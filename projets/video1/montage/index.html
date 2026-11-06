@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
     <script src="assets/gsap.min.js"></script>
     <style>
       /* charte de marque injectée (brand/<marque>/brand.css) */
@@ -37,6 +38,16 @@
         --stone: #a59d90;
         --dark: #4a4540;
         --font: "Specimen Montserrat", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        --cap-left: 60px;
+        --cap-width: 960px;
+        --ill-top: 150px;
       }
       
       /* --- Sous-titres ---------------------------------------------------------- */
@@ -88,18 +99,18 @@
 
       /* voile sombre derrière les sous-titres */
       /* bande floutée + assombrie : masque les traces des anciens sous-titres incrustés */
-      #shade { position: absolute; left: 0; top: 1130px; width: 1080px; height: 560px;
+      #shade { position: absolute; left: 0; top: calc(var(--cap-top, 1260px) - 130px); width: 1080px; height: 560px;
         backdrop-filter: blur(18px) brightness(0.62); -webkit-backdrop-filter: blur(18px) brightness(0.62);
         -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%);
         mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%); }
 
-      .cap { position: absolute; left: 60px; top: 1260px; width: 960px; height: 300px;
+      .cap { position: absolute; left: var(--cap-left, 60px); top: var(--cap-top, 1260px); width: var(--cap-width, 960px); height: 300px;
         display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 30px;
         font-weight: 900; font-size: 92px; line-height: 1.08; text-align: center; color: var(--ink);
         letter-spacing: -0.01em; transform-origin: 50% 50%; }
 
       /* illustrations : zone haute */
-      .ill { position: absolute; left: 0; top: 150px; width: 1080px; height: 470px;
+      .ill { position: absolute; left: 0; top: var(--ill-top, 150px); width: 1080px; height: 470px;
         display: flex; align-items: center; justify-content: center; }
       .ico { width: 120px; height: 120px; flex: none; }
       .spark { width: 420px; height: 110px; }

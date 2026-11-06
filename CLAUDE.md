@@ -1,24 +1,35 @@
 # Montage — consignes pour Claude
 
-## Charte graphique VERROUILLÉE : Specimen Agency (couleurs + police)
+## Chartes graphiques VERROUILLÉES : deux marques
 
-Toutes les vidéos montées dans ce dépôt utilisent la charte **Specimen Agency**, sauf demande
-explicite contraire de l'utilisateur pour une vidéo donnée.
+Chaque montage utilise **exactement une** des deux chartes ci-dessous. Elles ne se mélangent jamais.
 
-- **Source unique** : `brand/specimen-agency/` (`brand.css`, `brand.json`, `logo.png`, `README.md`).
+| Marque | Dossier | Quand l'utiliser | Couleurs | Police | Format |
+|---|---|---|---|---|---|
+| **Specimen Agency** | `brand/specimen-agency/` | Par défaut : agence, Instagram, conseils marketing | or, noir profond, ivoire | Montserrat (`"Specimen Montserrat"`) | Reels Instagram |
+| **Specimen Gaming** | `brand/specimen-gaming/` | Vidéos du **compte TikTok gaming** (jeux vidéo, gameplay, gaming, TikTok gaming) | rouge `#da3d39`, anthracite `#2c2d32`, blanc | Oxanium (`"Specimen Oxanium"`) | TikTok (zones de l'interface évitées) |
+
+**Choix de la marque.** Si l'utilisateur parle de gaming, du compte gaming ou de TikTok gaming, ou si la vidéo
+porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-agency`. En cas de doute réel,
+poser la question avant de monter. La marque se choisit avec `BRAND=<marque>` au moment de la génération ;
+elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateur s'en sert.
+
+Règles communes :
+- **Source unique** : `brand/<marque>/` (`brand.css`, `brand.json`, `logo.png`, `fonts/`, `README.md`).
 - Les compositions **injectent** `brand.css` (marqueur `{{BRAND_CSS}}` de `templates/reel-vertical/template.html`)
-  et utilisent uniquement ses variables (`var(--gold)`, `var(--panel)`…). Dans les SVG :
-  `style="fill:var(--gold)"`, jamais une couleur en dur.
-- **Police unique : Montserrat**, embarquée dans `brand/specimen-agency/fonts/` sous le nom de famille
-  `"Specimen Montserrat"` et exposée par `var(--font)`. Aucune autre `font-family` n'est autorisée
-  (ni Arial, ni Inter, ni Google Fonts, ni police serif). Graisses : 900 pour les sous-titres, 800 pour
-  les titres de cartes, 700-800 en capitales espacées pour les textes de marque.
-- **Interdit** : rouge, vert, rose, bleu ou toute couleur absente de `brand.json`. Les notions
-  « négatif / positif » s'expriment avec l'or, le noir et l'ivoire (barré, tampon, contraste), pas avec du rouge ou du vert.
-- **Obligatoire** sur chaque vidéo : sous-titres blancs à contour noir avec mots clés en or,
-  cartes noires à liseré or, flashs ivoire ou or, écran de fin logo + slogan.
-- **Avant de livrer** : `npm run brand:check` (couleurs + police) doit être vert, en plus de `hyperframes check`.
-- Changer la charte = modifier `brand/specimen-agency/` uniquement, puis régénérer les vidéos.
+  et n'utilisent que ses variables (`var(--accent)`, `var(--panel)`, `var(--font)`…). Dans les SVG,
+  écrire `style="fill:var(--accent)"`, jamais une couleur en dur. Les alias `--gold`, `--ivory`… existent
+  dans les deux chartes pour que les modèles fonctionnent avec l'une comme avec l'autre.
+- **Police unique par marque**, embarquée dans `brand/<marque>/fonts/` et exposée par `var(--font)`.
+  Aucune autre `font-family` (ni Arial, ni Inter, ni Google Fonts).
+- **Interdit** : toute couleur absente du `brand.json` de la marque. Pas de rouge ni de vert dans Agency ;
+  pas d'or ni de jaune dans Gaming.
+- **Obligatoire** sur chaque vidéo : sous-titres blancs à contour noir avec mots clés à la couleur
+  d'accent de la marque, cartes de la marque, flashs de la marque, écran de fin avec le logo de la marque.
+- La bande floutée `#shade` ne sert qu'à masquer des sous-titres déjà incrustés dans la source :
+  la retirer si la vidéo source n'en a pas.
+- **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) doit être vert, en plus de `hyperframes check`.
+- Changer une charte = modifier uniquement `brand/<marque>/`, puis régénérer les vidéos.
 
 ## Monter une nouvelle vidéo (procédure)
 
@@ -30,7 +41,8 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
 4. `cut_silences.py` : couper les blancs, puis recaler les mots sur la nouvelle timeline.
 5. `build_composition.py` : adapter les groupes de sous-titres, les sections et les illustrations
    au discours. La charte (couleurs, police, logo) est lue et copiée automatiquement dans
-   `montage/assets/brand/` (`BRAND=specimen-agency` par défaut).
+   `montage/assets/brand/`. Lancer avec `BRAND=specimen-gaming` pour le compte gaming
+   (`specimen-agency` par défaut).
 6. `hyperframes check`, puis `npm run brand:check`, puis `hyperframes snapshot` pour relire.
 7. `hyperframes render --quality delivery`, puis `loudnorm` à -14 LUFS (voir `scripts/montage.sh`).
 8. Livrer à l'utilisateur deux fichiers : une version légère (CRF 23, environ 10 Mo) et une version HD.

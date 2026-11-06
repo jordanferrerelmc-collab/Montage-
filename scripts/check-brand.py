@@ -10,23 +10,32 @@ import glob, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 args = sys.argv[1:]
-brand = "specimen-agency"
+forced = None
 if "--brand" in args:
-    i = args.index("--brand"); brand = args[i + 1]; del args[i:i + 2]
-spec = json.load(open(f"{ROOT}/brand/{brand}/brand.json"))
+    i = args.index("--brand"); forced = args[i + 1]; del args[i:i + 2]
 
 def norm_hex(h):
     h = h.lower().lstrip("#")
     if len(h) in (3, 4): h = "".join(c * 2 for c in h[:3])
     return "#" + h[:6]
 
-allowed_hex = set()
-for v in spec["colors"].values():
-    for c in (v if isinstance(v, list) else [v]):
-        allowed_hex.add(norm_hex(c))
-allowed_rgb = {tuple(int(x) for x in t.split(",")) for t in spec["rgb_allowed"]}
-for h in allowed_hex:
-    allowed_rgb.add(tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)))
+def load(brand):
+    spec = json.load(open(f"{ROOT}/brand/{brand}/brand.json"))
+    hexes = set()
+    for v in spec["colors"].values():
+        for c in (v if isinstance(v, list) else [v]):
+            hexes.add(norm_hex(c))
+    rgbs = {tuple(int(x) for x in t.split(",")) for t in spec["rgb_allowed"]}
+    rgbs |= {tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) for h in hexes}
+    return spec, hexes, rgbs
+
+def brand_of(path, txt):
+    """Marque du fichier : --brand, sinon <meta name="brand">, sinon dossier brand/<x>/, sinon agence."""
+    if forced: return forced
+    m = re.search(r'<meta name="brand" content="([\w-]+)"', txt)
+    if m and m.group(1) != "{{BRAND}}": return m.group(1)
+    m = re.search(r"brand/([\w-]+)/", path.replace(os.sep, "/"))
+    return m.group(1) if m else "specimen-agency"
 
 NAMED = re.compile(r"(?<![\w-])(red|green|blue|pink|purple|orange|yellow|cyan|magenta|lime|teal)(?![\w-])", re.I)
 HEX = re.compile(r"#[0-9a-fA-F]{3,8}\b")
@@ -34,10 +43,12 @@ RGB = re.compile(r"rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)")
 
 files = args or (glob.glob(f"{ROOT}/projets/*/montage/index.html")
                  + glob.glob(f"{ROOT}/templates/**/*.html", recursive=True)
-                 + [f"{ROOT}/brand/{brand}/brand.css"])
+                 + glob.glob(f"{ROOT}/brand/*/brand.css"))
 bad = 0
 for f in files:
     txt = open(f, encoding="utf-8").read()
+    brand = brand_of(f, txt)
+    spec, allowed_hex, allowed_rgb = load(brand)
     # ne contrôle que le style et le balisage graphique, pas le JS ni le texte des sous-titres
     zones = re.findall(r"<style>(.*?)</style>", txt, re.S) or [txt]
     zones += re.findall(r'(?:style|fill|stroke|stop-color|color)="([^"]*)"', txt)
@@ -63,10 +74,10 @@ for f in files:
     rel = os.path.relpath(f, ROOT)
     if issues:
         bad += 1
-        print(f"✗ {rel} : hors charte {sorted(issues)}")
+        print(f"✗ {rel} [{spec['name']}] : hors charte {sorted(issues)}")
     else:
-        print(f"✓ {rel}")
+        print(f"✓ {rel} [{spec['name']}]")
 if bad:
-    print(f"\nCharte « {spec['name']} » non respectée. Utilisez les variables de brand/{brand}/brand.css.")
+    print("\nCharte non respectée. Utilisez uniquement les variables de brand/<marque>/brand.css.")
     sys.exit(1)
-print(f"\n✅ Charte « {spec['name']} » respectée.")
+print("\n✅ Chartes respectées.")

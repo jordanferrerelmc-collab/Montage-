@@ -161,12 +161,13 @@ sfx_html.append(f'<audio class="clip" src="assets/sfx/whoosh.wav" data-start="{W
 
 endcard = (f'<div class="clip" id="endcard" data-start="{SPEECH_END}" data-duration="{DUR - SPEECH_END:.2f}" data-track-index="4">'
            f'<img id="logo" src="assets/brand/logo.png" alt="{brand["name"]}"/>'
-           f'<div id="tagline">{"<br/>".join(p.strip() + "." for p in brand["tagline"].rstrip(".").split("."))}</div></div>')
+           + (f'<div id="tagline">{"<br/>".join(p.strip() + "." for p in brand["tagline"].rstrip(".").split("."))}</div>' if brand.get("tagline") else "")
+           + '</div>')
 ill_js += f'''
   // écran de fin Specimen Agency
   tl.fromTo("#flash", {{opacity: 0.9}}, {{opacity: 0, duration: 0.3, ease: "power2.out", immediateRender: false}}, {SPEECH_END:.3f});
   tl.from("#logo", {{scale: 0.6, opacity: 0, rotation: -8, duration: 0.6, ease: "back.out(1.6)"}}, {SPEECH_END + 0.05:.3f});
-  tl.from("#tagline", {{y: 40, opacity: 0, duration: 0.5, ease: "power3.out"}}, {SPEECH_END + 0.5:.3f});
+  {'' if brand.get("tagline") else '// '}tl.from("#tagline", {{y: 40, opacity: 0, duration: 0.5, ease: "power3.out"}}, {SPEECH_END + 0.5:.3f});
   tl.fromTo("#logo", {{scale: 1}}, {{scale: 1.04, duration: {DUR - SPEECH_END - 0.65:.2f}, ease: "none", immediateRender: false}}, {SPEECH_END + 0.65:.3f});
 '''
 sfx_html.append(f'<audio class="clip" src="assets/sfx/whoosh.wav" data-start="{SPEECH_END - 0.15:.3f}" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>')
@@ -177,6 +178,7 @@ brand_css = open(f"{BRAND_DIR}/brand.css").read()
 tpl = tpl.replace("{{BRAND_CSS}}", "\n".join("      " + l for l in brand_css.splitlines()))
 os.makedirs(f"{ROOT}/montage/assets/brand", exist_ok=True)
 shutil.copy(f"{BRAND_DIR}/{brand['logo']}", f"{ROOT}/montage/assets/brand/logo.png")
+tpl = tpl.replace("{{BRAND}}", BRAND)
 shutil.copytree(f"{BRAND_DIR}/fonts", f"{ROOT}/montage/assets/brand/fonts", dirs_exist_ok=True)
 out = (tpl.replace("{{DUR}}", f"{DUR}")
           .replace("{{CAPTIONS}}", "\n      ".join(caps_html) + "\n      " + endcard)

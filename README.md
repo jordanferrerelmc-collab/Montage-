@@ -98,10 +98,12 @@ npm run transcribe -- ../out/voix.wav --model small --language fr --to srt -o ..
 - Dans une composition HyperFrames, `npx hyperframes transcribe` produit `transcript.json`,
   utilisé pour des sous-titres animés mot à mot.
 
-## Charte graphique (verrouillée)
+## Chartes graphiques (verrouillées)
 
-Toutes les vidéos utilisent la charte **Specimen Agency** : or, noir profond et ivoire, police
-Montserrat, écran de fin avec logo. Source unique : `brand/specimen-agency/` (voir son README).
+Chaque vidéo utilise l'une des deux chartes, choisie avec `BRAND=<marque>` :
+
+- **Specimen Agency** (`brand/specimen-agency/`, par défaut) : or, noir profond, ivoire, police Montserrat, format Reels.
+- **Specimen Gaming** (`brand/specimen-gaming/`, compte TikTok gaming) : rouge, anthracite, blanc, police Oxanium, mise en page TikTok.
 
 ```bash
 npm run brand:check   # refuse toute couleur hors charte et toute police autre que Montserrat

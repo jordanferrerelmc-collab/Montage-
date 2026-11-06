@@ -29,6 +29,16 @@
   --stone: #a59d90;
   --dark: #4a4540;
   --font: "Specimen Montserrat", sans-serif;
+
+  /* alias génériques utilisés par les modèles */
+  --accent: var(--gold);
+  --accent-soft: var(--gold-light);
+
+  /* mise en page Instagram Reels */
+  --cap-top: 1260px;
+  --cap-left: 60px;
+  --cap-width: 960px;
+  --ill-top: 150px;
 }
 
 /* --- Sous-titres ---------------------------------------------------------- */
