@@ -43,6 +43,17 @@ browser=$(bash scripts/with-browser.sh bash -c 'echo "${REMOTION_BROWSER_EXECUTA
 if [[ -n "$browser" ]]; then ok "Chrome (Remotion)" "$browser"
 else opt "Chrome (Remotion)" "aucun binaire local — Remotion téléchargera le sien"; fi
 
+echo "Modules IA (installés par : npm run install:ai)"
+CACHE=${HYPERFRAMES_CACHE_DIR:-$HOME/.cache/hyperframes}
+if command -v whisper-cli >/dev/null; then ok "whisper.cpp" "$(command -v whisper-cli)"
+else opt "whisper.cpp" "absent — transcription / sous-titres indisponibles"; fi
+models=$(ls "$CACHE"/whisper/models/ggml-*.bin 2>/dev/null | xargs -rn1 basename | tr '\n' ' ')
+[[ -n "$models" ]] && ok "modèles Whisper" "$models" || opt "modèles Whisper" "aucun"
+if python3 -c 'import kokoro_onnx, soundfile' 2>/dev/null; then ok "Kokoro (TTS)" "kokoro-onnx $(python3 -c 'import importlib.metadata as m;print(m.version("kokoro-onnx"))')"
+else opt "Kokoro (TTS)" "absent — synthèse vocale locale indisponible"; fi
+[[ -s "$CACHE/tts/models/kokoro-v1.0.onnx" && -s "$CACHE/tts/voices/voices-v1.0.bin" ]] \
+  && ok "modèle Kokoro" "kokoro-v1.0 + voices-v1.0" || opt "modèle Kokoro" "non téléchargé (fait au premier usage)"
+
 echo
 echo "Diagnostic HyperFrames :"
 (cd hyperframes && npx --no-install hyperframes doctor 2>&1 | grep -E '✓|✗' | sed 's/^/  /')

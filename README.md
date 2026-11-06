@@ -7,12 +7,16 @@ Atelier de création vidéo par le code, prêt à l'emploi :
 | [HyperFrames](https://hyperframes.heygen.com) | Vidéos écrites en HTML/CSS + GSAP, rendues en MP4/WebM/MOV/GIF | 0.9.19 |
 | [Remotion](https://www.remotion.dev) | Vidéos écrites en React/TypeScript | 4.0.541 |
 | [FFmpeg](https://ffmpeg.org) | Montage, transitions, mixage audio, encodage final | ≥ 6 |
+| [whisper.cpp](https://github.com/ggml-org/whisper.cpp) | Transcription locale → sous-titres SRT/VTT (`hyperframes transcribe`) | v1.9.5 |
+| [Kokoro](https://github.com/thewh1teagle/kokoro-onnx) | Synthèse vocale locale, voix FR incluse (`hyperframes tts`) | kokoro-onnx 0.6.1 |
 | GSAP | Moteur d'animation des compositions HyperFrames (copie locale, sans CDN) | 3.15.0 |
 
 ## Prérequis
 
 - Node.js ≥ 20 et npm
 - FFmpeg + FFprobe dans le `PATH` (`apt install ffmpeg` / `brew install ffmpeg`)
+- Pour `install:ai` : Python 3 + pip, git, cmake et un compilateur C/C++. Accès réseau à
+  github.com (sources whisper.cpp, modèles Kokoro) et huggingface.co (modèle Whisper).
 - Chrome : HyperFrames et Remotion téléchargent chacun leur Chrome Headless Shell au premier rendu.
   Si le réseau le bloque, `scripts/with-browser.sh` détecte un Chrome Headless Shell Playwright local,
   ou définissez `REMOTION_BROWSER_EXECUTABLE=/chemin/vers/chrome-headless-shell`.
@@ -21,6 +25,7 @@ Atelier de création vidéo par le code, prêt à l'emploi :
 
 ```bash
 npm install          # installe les deux workspaces (hyperframes/ et remotion/)
+npm run install:ai   # whisper.cpp (compilé) + Kokoro + modèles (≈ 850 Mo)
 npm run doctor       # vérifie Node, FFmpeg (encodeurs), HyperFrames, Remotion, Chrome
 npm run verify       # test de bout en bout : check + rendus + montage FFmpeg
 ```
@@ -78,11 +83,22 @@ bash scripts/montage.sh a.mp4 b.mp4 sortie.mp4   # avec vos propres clips
 Le script montre une chaîne type : harmonisation fps/pixels, transition `xfade`, piste audio
 avec fondus, normalisation `loudnorm` (EBU R128, -14 LUFS), export H.264/AAC `+faststart`.
 
+### Voix off (Kokoro) et sous-titres (whisper.cpp)
+
+```bash
+npm run tts -- "Bonjour et bienvenue." --voice ff_siwis -o ../out/voix.wav   # chemin relatif à hyperframes/
+npm run tts -- --list                                                          # toutes les voix
+npm run transcribe -- ../out/voix.wav --model small --language fr --to srt -o ../out/voix.srt
+```
+
+- Voix françaises : `ff_siwis`. Anglais, espagnol, italien, japonais, etc. également disponibles.
+- Modèle Whisper installé : `small` (multilingue, 466 Mo). Pour un autre :
+  `WHISPER_MODEL=medium npm run install:ai` puis `--model medium`. Les modèles `*.en` sont réservés à l'anglais.
+- Les noms propres (« HyperFrames », « Remotion ») peuvent être mal transcrits : relisez le `.srt`.
+- Dans une composition HyperFrames, `npx hyperframes transcribe` produit `transcript.json`,
+  utilisé pour des sous-titres animés mot à mot.
+
 ## Options facultatives
 
-`npx hyperframes doctor` signale des modules optionnels non installés :
-
-- **whisper.cpp** — transcription / sous-titres automatiques (`hyperframes transcribe`)
-- **Kokoro** — synthèse vocale locale : `pip install kokoro-onnx soundfile`
 - **MusicGen** — musique générée localement : `pip install transformers torch soundfile numpy`
 - **Docker** — rendus HyperFrames reproductibles bit à bit (`--docker`)
