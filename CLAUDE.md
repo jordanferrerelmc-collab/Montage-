@@ -66,8 +66,8 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 ## Voix clonée de l'utilisateur (montages sans visage)
 
 - Voix de référence : `voix/voix_reference.wav`, échantillon propre de 27 s tiré de `projets/video1`.
-  **Ne la versionner que si le dépôt GitHub est privé** : vérifier la visibilité avec `list_repos` avant
-  tout commit. Tant que le dépôt est public, `voix/` est exclu par `.gitignore`.
+  Versionnée dans le dépôt à la demande explicite de l'utilisateur, alors que le dépôt est public
+  (risque expliqué le 06/11/2026). Ne l'utiliser que pour ses propres montages.
 - Moteur : Chatterbox Multilingual, en local (licence MIT, français). Installation : `npm run voix:install`
   (≈ 3 Go, quelques minutes, à faire au début d'une session qui en a besoin).
 - Génération : `npm run voix -- "Texte." -o out/voix.wav` (ou `--fichier texte.txt`, `--expressivite 0.3-0.8`).
