@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=1080, height=1920" />
     <script src="assets/gsap.min.js"></script>
     <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
       :root {
-        /* charte Specimen Agency : or, noir profond, ivoire */
         --gold: #e3b25c;
         --gold-light: #f2d58e;
         --gold-deep: #b8863b;
@@ -14,11 +19,55 @@
         --black: #0b0b0d;
         --ivory: #f7f1e3;
         --ink: #ffffff;
+        --flash: #fff8e8;
         --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
         --font: "Montserrat", "Inter", sans-serif;
       }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+
+      /* ---- mise en page du format vertical (indépendante de la marque) ---- */
       * { margin: 0; padding: 0; box-sizing: border-box; }
-      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
       #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
 
       /* caméra : on zoome ce conteneur, ancré sur le visage */
@@ -30,72 +79,42 @@
       /* bande floutée + assombrie : masque les traces des anciens sous-titres incrustés */
       #shade { position: absolute; left: 0; top: 1130px; width: 1080px; height: 560px;
         backdrop-filter: blur(18px) brightness(0.62); -webkit-backdrop-filter: blur(18px) brightness(0.62);
-        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
-        mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); }
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%); }
 
       .cap { position: absolute; left: 60px; top: 1260px; width: 960px; height: 300px;
         display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 30px;
         font-weight: 900; font-size: 92px; line-height: 1.08; text-align: center; color: var(--ink);
         letter-spacing: -0.01em; transform-origin: 50% 50%; }
-      .w { display: inline-block; -webkit-text-stroke: 14px #000; paint-order: stroke fill;
-        text-shadow: 0 8px 0 rgba(0,0,0,0.55); transform-origin: 50% 70%; }
-      .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }
-      .hl-red { color: var(--gold-light); }
 
       /* illustrations : zone haute */
       .ill { position: absolute; left: 0; top: 150px; width: 1080px; height: 470px;
         display: flex; align-items: center; justify-content: center; }
-      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
-        align-items: center; gap: 12px; color: #fff; box-shadow: 0 24px 60px rgba(0,0,0,0.35); border: 4px solid var(--gold); }
-      .panel.row { flex-direction: row; gap: 34px; }
-      .panel.green { background: var(--panel); border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227,178,92,0.35), 0 24px 60px rgba(0,0,0,0.35); }
       .ico { width: 120px; height: 120px; flex: none; }
-      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
-      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
-      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
       .spark { width: 420px; height: 110px; }
-      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
       .xmark { position: absolute; width: 330px; height: 330px; }
       .arrow { width: 160px; height: 230px; filter: drop-shadow(0 8px 0 rgba(0,0,0,0.5)); margin-top: 200px; }
-      .num { color: var(--gold); display: inline-block; }
-      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px; padding: 36px 48px; border-radius: 48px 48px 48px 8px;
-        box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-width: 860px; }
-      .zzz { position: absolute; right: 90px; top: 10px; font-weight: 900; font-size: 110px; color: #fff;
-        -webkit-text-stroke: 10px #000; paint-order: stroke fill; }
-      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
-        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0,0,0,0.4); }
+      .zzz { position: absolute; right: 90px; top: 10px; font-weight: 900; font-size: 110px; color: var(--ink);
+        -webkit-text-stroke: 10px #000000; paint-order: stroke fill; }
       .steprow { display: flex; align-items: center; gap: 30px; }
-      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold); font-weight: 800;
-        font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0,0,0,0.35); flex: none; }
       .ba { display: flex; gap: 18px; }
       .half { width: 330px; height: 300px; border-radius: 36px; padding: 28px; display: flex; flex-direction: column;
         justify-content: space-between; font-weight: 900; font-size: 50px; }
       .half svg { width: 100%; height: 150px; }
-      .before { background: rgba(40,38,35,0.92); color: #a59d90; }
+      .before { background: var(--panel-muted); color: var(--stone); }
       .after { background: var(--panel); color: var(--gold); border: 5px solid var(--gold); }
-      .panel.col { padding: 30px 40px; }
       .wave { display: flex; align-items: center; height: 170px; gap: 0; }
       .bar { display: block; width: 50px; margin: 0 6px; background: var(--gold); border-radius: 12px; transform-origin: 50% 50%; }
-      .bar.gap { background: #4a4540; }
+      .bar.gap { background: var(--dark); }
       .scissors { position: absolute; width: 150px; height: 150px; left: 465px; top: 160px; }
       .icons { display: flex; gap: 26px; }
       .eng { background: var(--panel); border-radius: 40px; padding: 28px 36px; display: flex; flex-direction: column; align-items: center;
         gap: 8px; color: var(--gold); font-weight: 800; font-size: 62px; border: 4px solid var(--gold); }
       .chart { display: flex; align-items: flex-end; gap: 14px; height: 150px; }
       .cbar { display: block; width: 44px; background: var(--gold); border-radius: 10px; }
-      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px; letter-spacing: 0.04em;
-        padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0,0,0,0.35); }
       .cta .ico { width: 100px; height: 100px; }
 
-      #flash, #redflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
-      #flash { background: #fff8e8; }
-      #redflash { background: var(--gold); mix-blend-mode: screen; }
 
-      /* écran de fin */
-      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
-        align-items: center; justify-content: center; gap: 90px; }
-      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80,50,10,0.45); }
-      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
     </style>
   </head>
   <body>
@@ -104,19 +123,19 @@
         <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="28.6" data-has-audio="true" data-volume="1" data-track-index="0"></video>
       </div></div>
       <div id="shade"></div>
-      <div class="ill clip " id="i-views" data-start="0.940" data-duration="1.020" data-track-index="3"><div class="panel"><svg viewBox="0 0 64 64" class="ico"><path d="M4 32s10-18 28-18 28 18 28 18-10 18-28 18S4 32 4 32z" fill="none" stroke="#fff" stroke-width="5"/><circle cx="32" cy="32" r="9" fill="#fff"/></svg><div class="big"><span id="cnt">200</span> <small>vues</small></div><svg viewBox="0 0 300 90" class="spark"><polyline id="sparkline" points="0,20 60,35 120,30 180,60 240,70 300,82" fill="none" stroke="#E3B25C" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></svg></div></div>
-      <div class="ill clip " id="i-algo" data-start="2.520" data-duration="0.770" data-track-index="3"><div class="panel"><div class="chip">ALGO</div><svg viewBox="0 0 100 100" class="xmark"><path d="M15 15L85 85M85 15L15 85" stroke="#E3B25C" stroke-width="16" stroke-linecap="round"/></svg></div></div>
-      <div class="ill clip " id="i-arrow" data-start="3.290" data-duration="0.570" data-track-index="3"><svg viewBox="0 0 100 140" class="arrow"><path d="M50 5v100M15 75l35 40 35-40" fill="none" stroke="#E3B25C" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="ill clip " id="i-timer" data-start="3.960" data-duration="2.680" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><circle cx="32" cy="36" r="22" fill="none" stroke="#fff" stroke-width="5"/><path d="M32 36V22M26 6h12" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg><div><div class="kicker">TU AS</div><div class="big"><span class="num" id="n3">3</span> <small>SECONDES</small></div></div></div></div>
+      <div class="ill clip " id="i-views" data-start="0.940" data-duration="1.020" data-track-index="3"><div class="panel"><svg viewBox="0 0 64 64" class="ico"><path d="M4 32s10-18 28-18 28 18 28 18-10 18-28 18S4 32 4 32z" fill="none" style="stroke:var(--ink)" stroke-width="5"/><circle cx="32" cy="32" r="9" style="fill:var(--ink)"/></svg><div class="big"><span id="cnt">200</span> <small>vues</small></div><svg viewBox="0 0 300 90" class="spark"><polyline id="sparkline" points="0,20 60,35 120,30 180,60 240,70 300,82" fill="none" style="stroke:var(--gold)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></svg></div></div>
+      <div class="ill clip " id="i-algo" data-start="2.520" data-duration="0.770" data-track-index="3"><div class="panel"><div class="chip">ALGO</div><svg viewBox="0 0 100 100" class="xmark"><path d="M15 15L85 85M85 15L15 85" style="stroke:var(--gold)" stroke-width="16" stroke-linecap="round"/></svg></div></div>
+      <div class="ill clip " id="i-arrow" data-start="3.290" data-duration="0.570" data-track-index="3"><svg viewBox="0 0 100 140" class="arrow"><path d="M50 5v100M15 75l35 40 35-40" fill="none" style="stroke:var(--gold)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="ill clip " id="i-timer" data-start="3.960" data-duration="2.680" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><circle cx="32" cy="36" r="22" fill="none" style="stroke:var(--ink)" stroke-width="5"/><path d="M32 36V22M26 6h12" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/></svg><div><div class="kicker">TU AS</div><div class="big"><span class="num" id="n3">3</span> <small>SECONDES</small></div></div></div></div>
       <div class="ill clip " id="i-bubble" data-start="6.640" data-duration="1.630" data-track-index="3"><div class="bubble">Bonjour, je vais parler de…</div><div class="zzz" id="zzz">Z<sup>z</sup><sup><sup>z</sup></sup></div></div>
       <div class="ill clip " id="i-faux" data-start="8.940" data-duration="1.670" data-track-index="3"><div class="stamp" id="stamp">FAUX</div></div>
-      <div class="ill clip " id="i-method" data-start="10.710" data-duration="1.150" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><path d="M36 4L12 36h18l-4 24 26-34H34z" fill="#E3B25C"/></svg><div class="big">MA MÉTHODE</div></div></div>
-      <div class="ill clip " id="i-result" data-start="11.860" data-duration="1.640" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M18 8h28v14a14 14 0 0 1-28 0zM18 12H8v6a10 10 0 0 0 10 10M46 12h10v6a10 10 0 0 1-10 10M32 36v10M22 56h20M26 46h12v10H26z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/></svg><div class="big">LE RÉSULTAT<br><small>D'ABORD</small></div></div></div>
-      <div class="ill clip " id="i-step1" data-start="13.500" data-duration="1.450" data-track-index="3"><div class="steprow"><div class="num-badge">1</div><div class="ba"><div class="half before"><span>AVANT</span><svg viewBox="0 0 100 50"><polyline points="0,40 50,38 100,41" fill="none" stroke="#8a8378" stroke-width="6"/></svg></div><div class="half after" id="after"><span>APRÈS</span><svg viewBox="0 0 100 50"><polyline points="0,45 40,32 70,20 100,4" fill="none" stroke="#F2D58E" stroke-width="7" stroke-linecap="round"/></svg></div></div></div></div>
-      <div class="ill clip " id="i-step2" data-start="14.950" data-duration="3.710" data-track-index="3"><div class="steprow"><div class="num-badge">2</div><div class="panel col"><div class="wave" id="wave"><i class="bar " style="height:60px"></i><i class="bar " style="height:110px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:90px"></i><i class="bar " style="height:140px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:100px"></i><i class="bar " style="height:70px"></i><i class="bar " style="height:120px"></i></div><div class="kicker">ZÉRO BLANC</div></div></div><svg viewBox="0 0 64 64" class="scissors" id="sc"><circle cx="16" cy="48" r="9" fill="none" stroke="#fff" stroke-width="5"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="5"/><path d="M23 42L58 10M23 22l35 32" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div>
-      <div class="ill clip " id="i-step3" data-start="18.660" data-duration="3.610" data-track-index="3"><div class="steprow"><div class="num-badge">3</div><div class="icons"><div class="eng" id="e-com"><svg viewBox="0 0 64 64" class="ico"><path d="M8 12h48v32H28l-12 10V44H8z" fill="#fff"/></svg><b>+128</b></div><div class="eng" id="e-share"><svg viewBox="0 0 64 64" class="ico"><path d="M6 30L58 8 44 58 32 36z" fill="#fff"/></svg><b>+54</b></div></div></div></div>
-      <div class="ill clip " id="i-secret" data-start="22.270" data-duration="1.900" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M12 34l14 14 26-30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="chart"><i class="cbar" style="height:30px"></i><i class="cbar" style="height:50px"></i><i class="cbar" style="height:75px"></i><i class="cbar" style="height:105px"></i><i class="cbar" style="height:140px"></i></div></div></div>
-      <div class="ill clip " id="i-cta" data-start="24.170" data-duration="1.880" data-track-index="3"><div class="cta" id="cta"><svg viewBox="0 0 64 64" class="ico plane" id="plane"><path d="M6 30L58 8 44 58 32 36z" fill="#111"/></svg>ENVOIE À UN POTE</div></div>
+      <div class="ill clip " id="i-method" data-start="10.710" data-duration="1.150" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><path d="M36 4L12 36h18l-4 24 26-34H34z" style="fill:var(--gold)"/></svg><div class="big">MA MÉTHODE</div></div></div>
+      <div class="ill clip " id="i-result" data-start="11.860" data-duration="1.640" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M18 8h28v14a14 14 0 0 1-28 0zM18 12H8v6a10 10 0 0 0 10 10M46 12h10v6a10 10 0 0 1-10 10M32 36v10M22 56h20M26 46h12v10H26z" fill="none" style="stroke:var(--ink)" stroke-width="5" stroke-linejoin="round"/></svg><div class="big">LE RÉSULTAT<br><small>D'ABORD</small></div></div></div>
+      <div class="ill clip " id="i-step1" data-start="13.500" data-duration="1.450" data-track-index="3"><div class="steprow"><div class="num-badge">1</div><div class="ba"><div class="half before"><span>AVANT</span><svg viewBox="0 0 100 50"><polyline points="0,40 50,38 100,41" fill="none" style="stroke:var(--taupe)" stroke-width="6"/></svg></div><div class="half after" id="after"><span>APRÈS</span><svg viewBox="0 0 100 50"><polyline points="0,45 40,32 70,20 100,4" fill="none" style="stroke:var(--gold-light)" stroke-width="7" stroke-linecap="round"/></svg></div></div></div></div>
+      <div class="ill clip " id="i-step2" data-start="14.950" data-duration="3.710" data-track-index="3"><div class="steprow"><div class="num-badge">2</div><div class="panel col"><div class="wave" id="wave"><i class="bar " style="height:60px"></i><i class="bar " style="height:110px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:90px"></i><i class="bar " style="height:140px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:100px"></i><i class="bar " style="height:70px"></i><i class="bar " style="height:120px"></i></div><div class="kicker">ZÉRO BLANC</div></div></div><svg viewBox="0 0 64 64" class="scissors" id="sc"><circle cx="16" cy="48" r="9" fill="none" style="stroke:var(--ink)" stroke-width="5"/><circle cx="16" cy="16" r="9" fill="none" style="stroke:var(--ink)" stroke-width="5"/><path d="M23 42L58 10M23 22l35 32" style="stroke:var(--ink)" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="ill clip " id="i-step3" data-start="18.660" data-duration="3.610" data-track-index="3"><div class="steprow"><div class="num-badge">3</div><div class="icons"><div class="eng" id="e-com"><svg viewBox="0 0 64 64" class="ico"><path d="M8 12h48v32H28l-12 10V44H8z" style="fill:var(--ink)"/></svg><b>+128</b></div><div class="eng" id="e-share"><svg viewBox="0 0 64 64" class="ico"><path d="M6 30L58 8 44 58 32 36z" style="fill:var(--ink)"/></svg><b>+54</b></div></div></div></div>
+      <div class="ill clip " id="i-secret" data-start="22.270" data-duration="1.900" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M12 34l14 14 26-30" fill="none" style="stroke:var(--ink)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="chart"><i class="cbar" style="height:30px"></i><i class="cbar" style="height:50px"></i><i class="cbar" style="height:75px"></i><i class="cbar" style="height:105px"></i><i class="cbar" style="height:140px"></i></div></div></div>
+      <div class="ill clip " id="i-cta" data-start="24.170" data-duration="1.880" data-track-index="3"><div class="cta" id="cta"><svg viewBox="0 0 64 64" class="ico plane" id="plane"><path d="M6 30L58 8 44 58 32 36z" style="fill:var(--black)"/></svg>ENVOIE À UN POTE</div></div>
       <div id="redflash"></div>
       <div id="flash"></div>
       <div class="cap clip" id="g0" data-start="0.000" data-duration="0.730" data-track-index="2"><span class="w" id="w0">TES</span> <span class="w" id="w1">VIDÉOS</span> <span class="w hl-pink" id="w2">INSTAGRAM</span></div>

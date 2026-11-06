@@ -98,6 +98,15 @@ npm run transcribe -- ../out/voix.wav --model small --language fr --to srt -o ..
 - Dans une composition HyperFrames, `npx hyperframes transcribe` produit `transcript.json`,
   utilisé pour des sous-titres animés mot à mot.
 
+## Charte graphique (verrouillée)
+
+Toutes les vidéos utilisent la charte **Specimen Agency** : or, noir profond et ivoire, police
+Montserrat, écran de fin avec logo. Source unique : `brand/specimen-agency/` (voir son README).
+
+```bash
+npm run brand:check   # refuse toute couleur hors charte dans les compositions
+```
+
 ## Options facultatives
 
 - **MusicGen** — musique générée localement : `pip install transformers torch soundfile numpy`

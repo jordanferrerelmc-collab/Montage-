@@ -20,32 +20,32 @@ expect_video() {
     || { echo "✗ résolution inattendue pour $f"; exit 1; }
 }
 
-step "1/7 Diagnostic des dépendances"
+step "1/8 Diagnostic des dépendances"
 bash scripts/doctor.sh
 
-step "2/7 HyperFrames — lint, validation runtime, mise en page"
+step "2/8 HyperFrames — lint, validation runtime, mise en page"
 (cd hyperframes && npx --no-install hyperframes check)
 
-step "3/7 HyperFrames — rendu MP4"
+step "3/8 HyperFrames — rendu MP4"
 (cd hyperframes && npx --no-install hyperframes render -o renders/main.mp4 --quality draft --quiet >/dev/null)
 expect_video hyperframes/renders/main.mp4
 
-step "4/7 Remotion — typecheck"
+step "4/8 Remotion — typecheck"
 npm run typecheck -w montage-remotion --silent
 
-step "5/7 Remotion — rendu MP4 + image fixe"
+step "5/8 Remotion — rendu MP4 + image fixe"
 quiet_remotion bash scripts/with-browser.sh npm run render -w montage-remotion --silent >/dev/null
 quiet_remotion bash scripts/with-browser.sh npm run still -w montage-remotion --silent >/dev/null
 expect_video remotion/out/intro.mp4
 [[ -s remotion/out/intro.png ]] && echo "  remotion/out/intro.png ✓"
 
-step "6/7 FFmpeg — montage (fondu enchaîné + audio normalisé)"
+step "6/8 FFmpeg — montage (fondu enchaîné + audio normalisé)"
 bash scripts/montage.sh
 expect_video out/montage.mp4
 ffprobe -v error -select_streams a:0 -show_entries stream=codec_name,sample_rate -of default=nw=1 out/montage.mp4 \
   | tr '\n' ' ' | sed 's/^/  audio → /'; echo
 
-step "7/7 Voix (Kokoro) → sous-titres (whisper.cpp)"
+step "7/8 Voix (Kokoro) → sous-titres (whisper.cpp)"
 HF=$PWD/hyperframes/node_modules/.bin/hyperframes
 if command -v whisper-cli >/dev/null && python3 -c 'import kokoro_onnx' 2>/dev/null; then
   mkdir -p out/voix
@@ -58,5 +58,8 @@ if command -v whisper-cli >/dev/null && python3 -c 'import kokoro_onnx' 2>/dev/n
 else
   echo "  ⏭  ignoré : whisper.cpp ou Kokoro absent (npm run install:ai)"
 fi
+
+step "8/8 Charte graphique verrouillée (Specimen Agency)"
+python3 scripts/check-brand.py
 
 printf '\n\033[32m✅ Tout fonctionne : HyperFrames, Remotion et FFmpeg sont opérationnels.\033[0m\n'

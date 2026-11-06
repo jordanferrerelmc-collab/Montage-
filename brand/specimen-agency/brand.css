@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+   Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+   Toute modification ici s'applique à toutes les prochaines vidéos.
+   ========================================================================== */
+:root {
+  --gold: #e3b25c;
+  --gold-light: #f2d58e;
+  --gold-deep: #b8863b;
+  --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+  --black: #0b0b0d;
+  --ivory: #f7f1e3;
+  --ink: #ffffff;
+  --flash: #fff8e8;
+  --panel: rgba(11, 11, 13, 0.9);
+  --panel-muted: rgba(40, 38, 35, 0.92);
+  --taupe: #8a8378;
+  --stone: #a59d90;
+  --dark: #4a4540;
+  --font: "Montserrat", "Inter", sans-serif;
+}
+
+/* --- Sous-titres ---------------------------------------------------------- */
+.w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+  text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+.hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+.hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+
+/* --- Cartes et éléments graphiques --------------------------------------- */
+.panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+  align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+.panel.row { flex-direction: row; gap: 34px; }
+.panel.col { padding: 30px 40px; }
+.panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+.big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+.big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+.kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+.chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+.num { color: var(--gold); display: inline-block; }
+.bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+  padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+.stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+  padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+.num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+  font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+.cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+  letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+
+/* --- Transitions ---------------------------------------------------------- */
+#flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+#flash { background: var(--flash); }
+#redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+
+/* --- Écran de fin ----------------------------------------------------------- */
+#endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 90px; }
+#logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+#tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }

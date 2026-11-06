@@ -13,6 +13,7 @@
   "scripts": {
     "doctor": "bash scripts/doctor.sh",
     "verify": "bash scripts/verify.sh",
+    "brand:check": "python3 scripts/check-brand.py",
     "install:ai": "bash scripts/install-ai.sh",
     "hf:dev": "npm run dev -w montage-hyperframes",
     "hf:check": "npm run check -w montage-hyperframes",
