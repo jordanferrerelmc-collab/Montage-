@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      :root {
+        --yellow: #ffe14d;
+        --red: #ff6b81;
+        --green: #3ddc84;
+        --pink: #ff4fd8;
+        --ink: #ffffff;
+        --panel: rgba(12, 12, 16, 0.86);
+        --font: "Montserrat", "Inter", sans-serif;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+
+      /* caméra : on zoome ce conteneur, ancré sur le visage */
+      #cam { position: absolute; inset: 0; transform-origin: 50% 36%; }
+      #punch { position: absolute; inset: 0; transform-origin: 50% 36%; }
+      #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* voile sombre derrière les sous-titres */
+      /* bande floutée + assombrie : masque les traces des anciens sous-titres incrustés */
+      #shade { position: absolute; left: 0; top: 1130px; width: 1080px; height: 560px;
+        backdrop-filter: blur(18px) brightness(0.62); -webkit-backdrop-filter: blur(18px) brightness(0.62);
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000 22%, #000 78%, transparent 100%); }
+
+      .cap { position: absolute; left: 60px; top: 1260px; width: 960px; height: 300px;
+        display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 30px;
+        font-weight: 900; font-size: 92px; line-height: 1.08; text-align: center; color: var(--ink);
+        letter-spacing: -0.01em; transform-origin: 50% 50%; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0,0,0,0.55); transform-origin: 50% 70%; }
+      .hl-yellow { color: var(--yellow); }
+      .hl-red { color: var(--red); }
+      .hl-green { color: var(--green); }
+      .hl-pink { color: var(--pink); }
+
+      /* illustrations : zone haute */
+      .ill { position: absolute; left: 0; top: 150px; width: 1080px; height: 470px;
+        display: flex; align-items: center; justify-content: center; }
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: #fff; box-shadow: 0 24px 60px rgba(0,0,0,0.35); border: 4px solid rgba(255,255,255,0.12); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.green { background: rgba(20, 120, 70, 0.92); }
+      .ico { width: 120px; height: 120px; flex: none; }
+      .big { font-weight: 900; font-size: 92px; line-height: 1; text-align: left; }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 800; font-size: 42px; letter-spacing: 0.08em; color: var(--yellow); }
+      .spark { width: 420px; height: 110px; }
+      .chip { font-weight: 900; font-size: 120px; padding: 10px 50px; background: #fff; color: #111; border-radius: 30px; }
+      .xmark { position: absolute; width: 330px; height: 330px; }
+      .arrow { width: 160px; height: 230px; filter: drop-shadow(0 8px 0 rgba(0,0,0,0.5)); margin-top: 200px; }
+      .num { color: var(--yellow); display: inline-block; }
+      .bubble { background: #fff; color: #222; font-weight: 700; font-size: 56px; padding: 36px 48px; border-radius: 48px 48px 48px 8px;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.3); max-width: 860px; }
+      .zzz { position: absolute; right: 90px; top: 10px; font-weight: 900; font-size: 110px; color: #fff;
+        -webkit-text-stroke: 10px #000; paint-order: stroke fill; }
+      .stamp { font-weight: 900; font-size: 230px; color: var(--red); border: 22px solid var(--red); border-radius: 36px;
+        padding: 0 50px; transform: rotate(-10deg); background: rgba(255,255,255,0.9); line-height: 1.15; }
+      .steprow { display: flex; align-items: center; gap: 30px; }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--yellow); color: #111; font-weight: 900;
+        font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0,0,0,0.35); flex: none; }
+      .ba { display: flex; gap: 18px; }
+      .half { width: 330px; height: 300px; border-radius: 36px; padding: 28px; display: flex; flex-direction: column;
+        justify-content: space-between; font-weight: 900; font-size: 50px; }
+      .half svg { width: 100%; height: 150px; }
+      .before { background: rgba(60,60,60,0.9); color: #ccc; }
+      .after { background: rgba(12,12,16,0.9); color: var(--green); border: 5px solid var(--green); }
+      .panel.col { padding: 30px 40px; }
+      .wave { display: flex; align-items: center; height: 170px; gap: 0; }
+      .bar { display: block; width: 50px; margin: 0 6px; background: var(--pink); border-radius: 12px; transform-origin: 50% 50%; }
+      .bar.gap { background: #555; }
+      .scissors { position: absolute; width: 150px; height: 150px; left: 465px; top: 160px; }
+      .icons { display: flex; gap: 26px; }
+      .eng { background: var(--panel); border-radius: 40px; padding: 28px 36px; display: flex; flex-direction: column; align-items: center;
+        gap: 8px; color: var(--green); font-weight: 900; font-size: 62px; }
+      .chart { display: flex; align-items: flex-end; gap: 14px; height: 150px; }
+      .cbar { display: block; width: 44px; background: #fff; border-radius: 10px; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--yellow); color: #111; font-weight: 900; font-size: 74px;
+        padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0,0,0,0.35); }
+      .cta .ico { width: 100px; height: 100px; }
+
+      #flash, #redflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: #fff; }
+      #redflash { background: var(--red); mix-blend-mode: screen; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="27.3" data-width="1080" data-height="1920">
+      <div id="cam"><div id="punch">
+        <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="27.3" data-has-audio="true" data-volume="1" data-track-index="0"></video>
+      </div></div>
+      <div id="shade"></div>
+      <div class="ill clip " id="i-views" data-start="0.940" data-duration="1.020" data-track-index="3"><div class="panel"><svg viewBox="0 0 64 64" class="ico"><path d="M4 32s10-18 28-18 28 18 28 18-10 18-28 18S4 32 4 32z" fill="none" stroke="#fff" stroke-width="5"/><circle cx="32" cy="32" r="9" fill="#fff"/></svg><div class="big"><span id="cnt">200</span> <small>vues</small></div><svg viewBox="0 0 300 90" class="spark"><polyline id="sparkline" points="0,20 60,35 120,30 180,60 240,70 300,82" fill="none" stroke="#ff3b5c" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/></svg></div></div>
+      <div class="ill clip " id="i-algo" data-start="2.520" data-duration="0.770" data-track-index="3"><div class="panel"><div class="chip">ALGO</div><svg viewBox="0 0 100 100" class="xmark"><path d="M15 15L85 85M85 15L15 85" stroke="#ff3b5c" stroke-width="16" stroke-linecap="round"/></svg></div></div>
+      <div class="ill clip " id="i-arrow" data-start="3.290" data-duration="0.570" data-track-index="3"><svg viewBox="0 0 100 140" class="arrow"><path d="M50 5v100M15 75l35 40 35-40" fill="none" stroke="#ffe14d" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="ill clip " id="i-timer" data-start="3.960" data-duration="2.680" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><circle cx="32" cy="36" r="22" fill="none" stroke="#fff" stroke-width="5"/><path d="M32 36V22M26 6h12" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg><div><div class="kicker">TU AS</div><div class="big"><span class="num" id="n3">3</span> <small>SECONDES</small></div></div></div></div>
+      <div class="ill clip " id="i-bubble" data-start="6.640" data-duration="1.630" data-track-index="3"><div class="bubble">Bonjour, je vais parler de…</div><div class="zzz" id="zzz">Z<sup>z</sup><sup><sup>z</sup></sup></div></div>
+      <div class="ill clip " id="i-faux" data-start="8.940" data-duration="1.670" data-track-index="3"><div class="stamp" id="stamp">FAUX</div></div>
+      <div class="ill clip " id="i-method" data-start="10.710" data-duration="1.150" data-track-index="3"><div class="panel row"><svg viewBox="0 0 64 64" class="ico"><path d="M36 4L12 36h18l-4 24 26-34H34z" fill="#ffe14d"/></svg><div class="big">MA MÉTHODE</div></div></div>
+      <div class="ill clip " id="i-result" data-start="11.860" data-duration="1.640" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M18 8h28v14a14 14 0 0 1-28 0zM18 12H8v6a10 10 0 0 0 10 10M46 12h10v6a10 10 0 0 1-10 10M32 36v10M22 56h20M26 46h12v10H26z" fill="none" stroke="#fff" stroke-width="5" stroke-linejoin="round"/></svg><div class="big">LE RÉSULTAT<br><small>D'ABORD</small></div></div></div>
+      <div class="ill clip " id="i-step1" data-start="13.500" data-duration="1.450" data-track-index="3"><div class="steprow"><div class="num-badge">1</div><div class="ba"><div class="half before"><span>AVANT</span><svg viewBox="0 0 100 50"><polyline points="0,40 50,38 100,41" fill="none" stroke="#bbb" stroke-width="6"/></svg></div><div class="half after" id="after"><span>APRÈS</span><svg viewBox="0 0 100 50"><polyline points="0,45 40,32 70,20 100,4" fill="none" stroke="#3ddc84" stroke-width="7" stroke-linecap="round"/></svg></div></div></div></div>
+      <div class="ill clip " id="i-step2" data-start="14.950" data-duration="3.710" data-track-index="3"><div class="steprow"><div class="num-badge">2</div><div class="panel col"><div class="wave" id="wave"><i class="bar " style="height:60px"></i><i class="bar " style="height:110px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:90px"></i><i class="bar " style="height:140px"></i><i class="bar gap" style="height:8px"></i><i class="bar gap" style="height:8px"></i><i class="bar " style="height:100px"></i><i class="bar " style="height:70px"></i><i class="bar " style="height:120px"></i></div><div class="kicker">ZÉRO BLANC</div></div></div><svg viewBox="0 0 64 64" class="scissors" id="sc"><circle cx="16" cy="48" r="9" fill="none" stroke="#fff" stroke-width="5"/><circle cx="16" cy="16" r="9" fill="none" stroke="#fff" stroke-width="5"/><path d="M23 42L58 10M23 22l35 32" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div>
+      <div class="ill clip " id="i-step3" data-start="18.660" data-duration="3.610" data-track-index="3"><div class="steprow"><div class="num-badge">3</div><div class="icons"><div class="eng" id="e-com"><svg viewBox="0 0 64 64" class="ico"><path d="M8 12h48v32H28l-12 10V44H8z" fill="#fff"/></svg><b>+128</b></div><div class="eng" id="e-share"><svg viewBox="0 0 64 64" class="ico"><path d="M6 30L58 8 44 58 32 36z" fill="#fff"/></svg><b>+54</b></div></div></div></div>
+      <div class="ill clip " id="i-secret" data-start="22.270" data-duration="1.900" data-track-index="3"><div class="panel row green"><svg viewBox="0 0 64 64" class="ico"><path d="M12 34l14 14 26-30" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg><div class="chart"><i class="cbar" style="height:30px"></i><i class="cbar" style="height:50px"></i><i class="cbar" style="height:75px"></i><i class="cbar" style="height:105px"></i><i class="cbar" style="height:140px"></i></div></div></div>
+      <div class="ill clip " id="i-cta" data-start="24.170" data-duration="3.130" data-track-index="3"><div class="cta" id="cta"><svg viewBox="0 0 64 64" class="ico plane" id="plane"><path d="M6 30L58 8 44 58 32 36z" fill="#111"/></svg>ENVOIE À UN POTE</div></div>
+      <div id="redflash"></div>
+      <div id="flash"></div>
+      <div class="cap clip" id="g0" data-start="0.000" data-duration="0.730" data-track-index="2"><span class="w" id="w0">TES</span> <span class="w" id="w1">VIDÉOS</span> <span class="w hl-pink" id="w2">INSTAGRAM</span></div>
+      <div class="cap clip" id="g1" data-start="0.730" data-duration="1.230" data-track-index="2"><span class="w" id="w3">FONT</span> <span class="w hl-red" id="w4">200</span> <span class="w hl-red" id="w5">VUES</span></div>
+      <div class="cap clip" id="g2" data-start="1.960" data-duration="1.330" data-track-index="2"><span class="w" id="w6">CE</span> <span class="w" id="w7">N&#x27;EST</span> <span class="w" id="w8">PAS</span> <span class="w hl-red" id="w9">L&#x27;ALGO</span></div>
+      <div class="cap clip" id="g3" data-start="3.290" data-duration="0.570" data-track-index="2"><span class="w" id="w10">C&#x27;EST</span> <span class="w hl-yellow" id="w11">ÇA</span></div>
+      <div class="cap clip" id="g4" data-start="3.860" data-duration="1.670" data-track-index="2"><span class="w" id="w12">SI</span> <span class="w" id="w13">TU</span> <span class="w" id="w14">COMMENCES</span> <span class="w" id="w15">TOUJOURS</span></div>
+      <div class="cap clip" id="g5" data-start="5.530" data-duration="1.110" data-track-index="2"><span class="w" id="w16">TES</span> <span class="w" id="w17">VIDÉOS</span> <span class="w" id="w18">PAR</span></div>
+      <div class="cap clip" id="g6" data-start="6.640" data-duration="1.630" data-track-index="2"><span class="w" id="w19">« BONJOUR,</span> <span class="w" id="w20">JE</span> <span class="w" id="w21">VAIS</span> <span class="w" id="w22">PARLER</span> <span class="w" id="w23">DE… »</span></div>
+      <div class="cap clip" id="g7" data-start="8.270" data-duration="1.180" data-track-index="2"><span class="w" id="w24">NON</span> <span class="w" id="w25">C&#x27;EST</span> <span class="w hl-red" id="w26">FAUX</span></div>
+      <div class="cap clip" id="g8" data-start="9.450" data-duration="1.160" data-track-index="2"><span class="w" id="w27">FAUT</span> <span class="w" id="w28">PAS</span> <span class="w" id="w29">COMMENCER</span> <span class="w" id="w30">PAR</span> <span class="w" id="w31">ÇA</span></div>
+      <div class="cap clip" id="g9" data-start="10.610" data-duration="1.100" data-track-index="2"><span class="w" id="w32">CE</span> <span class="w" id="w33">QUE</span> <span class="w" id="w34">JE</span> <span class="w" id="w35">FAIS</span></div>
+      <div class="cap clip" id="g10" data-start="11.710" data-duration="1.800" data-track-index="2"><span class="w" id="w36">JE</span> <span class="w" id="w37">COMMENCE</span> <span class="w" id="w38">PAR</span> <span class="w" id="w39">LE</span> <span class="w hl-green" id="w40">RÉSULTAT</span></div>
+      <div class="cap clip" id="g11" data-start="13.510" data-duration="1.480" data-track-index="2"><span class="w hl-yellow" id="w41">1.</span> <span class="w hl-yellow" id="w42">AVANT</span> <span class="w hl-yellow" id="w43">/ APRÈS</span></div>
+      <div class="cap clip" id="g12" data-start="14.990" data-duration="1.330" data-track-index="2"><span class="w hl-yellow" id="w44">2.</span> <span class="w" id="w45">JE</span> <span class="w hl-pink" id="w46">COUPE</span></div>
+      <div class="cap clip" id="g13" data-start="16.320" data-duration="0.850" data-track-index="2"><span class="w" id="w47">TOUS</span> <span class="w" id="w48">LES</span> <span class="w hl-pink" id="w49">BLANCS</span></div>
+      <div class="cap clip" id="g14" data-start="17.170" data-duration="0.860" data-track-index="2"><span class="w" id="w50">POUR</span> <span class="w" id="w51">QUE</span> <span class="w" id="w52">LA</span> <span class="w" id="w53">VIDÉO</span></div>
+      <div class="cap clip" id="g15" data-start="18.030" data-duration="0.620" data-track-index="2"><span class="w" id="w54">SOIT</span> <span class="w hl-green" id="w55">FLUIDE</span></div>
+      <div class="cap clip" id="g16" data-start="18.650" data-duration="0.620" data-track-index="2"><span class="w" id="w56">ET</span> <span class="w" id="w57">EN</span> <span class="w hl-yellow" id="w58">3.</span></div>
+      <div class="cap clip" id="g17" data-start="19.270" data-duration="0.940" data-track-index="2"><span class="w" id="w59">J&#x27;INCITE</span> <span class="w" id="w60">LES</span> <span class="w" id="w61">GENS</span></div>
+      <div class="cap clip" id="g18" data-start="20.210" data-duration="0.750" data-track-index="2"><span class="w" id="w62">À</span> <span class="w hl-pink" id="w63">COMMENTER</span></div>
+      <div class="cap clip" id="g19" data-start="20.960" data-duration="0.580" data-track-index="2"><span class="w" id="w64">OU</span> <span class="w" id="w65">À</span> <span class="w hl-pink" id="w66">PARTAGER</span></div>
+      <div class="cap clip" id="g20" data-start="21.540" data-duration="0.730" data-track-index="2"><span class="w" id="w67">LA</span> <span class="w" id="w68">VIDÉO</span></div>
+      <div class="cap clip" id="g21" data-start="22.270" data-duration="0.900" data-track-index="2"><span class="w" id="w69">C&#x27;EST</span> <span class="w" id="w70">CE</span> <span class="w" id="w71">QUI</span> <span class="w hl-green" id="w72">MARCHE</span></div>
+      <div class="cap clip" id="g22" data-start="23.170" data-duration="1.000" data-track-index="2"><span class="w" id="w73">IL</span> <span class="w" id="w74">N&#x27;Y</span> <span class="w" id="w75">A</span> <span class="w" id="w76">PAS</span> <span class="w" id="w77">DE</span> <span class="w hl-yellow" id="w78">SECRET</span></div>
+      <div class="cap clip" id="g23" data-start="24.170" data-duration="0.970" data-track-index="2"><span class="w" id="w79">ENVOIE</span> <span class="w" id="w80">ÇA</span> <span class="w" id="w81">À</span> <span class="w" id="w82">UN</span> <span class="w hl-pink" id="w83">POTE</span></div>
+      <div class="cap clip" id="g24" data-start="25.140" data-duration="2.160" data-track-index="2"><span class="w" id="w84">QUI</span> <span class="w" id="w85">A</span> <span class="w hl-yellow" id="w86">BESOIN</span></div>
+    </div>
+    <audio id="sfx0" class="clip" src="assets/sfx/whoosh.wav" data-start="3.680" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx1" class="clip" src="assets/sfx/whoosh.wav" data-start="8.090" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx2" class="clip" src="assets/sfx/whoosh.wav" data-start="10.430" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx3" class="clip" src="assets/sfx/whoosh.wav" data-start="13.320" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx4" class="clip" src="assets/sfx/whoosh.wav" data-start="14.770" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx5" class="clip" src="assets/sfx/whoosh.wav" data-start="18.480" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx6" class="clip" src="assets/sfx/whoosh.wav" data-start="22.090" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx7" class="clip" src="assets/sfx/whoosh.wav" data-start="23.990" data-duration="0.45" data-volume="0.35" data-track-index="5"></audio>
+    <audio id="sfx8" class="clip" src="assets/sfx/pop.wav" data-start="0.940" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx9" class="clip" src="assets/sfx/pop.wav" data-start="2.520" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx10" class="clip" src="assets/sfx/pop.wav" data-start="6.640" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx11" class="clip" src="assets/sfx/pop.wav" data-start="11.860" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx12" class="clip" src="assets/sfx/pop.wav" data-start="13.810" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx13" class="clip" src="assets/sfx/pop.wav" data-start="14.320" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx14" class="clip" src="assets/sfx/pop.wav" data-start="20.260" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx15" class="clip" src="assets/sfx/pop.wav" data-start="21.030" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx16" class="clip" src="assets/sfx/pop.wav" data-start="22.320" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx17" class="clip" src="assets/sfx/pop.wav" data-start="24.220" data-duration="0.12" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="sfx18" class="clip" src="assets/sfx/buzz.wav" data-start="8.970" data-duration="0.35" data-volume="0.45" data-track-index="7"></audio>
+    <audio id="sfx19" class="clip" src="assets/sfx/impact.wav" data-start="8.970" data-duration="0.45" data-volume="0.5" data-track-index="8"></audio>
+    <audio id="sfx20" class="clip" src="assets/sfx/ding.wav" data-start="13.060" data-duration="0.6" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="sfx21" class="clip" src="assets/sfx/whoosh.wav" data-start="15.870" data-duration="0.45" data-volume="0.3" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#cam", {scale: 1.180, rotation: 1.5}, {scale: 1.000, rotation: 0, duration: 0.32, ease: "expo.out"}, 0.000);
+  tl.to("#cam", {scale: 1.050, duration: 3.540, ease: "none"}, 0.320);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 0.000);
+  tl.fromTo("#cam", {scale: 1.416, rotation: -1.5}, {scale: 1.200, rotation: 0, duration: 0.32, ease: "expo.out"}, 3.860);
+  tl.to("#cam", {scale: 1.260, duration: 4.090, ease: "none"}, 4.180);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 3.860);
+  tl.fromTo("#cam", {scale: 1.180, rotation: 1.5}, {scale: 1.000, rotation: 0, duration: 0.32, ease: "expo.out"}, 8.270);
+  tl.to("#cam", {scale: 1.050, duration: 2.020, ease: "none"}, 8.590);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 8.270);
+  tl.fromTo("#cam", {scale: 1.369, rotation: -1.5}, {scale: 1.160, rotation: 0, duration: 0.32, ease: "expo.out"}, 10.610);
+  tl.to("#cam", {scale: 1.218, duration: 2.570, ease: "none"}, 10.930);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 10.610);
+  tl.fromTo("#cam", {scale: 1.180, rotation: 1.5}, {scale: 1.000, rotation: 0, duration: 0.32, ease: "expo.out"}, 13.500);
+  tl.to("#cam", {scale: 1.050, duration: 1.130, ease: "none"}, 13.820);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 13.500);
+  tl.fromTo("#cam", {scale: 1.440, rotation: -1.5}, {scale: 1.220, rotation: 0, duration: 0.32, ease: "expo.out"}, 14.950);
+  tl.to("#cam", {scale: 1.281, duration: 3.390, ease: "none"}, 15.270);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 14.950);
+  tl.fromTo("#cam", {scale: 1.227, rotation: 1.5}, {scale: 1.040, rotation: 0, duration: 0.32, ease: "expo.out"}, 18.660);
+  tl.to("#cam", {scale: 1.092, duration: 3.290, ease: "none"}, 18.980);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 18.660);
+  tl.fromTo("#cam", {scale: 1.416, rotation: -1.5}, {scale: 1.200, rotation: 0, duration: 0.32, ease: "expo.out"}, 22.270);
+  tl.to("#cam", {scale: 1.260, duration: 1.580, ease: "none"}, 22.590);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 22.270);
+  tl.fromTo("#cam", {scale: 1.180, rotation: 1.5}, {scale: 1.000, rotation: 0, duration: 0.32, ease: "expo.out"}, 24.170);
+  tl.to("#cam", {scale: 1.050, duration: 2.810, ease: "none"}, 24.490);
+  tl.fromTo("#flash", {opacity: 0.9}, {opacity: 0, duration: 0.2, ease: "power2.out"}, 24.170);
+  tl.to("#punch", {scale: 1.07, duration: 0.1, ease: "power2.out"}, 1.980);
+  tl.to("#punch", {scale: 1.0, duration: 0.1, ease: "power2.out"}, 3.240);
+  tl.to("#punch", {scale: 1.07, duration: 0.1, ease: "power2.out"}, 4.400);
+  tl.to("#punch", {scale: 1.0, duration: 0.1, ease: "power2.out"}, 4.800);
+  tl.to("#punch", {scale: 1.07, duration: 0.1, ease: "power2.out"}, 9.520);
+  tl.to("#punch", {scale: 1.0, duration: 0.1, ease: "power2.out"}, 16.300);
+  tl.to("#punch", {scale: 1.07, duration: 0.1, ease: "power2.out"}, 20.300);
+  tl.fromTo("#g0", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 0.000);
+  tl.fromTo("#w0", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 0.000);
+  tl.fromTo("#w1", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 0.000);
+  tl.fromTo("#w2", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 0.200);
+  tl.fromTo("#g1", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 0.730);
+  tl.fromTo("#w3", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 0.730);
+  tl.fromTo("#w4", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 0.990);
+  tl.fromTo("#w5", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 1.440);
+  tl.fromTo("#g2", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 1.960);
+  tl.fromTo("#w6", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 1.960);
+  tl.fromTo("#w7", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 1.990);
+  tl.fromTo("#w8", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 2.520);
+  tl.fromTo("#w9", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 2.710);
+  tl.fromTo("#g3", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 3.290);
+  tl.fromTo("#w10", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 3.290);
+  tl.fromTo("#w11", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 3.540);
+  tl.fromTo("#g4", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 3.860);
+  tl.fromTo("#w12", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 3.860);
+  tl.fromTo("#w13", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 4.315);
+  tl.fromTo("#w14", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 4.730);
+  tl.fromTo("#w15", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 4.930);
+  tl.fromTo("#g5", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 5.530);
+  tl.fromTo("#w16", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 5.530);
+  tl.fromTo("#w17", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 5.800);
+  tl.fromTo("#w18", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 6.330);
+  tl.fromTo("#g6", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 6.640);
+  tl.fromTo("#w19", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 6.640);
+  tl.fromTo("#w20", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 7.340);
+  tl.fromTo("#w21", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 7.580);
+  tl.fromTo("#w22", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 7.680);
+  tl.fromTo("#w23", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 8.020);
+  tl.fromTo("#g7", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 8.270);
+  tl.fromTo("#w24", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 8.270);
+  tl.fromTo("#w25", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 8.610);
+  tl.fromTo("#w26", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 8.970);
+  tl.fromTo("#g8", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 9.450);
+  tl.fromTo("#w27", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 9.450);
+  tl.fromTo("#w28", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 9.640);
+  tl.fromTo("#w29", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 9.730);
+  tl.fromTo("#w30", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 10.250);
+  tl.fromTo("#w31", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 10.520);
+  tl.fromTo("#g9", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 10.610);
+  tl.fromTo("#w32", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 10.610);
+  tl.fromTo("#w33", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 10.870);
+  tl.fromTo("#w34", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 11.060);
+  tl.fromTo("#w35", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 11.180);
+  tl.fromTo("#g10", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 11.710);
+  tl.fromTo("#w36", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 11.710);
+  tl.fromTo("#w37", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 11.910);
+  tl.fromTo("#w38", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 12.480);
+  tl.fromTo("#w39", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 12.730);
+  tl.fromTo("#w40", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 13.010);
+  tl.fromTo("#g11", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 13.510);
+  tl.fromTo("#w41", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 13.510);
+  tl.fromTo("#w42", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 13.810);
+  tl.fromTo("#w43", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 14.320);
+  tl.fromTo("#g12", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 14.990);
+  tl.fromTo("#w44", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 14.990);
+  tl.fromTo("#w45", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 15.760);
+  tl.fromTo("#w46", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 15.820);
+  tl.fromTo("#g13", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 16.320);
+  tl.fromTo("#w47", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 16.320);
+  tl.fromTo("#w48", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 16.490);
+  tl.fromTo("#w49", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 16.710);
+  tl.fromTo("#g14", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 17.170);
+  tl.fromTo("#w50", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 17.170);
+  tl.fromTo("#w51", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 17.420);
+  tl.fromTo("#w52", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 17.610);
+  tl.fromTo("#w53", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 17.720);
+  tl.fromTo("#g15", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 18.030);
+  tl.fromTo("#w54", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 18.030);
+  tl.fromTo("#w55", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 18.280);
+  tl.fromTo("#g16", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 18.650);
+  tl.fromTo("#w56", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 18.650);
+  tl.fromTo("#w57", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 18.690);
+  tl.fromTo("#w58", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 18.870);
+  tl.fromTo("#g17", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 19.270);
+  tl.fromTo("#w59", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 19.270);
+  tl.fromTo("#w60", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 19.770);
+  tl.fromTo("#w61", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 19.960);
+  tl.fromTo("#g18", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 20.210);
+  tl.fromTo("#w62", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 20.210);
+  tl.fromTo("#w63", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 20.260);
+  tl.fromTo("#g19", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 20.960);
+  tl.fromTo("#w64", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 20.960);
+  tl.fromTo("#w65", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 20.970);
+  tl.fromTo("#w66", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 21.030);
+  tl.fromTo("#g20", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 21.540);
+  tl.fromTo("#w67", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 21.540);
+  tl.fromTo("#w68", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 21.670);
+  tl.fromTo("#g21", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 22.270);
+  tl.fromTo("#w69", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 22.270);
+  tl.fromTo("#w70", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 22.530);
+  tl.fromTo("#w71", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 22.600);
+  tl.fromTo("#w72", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 22.750);
+  tl.fromTo("#g22", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 23.170);
+  tl.fromTo("#w73", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.170);
+  tl.fromTo("#w74", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.230);
+  tl.fromTo("#w75", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.360);
+  tl.fromTo("#w76", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.410);
+  tl.fromTo("#w77", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.570);
+  tl.fromTo("#w78", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 23.660);
+  tl.fromTo("#g23", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 24.170);
+  tl.fromTo("#w79", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 24.170);
+  tl.fromTo("#w80", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 24.560);
+  tl.fromTo("#w81", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 24.690);
+  tl.fromTo("#w82", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 24.770);
+  tl.fromTo("#w83", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 24.870);
+  tl.fromTo("#g24", {scale: 0.6, y: 30}, {scale: 1, y: 0, duration: 0.22, ease: "back.out(2.5)"}, 25.140);
+  tl.fromTo("#w84", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 25.140);
+  tl.fromTo("#w85", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 25.340);
+  tl.fromTo("#w86", {y: -16}, {y: 0, duration: 0.2, ease: "back.out(3)"}, 25.470);
+  // vues : le compteur tremble, la courbe s'effondre
+  tl.from("#i-views", {scale: 0.5, opacity: 0, duration: 0.25, ease: "back.out(2)"}, 0.940);
+  tl.fromTo("#sparkline", {strokeDasharray: 1, strokeDashoffset: 1}, {strokeDashoffset: 0, duration: 0.8, ease: "power2.out"}, 1.040);
+  tl.from("#i-algo", {scale: 0.5, opacity: 0, duration: 0.2, ease: "back.out(2)"}, 2.520);
+  tl.from("#i-algo .xmark", {scale: 2.2, opacity: 0, duration: 0.2, ease: "power3.in"}, 2.760);
+  tl.from("#i-arrow", {y: -60, opacity: 0, duration: 0.18}, 3.290);
+  tl.to("#i-arrow", {y: 25, duration: 0.18, yoyo: true, repeat: 3, ease: "sine.inOut"}, 3.490);
+  tl.from("#i-timer", {x: -500, duration: 0.3, ease: "expo.out"}, 3.960);
+  tl.from("#i-bubble .bubble", {scale: 0.3, opacity: 0, transformOrigin: "20% 100%", duration: 0.25, ease: "back.out(2)"}, 6.640);
+  tl.from("#zzz", {y: 40, opacity: 0, duration: 0.5}, 7.630);
+  tl.from("#stamp", {scale: 3, opacity: 0, rotation: -25, duration: 0.18, ease: "power4.in"}, 8.940);
+  tl.fromTo("#punch", {x: -18}, {x: 0, duration: 0.3, ease: "elastic.out(1.2, 0.3)"}, 9.120);
+  tl.fromTo("#redflash", {opacity: 0.55}, {opacity: 0, duration: 0.35, immediateRender: false}, 9.120);
+  tl.from("#i-method", {y: -80, opacity: 0, duration: 0.25, ease: "back.out(2)"}, 10.710);
+  tl.from("#i-result", {scale: 0.4, opacity: 0, duration: 0.25, ease: "back.out(2.5)"}, 11.860);
+  tl.fromTo("#i-result .panel", {scale: 1.15}, {scale: 1, duration: 0.3, ease: "back.out(3)"}, 13.010);
+  tl.from("#i-step1 .num-badge", {scale: 0, duration: 0.2, ease: "back.out(3)"}, 13.550);
+  tl.from("#i-step1 .before", {x: -300, opacity: 0, duration: 0.25, ease: "expo.out"}, 13.810);
+  tl.from("#after", {x: 300, opacity: 0, duration: 0.25, ease: "expo.out"}, 14.320);
+  tl.from("#i-step2 .num-badge", {scale: 0, duration: 0.2, ease: "back.out(3)"}, 15.000);
+  tl.from("#i-step2 .panel", {x: 400, opacity: 0, duration: 0.28, ease: "expo.out"}, 15.050);
+  tl.fromTo("#sc", {x: -420, rotation: -20}, {x: 420, rotation: 10, duration: 0.6, ease: "power2.inOut"}, 15.870);
+  tl.to("#wave .gap", {scaleX: 0, duration: 0.3, ease: "power3.in"}, 16.760);
+  tl.from("#i-step3 .num-badge", {scale: 0, duration: 0.2, ease: "back.out(3)"}, 18.710);
+  tl.from("#e-com", {scale: 0, duration: 0.25, ease: "back.out(3)"}, 20.260);
+  tl.from("#e-share", {scale: 0, duration: 0.25, ease: "back.out(3)"}, 21.030);
+  tl.to(["#e-com", "#e-share"], {y: -12, duration: 0.2, yoyo: true, repeat: 1}, 21.720);
+  tl.from("#i-secret", {scale: 0.4, opacity: 0, duration: 0.25, ease: "back.out(2.5)"}, 22.320);
+  tl.from("#i-secret .cbar", {scaleY: 0, transformOrigin: "50% 100%", stagger: 0.08, duration: 0.3, ease: "back.out(2)"}, 22.420);
+  tl.from("#cta", {y: -200, opacity: 0, duration: 0.3, ease: "back.out(2)"}, 24.220);
+  tl.to("#cta", {scale: 1.08, duration: 0.25, yoyo: true, repeat: 5, ease: "sine.inOut"}, 24.570);
+  tl.fromTo("#plane", {x: 0, y: 0}, {x: 14, y: -10, duration: 0.25, yoyo: true, repeat: 5, ease: "sine.inOut"}, 24.570);
+  tl.set("#n3", {textContent: "3"}, 4.260);
+  tl.fromTo("#n3", {scale: 1.5}, {scale: 1, duration: 0.2}, 4.260);
+  tl.set("#n3", {textContent: "2"}, 5.060);
+  tl.fromTo("#n3", {scale: 1.5}, {scale: 1, duration: 0.2}, 5.060);
+  tl.set("#n3", {textContent: "1"}, 5.860);
+  tl.fromTo("#n3", {scale: 1.5}, {scale: 1, duration: 0.2}, 5.860);
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

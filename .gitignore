@@ -5,3 +5,10 @@ hyperframes/.hyperframes/
 remotion/out/
 .DS_Store
 *.log
+# projets de montage : on versionne scripts et composition, pas les médias lourds
+projets/*/src/
+projets/*/work/
+projets/*/final/
+projets/*/montage/renders/
+projets/*/montage/.hyperframes/
+projets/*/montage/assets/*.mp4
