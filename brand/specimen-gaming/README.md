@@ -1,7 +1,7 @@
 # Charte vidéo — Specimen Gaming (TikTok)
 
 Charte **verrouillée** du compte TikTok gaming. `npm run brand:check` refuse toute couleur non listée
-ici et toute police autre qu'Oxanium dans les vidéos marquées `specimen-gaming`.
+ici et toute police autre que TeX Gyre Heros (Helvetica Neue) dans les vidéos marquées `specimen-gaming`.
 
 ## Couleurs (tirées du logo)
 
@@ -17,18 +17,21 @@ ici et toute police autre qu'Oxanium dans les vidéos marquées `specimen-gaming
 
 Interdit : or, jaune, vert, bleu, rose, ou toute autre teinte.
 
-## Typographie (verrouillée)
+## Typographie (verrouillée, commune aux deux marques)
 
-**Une seule police : Oxanium**, au lettrage carré proche de celui du logo. Le fichier est embarqué dans
-`fonts/Oxanium-Variable.woff2` (graisses 200 à 800, licence SIL OFL : voir `fonts/OFL.txt`) et déclaré sous le nom
-`"Specimen Oxanium"`.
+**Une seule police : Helvetica Neue**, la police du Reel de référence. Elle est payante, on utilise donc son
+équivalent libre **TeX Gyre Heros** (licence GUST, usage commercial autorisé). Les fichiers d'origine sont dans
+`fonts/` (`texgyreheros-regular.otf`, `texgyreheros-bold.otf`, licence `GUST-FONT-LICENSE.txt`). La police est
+déclarée sous le nom `"Specimen Heros"` : le rendu ne dépend ni d'Internet ni des polices installées.
 
 | Usage | Graisse | Style |
 |---|---|---|
-| Sous-titres | 800 | Capitales, contour noir |
-| Titres des cartes | 800 | Capitales |
-| Petits titres (kicker) | 700 | Capitales, lettres espacées 0.14em |
-| Bulles de dialogue | 600 | Casse normale |
+| Sous-titres | 700 | Casse du discours, lettres resserrées (-0.02em) |
+| Grands titres | 700 | Petite ligne en minuscules + très grande ligne en capitales (-0.045em) |
+| Étiquettes de cartes | 700 | Capitales espacées |
+| Textes courants | 400 | — |
+
+Toute autre `font-family` est refusée par `npm run brand:check`.
 
 ## Style gaming
 

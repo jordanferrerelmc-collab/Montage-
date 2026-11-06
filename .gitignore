@@ -12,3 +12,6 @@ projets/*/final/
 projets/*/montage/renders/
 projets/*/montage/.hyperframes/
 projets/*/montage/assets/*.mp4
+projets/*/montage/assets/*.webm
+references/*/*.mov
+references/*/*.mp4

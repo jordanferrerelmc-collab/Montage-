@@ -3,13 +3,19 @@
    Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
    Toute modification ici s'applique à toutes les prochaines vidéos.
    ========================================================================== */
-/* --- Police VERROUILLÉE : Montserrat (fichier embarqué, licence OFL — fonts/OFL.txt) ---
-   Nom de famille propre à la marque : le rendu n'utilise jamais une autre police
-   (ni téléchargement Google Fonts, ni police système de remplacement). */
+/* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+   Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
 @font-face {
-  font-family: "Specimen Montserrat";
-  src: url("assets/brand/fonts/Montserrat-Variable.woff2") format("woff2");
-  font-weight: 100 900;
+  font-family: "Specimen Heros";
+  src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+  font-weight: 100 599;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Specimen Heros";
+  src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+  font-weight: 600 900;
   font-style: normal;
   font-display: block;
 }
@@ -28,7 +34,7 @@
   --taupe: #8a8378;
   --stone: #a59d90;
   --dark: #4a4540;
-  --font: "Specimen Montserrat", sans-serif;
+  --font: "Specimen Heros", sans-serif;
 
   /* alias génériques utilisés par les modèles */
   --accent: var(--gold);

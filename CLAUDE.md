@@ -6,13 +6,25 @@ Chaque montage utilise **exactement une** des deux chartes ci-dessous. Elles ne 
 
 | Marque | Dossier | Quand l'utiliser | Couleurs | Police | Format |
 |---|---|---|---|---|---|
-| **Specimen Agency** | `brand/specimen-agency/` | Par défaut : agence, Instagram, conseils marketing | or, noir profond, ivoire | Montserrat (`"Specimen Montserrat"`) | Reels Instagram |
-| **Specimen Gaming** | `brand/specimen-gaming/` | Vidéos du **compte TikTok gaming** (jeux vidéo, gameplay, gaming, TikTok gaming) | rouge `#da3d39`, anthracite `#2c2d32`, blanc | Oxanium (`"Specimen Oxanium"`) | TikTok (zones de l'interface évitées) |
+| **Specimen Agency** | `brand/specimen-agency/` | Par défaut : agence, Instagram, conseils marketing | or, noir profond, ivoire | Helvetica Neue → TeX Gyre Heros (`"Specimen Heros"`) | Reels Instagram, **style éditorial** |
+| **Specimen Gaming** | `brand/specimen-gaming/` | Vidéos du **compte TikTok gaming** (jeux vidéo, gameplay, gaming, TikTok gaming) | rouge `#da3d39`, anthracite `#2c2d32`, blanc | Helvetica Neue → TeX Gyre Heros (`"Specimen Heros"`) | TikTok (zones de l'interface évitées), **style dynamique** |
 
 **Choix de la marque.** Si l'utilisateur parle de gaming, du compte gaming ou de TikTok gaming, ou si la vidéo
 porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-agency`. En cas de doute réel,
 poser la question avant de monter. La marque se choisit avec `BRAND=<marque>` au moment de la génération ;
 elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateur s'en sert.
+
+**Styles de montage verrouillés** (`montage_style` dans `brand.json`) :
+- **Agency → éditorial** (`templates/reel-editorial/`, exemple : `projets/video1/scripts/build_editorial.py`),
+  d'après le Reel de référence `references/reel-style/` :
+  - sous-titres mot à mot (1 à 3 mots), blancs, TeX Gyre Heros gras, sans contour, ombre douce, à hauteur de poitrine ;
+  - grands titres (petite ligne + très grande ligne en capitales) **derrière la tête** : le sujet est détouré avec
+    `hyperframes remove-background` (`assets/subject.webm`, superposé au-dessus des titres). Ils passent de l'or au blanc ;
+  - cartes flottantes arrondies (noir ou ivoire, liseré or) qui entrent en éventail ; carte de stats (anneau), pastilles d'étape ;
+  - transitions en halo lumineux doux (`#bloom`), zooms lents, micro-sauts discrets sur les coupes ; pas de flash dur ni de tremblement ;
+  - CTA en pilule dorée, écran de fin avec le logo.
+- **Gaming → dynamique** (`templates/reel-vertical/`, exemple : `projets/video1/scripts/build_composition.py`) :
+  flashs et zooms rapides, sous-titres à contour épais, bruitages.
 
 Règles communes :
 - **Source unique** : `brand/<marque>/` (`brand.css`, `brand.json`, `logo.png`, `fonts/`, `README.md`).
@@ -20,8 +32,10 @@ Règles communes :
   et n'utilisent que ses variables (`var(--accent)`, `var(--panel)`, `var(--font)`…). Dans les SVG,
   écrire `style="fill:var(--accent)"`, jamais une couleur en dur. Les alias `--gold`, `--ivory`… existent
   dans les deux chartes pour que les modèles fonctionnent avec l'une comme avec l'autre.
-- **Police unique par marque**, embarquée dans `brand/<marque>/fonts/` et exposée par `var(--font)`.
-  Aucune autre `font-family` (ni Arial, ni Inter, ni Google Fonts).
+- **Police unique, la même pour les deux marques** : Helvetica Neue, remplacée par son équivalent libre
+  TeX Gyre Heros (licence GUST, fichiers d'origine non modifiés dans `brand/<marque>/fonts/`), famille
+  `"Specimen Heros"`, exposée par `var(--font)`. Graisses disponibles : 400 et 700. Aucune autre `font-family`
+  (ni Arial, ni Inter, ni Google Fonts).
 - **Interdit** : toute couleur absente du `brand.json` de la marque. Pas de rouge ni de vert dans Agency ;
   pas d'or ni de jaune dans Gaming.
 - **Obligatoire** sur chaque vidéo : sous-titres blancs à contour noir avec mots clés à la couleur

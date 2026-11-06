@@ -4,24 +4,36 @@
   "tagline": null,
   "logo": "logo.png",
   "fonts": {
-    "family": "Specimen Oxanium",
-    "source": "Oxanium (Google Fonts, OFL)",
-    "file": "fonts/Oxanium-Variable.woff2",
-    "weights": {"sous_titres": 800, "titres_cartes": 800, "textes_marque": "700, capitales, lettres espacées 0.08-0.14em", "bulles": 600},
-    "rules": "Une seule police dans toutes les vidéos gaming : var(--font) (Oxanium, lettrage carré proche du logo). Aucune autre font-family autorisée."
+    "family": "Specimen Heros",
+    "source": "TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST)",
+    "files": [
+      "fonts/texgyreheros-regular.otf",
+      "fonts/texgyreheros-bold.otf"
+    ],
+    "weights": {
+      "regular": 400,
+      "bold": 700
+    },
+    "rules": "Une seule police, identique pour Specimen Agency et Specimen Gaming : var(--font) (Helvetica Neue / TeX Gyre Heros). Aucune autre font-family autorisée."
   },
   "colors": {
-    "red":        "#da3d39",
-    "red_light":  "#ff5a4e",
-    "red_dark":   "#a82a27",
-    "charcoal":   "#2c2d32",
+    "red": "#da3d39",
+    "red_light": "#ff5a4e",
+    "red_dark": "#a82a27",
+    "charcoal": "#2c2d32",
     "charcoal_deep": "#1c1d21",
-    "white":      "#ffffff",
-    "silver":     "#c9cbd1",
-    "flash":      "#ffffff",
+    "white": "#ffffff",
+    "silver": "#c9cbd1",
+    "flash": "#ffffff",
     "pure_black": "#000000"
   },
-  "rgb_allowed": ["0,0,0", "28,29,33", "44,45,50", "218,61,57", "255,255,255"],
+  "rgb_allowed": [
+    "0,0,0",
+    "28,29,33",
+    "44,45,50",
+    "218,61,57",
+    "255,255,255"
+  ],
   "layout": "TikTok : sous-titres remontés (haut 1120 px) et décalés de la colonne d'icônes à droite ; illustrations sous les onglets du haut (haut 230 px).",
   "usage": {
     "captions": "Blanc, contour noir épais ; mots clés en rouge (--red-light pour la lisibilité). Aucune autre couleur.",
@@ -30,5 +42,9 @@
     "transitions": "Flash blanc ; flash d'accent rouge.",
     "end_card": "Fond anthracite, logo horizontal centré, sans slogan."
   },
-  "forbidden": "Or, jaune, vert, bleu, rose ou toute couleur hors de cette liste."
+  "forbidden": "Or, jaune, vert, bleu, rose ou toute couleur hors de cette liste.",
+  "montage_style": {
+    "name": "dynamic",
+    "description": "Style dynamique : sous-titres gras à contour noir, flashs et zooms rapides, illustrations en cartes, bruitages. Modèle : templates/reel-vertical/."
+  }
 }

@@ -102,11 +102,11 @@ npm run transcribe -- ../out/voix.wav --model small --language fr --to srt -o ..
 
 Chaque vidéo utilise l'une des deux chartes, choisie avec `BRAND=<marque>` :
 
-- **Specimen Agency** (`brand/specimen-agency/`, par défaut) : or, noir profond, ivoire, police Montserrat, format Reels.
-- **Specimen Gaming** (`brand/specimen-gaming/`, compte TikTok gaming) : rouge, anthracite, blanc, police Oxanium, mise en page TikTok.
+- **Specimen Agency** (`brand/specimen-agency/`, par défaut) : or, noir profond, ivoire, police Helvetica Neue (TeX Gyre Heros), format Reels, style de montage éditorial.
+- **Specimen Gaming** (`brand/specimen-gaming/`, compte TikTok gaming) : rouge, anthracite, blanc, police Helvetica Neue (TeX Gyre Heros), mise en page TikTok, style de montage dynamique.
 
 ```bash
-npm run brand:check   # refuse toute couleur hors charte et toute police autre que Montserrat
+npm run brand:check   # refuse toute couleur hors charte et toute police autre que TeX Gyre Heros
 ```
 
 ## Options facultatives

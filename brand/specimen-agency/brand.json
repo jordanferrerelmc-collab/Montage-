@@ -3,16 +3,17 @@
   "tagline": "VOTRE IMAGE. NOTRE EXPERTISE.",
   "logo": "logo.png",
   "fonts": {
-    "family": "Specimen Montserrat",
-    "source": "Montserrat (Google Fonts, OFL)",
-    "file": "fonts/Montserrat-Variable.woff2",
+    "family": "Specimen Heros",
+    "source": "TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST)",
+    "files": [
+      "fonts/texgyreheros-regular.otf",
+      "fonts/texgyreheros-bold.otf"
+    ],
     "weights": {
-      "sous_titres": 900,
-      "titres_cartes": 800,
-      "textes_marque": "700-800, capitales, lettres espacées 0.16-0.22em",
-      "bulles": 700
+      "regular": 400,
+      "bold": 700
     },
-    "rules": "Une seule police dans toutes les vidéos : var(--font). Aucune autre font-family autorisée."
+    "rules": "Une seule police, identique pour Specimen Agency et Specimen Gaming : var(--font) (Helvetica Neue / TeX Gyre Heros). Aucune autre font-family autorisée."
   },
   "colors": {
     "gold": "#e3b25c",
@@ -49,5 +50,9 @@
     "transitions": "Flash ivoire (--flash) ; flash d'accent en or, jamais rouge.",
     "end_card": "Fond dégradé or, logo rond centré, slogan noir en capitales espacées sur deux lignes."
   },
-  "forbidden": "Rouge, vert, rose, bleu ou toute couleur hors de cette liste."
+  "forbidden": "Rouge, vert, rose, bleu ou toute couleur hors de cette liste.",
+  "montage_style": {
+    "name": "editorial",
+    "description": "Style éditorial premium (référence : references/reel-style) : sous-titres mot à mot blancs sans contour, grands titres derrière la tête (sujet détouré), cartes flottantes, transitions en halo lumineux, zooms lents. Modèle : templates/reel-editorial/."
+  }
 }

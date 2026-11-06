@@ -3,7 +3,7 @@
 > « Votre image. Notre expertise. »
 
 Cette charte est **verrouillée** : toutes les vidéos du dépôt l'utilisent. `npm run brand:check`
-refuse toute couleur qui n'est pas listée ici, et toute police autre que Montserrat.
+refuse toute couleur qui n'est pas listée ici, et toute police autre que TeX Gyre Heros (Helvetica Neue).
 
 ## Couleurs
 
@@ -21,18 +21,19 @@ refuse toute couleur qui n'est pas listée ici, et toute police autre que Montse
 
 Interdit : rouge, vert, rose, bleu, ou toute autre teinte.
 
-## Typographie (verrouillée)
+## Typographie (verrouillée, commune aux deux marques)
 
-**Une seule police : Montserrat.** Le fichier est embarqué dans `fonts/Montserrat-Variable.woff2`
-(police variable, graisses 100 à 900, licence SIL OFL : voir `fonts/OFL.txt`). Elle est déclarée sous
-le nom `"Specimen Montserrat"` : le rendu ne dépend donc ni d'Internet ni des polices installées.
+**Une seule police : Helvetica Neue**, la police du Reel de référence. Elle est payante, on utilise donc son
+équivalent libre **TeX Gyre Heros** (licence GUST, usage commercial autorisé). Les fichiers d'origine sont dans
+`fonts/` (`texgyreheros-regular.otf`, `texgyreheros-bold.otf`, licence `GUST-FONT-LICENSE.txt`). La police est
+déclarée sous le nom `"Specimen Heros"` : le rendu ne dépend ni d'Internet ni des polices installées.
 
 | Usage | Graisse | Style |
 |---|---|---|
-| Sous-titres | 900 | Capitales, contour noir |
-| Titres des cartes | 800 | Capitales, lettres espacées 0.03em |
-| Textes de marque (slogan, kicker) | 700-800 | Capitales, lettres espacées 0.16-0.22em |
-| Bulles de dialogue | 700 | Casse normale |
+| Sous-titres | 700 | Casse du discours, lettres resserrées (-0.02em) |
+| Grands titres | 700 | Petite ligne en minuscules + très grande ligne en capitales (-0.045em) |
+| Étiquettes de cartes | 700 | Capitales espacées |
+| Textes courants | 400 | — |
 
 Toute autre `font-family` est refusée par `npm run brand:check`.
 

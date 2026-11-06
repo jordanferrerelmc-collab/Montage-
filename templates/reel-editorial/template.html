@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="{{BRAND}}" />
+    <meta name="montage-style" content="editorial" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+{{BRAND_CSS}}
+
+      /* ---- style de montage « éditorial » (réf. references/reel-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+
+      /* caméra : fond vidéo, titres « derrière le sujet », sujet détouré par-dessus */
+      #cam, #punch { position: absolute; inset: 0; transform-origin: 50% 34%; }
+      #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* titres derrière la tête : petite ligne + très grande ligne */
+      .behind { position: absolute; left: 0; top: var(--title-top, 300px); width: 1080px; padding: 60px 0; text-align: center; color: var(--ink);
+        text-shadow: 0 4px 22px rgba(0, 0, 0, 0.45);
+        background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%); }
+      .behind .small { display: block; margin-bottom: 18px; font-weight: 700; font-size: 66px; letter-spacing: -0.03em; line-height: 1; }
+      .behind .huge { display: block; font-weight: 700; letter-spacing: -0.045em; line-height: 0.86; text-transform: uppercase; }
+
+      /* flou très léger pour masquer d'éventuels sous-titres incrustés dans la source (option) */
+      #soften { position: absolute; left: 0; top: 1110px; width: 1080px; height: 520px; display: {{SOFTEN}};
+        backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 25%, #000000 75%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000000 25%, #000000 75%, transparent 100%); }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      .cap { position: absolute; left: 90px; top: 1085px; width: 900px; height: 110px; display: flex;
+        align-items: center; justify-content: center; font-weight: 700; font-size: 66px; letter-spacing: -0.02em;
+        color: var(--ink); text-shadow: 0 3px 16px rgba(0, 0, 0, 0.55); }
+      .cap.key { font-size: 76px; }
+
+      /* cartes flottantes */
+      .deck { position: absolute; left: 0; top: 1240px; width: 1080px; height: 440px; }
+      .card { position: absolute; border-radius: 34px; overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+        border: 3px solid var(--accent); background: var(--panel); color: var(--ink); display: flex; flex-direction: column;
+        justify-content: space-between; padding: 30px; }
+      .card.light { background: var(--ivory); color: var(--black); }
+      .card.light .label { color: var(--black); }
+      .card .label { font-weight: 700; font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+      .card .value { font-weight: 700; font-size: 92px; letter-spacing: -0.03em; line-height: 0.95; }
+      .card .text { font-weight: 700; font-size: 46px; letter-spacing: -0.02em; line-height: 1.1; }
+      .card svg { width: 100%; }
+      .ring { width: 210px; height: 210px; align-self: center; }
+      .bars { display: flex; align-items: center; justify-content: center; height: 160px; }
+      .bars i { display: block; width: 26px; margin: 0 5px; border-radius: 8px; background: var(--accent); transform-origin: 50% 50%; }
+      .bars i.gap { background: var(--taupe); }
+      .pill { position: absolute; left: 50%; top: 1460px; transform: translateX(-50%); display: flex; align-items: center; gap: 22px;
+        white-space: nowrap; padding: 30px 52px; border-radius: 999px; background: var(--gold-grad); color: var(--black);
+        font-weight: 700; font-size: 54px; letter-spacing: -0.02em; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .pill svg { width: 66px; height: 66px; }
+
+      /* transitions douces : halo lumineux */
+      #bloom { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DUR}}" data-width="1080" data-height="1920">
+      <div id="cam"><div id="punch">
+        <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="{{DUR}}" data-has-audio="true" data-volume="1" data-track-index="0"></video>
+        {{BEHIND}}
+        <video id="clip-subject" class="clip" src="assets/subject.webm" data-start="0" data-duration="{{SUBJECT_DUR}}" muted data-track-index="1"></video>
+      </div></div>
+      <div id="soften"></div>
+      {{CARDS}}
+      {{CAPTIONS}}
+      <div id="bloom"></div>
+      {{ENDCARD}}
+    </div>
+    {{SFX}}
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+{{JS}}
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
