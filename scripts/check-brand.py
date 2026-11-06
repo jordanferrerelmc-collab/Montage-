@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Verrou de charte : refuse toute couleur absente de brand/<marque>/brand.json.
+"""Verrou de charte : refuse toute couleur absente de brand/<marque>/brand.json
+et toute police autre que celle de la marque (var(--font)).
 
 Analyse les compositions des projets vidéo (projets/*/montage/index.html), le modèle
 templates/ et la charte elle-même. Codes de sortie : 0 = conforme, 1 = couleur hors charte.
@@ -51,10 +52,18 @@ for f in files:
     for css in re.findall(r"(?:color|background|fill|stroke|border)[^;{}]*:[^;{}]*", zone):
         for n in NAMED.findall(css):
             issues.add(n)
+    # police verrouillée : seule var(--font) (ou la famille de la marque) est autorisée
+    family = spec["fonts"]["family"]
+    for ff in re.findall(r"font-family\s*:\s*([^;}\"]+(?:\"[^\"]*\"[^;}]*)?)", zone):
+        val = ff.strip()
+        if val not in ("var(--font)", "inherit") and not val.startswith(f'"{family}"'):
+            issues.add("police " + val)
+    if f.endswith("index.html") and family not in txt:
+        issues.add("police de marque absente (brand.css non injecté ?)")
     rel = os.path.relpath(f, ROOT)
     if issues:
         bad += 1
-        print(f"✗ {rel} : couleurs hors charte {sorted(issues)}")
+        print(f"✗ {rel} : hors charte {sorted(issues)}")
     else:
         print(f"✓ {rel}")
 if bad:

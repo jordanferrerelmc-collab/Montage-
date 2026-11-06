@@ -3,26 +3,45 @@
   "tagline": "VOTRE IMAGE. NOTRE EXPERTISE.",
   "logo": "logo.png",
   "fonts": {
-    "main": "Montserrat",
-    "fallback": "Inter, sans-serif",
-    "rules": "Titres et sous-titres en Montserrat 800-900 ; textes de marque en capitales avec lettres espacées (0.16-0.22em)."
+    "family": "Specimen Montserrat",
+    "source": "Montserrat (Google Fonts, OFL)",
+    "file": "fonts/Montserrat-Variable.woff2",
+    "weights": {
+      "sous_titres": 900,
+      "titres_cartes": 800,
+      "textes_marque": "700-800, capitales, lettres espacées 0.16-0.22em",
+      "bulles": 700
+    },
+    "rules": "Une seule police dans toutes les vidéos : var(--font). Aucune autre font-family autorisée."
   },
   "colors": {
-    "gold":       "#e3b25c",
+    "gold": "#e3b25c",
     "gold_light": "#f2d58e",
-    "gold_deep":  "#b8863b",
-    "gold_gradient_stops": ["#f0cd7c", "#e1b667", "#c79c4d", "#bd8e3e"],
-    "black":      "#0b0b0d",
-    "ivory":      "#f7f1e3",
-    "white":      "#ffffff",
-    "flash":      "#fff8e8",
+    "gold_deep": "#b8863b",
+    "gold_gradient_stops": [
+      "#f0cd7c",
+      "#e1b667",
+      "#c79c4d",
+      "#bd8e3e"
+    ],
+    "black": "#0b0b0d",
+    "ivory": "#f7f1e3",
+    "white": "#ffffff",
+    "flash": "#fff8e8",
     "neutral_taupe": "#8a8378",
     "neutral_stone": "#a59d90",
-    "neutral_dark":  "#4a4540",
+    "neutral_dark": "#4a4540",
     "pure_black": "#000000",
-    "ink_black":  "#111111"
+    "ink_black": "#111111"
   },
-  "rgb_allowed": ["0,0,0", "11,11,13", "40,38,35", "227,178,92", "80,50,10", "255,255,255"],
+  "rgb_allowed": [
+    "0,0,0",
+    "11,11,13",
+    "40,38,35",
+    "227,178,92",
+    "80,50,10",
+    "255,255,255"
+  ],
   "usage": {
     "captions": "Blanc, contour noir épais ; mots clés en or (--gold), mot secondaire en or clair (--gold-light). Aucune autre couleur.",
     "cards": "Fond noir translucide (--panel) avec liseré or, textes ivoire, icônes et graphiques or.",

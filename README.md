@@ -104,7 +104,7 @@ Toutes les vidéos utilisent la charte **Specimen Agency** : or, noir profond et
 Montserrat, écran de fin avec logo. Source unique : `brand/specimen-agency/` (voir son README).
 
 ```bash
-npm run brand:check   # refuse toute couleur hors charte dans les compositions
+npm run brand:check   # refuse toute couleur hors charte et toute police autre que Montserrat
 ```
 
 ## Options facultatives

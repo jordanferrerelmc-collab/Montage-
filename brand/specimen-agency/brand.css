@@ -3,6 +3,17 @@
    Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
    Toute modification ici s'applique à toutes les prochaines vidéos.
    ========================================================================== */
+/* --- Police VERROUILLÉE : Montserrat (fichier embarqué, licence OFL — fonts/OFL.txt) ---
+   Nom de famille propre à la marque : le rendu n'utilise jamais une autre police
+   (ni téléchargement Google Fonts, ni police système de remplacement). */
+@font-face {
+  font-family: "Specimen Montserrat";
+  src: url("assets/brand/fonts/Montserrat-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+}
+
 :root {
   --gold: #e3b25c;
   --gold-light: #f2d58e;
@@ -17,7 +28,7 @@
   --taupe: #8a8378;
   --stone: #a59d90;
   --dark: #4a4540;
-  --font: "Montserrat", "Inter", sans-serif;
+  --font: "Specimen Montserrat", sans-serif;
 }
 
 /* --- Sous-titres ---------------------------------------------------------- */

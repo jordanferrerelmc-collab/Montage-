@@ -3,7 +3,7 @@
 > « Votre image. Notre expertise. »
 
 Cette charte est **verrouillée** : toutes les vidéos du dépôt l'utilisent. `npm run brand:check`
-refuse toute couleur qui n'est pas listée ici.
+refuse toute couleur qui n'est pas listée ici, et toute police autre que Montserrat.
 
 ## Couleurs
 
@@ -21,10 +21,20 @@ refuse toute couleur qui n'est pas listée ici.
 
 Interdit : rouge, vert, rose, bleu, ou toute autre teinte.
 
-## Typographie
+## Typographie (verrouillée)
 
-Montserrat (repli : Inter). Sous-titres en 900 et en capitales. Titres de cartes en 800.
-Textes de marque (slogan, kicker) en capitales avec lettres espacées (0.16 à 0.22em).
+**Une seule police : Montserrat.** Le fichier est embarqué dans `fonts/Montserrat-Variable.woff2`
+(police variable, graisses 100 à 900, licence SIL OFL : voir `fonts/OFL.txt`). Elle est déclarée sous
+le nom `"Specimen Montserrat"` : le rendu ne dépend donc ni d'Internet ni des polices installées.
+
+| Usage | Graisse | Style |
+|---|---|---|
+| Sous-titres | 900 | Capitales, contour noir |
+| Titres des cartes | 800 | Capitales, lettres espacées 0.03em |
+| Textes de marque (slogan, kicker) | 700-800 | Capitales, lettres espacées 0.16-0.22em |
+| Bulles de dialogue | 700 | Casse normale |
+
+Toute autre `font-family` est refusée par `npm run brand:check`.
 
 ## Composants
 
@@ -40,4 +50,5 @@ Textes de marque (slogan, kicker) en capitales avec lettres espacées (0.16 à 0
 
 - `brand.css` : variables et composants, injectés dans chaque composition.
 - `brand.json` : palette autorisée (utilisée par le vérificateur), slogan, règles d'usage.
+- `fonts/` : police Montserrat embarquée et sa licence.
 - `logo.png` : logo rond détouré. `logo_full.jpg` : visuel d'origine.
