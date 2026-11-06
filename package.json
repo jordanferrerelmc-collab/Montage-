@@ -1,0 +1,18 @@
+{
+  "name": "montage",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Atelier vidéo : HyperFrames (HTML → vidéo), Remotion (React → vidéo) et FFmpeg (montage / encodage).",
+  "workspaces": ["hyperframes", "remotion"],
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "doctor": "bash scripts/doctor.sh",
+    "verify": "bash scripts/verify.sh",
+    "hf:dev": "npm run dev -w montage-hyperframes",
+    "hf:check": "npm run check -w montage-hyperframes",
+    "hf:render": "npm run render -w montage-hyperframes",
+    "remotion:dev": "npm run dev -w montage-remotion",
+    "remotion:render": "bash scripts/with-browser.sh npm run render -w montage-remotion",
+    "montage": "bash scripts/montage.sh"
+  }
+}
