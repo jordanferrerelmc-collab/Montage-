@@ -62,3 +62,17 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
 8. Livrer à l'utilisateur deux fichiers : une version légère (CRF 23, environ 10 Mo) et une version HD.
 
 Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionnés.
+
+## Voix clonée de l'utilisateur (montages sans visage)
+
+- Voix de référence : `voix/voix_reference.wav`, échantillon propre de 27 s tiré de `projets/video1`.
+  **Ne la versionner que si le dépôt GitHub est privé** : vérifier la visibilité avec `list_repos` avant
+  tout commit. Tant que le dépôt est public, `voix/` est exclu par `.gitignore`.
+- Moteur : Chatterbox Multilingual, en local (licence MIT, français). Installation : `npm run voix:install`
+  (≈ 3 Go, quelques minutes, à faire au début d'une session qui en a besoin).
+- Génération : `npm run voix -- "Texte." -o out/voix.wav` (ou `--fichier texte.txt`, `--expressivite 0.3-0.8`).
+  Compter environ 25 s de calcul par phrase sur CPU.
+- Toujours relire la sortie avec `hyperframes transcribe` : le modèle peut déformer un mot
+  (ex. « vues » → « jus »). Reformuler la phrase et régénérer si besoin.
+- Montage sans visage : voix off + style de la marque (cartes, titres, B-roll fournis par l'utilisateur,
+  fond de marque), sans la vidéo de la personne.

@@ -40,6 +40,7 @@ for s in sentences:
         chunks.append(s[:cut + 1].strip()); s = s[cut + 1:].strip()
     chunks.append(s)
 
+os.environ.setdefault("HF_HUB_DISABLE_XET", "1")  # protocole Xet de Hugging Face bloqué par le réseau
 import torch, torchaudio
 from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 

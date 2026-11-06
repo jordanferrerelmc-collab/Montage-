@@ -22,6 +22,8 @@
     "remotion:render": "bash scripts/with-browser.sh npm run render -w montage-remotion",
     "montage": "bash scripts/montage.sh",
     "tts": "bash -c 'cd hyperframes && npx hyperframes tts \"$@\"' --",
-    "transcribe": "bash -c 'cd hyperframes && npx hyperframes transcribe \"$@\"' --"
+    "transcribe": "bash -c 'cd hyperframes && npx hyperframes transcribe \"$@\"' --",
+    "voix:install": "bash scripts/install-voice.sh",
+    "voix": "/root/.venvs/voice/bin/python scripts/voix.py"
   }
 }
