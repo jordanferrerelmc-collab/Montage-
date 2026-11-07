@@ -150,25 +150,14 @@ pop("#s-c1a .num-badge", c0 + 0.05, fr="scale: 0, rotation: -40", ease="back.out
 tabs = "".join(f'<div class="tab" id="tab-{n}" style="padding:16px 26px; font-weight:700; font-size:38px; letter-spacing:0.06em; '
                f'color:var(--silver); border-bottom:6px solid transparent">{n}</div>' for n in ("VIDÉO", "AUDIO", "JEU", "COMMANDES"))
 scene("s-c1b", t_va - 0.05, t_pourras - 0.05,
-      '<div class="center panel" id="menu" style="top:450px; width:940px; padding:40px; align-items:stretch; gap:30px">'
-      '<div style="font-weight:700; font-size:56px; letter-spacing:0.04em">⚙ PARAMÈTRES</div>'
-      f'<div style="display:flex; gap:6px; border-bottom:3px solid var(--charcoal)">{tabs}</div>'
-      '<div id="row" style="display:flex; align-items:center; justify-content:space-between; padding:26px 28px; background:var(--charcoal); border-radius:12px">'
-      '<div style="font-weight:700; font-size:44px; line-height:1.1">Visualisation<br/>des bruitages</div>'
-      '<div id="toggle" style="width:170px; height:86px; border-radius:50px; background:var(--dark); border:4px solid var(--silver); position:relative">'
-      '<div id="knob" style="position:absolute; left:6px; top:6px; width:66px; height:66px; border-radius:50%; background:var(--silver)"></div></div></div>'
-      '<div style="font-size:34px; color:var(--silver)">Paramètres › Audio › Visualisation des bruitages</div></div>')
-pop("#menu", t_va - 0.05, fr="y: 300, opacity: 0", ease="expo.out", d=0.4, snd=False)
-js.append(f'  tl.to("#tab-AUDIO", {{color: "var(--ink)", borderBottomColor: "var(--red)", duration: 0.12}}, {t_audio:.3f});')
+      '<div class="center" id="crumb" style="top:40px; white-space:nowrap"><span class="tag" style="font-size:36px">Paramètres › Audio › Bruitages</span></div>')
+pop("#crumb", t_va - 0.05, fr="y: -80, opacity: 0", ease="back.out(2)", snd=False)
 sfx("click", t_audio, 0.5, 0.1)
-js.append(f'  tl.to("#knob", {{x: 84, backgroundColor: "var(--ink)", duration: 0.2, ease: "back.out(2)"}}, {t_active:.3f});')
-js.append(f'  tl.to("#toggle", {{backgroundColor: "var(--red)", borderColor: "var(--ink)", duration: 0.2}}, {t_active:.3f});')
-js.append(f'  tl.fromTo("#row", {{scale: 1}}, {{scale: 1.05, duration: 0.15, yoyo: true, repeat: 1, immediateRender: false}}, {t_active:.3f});')
 sfx("click", t_active, 0.5, 0.1); sfx("check", t_active + 0.05, 0.3, 0.4)
 
 STEP = '<svg viewBox="0 0 40 60" style="width:56px"><ellipse cx="20" cy="20" rx="14" ry="18" style="fill:var(--ink)"/><ellipse cx="20" cy="49" rx="10" ry="10" style="fill:var(--ink)"/></svg>'
 scene("s-c1c", t_pourras - 0.05, c1e + 0.1,
-      '<div class="center" id="radar" style="top:450px; width:720px; height:720px">'
+      '<div style="position:absolute; left:660px; top:0px; transform:scale(0.52); transform-origin:0 0"><div id="radar" style="position:relative; width:720px; height:720px; border-radius:50%; background:var(--panel); border:6px solid var(--red)">'
       '<svg viewBox="0 0 200 200" style="position:absolute; inset:0; width:720px">'
       '<circle cx="100" cy="100" r="92" fill="none" style="stroke:var(--silver)" stroke-width="2" opacity="0.5"/>'
       '<circle cx="100" cy="100" r="60" fill="none" style="stroke:var(--silver)" stroke-width="2" opacity="0.35"/>'
@@ -176,7 +165,7 @@ scene("s-c1c", t_pourras - 0.05, c1e + 0.1,
       '<circle cx="100" cy="100" r="9" style="fill:var(--ink)"/></svg>'
       f'<div id="st1" style="position:absolute; left:470px; top:120px; transform:rotate(30deg)">{STEP}</div>'
       f'<div id="st2" style="position:absolute; left:540px; top:200px; transform:rotate(40deg)">{STEP}</div>'
-      f'<div id="st3" style="position:absolute; left:595px; top:290px; transform:rotate(55deg)">{STEP}</div></div>'
+      f'<div id="st3" style="position:absolute; left:595px; top:290px; transform:rotate(55deg)">{STEP}</div></div></div>'
       '<div class="center" id="antic" style="top:820px; white-space:nowrap"><span class="tag" style="font-size:46px">Anticipe l\'ennemi</span></div>')
 pop("#radar", t_pourras - 0.05, fr="scale: 0.5, opacity: 0", ease="expo.out", d=0.4, snd=False)
 for k in (1, 2, 3):
@@ -192,13 +181,13 @@ t_sortir = T("sortir", t_alors); t_tirer = T("tirer", t_sortir); t_couvert = T("
 scene("s-c2a", c2s, t_sur - 0.05, badge(2, 'UTILISE<br/><span class="acc">LES ANGLES</span>'), big=True)
 pop("#s-c2a .num-badge", c2s + 0.05, fr="scale: 0, rotation: -40", ease="back.out(2.5)")
 scene("s-c2b", t_sur - 0.05, t_alors - 0.05,
-      '<div class="center" style="top:430px; width:760px; height:620px">'
+      '<div class="panel" style="position:absolute; left:560px; top:0px; width:480px; padding:16px"><div style="width:760px; transform:scale(0.58); transform-origin:0 0; height:370px">'
       '<svg viewBox="0 0 200 160" style="width:760px">'
       '<path id="cone" d="M118 112 L60 10 L196 10 Z" style="fill:var(--red)" opacity="0.28"/>'
       '<path d="M118 112 L60 10 M118 112 L196 10" style="stroke:var(--red)" stroke-width="2" stroke-dasharray="5 4"/>'
       '<circle cx="100" cy="120" r="14" style="fill:var(--ink)"/>'
       '<g id="cam"><rect x="108" y="132" width="26" height="18" rx="3" style="fill:var(--red)"/><path d="M134 136 l10 -5 v20 l-10 -5z" style="fill:var(--red)"/></g>'
-      '<path d="M100 120 L121 141" style="stroke:var(--silver)" stroke-width="2" stroke-dasharray="3 3"/></svg></div>'
+      '<path d="M100 120 L121 141" style="stroke:var(--silver)" stroke-width="2" stroke-dasharray="3 3"/></svg></div></div>'
       '<div class="center" style="top:770px; width:1000px"><div class="h2 stroke" style="font-size:62px">CAMÉRA DÉCALÉE <span class="acc">À DROITE →</span></div></div>')
 pop("#s-c2b svg", t_sur - 0.05, fr="scale: 0.6, opacity: 0", ease="expo.out", d=0.4, snd=False)
 pop("#cam", T("camera", t_sur) - 0.05, fr="x: -60, opacity: 0", ease="back.out(2)")
@@ -207,21 +196,10 @@ js.append(f'  tl.from("#cone", {{opacity: 0, duration: 0.3}}, {t_droite - 0.1:.3
 labels = "".join(f'<span class="tag" id="lb{i}" style="background:var(--dark); font-size:40px">{t}</span>'
                  for i, t in enumerate(["SORS", "TIRE", "COUVRE-TOI"]))
 scene("s-c2c", t_alors - 0.05, t_evite - 0.05,
-      '<div class="center" style="top:420px; width:800px; height:560px">'
-      '<svg viewBox="0 0 200 140" style="width:800px">'
-      '<rect x="70" y="10" width="24" height="120" rx="3" style="fill:var(--silver)"/>'
-      '<circle id="foe" cx="180" cy="40" r="11" style="fill:var(--red)"/>'
-      '<g id="me"><circle cx="56" cy="74" r="12" style="fill:var(--ink)"/></g>'
-      '<path id="shot" d="M120 70 L170 44" style="stroke:var(--red)" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></div>'
-      f'<div class="center" style="top:770px; display:flex; gap:22px">{labels}</div>')
-pop("#s-c2c svg", t_alors - 0.05, fr="y: 200, opacity: 0", ease="expo.out", d=0.4, snd=False)
-js.append(f'  tl.to("#me", {{x: 210, duration: 0.25, ease: "power3.out"}}, {t_sortir:.3f});')
+      f'<div class="center" style="top:60px; display:flex; gap:22px">{labels}</div>')
 js.append(f'  tl.to("#lb0", {{backgroundColor: "var(--red)", duration: 0.1}}, {t_sortir:.3f});')
-js.append(f'  tl.fromTo("#shot", {{opacity: 1}}, {{opacity: 0, duration: 0.25, repeat: 1, immediateRender: false}}, {t_tirer:.3f});')
 js.append(f'  tl.to("#lb1", {{backgroundColor: "var(--red)", duration: 0.1}}, {t_tirer:.3f});')
-js.append(f'  tl.fromTo("#foe", {{scale: 1}}, {{scale: 0.7, duration: 0.1, yoyo: true, repeat: 1, transformOrigin: "50% 50%", immediateRender: false}}, {t_tirer + 0.05:.3f});')
 sfx("shot", t_tirer, 0.5, 0.5)
-js.append(f'  tl.to("#me", {{x: 0, duration: 0.25, ease: "power3.out"}}, {t_couvert - 0.1:.3f});')
 js.append(f'  tl.to("#lb2", {{backgroundColor: "var(--red)", duration: 0.1}}, {t_couvert - 0.1:.3f});')
 
 scene("s-c2d", t_evite - 0.05, c2e + 0.1,
@@ -241,17 +219,15 @@ t_attaque = T("attaque", t_change); t_bon = T("bon", t_attaque); t_prendre = T("
 scene("s-c3a", c3s, t_mets - 0.05, badge(3, 'NE FORCE PAS<br/><span class="acc">LE KILL</span>'), big=True)
 pop("#s-c3a .num-badge", c3s + 0.05, fr="scale: 0, rotation: -40", ease="back.out(2.5)")
 steps = ["GROS TIR<br/>AU POMPE", "PROTÈGE-<br/>TOI", "CHANGE<br/>D'ANGLE", "ATTAQUE<br/>À NOUVEAU"]
-grid = "".join(f'<div class="panel" id="cy{i}" style="width:430px; height:250px; justify-content:center; padding:20px">'
-               f'<div style="font-weight:700; font-size:30px; color:var(--ink); letter-spacing:0.1em">ÉTAPE {i + 1}</div>'
-               f'<div class="h2" style="font-size:58px">{s}</div></div>' for i, s in enumerate(steps))
+grid = "".join(f'<div class="panel" id="cy{i}" style="width:240px; height:170px; justify-content:center; padding:10px; box-shadow:none">'
+               f'<div style="font-weight:700; font-size:22px; color:var(--ink); letter-spacing:0.1em">ÉTAPE {i + 1}</div>'
+               f'<div class="h2" style="font-size:34px">{s}</div></div>' for i, s in enumerate(steps))
 scene("s-c3b", t_mets - 0.05, t_bon - 0.05,
-      f'<div class="center" style="top:480px; display:grid; grid-template-columns:430px 430px; gap:40px">{grid}</div>'
-      '<div class="center h1" id="loop" style="top:480px; font-size:120px; color:var(--ink)">↻</div>')
+      f'<div class="center" style="top:110px; display:flex; gap:16px">{grid}</div>')
 for i, t in enumerate([t_mets, t_protege, t_change, t_attaque]):
     pop(f"#cy{i}", t - 0.08, fr="scale: 0.5, opacity: 0", ease="back.out(2)")
     js.append(f'  tl.to("#cy{i}", {{backgroundColor: "var(--red)", borderColor: "var(--ink)", duration: 0.12}}, {t - 0.02 if i else t_pompe:.3f});')
 sfx("shot", t_pompe, 0.55, 0.5)
-pop("#loop", t_attaque + 0.2, fr="rotation: -180, opacity: 0", ease="back.out(2)", snd=False)
 
 bar = lambda bid, label, col: (f'<div style="display:flex; flex-direction:column; gap:14px; width:860px">'
                                f'<div style="font-weight:700; font-size:40px; letter-spacing:0.08em">{label}</div>'
@@ -260,7 +236,7 @@ bar = lambda bid, label, col: (f'<div style="display:flex; flex-direction:column
 scene("s-c3c", t_bon - 0.05, c3e + 0.1,
       '<div class="center" style="top:430px; display:flex; flex-direction:column; gap:50px">'
       + bar("hp-foe", "ADVERSAIRE", "var(--red)") + bar("hp-me", "TOI", "var(--ink)") + '</div>'
-      '<div class="center" id="nodmg" style="top:720px; white-space:nowrap"><span class="tag" style="font-size:44px">Dégâts reçus : 0</span></div>')
+      '<div class="center" id="nodmg" style="top:720px; white-space:nowrap"><span class="tag" style="font-size:36px">Dégâts reçus : 0</span></div>')
 pop("#s-c3c .center", t_bon - 0.05, fr="y: 200, opacity: 0", ease="expo.out", d=0.4, snd=False)
 js.append(f'  tl.to("#hp-foe", {{scaleX: 0.35, duration: 0.5, ease: "power3.out"}}, {T("degats", t_bon):.3f});')
 sfx("impact", T("degats", t_bon), 0.35, 0.45)
@@ -290,7 +266,7 @@ pop("#op2", t_zero - 0.1, fr="x: 400, opacity: 0", ease="expo.out")
 pop("#cmt", t_zero + 0.6, fr="y: 60, opacity: 0", ease="back.out(2)")
 scene("s-o3", t_abonne - 0.05, VOICE_END + 0.35,
       '<div class="center" style="top:470px; display:flex; flex-direction:column; align-items:center; gap:50px">'
-      '<div class="cta" id="sub" style="font-size:88px; padding:46px 90px">+ ABONNE-TOI</div>'
+      '<div class="cta" id="sub" style="font-size:76px; padding:40px 80px; white-space:nowrap">+ ABONNE-TOI</div>'
       '<div class="h2" style="font-size:64px; letter-spacing:0.04em">SPECIMEN <span class="acc">GAMING</span></div></div>', big=True)
 pop("#sub", t_abonne, fr="scale: 0.3, opacity: 0", ease="back.out(2.5)")
 js.append(f'  tl.to("#sub", {{scale: 0.92, duration: 0.1, yoyo: true, repeat: 1}}, {t_abonne + 0.9:.3f});')
@@ -330,6 +306,66 @@ js.append(f'  tl.fromTo("#flash", {{opacity: 0.9}}, {{opacity: 0, duration: 0.3,
 js.append(f'  tl.from("#logo", {{scale: 0.6, opacity: 0, duration: 0.5, ease: "back.out(1.8)"}}, {VOICE_END + 0.4:.3f});')
 sfx("impact", VOICE_END + 0.35, 0.45, 0.45)
 
+# ------------------------------------------------------------------ images du jeu (captures de l'utilisateur)
+# (début, fin, clip, entrée source, sortie source, mode, voile sombre)
+# mode « full » : plein écran vertical recadré sur le personnage ; « card » : capture entière en carte sur fond flouté
+SRC = f"{ROOT}/src"
+BROLL = [
+    (h0, t_voici - 0.05, "clip3.mov", 0.3, 4.6, "full", 0.45),
+    (t_voici - 0.05, h1 + 0.1, "clip2.mp4", 0.0, 3.6, "full", 0.6),
+    (h1 + 0.1, t_va - 0.05, "clip4.mov", 0.0, 3.4, "full", 0.62),
+    (t_va - 0.05, t_pourras - 0.05, "clip1.mp4", 3.0, 8.8, "menu", 0.0),
+    (t_pourras - 0.05, c1e + 0.1, "clip2.mp4", 0.0, 5.8, "full", 0.3),
+    (c1e + 0.1, t_sur - 0.05, "clip4.mov", 7.0, 9.4, "full", 0.62),
+    (t_sur - 0.05, t_alors - 0.05, "clip3.mov", 0.0, 2.6, "full", 0.25),
+    (t_alors - 0.05, t_evite - 0.05, "clip3.mov", 2.4, 5.6, "full", 0.1),
+    (t_evite - 0.05, c2e + 0.1, "clip2.mp4", 2.4, 5.8, "full", 0.5),
+    (c2e + 0.1, t_mets - 0.05, "clip4.mov", 0.0, 2.2, "full", 0.62),
+    (t_mets - 0.05, t_protege - 0.05, "clip3.mov", 4.5, 5.9, "full", 0.1),
+    (t_protege - 0.05, t_attaque - 0.05, "clip4.mov", 3.6, 7.2, "full", 0.1),
+    (t_attaque - 0.05, t_bon - 0.05, "clip3.mov", 6.2, 7.9, "full", 0.1),
+    (t_bon - 0.05, c3e + 0.1, "clip4.mov", 7.0, 9.4, "full", 0.55),
+    (c3e + 0.1, t_dis - 0.05, "clip3.mov", 7.0, 10.4, "full", 0.6),
+    (t_dis - 0.05, t_abonne - 0.05, "clip2.mp4", 0.0, 5.8, "full", 0.65),
+    (t_abonne - 0.05, VOICE_END + 0.35, "clip3.mov", 4.5, 7.9, "full", 0.6),
+]
+FOCUS = {"clip2.mp4": 0.42, "clip3.mov": 0.44, "clip4.mov": 0.44}  # position horizontale du personnage
+
+def build_broll():
+    import hashlib, subprocess, tempfile
+    key = hashlib.md5(json.dumps([[round(x, 3) if isinstance(x, float) else x for x in b] for b in BROLL]).encode()).hexdigest()[:10]
+    out = f"{ROOT}/work/broll_{key}.mp4"
+    if os.path.exists(out):
+        return out
+    tmp = tempfile.mkdtemp(dir=f"{ROOT}/work")
+    parts = []
+    for n, (a, b, clip, si, so, mode, _) in enumerate(BROLL):
+        need = b - a
+        speed = (so - si) / need                       # > 1 : accéléré, < 1 : ralenti
+        speed = min(max(speed, 0.6), 1.8)
+        used = need * speed
+        if mode == "menu":
+            vf = (f"split[a][b];[a]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=30:3,eq=brightness=-0.25[bg];"
+                  f"[b]crop=1180:760:0:120,scale=1040:-2,pad=iw+12:ih+12:6:6:color=0xda3d39[fg];[bg][fg]overlay=(W-w)/2:330")
+        else:
+            fx = FOCUS.get(clip, 0.45)
+            vf = f"scale=-2:1920,crop=1080:1920:'max(0,min(iw-1080,iw*{fx}-540))':0"
+        f = f"{tmp}/{n:02d}.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{si}", "-t", f"{used:.3f}", "-i", f"{SRC}/{clip}",
+                        "-filter_complex", f"[0:v]setpts=PTS/{speed:.4f},fps=30,{vf},format=yuv420p,tpad=stop_mode=clone:stop_duration=2[v]",
+                        "-map", "[v]", "-t", f"{need:.3f}", "-an", "-c:v", "libx264", "-crf", "18", "-preset", "fast", f], check=True)
+        parts.append(f)
+    with open(f"{tmp}/list.txt", "w") as fh:
+        fh.writelines(f"file '{p}'\n" for p in parts)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", f"{tmp}/list.txt",
+                    "-c:v", "libx264", "-crf", "18", "-preset", "fast", "-r", "30", "-an", out], check=True)
+    return out
+
+broll_file = build_broll()
+BROLL_LEN = BROLL[-1][1]
+for (a, b, clip, si, so, mode, dim) in BROLL:
+    js.append(f'  tl.set("#dim", {{opacity: {dim}}}, {max(0, a):.3f});')
+
 # ------------------------------------------------------------------ audio
 aud = [f'<audio id="voice" class="clip" src="assets/voix_off.wav" data-start="0" data-duration="{VOICE_END + 0.2:.3f}" data-volume="1" data-track-index="0"></audio>']
 tracks = {}
@@ -349,9 +385,11 @@ shutil.copy(f"{BRAND_DIR}/{brand['logo']}", f"{A}/brand/logo.png")
 shutil.rmtree(f"{A}/brand/fonts", ignore_errors=True)
 shutil.copytree(f"{BRAND_DIR}/fonts", f"{A}/brand/fonts")
 shutil.copy(f"{ROOT}/work/voix_off.wav", f"{A}/voix_off.wav")
+shutil.copy(broll_file, f"{A}/broll.mp4")
 out = (tpl.replace("{{BRAND_CSS}}", "\n".join("      " + l for l in brand_css.splitlines()))
           .replace("{{BRAND}}", BRAND).replace("{{DUR}}", f"{DUR}")
           .replace("{{STREAKS}}", "\n      ".join(streaks))
+          .replace("{{BACKDROP}}", f'<video id="broll" class="clip" src="assets/broll.mp4" data-start="0" data-duration="{BROLL_LEN:.3f}" muted data-track-index="1"></video><div id="dim"></div>')
           .replace("{{SCENES}}", "\n        ".join(scenes))
           .replace("{{CAPTIONS}}", "\n      ".join(caps))
           .replace("{{ENDCARD}}", endcard)
