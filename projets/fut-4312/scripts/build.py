@@ -14,7 +14,7 @@ brand = json.load(open(f"{BRAND_DIR}/brand.json"))
 heard = json.load(open(f"{ROOT}/work/words.json"))
 S = json.load(open(f"{ROOT}/work/sections.json"))
 script = json.load(open(f"{ROOT}/scripts/sections.json"))
-CLIP_LEN = 18.2
+CLIP_LEN = 20.0   # capture 16,3 s + arrêt sur image du terrain complet
 VOICE_END = S["s4"][1]
 MAIN_END = max(CLIP_LEN, VOICE_END + 0.3)
 END_LEN = 1.8
@@ -80,16 +80,17 @@ t_toi = T("toi", t_abuse)
 # ------------------------------------------------------------------ fond (capture) : zooms sur l'action
 js.append(f'  tl.fromTo("#broll", {{scale: 1}}, {{scale: 1.06, duration: {t_encore:.2f}, ease: "none"}}, 0);')
 # zoom sur le panneau « 4-3-1-2 » de l'adversaire (à droite du cadre) au moment où il est cité
-js.append(f'  tl.to("#broll", {{scale: 1.75, x: -330, y: 230, duration: 0.35, ease: "expo.out"}}, {t_encore - 0.05:.3f});')
+t_zoom = max(t_encore, 6.75)   # le panneau « 4-3-1-2 » est stable à l'écran à partir de 6,75 s
+js.append(f'  tl.to("#broll", {{scale: 1.75, x: -600, y: 349, duration: 0.35, ease: "expo.out"}}, {t_zoom:.3f});')
 js.append(f'  tl.to("#broll", {{scale: 1.0, x: 0, y: 0, duration: 0.4, ease: "expo.inOut"}}, {t_meneur - 0.2:.3f});')
 js.append(f'  tl.to("#broll", {{scale: 1.1, duration: {max(0.5, t_resultat - t_meneur):.2f}, ease: "none"}}, {t_meneur + 0.2:.3f});')
 js.append(f'  tl.to("#broll", {{scale: 1.0, duration: 0.3, ease: "expo.out"}}, {t_resultat - 0.05:.3f});')
 
 # ------------------------------------------------------------------ titre d'accroche (haut)
 scenes.append(f'<div class="clip" id="hook" data-start="0" data-duration="{MAIN_END:.2f}" data-track-index="2" '
-              'style="position:absolute; left:0; top:190px; width:1080px; text-align:center">'
-              '<div class="h2 stroke" id="hk1" style="font-size:58px">EN FUT CHAMPIONS, TOUT LE MONDE JOUE EN</div>'
-              '<div class="h1 acc stroke" id="hk2" style="font-size:150px; margin-top:6px">4-3-1-2 ?!</div></div>')
+              'style="position:absolute; left:0; top:120px; width:1080px; text-align:center">'
+              '<div class="h2 stroke" id="hk1" style="font-size:56px">TOUT LE MONDE JOUE EN</div>'
+              '<div class="h1 acc stroke" id="hk2" style="font-size:124px; margin-top:4px">4-3-1-2 ?!</div></div>')
 pop("#hk1", 0.05, fr="y: -80, opacity: 0", ease="back.out(2)", name="whoosh", vol=0.3)
 pop("#hk2", 0.25, fr="scale: 2.4, opacity: 0", d=0.22, ease="power4.in", name="impact", vol=0.45)
 js.append(f'  tl.fromTo("#hk2", {{rotation: 0}}, {{rotation: -3, duration: 0.12, yoyo: true, repeat: 3, immediateRender: false}}, {t_encore:.3f});')
@@ -123,7 +124,7 @@ sfx("buzz", t_abuse - 0.05, 0.4, 0.35)
 # ------------------------------------------------------------------ question finale
 scenes.append(f'<div class="clip" id="ask" data-start="{t_toi - 0.05:.3f}" data-duration="{MAIN_END - t_toi + 0.05:.3f}" data-track-index="4" '
               'style="position:absolute; left:0; top:560px; width:1080px; display:flex; flex-direction:column; align-items:center; gap:24px">'
-              '<div class="cta" id="askc" style="font-size:64px; white-space:nowrap">ET TOI, T\'EN CROISES COMBIEN ?</div>'
+              '<div class="cta" id="askc" style="font-size:48px; white-space:nowrap; padding:30px 48px">ET TOI, T\'EN CROISES COMBIEN ?</div>'
               '<span class="tag" id="askt" style="font-size:40px">Réponds en commentaire ↓</span></div>')
 pop("#askc", t_toi - 0.05, fr="x: -600, opacity: 0", ease="expo.out", name="whoosh", vol=0.3)
 pop("#askt", t_toi + 0.5, fr="y: 60, opacity: 0", ease="back.out(2)")
@@ -165,7 +166,7 @@ sfx("impact", MAIN_END, 0.45, 0.45)
 
 # ------------------------------------------------------------------ audio
 aud = [f'<audio id="voice" class="clip" src="assets/voix_off.wav" data-start="0" data-duration="{VOICE_END + 0.2:.3f}" data-volume="1" data-track-index="0"></audio>',
-       f'<audio id="game" class="clip" src="assets/game.wav" data-start="0" data-duration="{CLIP_LEN:.2f}" data-volume="0.22" data-fade-out="0.6" data-track-index="1"></audio>']
+       f'<audio id="game" class="clip" src="assets/game.wav" data-start="0" data-duration="16.3" data-volume="0.22" data-fade-out="0.8" data-track-index="1"></audio>']
 tracks = {}
 for n_, (name, t_, vol, d) in enumerate(audio):
     tr = 7

@@ -26,6 +26,7 @@ for s in secs:
     with open(lst, "w") as fh:
         for i, f in enumerate(files):
             fh.write(f"file '{f}'\n" + (f"file '{sil}'\n" if i < len(files) - 1 else ""))
+    os.makedirs(f"{ROOT}/work/voix", exist_ok=True)
     out = f"{ROOT}/work/voix/{s['id']}.wav"
     # retire les silences de tête/queue, normalise
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", lst, "-af",
