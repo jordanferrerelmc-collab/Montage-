@@ -11,8 +11,9 @@ REPO = os.path.dirname(os.path.dirname(ROOT))
 BRAND = os.environ.get("BRAND", "specimen-gaming")
 BRAND_DIR = f"{REPO}/brand/{BRAND}"
 brand = json.load(open(f"{BRAND_DIR}/brand.json"))
-words = json.load(open(f"{ROOT}/work/words.json"))
+heard = json.load(open(f"{ROOT}/work/words.json"))      # mots horodatés (transcription, parfois fautive)
 S = json.load(open(f"{ROOT}/work/sections.json"))       # {id: [start, end]}
+script = json.load(open(f"{ROOT}/scripts/sections.json"))
 VOICE_END = S["outro"][1]
 END_LEN = 2.4
 DUR = round(VOICE_END + 0.35 + END_LEN, 2)
@@ -21,11 +22,49 @@ def norm(s):
     s = unicodedata.normalize("NFD", s.lower())
     return re.sub(r"[^a-z0-9']", "", "".join(c for c in s if unicodedata.category(c) != "Mn"))
 
+def align():
+    """Texte exact du script, horodaté grâce à la transcription (alignement mot à mot)."""
+    import difflib
+    toks = []
+    for s in script:
+        for w in s["text"].split():
+            toks.append({"text": w, "sec": s["id"]})
+    a = [norm(t["text"]) for t in toks]
+    b = [norm(h["text"]) for h in heard]
+    sm = difflib.SequenceMatcher(None, a, b, autojunk=False)
+    for tag, i1, i2, j1, j2 in sm.get_opcodes():
+        if tag == "equal" or (tag == "replace" and i2 - i1 == j2 - j1):
+            for k in range(i2 - i1):
+                toks[i1 + k]["start"], toks[i1 + k]["end"] = heard[j1 + k]["start"], heard[j1 + k]["end"]
+        elif tag == "replace" and j2 > j1:   # répartit l'intervalle entendu sur les mots du script
+            t0, t1 = heard[j1]["start"], heard[j2 - 1]["end"]
+            n = i2 - i1
+            for k in range(n):
+                toks[i1 + k]["start"] = t0 + (t1 - t0) * k / n
+                toks[i1 + k]["end"] = t0 + (t1 - t0) * (k + 1) / n
+    # mots non retrouvés : interpolation entre voisins, bornée par la section
+    for i, t in enumerate(toks):
+        if "start" not in t:
+            prev = next((toks[k]["end"] for k in range(i - 1, -1, -1) if "end" in toks[k]), S[t["sec"]][0])
+            nxt = next((toks[k]["start"] for k in range(i + 1, len(toks)) if "start" in toks[k]), S[t["sec"]][1])
+            t["start"], t["end"] = prev, max(prev + 0.05, min(nxt, prev + 0.3))
+    # « un contre un » s'affiche « 1v1 »
+    out, i = [], 0
+    while i < len(toks):
+        if [norm(x["text"]) for x in toks[i:i + 3]] == ["un", "contre", "un"]:
+            out.append({**toks[i], "text": "1v1", "end": toks[i + 2]["end"]}); i += 3
+        else:
+            out.append(toks[i]); i += 1
+    return out
+
+words = align()
+
 def T(word, after=0.0, default=None):
     """Début du premier mot commençant par `word` après `after` (s)."""
     w = norm(word)
     for x in words:
-        if x["start"] >= after - 0.05 and norm(x["text"]).startswith(w):
+        n = norm(x["text"])
+        if x["start"] >= after - 0.05 and (n.startswith(w) or n.split("'")[-1].startswith(w)):
             return x["start"]
     if default is None:
         raise SystemExit(f"mot introuvable : {word} après {after}")
@@ -94,7 +133,7 @@ tiles = "".join(f'<div class="panel" id="tile{i}" style="width:250px; height:250
 scene("s-hook2", t_voici - 0.05, h1 + 0.1,
       '<div class="center" style="top:300px"><div class="h1 stroke" id="h3a"><span class="acc">3</span> ASTUCES</div></div>'
       f'<div class="center" style="top:600px; display:flex; gap:40px">{tiles}</div>'
-      '<div class="center" id="forgot" style="top:840px"><span class="tag">La plus oubliée</span></div>')
+      '<div class="center" id="forgot" style="top:800px; white-space:nowrap"><span class="tag">La plus oubliée</span></div>')
 pop("#h3a", t_voici, fr="y: -120, opacity: 0", ease="back.out(1.8)")
 for i in (1, 2, 3):
     pop(f"#tile{i}", T("astuces", t_voici) + 0.12 * (i - 1), fr="y: 200, opacity: 0, rotation: 12")
@@ -138,7 +177,7 @@ scene("s-c1c", t_pourras - 0.05, c1e + 0.1,
       f'<div id="st1" style="position:absolute; left:470px; top:120px; transform:rotate(30deg)">{STEP}</div>'
       f'<div id="st2" style="position:absolute; left:540px; top:200px; transform:rotate(40deg)">{STEP}</div>'
       f'<div id="st3" style="position:absolute; left:595px; top:290px; transform:rotate(55deg)">{STEP}</div></div>'
-      '<div class="center" id="antic" style="top:860px"><span class="tag" style="font-size:52px">Anticipe l\'ennemi</span></div>')
+      '<div class="center" id="antic" style="top:820px; white-space:nowrap"><span class="tag" style="font-size:46px">Anticipe l\'ennemi</span></div>')
 pop("#radar", t_pourras - 0.05, fr="scale: 0.5, opacity: 0", ease="expo.out", d=0.4, snd=False)
 for k in (1, 2, 3):
     tt = t_pas + 0.22 * (k - 1)
@@ -160,7 +199,7 @@ scene("s-c2b", t_sur - 0.05, t_alors - 0.05,
       '<circle cx="100" cy="120" r="14" style="fill:var(--ink)"/>'
       '<g id="cam"><rect x="108" y="132" width="26" height="18" rx="3" style="fill:var(--red)"/><path d="M134 136 l10 -5 v20 l-10 -5z" style="fill:var(--red)"/></g>'
       '<path d="M100 120 L121 141" style="stroke:var(--silver)" stroke-width="2" stroke-dasharray="3 3"/></svg></div>'
-      '<div class="center" style="top:860px"><div class="h2 stroke">CAMÉRA DÉCALÉE <span class="acc">À DROITE →</span></div></div>')
+      '<div class="center" style="top:770px; width:1000px"><div class="h2 stroke" style="font-size:62px">CAMÉRA DÉCALÉE <span class="acc">À DROITE →</span></div></div>')
 pop("#s-c2b svg", t_sur - 0.05, fr="scale: 0.6, opacity: 0", ease="expo.out", d=0.4, snd=False)
 pop("#cam", T("camera", t_sur) - 0.05, fr="x: -60, opacity: 0", ease="back.out(2)")
 js.append(f'  tl.from("#cone", {{opacity: 0, duration: 0.3}}, {t_droite - 0.1:.3f});')
@@ -174,7 +213,7 @@ scene("s-c2c", t_alors - 0.05, t_evite - 0.05,
       '<circle id="foe" cx="180" cy="40" r="11" style="fill:var(--red)"/>'
       '<g id="me"><circle cx="56" cy="74" r="12" style="fill:var(--ink)"/></g>'
       '<path id="shot" d="M120 70 L170 44" style="stroke:var(--red)" stroke-width="4" stroke-linecap="round" opacity="0"/></svg></div>'
-      f'<div class="center" style="top:860px; display:flex; gap:22px">{labels}</div>')
+      f'<div class="center" style="top:770px; display:flex; gap:22px">{labels}</div>')
 pop("#s-c2c svg", t_alors - 0.05, fr="y: 200, opacity: 0", ease="expo.out", d=0.4, snd=False)
 js.append(f'  tl.to("#me", {{x: 210, duration: 0.25, ease: "power3.out"}}, {t_sortir:.3f});')
 js.append(f'  tl.to("#lb0", {{backgroundColor: "var(--red)", duration: 0.1}}, {t_sortir:.3f});')
@@ -186,12 +225,12 @@ js.append(f'  tl.to("#me", {{x: 0, duration: 0.25, ease: "power3.out"}}, {t_couv
 js.append(f'  tl.to("#lb2", {{backgroundColor: "var(--red)", duration: 0.1}}, {t_couvert - 0.1:.3f});')
 
 scene("s-c2d", t_evite - 0.05, c2e + 0.1,
-      '<div class="center" style="top:420px; width:820px; height:420px">'
+      '<div class="center" style="top:300px; width:820px; height:420px">'
       '<svg viewBox="0 0 200 100" style="width:820px">'
       '<circle cx="24" cy="50" r="12" style="fill:var(--ink)"/><circle cx="176" cy="50" r="12" style="fill:var(--red)"/>'
       '<path d="M44 50 H150 M136 38 L152 50 L136 62" fill="none" style="stroke:var(--ink)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>'
       '<path id="bigx" d="M80 18 L120 82 M120 18 L80 82" style="stroke:var(--red)" stroke-width="12" stroke-linecap="round"/></svg></div>'
-      '<div class="center" style="top:820px"><div class="h1 stroke" style="font-size:110px">NE FONCE<br/><span class="acc">PAS !</span></div></div>')
+      '<div class="center" style="top:640px; width:1000px"><div class="h1 stroke" style="font-size:110px">NE FONCE <span class="acc">PAS !</span></div></div>')
 pop("#s-c2d svg", t_evite - 0.05, fr="x: -300, opacity: 0", ease="expo.out", d=0.3, snd=False)
 pop("#bigx", T("foncer", t_evite) - 0.05, fr="scale: 3, opacity: 0, transformOrigin: '50% 50%'", ease="power4.in", d=0.2, name="buzz", vol=0.35)
 
@@ -203,11 +242,11 @@ scene("s-c3a", c3s, t_mets - 0.05, badge(3, 'NE FORCE PAS<br/><span class="acc">
 pop("#s-c3a .num-badge", c3s + 0.05, fr="scale: 0, rotation: -40", ease="back.out(2.5)")
 steps = ["GROS TIR<br/>AU POMPE", "PROTÈGE-<br/>TOI", "CHANGE<br/>D'ANGLE", "ATTAQUE<br/>À NOUVEAU"]
 grid = "".join(f'<div class="panel" id="cy{i}" style="width:430px; height:250px; justify-content:center; padding:20px">'
-               f'<div style="font-weight:700; font-size:30px; color:var(--silver); letter-spacing:0.1em">ÉTAPE {i + 1}</div>'
+               f'<div style="font-weight:700; font-size:30px; color:var(--ink); letter-spacing:0.1em">ÉTAPE {i + 1}</div>'
                f'<div class="h2" style="font-size:58px">{s}</div></div>' for i, s in enumerate(steps))
 scene("s-c3b", t_mets - 0.05, t_bon - 0.05,
       f'<div class="center" style="top:480px; display:grid; grid-template-columns:430px 430px; gap:40px">{grid}</div>'
-      '<div class="center h1" id="loop" style="top:480px; font-size:120px; color:var(--red)">↻</div>')
+      '<div class="center h1" id="loop" style="top:480px; font-size:120px; color:var(--ink)">↻</div>')
 for i, t in enumerate([t_mets, t_protege, t_change, t_attaque]):
     pop(f"#cy{i}", t - 0.08, fr="scale: 0.5, opacity: 0", ease="back.out(2)")
     js.append(f'  tl.to("#cy{i}", {{backgroundColor: "var(--red)", borderColor: "var(--ink)", duration: 0.12}}, {t - 0.02 if i else t_pompe:.3f});')
@@ -221,7 +260,7 @@ bar = lambda bid, label, col: (f'<div style="display:flex; flex-direction:column
 scene("s-c3c", t_bon - 0.05, c3e + 0.1,
       '<div class="center" style="top:430px; display:flex; flex-direction:column; gap:50px">'
       + bar("hp-foe", "ADVERSAIRE", "var(--red)") + bar("hp-me", "TOI", "var(--ink)") + '</div>'
-      '<div class="center" id="nodmg" style="top:800px"><span class="tag" style="font-size:52px">Dégâts reçus : 0</span></div>')
+      '<div class="center" id="nodmg" style="top:720px; white-space:nowrap"><span class="tag" style="font-size:44px">Dégâts reçus : 0</span></div>')
 pop("#s-c3c .center", t_bon - 0.05, fr="y: 200, opacity: 0", ease="expo.out", d=0.4, snd=False)
 js.append(f'  tl.to("#hp-foe", {{scaleX: 0.35, duration: 0.5, ease: "power3.out"}}, {T("degats", t_bon):.3f});')
 sfx("impact", T("degats", t_bon), 0.35, 0.45)
@@ -240,11 +279,11 @@ scene("s-o1", o0, t_dis - 0.05,
 for i in range(3):
     pop(f"#ck{i}", o0 + 0.2 + 0.35 * i, fr="x: -200, opacity: 0", ease="back.out(2)", name="check", vol=0.3)
 opt = lambda oid, t: (f'<div class="panel" id="{oid}" style="width:440px; height:230px; justify-content:center; padding:20px">'
-                      f'<div class="h2" style="font-size:60px">{t}</div></div>')
+                      f'<div class="h2" style="font-size:50px">{t}</div></div>')
 scene("s-o2", t_dis - 0.05, t_abonne - 0.05,
       '<div class="center" style="top:300px"><div class="h2 stroke" style="font-size:84px">TU JOUES EN…</div></div>'
       f'<div class="center" style="top:560px; display:flex; gap:40px">{opt("op1", "CONSTRUC-<br/>TION")}{opt("op2", "ZÉRO<br/>CONSTRUCTION")}</div>'
-      '<div class="center" id="cmt" style="top:820px"><span class="tag" style="font-size:46px">Réponds en commentaire ↓</span></div>')
+      '<div class="center" id="cmt" style="top:790px; white-space:nowrap"><span class="tag" style="font-size:40px">Réponds en commentaire ↓</span></div>')
 pop("#s-o2 .h2", t_dis - 0.05, fr="y: -100, opacity: 0", ease="back.out(2)", snd=False)
 pop("#op1", t_constr - 0.1, fr="x: -400, opacity: 0", ease="expo.out")
 pop("#op2", t_zero - 0.1, fr="x: 400, opacity: 0", ease="expo.out")
@@ -260,7 +299,7 @@ sfx("click", t_abonne + 0.9, 0.5, 0.1)
 # ------------------------------------------------------------------ sous-titres (mots, style dynamique)
 KEY = {"1", "un", "fortnite", "visee", "3", "trois", "troisieme", "bruitages", "pas", "anticiper", "angles", "droite", "mur",
        "couvert", "foncer", "pompe", "protege", "angle", "degats", "prendre", "commentaire", "construction", "abonnetoi", "abonne", "specimen", "gaming"}
-KEY -= {"pas"}
+KEY -= {"pas", "un"}
 fixes = {"1": "1V1"}
 groups, cur = [], []
 for i, x in enumerate(words):

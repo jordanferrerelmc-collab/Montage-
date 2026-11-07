@@ -12,10 +12,11 @@ from chatterbox.mtl_tts import ChatterboxMultilingualTTS
 model = ChatterboxMultilingualTTS.from_pretrained(device="cpu")
 for s in secs:
     if only and s["id"] not in only: continue
-    torch.manual_seed(int(s.get("seed", 1234)))
     parts = [p.strip() for p in re.split(r"(?<=[.!?…])\s+", s["text"]) if p.strip()]
     tmp = tempfile.mkdtemp(); files = []
     for i, p in enumerate(parts):
+        seeds = s.get("seeds") or []
+        torch.manual_seed(int(seeds[i] if i < len(seeds) and seeds[i] is not None else s.get("seed", 1234)))
         wav = model.generate(p, language_id="fr", audio_prompt_path=REF, exaggeration=0.62, cfg_weight=0.45)
         f = f"{tmp}/{i:02d}.wav"; torchaudio.save(f, wav, model.sr); files.append(f)
         print(s["id"], i, p, flush=True)

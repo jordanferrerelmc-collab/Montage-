@@ -1,7 +1,29 @@
 [
- {"id": "hook", "text": "Si tu perds tous tes un contre un sur Fortnite, c'est peut-être pas ta visée le problème ! Voici trois astuces qui vont complètement changer tes combats. Et la troisième, beaucoup de joueurs l'oublient !"},
- {"id": "c1", "text": "Première astuce : active la visualisation des bruitages ! Va dans Paramètres, Audio, puis active Visualisation des bruitages. Tu pourras repérer visuellement certains bruits, comme les pas de tes adversaires. Et crois-moi, anticiper un ennemi, ça change tout !"},
- {"id": "c2", "text": "Deuxième astuce : utilise les angles à ton avantage ! Sur Fortnite, la caméra est légèrement décalée vers la droite. Alors utilise un mur ou une couverture pour sortir ton arme du côté droit, tirer et te remettre à couvert. Évite de foncer directement sur ton adversaire !"},
- {"id": "c3", "text": "Troisième astuce : arrête de vouloir absolument terminer ton adversaire en une seule fois ! Mets un gros tir au pompe, protège-toi, change d'angle et attaque à nouveau. Un bon joueur ne cherche pas seulement à faire des dégâts, il cherche surtout à ne pas en prendre !"},
- {"id": "outro", "text": "Teste ces trois astuces dans ta prochaine game ! Et dis-moi en commentaire : tu joues en construction ou en zéro construction ? Abonne-toi à Specimen Gaming pour progresser sur Fortnite !"}
+ {
+  "id": "hook",
+  "text": "Si tu perds tous tes un contre un sur Fortnite, c'est peut-être pas ta visée le problème ! Voici trois astuces qui vont complètement changer tes combats. Et la troisième, beaucoup de joueurs l'oublient !"
+ },
+ {
+  "id": "c1",
+  "text": "Première astuce : active la visualisation des bruitages ! Va dans les Paramètres, ouvre Audio, puis active Visualisation des bruitages. Tu pourras repérer visuellement certains bruits, comme les pas de tes adversaires. Et crois-moi, anticiper un ennemi, ça change tout !",
+  "seed": 1234,
+  "seeds": [
+   7,
+   1234,
+   1234,
+   1234
+  ]
+ },
+ {
+  "id": "c2",
+  "text": "Deuxième astuce : utilise les angles à ton avantage ! Sur Fortnite, la caméra est légèrement décalée vers la droite. Alors utilise un mur ou une couverture pour sortir ton arme du côté droit, tirer et te remettre à couvert. Évite de foncer directement sur ton adversaire !"
+ },
+ {
+  "id": "c3",
+  "text": "Troisième astuce : arrête de vouloir absolument terminer ton adversaire en une seule fois ! Mets un gros tir au pompe, protège-toi, change d'angle et attaque à nouveau. Un bon joueur ne cherche pas seulement à faire des dégâts, il cherche surtout à ne pas en prendre !"
+ },
+ {
+  "id": "outro",
+  "text": "Teste ces trois astuces dans ta prochaine game ! Et dis-moi en commentaire : tu joues en construction ou en zéro construction ? Abonne-toi à Specimen Gaming pour progresser sur Fortnite !"
+ }
 ]
