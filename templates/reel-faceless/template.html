@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="{{BRAND}}" />
+    <meta name="montage-style" content="faceless" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+{{BRAND_CSS}}
+
+      /* ---- modèle « sans visage » : voix off + scènes illustrées ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep, var(--black)); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond animé */
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 60% at 50% 35%, var(--charcoal, var(--dark)) 0%, var(--charcoal-deep, var(--black)) 75%); }
+      #grid { position: absolute; left: -200px; top: -200px; width: 1480px; height: 2320px; opacity: 0.18;
+        background-image: linear-gradient(var(--silver) 2px, transparent 2px), linear-gradient(90deg, var(--silver) 2px, transparent 2px);
+        background-size: 120px 120px; transform: perspective(900px) rotateX(55deg); transform-origin: 50% 100%; }
+      .streak { position: absolute; height: 10px; border-radius: 10px; background: var(--accent); opacity: 0.55; }
+      #glow { position: absolute; left: 140px; top: 260px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 70%); opacity: 0.35; }
+
+      /* scène : zone d'illustration (au-dessus des sous-titres, sous les onglets TikTok) */
+      #stage { position: absolute; inset: 0; transform-origin: 50% 35%; }
+      .scene { position: absolute; left: 0; top: 200px; width: 1080px; height: 880px; }
+      .center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+      .h1 { font-weight: 700; font-size: 120px; line-height: 0.95; letter-spacing: -0.03em; text-transform: uppercase; text-align: center; }
+      .h2 { font-weight: 700; font-size: 70px; line-height: 1; letter-spacing: -0.02em; text-transform: uppercase; text-align: center; }
+      .acc { color: var(--accent-soft); }
+      .tag { display: inline-block; font-weight: 700; font-size: 34px; letter-spacing: 0.14em; text-transform: uppercase;
+        padding: 10px 22px; background: var(--accent); color: var(--ink); }
+      .stroke { -webkit-text-stroke: 12px #000000; paint-order: stroke fill; }
+
+      /* sous-titres (style dynamique de la marque) */
+      .cap { position: absolute; left: var(--cap-left, 60px); top: var(--cap-top, 1260px); width: var(--cap-width, 960px); height: 260px;
+        display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 0 26px;
+        font-size: 84px; line-height: 1.05; text-align: center; color: var(--ink); text-transform: uppercase; }
+
+      #flash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+
+      /* barre de progression */
+      #progress { position: absolute; left: 0; top: 0; height: 12px; width: 1080px; background: var(--accent); transform-origin: 0 50%; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DUR}}" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="glow"></div>
+      <div id="grid"></div>
+      {{STREAKS}}
+      <div id="stage">
+        {{SCENES}}
+      </div>
+      <div id="accentflash"></div>
+      <div id="flash"></div>
+      {{CAPTIONS}}
+      <div id="progress"></div>
+      {{ENDCARD}}
+    </div>
+    {{AUDIO}}
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+{{JS}}
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
