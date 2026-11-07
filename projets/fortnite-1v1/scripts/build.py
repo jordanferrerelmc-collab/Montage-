@@ -310,25 +310,16 @@ sfx("impact", VOICE_END + 0.35, 0.45, 0.45)
 # (début, fin, clip, entrée source, sortie source, mode, voile sombre)
 # mode « full » : plein écran vertical recadré sur le personnage ; « card » : capture entière en carte sur fond flouté
 SRC = f"{ROOT}/src"
-BROLL = [
-    (h0, t_voici - 0.05, "clip3.mov", 0.3, 4.6, "full", 0.45),
-    (t_voici - 0.05, h1 + 0.1, "clip2.mp4", 0.0, 3.6, "full", 0.6),
-    (h1 + 0.1, t_va - 0.05, "clip4.mov", 0.0, 3.4, "full", 0.62),
-    (t_va - 0.05, t_pourras - 0.05, "clip1.mp4", 3.0, 8.8, "menu", 0.0),
-    (t_pourras - 0.05, c1e + 0.1, "clip2.mp4", 0.0, 5.8, "full", 0.3),
-    (c1e + 0.1, t_sur - 0.05, "clip4.mov", 7.0, 9.4, "full", 0.62),
-    (t_sur - 0.05, t_alors - 0.05, "clip3.mov", 0.0, 2.6, "full", 0.25),
-    (t_alors - 0.05, t_evite - 0.05, "clip3.mov", 2.4, 5.6, "full", 0.1),
-    (t_evite - 0.05, c2e + 0.1, "clip2.mp4", 2.4, 5.8, "full", 0.5),
-    (c2e + 0.1, t_mets - 0.05, "clip4.mov", 0.0, 2.2, "full", 0.62),
-    (t_mets - 0.05, t_protege - 0.05, "clip3.mov", 4.5, 5.9, "full", 0.1),
-    (t_protege - 0.05, t_attaque - 0.05, "clip4.mov", 3.6, 7.2, "full", 0.1),
-    (t_attaque - 0.05, t_bon - 0.05, "clip3.mov", 6.2, 7.9, "full", 0.1),
-    (t_bon - 0.05, c3e + 0.1, "clip4.mov", 7.0, 9.4, "full", 0.55),
-    (c3e + 0.1, t_dis - 0.05, "clip3.mov", 7.0, 10.4, "full", 0.6),
-    (t_dis - 0.05, t_abonne - 0.05, "clip2.mp4", 0.0, 5.8, "full", 0.65),
-    (t_abonne - 0.05, VOICE_END + 0.35, "clip3.mov", 4.5, 7.9, "full", 0.6),
+BROLL = [   # un clip par partie, lu en continu (choix de l'utilisateur)
+    (h0, c0, "clip2.mp4", 0.0, 5.85, "full", 0.0),
+    (c0, c2s, "clip1.mp4", 0.0, 8.85, "menu", 0.0),
+    (c2s, c3s, "clip3.mov", 0.0, 10.45, "full", 0.0),
+    (c3s, c3e + 0.1, "clip4.mov", 0.0, 9.4, "full", 0.0),
 ]
+# voile sombre scène par scène (lisibilité des textes), 0 = images du jeu pleinement visibles
+DIM = [(h0, 0.45), (t_voici - 0.05, 0.55), (c0, 0.6), (t_va - 0.05, 0.0), (t_pourras - 0.05, 0.3),
+       (c2s, 0.6), (t_sur - 0.05, 0.25), (t_alors - 0.05, 0.08), (t_evite - 0.05, 0.45),
+       (c3s, 0.6), (t_mets - 0.05, 0.08), (t_bon - 0.05, 0.5), (c3e + 0.1, 0.0)]
 FOCUS = {"clip2.mp4": 0.42, "clip3.mov": 0.44, "clip4.mov": 0.44}  # position horizontale du personnage
 
 def build_broll():
@@ -342,7 +333,7 @@ def build_broll():
     for n, (a, b, clip, si, so, mode, _) in enumerate(BROLL):
         need = b - a
         speed = (so - si) / need                       # > 1 : accéléré, < 1 : ralenti
-        speed = min(max(speed, 0.6), 1.8)
+        speed = min(max(speed, 0.55), 1.8)
         used = need * speed
         if mode == "menu":
             vf = (f"split[a][b];[a]scale=1080:1920:force_original_aspect_ratio=increase,crop=1080:1920,boxblur=30:3,eq=brightness=-0.25[bg];"
@@ -363,7 +354,7 @@ def build_broll():
 
 broll_file = build_broll()
 BROLL_LEN = BROLL[-1][1]
-for (a, b, clip, si, so, mode, dim) in BROLL:
+for (a, dim) in DIM:
     js.append(f'  tl.set("#dim", {{opacity: {dim}}}, {max(0, a):.3f});')
 
 # ------------------------------------------------------------------ audio
