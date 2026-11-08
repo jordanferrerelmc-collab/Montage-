@@ -104,6 +104,9 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 
 ## Motion design 3D (pubs « 3D + interfaces »)
 
+**EN PAUSE (demande de l'utilisateur, 08/11/2026) : ne pas utiliser ce style dans les montages, sauf nouvelle demande
+explicite.** Les outils restent installés pour plus tard.
+
 Pour les vidéos du type `references/motion-3` (téléphone 3D, interfaces animées, objets 3D, halos, logo lumineux) :
 bibliothèque `templates/motion-3d/motion3d.js` (voir son README), exemple `projets/demo-motion-3d/`.
 - 362 éléments du catalogue dans `effets/compositions/` : maquettes d'interface (chat, notifications, profils, avis,
