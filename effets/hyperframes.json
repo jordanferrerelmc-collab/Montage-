@@ -964,6 +964,676 @@
       "name": "zoom-through-transition",
       "type": "hyperframes:component",
       "target": "compositions/components/zoom-through-transition.html"
+    },
+    {
+      "name": "ai-answer-rank",
+      "type": "hyperframes:block",
+      "target": "compositions/ai-answer-rank.html"
+    },
+    {
+      "name": "ai-chat-reveal",
+      "type": "hyperframes:block",
+      "target": "compositions/ai-chat-reveal.html"
+    },
+    {
+      "name": "app-showcase",
+      "type": "hyperframes:block",
+      "target": "compositions/app-showcase.html"
+    },
+    {
+      "name": "apple-money-count",
+      "type": "hyperframes:block",
+      "target": "compositions/apple-money-count.html"
+    },
+    {
+      "name": "ascii-trail-reveal",
+      "type": "hyperframes:component",
+      "target": "compositions/components/ascii-trail-reveal.html"
+    },
+    {
+      "name": "aurora",
+      "type": "hyperframes:block",
+      "target": "compositions/aurora.html"
+    },
+    {
+      "name": "aurora-drift",
+      "type": "hyperframes:component",
+      "target": "compositions/components/aurora-drift.html"
+    },
+    {
+      "name": "before-after-wipe",
+      "type": "hyperframes:component",
+      "target": "compositions/components/before-after-wipe.html"
+    },
+    {
+      "name": "blob",
+      "type": "hyperframes:block",
+      "target": "compositions/blob.html"
+    },
+    {
+      "name": "blue-sweater-intro-video",
+      "type": "hyperframes:block",
+      "target": "compositions/blue-sweater-intro-video.html"
+    },
+    {
+      "name": "bottom-up-letters",
+      "type": "hyperframes:component",
+      "target": "compositions/components/bottom-up-letters.html"
+    },
+    {
+      "name": "browser-device-stage",
+      "type": "hyperframes:component",
+      "target": "compositions/components/browser-device-stage.html"
+    },
+    {
+      "name": "camera-dolly-zoom",
+      "type": "hyperframes:block",
+      "target": "compositions/camera-dolly-zoom.html"
+    },
+    {
+      "name": "camera-scan-gate",
+      "type": "hyperframes:component",
+      "target": "compositions/components/camera-scan-gate.html"
+    },
+    {
+      "name": "chat-message",
+      "type": "hyperframes:component",
+      "target": "compositions/components/chat-message.html"
+    },
+    {
+      "name": "chat-thread",
+      "type": "hyperframes:component",
+      "target": "compositions/components/chat-thread.html"
+    },
+    {
+      "name": "chatgpt-exchange",
+      "type": "hyperframes:block",
+      "target": "compositions/chatgpt-exchange.html"
+    },
+    {
+      "name": "chrome-orb",
+      "type": "hyperframes:block",
+      "target": "compositions/chrome-orb.html"
+    },
+    {
+      "name": "claude-exchange",
+      "type": "hyperframes:block",
+      "target": "compositions/claude-exchange.html"
+    },
+    {
+      "name": "code-3d-extrude",
+      "type": "hyperframes:block",
+      "target": "compositions/code-3d-extrude.html"
+    },
+    {
+      "name": "code-particle-assemble",
+      "type": "hyperframes:block",
+      "target": "compositions/code-particle-assemble.html"
+    },
+    {
+      "name": "code-shader-dissolve",
+      "type": "hyperframes:block",
+      "target": "compositions/code-shader-dissolve.html"
+    },
+    {
+      "name": "code-snippet-apple-terminal-pro",
+      "type": "hyperframes:block",
+      "target": "compositions/code-snippet-apple-terminal-pro.html"
+    },
+    {
+      "name": "code-snippet-dark-2026",
+      "type": "hyperframes:block",
+      "target": "compositions/code-snippet-dark-2026.html"
+    },
+    {
+      "name": "code-snippet-dark-modern",
+      "type": "hyperframes:block",
+      "target": "compositions/code-snippet-dark-modern.html"
+    },
+    {
+      "name": "code-terminal-run",
+      "type": "hyperframes:component",
+      "target": "compositions/components/code-terminal-run.html"
+    },
+    {
+      "name": "color-wheel",
+      "type": "hyperframes:block",
+      "target": "compositions/color-wheel.html"
+    },
+    {
+      "name": "colorama-wipe",
+      "type": "hyperframes:component",
+      "target": "compositions/components/colorama-wipe.html"
+    },
+    {
+      "name": "comparison-split",
+      "type": "hyperframes:component",
+      "target": "compositions/components/comparison-split.html"
+    },
+    {
+      "name": "constellation-hub",
+      "type": "hyperframes:component",
+      "target": "compositions/components/constellation-hub.html"
+    },
+    {
+      "name": "cosmic-orb",
+      "type": "hyperframes:block",
+      "target": "compositions/cosmic-orb.html"
+    },
+    {
+      "name": "cuboid-carousel",
+      "type": "hyperframes:block",
+      "target": "compositions/cuboid-carousel/cuboid-carousel.html"
+    },
+    {
+      "name": "cursor-drag-drop",
+      "type": "hyperframes:component",
+      "target": "compositions/components/cursor-drag-drop.html"
+    },
+    {
+      "name": "cursor-marquee-select",
+      "type": "hyperframes:component",
+      "target": "compositions/components/cursor-marquee-select.html"
+    },
+    {
+      "name": "cursor-zoom-follow",
+      "type": "hyperframes:component",
+      "target": "compositions/components/cursor-zoom-follow.html"
+    },
+    {
+      "name": "device-frame-stage",
+      "type": "hyperframes:component",
+      "target": "compositions/components/device-frame-stage.html"
+    },
+    {
+      "name": "drift-hold",
+      "type": "hyperframes:component",
+      "target": "compositions/components/drift-hold.html"
+    },
+    {
+      "name": "dynamic-grid",
+      "type": "hyperframes:component",
+      "target": "compositions/components/dynamic-grid.html"
+    },
+    {
+      "name": "exploded-stack",
+      "type": "hyperframes:block",
+      "target": "compositions/exploded-stack.html"
+    },
+    {
+      "name": "flowing-gradient",
+      "type": "hyperframes:block",
+      "target": "compositions/flowing-gradient.html"
+    },
+    {
+      "name": "frost",
+      "type": "hyperframes:block",
+      "target": "compositions/frost.html"
+    },
+    {
+      "name": "gallery-tunnel",
+      "type": "hyperframes:block",
+      "target": "compositions/gallery-tunnel.html"
+    },
+    {
+      "name": "gesture-tap",
+      "type": "hyperframes:component",
+      "target": "compositions/components/gesture-tap.html"
+    },
+    {
+      "name": "godrays",
+      "type": "hyperframes:block",
+      "target": "compositions/godrays.html"
+    },
+    {
+      "name": "goo",
+      "type": "hyperframes:block",
+      "target": "compositions/goo.html"
+    },
+    {
+      "name": "grade-split-reveal",
+      "type": "hyperframes:component",
+      "target": "compositions/components/grade-split-reveal.html"
+    },
+    {
+      "name": "heatmap",
+      "type": "hyperframes:block",
+      "target": "compositions/heatmap.html"
+    },
+    {
+      "name": "hologram",
+      "type": "hyperframes:block",
+      "target": "compositions/hologram.html"
+    },
+    {
+      "name": "holographic",
+      "type": "hyperframes:block",
+      "target": "compositions/holographic.html"
+    },
+    {
+      "name": "icon-morph-beat",
+      "type": "hyperframes:component",
+      "target": "compositions/components/icon-morph-beat.html"
+    },
+    {
+      "name": "ios26-liquid-glass",
+      "type": "hyperframes:block",
+      "target": "compositions/ios26-liquid-glass.html"
+    },
+    {
+      "name": "kinetic-type-swap",
+      "type": "hyperframes:component",
+      "target": "compositions/components/kinetic-type-swap.html"
+    },
+    {
+      "name": "lens-flare",
+      "type": "hyperframes:block",
+      "target": "compositions/lens-flare.html"
+    },
+    {
+      "name": "light-edge",
+      "type": "hyperframes:block",
+      "target": "compositions/light-edge.html"
+    },
+    {
+      "name": "liquid-glass-notification",
+      "type": "hyperframes:block",
+      "target": "compositions/liquid-glass-notification.html"
+    },
+    {
+      "name": "liquid-glass-widgets",
+      "type": "hyperframes:block",
+      "target": "compositions/liquid-glass-widgets.html"
+    },
+    {
+      "name": "liquid-metal",
+      "type": "hyperframes:block",
+      "target": "compositions/liquid-metal.html"
+    },
+    {
+      "name": "locked-nucleus-orbit",
+      "type": "hyperframes:component",
+      "target": "compositions/components/locked-nucleus-orbit.html"
+    },
+    {
+      "name": "logo-outro",
+      "type": "hyperframes:block",
+      "target": "compositions/logo-outro.html"
+    },
+    {
+      "name": "macos-tahoe-liquid-glass",
+      "type": "hyperframes:block",
+      "target": "compositions/macos-tahoe-liquid-glass.html"
+    },
+    {
+      "name": "mesh-gradient",
+      "type": "hyperframes:block",
+      "target": "compositions/mesh-gradient.html"
+    },
+    {
+      "name": "message-thread-reveal",
+      "type": "hyperframes:block",
+      "target": "compositions/message-thread-reveal.html"
+    },
+    {
+      "name": "mk-background",
+      "type": "hyperframes:block",
+      "target": "compositions/mk-background.html"
+    },
+    {
+      "name": "multi-device-splay",
+      "type": "hyperframes:component",
+      "target": "compositions/components/multi-device-splay.html"
+    },
+    {
+      "name": "nebula",
+      "type": "hyperframes:block",
+      "target": "compositions/nebula.html"
+    },
+    {
+      "name": "north-korea-locked-down",
+      "type": "hyperframes:block",
+      "target": "compositions/north-korea-locked-down.html"
+    },
+    {
+      "name": "notes-reveal",
+      "type": "hyperframes:block",
+      "target": "compositions/notes-reveal.html"
+    },
+    {
+      "name": "notes-typing",
+      "type": "hyperframes:component",
+      "target": "compositions/components/notes-typing.html"
+    },
+    {
+      "name": "notification-cascade",
+      "type": "hyperframes:block",
+      "target": "compositions/notification-cascade.html"
+    },
+    {
+      "name": "notification-pileup",
+      "type": "hyperframes:component",
+      "target": "compositions/components/notification-pileup.html"
+    },
+    {
+      "name": "notification-stack",
+      "type": "hyperframes:component",
+      "target": "compositions/components/notification-stack.html"
+    },
+    {
+      "name": "nyc-paris-flight",
+      "type": "hyperframes:block",
+      "target": "compositions/nyc-paris-flight.html"
+    },
+    {
+      "name": "obsidian",
+      "type": "hyperframes:block",
+      "target": "compositions/obsidian.html"
+    },
+    {
+      "name": "offset-path-traveler",
+      "type": "hyperframes:component",
+      "target": "compositions/components/offset-path-traveler.html"
+    },
+    {
+      "name": "orbit-card",
+      "type": "hyperframes:block",
+      "target": "compositions/orbit-card/orbit-card.html"
+    },
+    {
+      "name": "oscilloscope-trace",
+      "type": "hyperframes:block",
+      "target": "compositions/oscilloscope-trace.html"
+    },
+    {
+      "name": "pan-stations",
+      "type": "hyperframes:component",
+      "target": "compositions/components/pan-stations.html"
+    },
+    {
+      "name": "particle-image-reveal",
+      "type": "hyperframes:component",
+      "target": "compositions/components/particle-image-reveal.html"
+    },
+    {
+      "name": "pendulum-swing",
+      "type": "hyperframes:component",
+      "target": "compositions/components/pendulum-swing.html"
+    },
+    {
+      "name": "plastic",
+      "type": "hyperframes:block",
+      "target": "compositions/plastic.html"
+    },
+    {
+      "name": "press-ripple",
+      "type": "hyperframes:component",
+      "target": "compositions/components/press-ripple.html"
+    },
+    {
+      "name": "prism",
+      "type": "hyperframes:block",
+      "target": "compositions/prism.html"
+    },
+    {
+      "name": "product-turntable",
+      "type": "hyperframes:block",
+      "target": "compositions/product-turntable.html"
+    },
+    {
+      "name": "rack-focus",
+      "type": "hyperframes:block",
+      "target": "compositions/rack-focus.html"
+    },
+    {
+      "name": "screen-flow-carousel",
+      "type": "hyperframes:component",
+      "target": "compositions/components/screen-flow-carousel.html"
+    },
+    {
+      "name": "scroll-camera-story",
+      "type": "hyperframes:component",
+      "target": "compositions/components/scroll-camera-story.html"
+    },
+    {
+      "name": "segmentation-flood",
+      "type": "hyperframes:component",
+      "target": "compositions/components/segmentation-flood.html"
+    },
+    {
+      "name": "share-sheet-carousel",
+      "type": "hyperframes:block",
+      "target": "compositions/share-sheet-carousel.html"
+    },
+    {
+      "name": "sine-wave",
+      "type": "hyperframes:block",
+      "target": "compositions/sine-wave.html"
+    },
+    {
+      "name": "slack-notification-ad",
+      "type": "hyperframes:block",
+      "target": "compositions/slack-notification-ad.html"
+    },
+    {
+      "name": "social-proof-card",
+      "type": "hyperframes:component",
+      "target": "compositions/components/social-proof-card.html"
+    },
+    {
+      "name": "soft-blob-touch",
+      "type": "hyperframes:component",
+      "target": "compositions/components/soft-blob-touch.html"
+    },
+    {
+      "name": "soft-blur-in",
+      "type": "hyperframes:component",
+      "target": "compositions/components/soft-blur-in.html"
+    },
+    {
+      "name": "spiral",
+      "type": "hyperframes:block",
+      "target": "compositions/spiral.html"
+    },
+    {
+      "name": "spiral-galaxy",
+      "type": "hyperframes:block",
+      "target": "compositions/spiral-galaxy.html"
+    },
+    {
+      "name": "split-flap-board",
+      "type": "hyperframes:block",
+      "target": "compositions/split-flap-board.html"
+    },
+    {
+      "name": "spring-stack-shuffle",
+      "type": "hyperframes:component",
+      "target": "compositions/components/spring-stack-shuffle.html"
+    },
+    {
+      "name": "state-chip-rail",
+      "type": "hyperframes:component",
+      "target": "compositions/components/state-chip-rail.html"
+    },
+    {
+      "name": "sticky-mock-swap",
+      "type": "hyperframes:component",
+      "target": "compositions/components/sticky-mock-swap.html"
+    },
+    {
+      "name": "store-badge-lockup",
+      "type": "hyperframes:component",
+      "target": "compositions/components/store-badge-lockup.html"
+    },
+    {
+      "name": "strands",
+      "type": "hyperframes:block",
+      "target": "compositions/strands.html"
+    },
+    {
+      "name": "streaming-text",
+      "type": "hyperframes:component",
+      "target": "compositions/components/streaming-text.html"
+    },
+    {
+      "name": "stripes",
+      "type": "hyperframes:block",
+      "target": "compositions/stripes.html"
+    },
+    {
+      "name": "sun-burst",
+      "type": "hyperframes:block",
+      "target": "compositions/sun-burst.html"
+    },
+    {
+      "name": "svg-stroke-trace",
+      "type": "hyperframes:component",
+      "target": "compositions/components/svg-stroke-trace.html"
+    },
+    {
+      "name": "swirl",
+      "type": "hyperframes:block",
+      "target": "compositions/swirl.html"
+    },
+    {
+      "name": "telemetry-hud",
+      "type": "hyperframes:component",
+      "target": "compositions/components/telemetry-hud.html"
+    },
+    {
+      "name": "testimonial-card",
+      "type": "hyperframes:component",
+      "target": "compositions/components/testimonial-card.html"
+    },
+    {
+      "name": "testimonial-proof-card",
+      "type": "hyperframes:component",
+      "target": "compositions/components/testimonial-proof-card.html"
+    },
+    {
+      "name": "thin-film",
+      "type": "hyperframes:block",
+      "target": "compositions/thin-film.html"
+    },
+    {
+      "name": "thread-message-stack",
+      "type": "hyperframes:block",
+      "target": "compositions/thread-message-stack.html"
+    },
+    {
+      "name": "three-orbiting-cards",
+      "type": "hyperframes:component",
+      "target": "compositions/components/three-orbiting-cards.html"
+    },
+    {
+      "name": "ticker-takeover",
+      "type": "hyperframes:component",
+      "target": "compositions/components/ticker-takeover.html"
+    },
+    {
+      "name": "toggle-flip",
+      "type": "hyperframes:component",
+      "target": "compositions/components/toggle-flip.html"
+    },
+    {
+      "name": "tracing-beam",
+      "type": "hyperframes:component",
+      "target": "compositions/components/tracing-beam.html"
+    },
+    {
+      "name": "typed-prompt",
+      "type": "hyperframes:component",
+      "target": "compositions/components/typed-prompt.html"
+    },
+    {
+      "name": "ui-3d-reveal",
+      "type": "hyperframes:block",
+      "target": "compositions/ui-3d-reveal.html"
+    },
+    {
+      "name": "ui-focus-zoom",
+      "type": "hyperframes:component",
+      "target": "compositions/components/ui-focus-zoom.html"
+    },
+    {
+      "name": "vector-editor-rig",
+      "type": "hyperframes:component",
+      "target": "compositions/components/vector-editor-rig.html"
+    },
+    {
+      "name": "vfx-anamorphic-flare",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-anamorphic-flare.html"
+    },
+    {
+      "name": "vfx-iphone-device",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-iphone-device.html"
+    },
+    {
+      "name": "vfx-liquid-background",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-liquid-background.html"
+    },
+    {
+      "name": "vfx-liquid-glass",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-liquid-glass.html"
+    },
+    {
+      "name": "vfx-magnetic",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-magnetic.html"
+    },
+    {
+      "name": "vfx-portal",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-portal.html"
+    },
+    {
+      "name": "vfx-shatter",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-shatter.html"
+    },
+    {
+      "name": "vfx-text-cursor",
+      "type": "hyperframes:block",
+      "target": "compositions/vfx-text-cursor.html"
+    },
+    {
+      "name": "voronoi",
+      "type": "hyperframes:block",
+      "target": "compositions/voronoi.html"
+    },
+    {
+      "name": "vpn-youtube-spot",
+      "type": "hyperframes:block",
+      "target": "compositions/vpn-youtube-spot.html"
+    },
+    {
+      "name": "water",
+      "type": "hyperframes:block",
+      "target": "compositions/water.html"
+    },
+    {
+      "name": "waveform",
+      "type": "hyperframes:block",
+      "target": "compositions/waveform.html"
+    },
+    {
+      "name": "whiteboard-ink",
+      "type": "hyperframes:component",
+      "target": "compositions/components/whiteboard-ink.html"
+    },
+    {
+      "name": "wordmark-tiles",
+      "type": "hyperframes:component",
+      "target": "compositions/components/wordmark-tiles.html"
+    },
+    {
+      "name": "yt-logo-intro",
+      "type": "hyperframes:block",
+      "target": "compositions/yt-logo-intro.html"
     }
   ]
 }

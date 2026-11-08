@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="motion-3d" />
+    <script src="assets/gsap.min.js"></script>
+    <script type="importmap">{"imports": {"three": "./assets/vendor/three/three.module.js", "three/addons/": "./assets/vendor/three/addons/", "motion3d": "./assets/motion3d.js"}}</script>
+    <style>
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        --cap-left: 60px;
+        --cap-width: 960px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--black); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+      #gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      .t { position: absolute; left: 0; width: 1080px; text-align: center; opacity: 0; }
+      .k { font-weight: 700; font-size: 36px; letter-spacing: 0.22em; color: var(--gold); }
+      .h { font-weight: 700; font-size: 118px; letter-spacing: -0.04em; line-height: 0.95; }
+      .h .a { color: var(--gold); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15.0" data-width="1080" data-height="1920">
+      <canvas id="gl" width="1080" height="1920"></canvas>
+      <div class="t" id="t1" style="top:190px"><div class="k">SPECIMEN AGENCY</div><div class="h">Votre <span class="a">image.</span></div></div>
+      <div class="t" id="t2" style="top:190px"><div class="k">MONTAGE · CONTENU · STRATÉGIE</div><div class="h" style="font-size:96px">On s'occupe <span class="a">de tout.</span></div></div>
+      <div class="t" id="t3" style="top:330px"><div class="h">Notre <span class="a">expertise.</span></div></div>
+    </div>
+    <script type="module">
+      import { THREE, createStage, canvasScreen, phone, card, isoBuilding, glowOrb, logoPlane, brandColor, bindTimeline } from "motion3d";
+      const gold = getComputedStyle(document.documentElement).getPropertyValue("--gold").trim();
+      const ivory = getComputedStyle(document.documentElement).getPropertyValue("--ivory").trim();
+      const black = getComputedStyle(document.documentElement).getPropertyValue("--black").trim();
+      const font = "Specimen Heros";
+      await document.fonts.load(`700 40px "${font}"`);
+      const logoImg = new Image(); logoImg.src = "assets/brand/logo.png"; await logoImg.decode();
+
+      const stage = createStage(document.getElementById("gl"), { bloom: 0.5 });
+      const { scene, camera } = stage;
+      const st = { orb: 0.01, orbOp: 0, ph: 0, rotY: -1.1, rotX: 0.15, px: 0, py: -6, ui: 0, cards: 0, bld: 0, bRot: 0.6, logo: 0, cam: 10 };
+
+      // --- intro : orbe lumineux
+      const orb = glowOrb({ size: 1 }); scene.add(orb);
+
+      // --- téléphone : écran = interface dessinée (profil d'agence, compteur, grille de contenus)
+      const scr = canvasScreen(540, 1130, (c, w, h, t) => {
+        c.fillStyle = black; c.fillRect(0, 0, w, h);
+        const p = st.ui;
+        c.save(); c.globalAlpha = Math.min(1, p * 3);
+        c.drawImage(logoImg, w / 2 - 80, 110, 160, 160);
+        c.fillStyle = ivory; c.font = `700 40px "${font}"`; c.textAlign = "center"; c.fillText("Specimen Agency", w / 2, 320);
+        c.fillStyle = gold; c.font = `700 22px "${font}"`; c.fillText("VOTRE IMAGE. NOTRE EXPERTISE.", w / 2, 360);
+        const n = Math.round(Math.min(1, Math.max(0, (p - 0.15) / 0.5)) * 128);
+        [["Projets", n], ["Vidéos", Math.round(n * 2.4)], ["Clients", Math.round(n / 3)]].forEach(([l, v], i) => {
+          const x = 90 + i * 180; c.fillStyle = ivory; c.font = `700 40px "${font}"`; c.fillText(String(v), x, 450);
+          c.fillStyle = gold; c.font = `700 20px "${font}"`; c.fillText(l.toUpperCase(), x, 480); });
+        c.fillStyle = gold; c.beginPath(); c.roundRect(60, 520, w - 120, 64, 32); c.fill();
+        c.fillStyle = black; c.font = `700 28px "${font}"`; c.fillText("Nous contacter", w / 2, 562);
+        for (let i = 0; i < 9; i++) {                     // grille de contenus qui apparaît
+          const a = Math.min(1, Math.max(0, (p - 0.35 - i * 0.05) / 0.12)); if (a <= 0) continue;
+          const gx = 24 + (i % 3) * 167, gy = 620 + Math.floor(i / 3) * 167;
+          c.globalAlpha = a; c.fillStyle = i % 2 ? gold : ivory; c.globalAlpha = a * (i % 2 ? 0.85 : 0.18);
+          c.beginPath(); c.roundRect(gx, gy + (1 - a) * 30, 158, 158, 14); c.fill(); }
+        c.restore();
+      });
+      const ph = phone({ screen: scr }); ph.scale.setScalar(0.92); scene.add(ph);
+
+      // --- cartes de services (texte original)
+      const mkCard = (title, sub) => {
+        const s = canvasScreen(512, 300, (c, w, h) => { c.clearRect(0, 0, w, h); c.fillStyle = gold; c.font = `700 30px "${font}"`; c.textAlign = "left";
+          c.fillText(sub.toUpperCase(), 36, 90); c.fillStyle = ivory; c.font = `700 64px "${font}"`; c.fillText(title, 36, 180); });
+        s.update(0); return card({ texture: s.texture, w: 2.4, h: 1.4 });
+      };
+      const cards = [mkCard("Montage", "Vidéo"), mkCard("Contenu", "Réseaux"), mkCard("Stratégie", "Marque")];
+      const cardPos = [[-2.6, 1.6, 0.6, 0.25], [2.5, 0.2, 0.9, -0.3], [-2.3, -1.9, 0.4, 0.2]];
+      cards.forEach((c) => scene.add(c));
+
+      // --- locaux isométriques
+      const bld = isoBuilding({ floors: 2 }); bld.scale.setScalar(0.62); scene.add(bld);
+
+      // --- logo final
+      const logo = await logoPlane("assets/brand/logo.png", { height: 3.2 }); scene.add(logo);
+      const logoOrb = glowOrb({ size: 1 }); logoOrb.position.z = -0.5; scene.add(logoOrb);
+
+      const tl = gsap.timeline({ paused: true });
+      // intro (0–2,2 s) : l'orbe grossit, pulse, puis éclate
+      tl.to(st, { orbOp: 1, orb: 1.6, duration: 1.2, ease: "power2.out" }, 0.1);
+      tl.to(st, { orb: 2.2, duration: 0.3, yoyo: true, repeat: 1, ease: "sine.inOut" }, 1.3);
+      tl.to(st, { orb: 30, orbOp: 0, duration: 0.4, ease: "power3.in" }, 1.95);
+      // téléphone (2,2–7,6 s)
+      tl.fromTo(st, { py: -7, rotY: -1.3 }, { py: -1.0, rotY: -0.35, duration: 1.0, ease: "expo.out", immediateRender: false }, 2.2);
+      tl.to(st, { ui: 1, duration: 3.2, ease: "none" }, 2.6);
+      tl.to(st, { rotY: 0.32, duration: 4.2, ease: "sine.inOut" }, 3.2);
+      // cartes (5,2–8,2 s) puis sortie
+      tl.to(st, { cards: 1, duration: 0.9, ease: "back.out(1.6)" }, 5.2);
+      tl.to(st, { cards: 0, px: 0, py: 8, duration: 0.6, ease: "power3.in" }, 7.6);
+      // locaux (8,2–11,8 s)
+      tl.fromTo(st, { bld: 0 }, { bld: 1, duration: 0.8, ease: "back.out(1.4)", immediateRender: false }, 8.2);
+      tl.fromTo(st, { bRot: 0.6 }, { bRot: 1.4, duration: 3.6, ease: "none", immediateRender: false }, 8.2);
+      tl.to(st, { bld: 0, duration: 0.5, ease: "power3.in" }, 11.6);
+      // logo (12–15 s)
+      tl.fromTo(st, { logo: 0 }, { logo: 1, duration: 0.9, ease: "back.out(1.4)", immediateRender: false }, 12.1);
+      // textes DOM (défocalisation)
+      const blurIn = (s, t) => tl.fromTo(s, { opacity: 0, filter: "blur(18px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, t);
+      const blurOut = (s, t) => tl.to(s, { opacity: 0, filter: "blur(14px)", duration: 0.3 }, t);
+      blurIn("#t1", 2.6); blurOut("#t1", 5.0); blurIn("#t2", 5.3); blurOut("#t2", 7.6); blurIn("#t3", 8.6); blurOut("#t3", 11.5);
+      tl.to({}, { duration: 15.0 }, 0);
+
+      bindTimeline(tl, "main", stage, (t) => {
+        orb.scale.setScalar(st.orb); orb.material.opacity = st.orbOp;
+        ph.visible = t > 2.1 && t < 8.3;
+        ph.position.set(st.px, st.py, 0); ph.rotation.set(st.rotX, st.rotY, 0);
+        ph.position.y += Math.sin(t * 1.6) * 0.08;                       // flottement
+        if (ph.visible) scr.update(t);
+        cards.forEach((c, i) => { const [x, y, z, r] = cardPos[i]; const k = Math.max(0, Math.min(1.2, st.cards - i * 0.12));
+          c.visible = k > 0.01; c.position.set(x * k, y + Math.sin(t * 1.3 + i) * 0.06, z); c.rotation.set(0, r, r * 0.3); c.scale.setScalar(Math.max(0.01, k)); });
+        bld.visible = st.bld > 0.01; bld.scale.setScalar(0.62 * Math.max(0.01, st.bld)); bld.rotation.set(0.62, st.bRot, 0); bld.position.set(0, -0.6, 0);
+        bld.userData.band.material.emissiveIntensity = 0.5 + 0.4 * Math.sin(t * 3);
+        logo.visible = st.logo > 0.01; logo.scale.setScalar(Math.max(0.01, st.logo)); logo.rotation.y = (1 - st.logo) * 0.8;
+        logoOrb.visible = logo.visible; logoOrb.scale.setScalar(8 * st.logo); logoOrb.material.opacity = 0.35 * st.logo;
+      });
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

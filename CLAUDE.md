@@ -101,3 +101,14 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 - **Remotion** dispose aussi de @remotion/transitions, motion-blur, noise, shapes, paths, lottie et light-leaks.
 - Rendu des shaders : WebGL logiciel (pas de GPU), plus lent mais fonctionnel. Les éléments 3D chargent
   Three.js depuis cdn.jsdelivr.net (autorisé dans l'environnement « Montage »).
+
+## Motion design 3D (pubs « 3D + interfaces »)
+
+Pour les vidéos du type `references/motion-3` (téléphone 3D, interfaces animées, objets 3D, halos, logo lumineux) :
+bibliothèque `templates/motion-3d/motion3d.js` (voir son README), exemple `projets/demo-motion-3d/`.
+- 362 éléments du catalogue dans `effets/compositions/` : maquettes d'interface (chat, notifications, profils, avis,
+  navigateur, appareils), scènes 3D, caméras, galeries, fonds lumineux — à adapter aux couleurs de la charte.
+- Rendu 3D : toujours piloté par la timeline (`bindTimeline`), écrire aussi `window.__timelines["main"] = tl;`
+  dans la page (le contrôle statique le cherche). Bloom : seuil élevé (0,8) pour éviter la surexposition.
+- Pas de modèles 3D tiers (licences) : objets procéduraux, ou modèles .glb fournis par l'utilisateur.
+- Rendu lent sans GPU : lancer le rendu en arrière-plan.
