@@ -44,7 +44,7 @@
   },
   "forbidden": "Or, jaune, vert, bleu, rose ou toute couleur hors de cette liste.",
   "montage_style": {
-    "name": "dynamic",
-    "description": "Style dynamique : sous-titres gras à contour noir, flashs et zooms rapides, illustrations en cartes, bruitages. Modèle : templates/reel-vertical/."
+    "name": "gaming-premium",
+    "description": "Style « gaming premium » (référence : references/gaming-style) : fond sombre en dégradé radial avec halo rouge qui respire, révélations mystère (silhouette « ? » puis carte avec onde de choc et halo), textes en défocalisation, classement N°, encadrés de stats et badges qui glissent, compteur en pastille, barre de progression, grille CTA 2×2, sous-titres mot à mot sans contour, transitions en fondu flouté. Modèle : templates/reel-gaming/ (animations : gaming-fx.js)."
   }
 }

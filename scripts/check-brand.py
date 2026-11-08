@@ -34,11 +34,13 @@ def brand_of(path, txt):
     if forced: return forced
     m = re.search(r'<meta name="brand" content="([\w-]+)"', txt)
     if m and m.group(1) != "{{BRAND}}": return m.group(1)
+    m = re.search(r'<meta name="brand-default" content="([\w-]+)"', txt)
+    if m: return m.group(1)
     m = re.search(r"brand/([\w-]+)/", path.replace(os.sep, "/"))
     return m.group(1) if m else "specimen-agency"
 
 NAMED = re.compile(r"(?<![\w-])(red|green|blue|pink|purple|orange|yellow|cyan|magenta|lime|teal)(?![\w-])", re.I)
-HEX = re.compile(r"#[0-9a-fA-F]{3,8}\b")
+HEX = re.compile(r"(?<![\w-])#[0-9a-fA-F]{3,8}\b(?![\w-]*\s*[{,])")
 RGB = re.compile(r"rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)")
 
 files = args or (glob.glob(f"{ROOT}/projets/*/montage/index.html")
@@ -65,7 +67,7 @@ for f in files:
             issues.add(n)
     # police verrouillée : seule var(--font) (ou la famille de la marque) est autorisée
     family = spec["fonts"]["family"]
-    for ff in re.findall(r"font-family\s*:\s*([^;}\"]+(?:\"[^\"]*\"[^;}]*)?)", zone):
+    for ff in re.findall(r"font-family\s*:\s*([^;}\"\n]+(?:\"[^\"\n]*\"[^;}\n]*)?)", zone):
         val = ff.strip()
         if val not in ("var(--font)", "inherit") and not val.startswith(f'"{family}"'):
             issues.add("police " + val)

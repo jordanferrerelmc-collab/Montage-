@@ -7,7 +7,7 @@ Chaque montage utilise **exactement une** des deux chartes ci-dessous. Elles ne 
 | Marque | Dossier | Quand l'utiliser | Couleurs | Police | Format |
 |---|---|---|---|---|---|
 | **Specimen Agency** | `brand/specimen-agency/` | Par défaut : agence, Instagram, conseils marketing | or, noir profond, ivoire | Helvetica Neue → TeX Gyre Heros (`"Specimen Heros"`) | Reels Instagram, **style éditorial** |
-| **Specimen Gaming** | `brand/specimen-gaming/` | Vidéos du **compte TikTok gaming** (jeux vidéo, gameplay, gaming, TikTok gaming) | rouge `#da3d39`, anthracite `#2c2d32`, blanc | Helvetica Neue → TeX Gyre Heros (`"Specimen Heros"`) | TikTok (zones de l'interface évitées), **style dynamique** |
+| **Specimen Gaming** | `brand/specimen-gaming/` | Vidéos du **compte TikTok gaming** (jeux vidéo, gameplay, gaming, TikTok gaming) | rouge `#da3d39`, anthracite `#2c2d32`, blanc | Helvetica Neue → TeX Gyre Heros (`"Specimen Heros"`) | TikTok (zones de l'interface évitées), **style gaming premium** |
 
 **Choix de la marque.** Si l'utilisateur parle de gaming, du compte gaming ou de TikTok gaming, ou si la vidéo
 porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-agency`. En cas de doute réel,
@@ -23,8 +23,16 @@ elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateu
   - cartes flottantes arrondies (noir ou ivoire, liseré or) qui entrent en éventail ; carte de stats (anneau), pastilles d'étape ;
   - transitions en halo lumineux doux (`#bloom`), zooms lents, micro-sauts discrets sur les coupes ; pas de flash dur ni de tremblement ;
   - CTA en pilule dorée, écran de fin avec le logo.
-- **Gaming → dynamique** (`templates/reel-vertical/`, exemple : `projets/video1/scripts/build_composition.py`) :
-  flashs et zooms rapides, sous-titres à contour épais, bruitages.
+- **Gaming → « gaming premium »** (`templates/reel-gaming/` + bibliothèque d'animations `gaming-fx.js`,
+  exemple complet : `projets/demo-style-gaming/scripts/build.py`), d'après la vidéo de référence `references/gaming-style/` :
+  - fond sombre en dégradé radial, halo rouge qui respire ; signature « SPECIMEN GAMING » et barre de progression en haut ;
+  - révélation mystère : silhouette « ? » → visuel révélé avec onde de choc (`fx.mysteryReveal`) ;
+  - textes en défocalisation (`fx.blurIn` / `fx.blurOut`), classement « N° + nom + sous-titre » ;
+  - encadrés de stats et badges qui glissent (`fx.slideBlur`), note « → … », compteur en pastille (`fx.countUp`) ;
+  - grille d'appel à l'action 2×2 au début (`fx.ctaGrid`) ; sous-titres mot à mot, blancs, sans contour, mots clés en rouge ;
+  - transitions en fondu flouté, pas de flash dur ; bruitages discrets (riser, impact, ding, clic) ; écran de fin avec le logo.
+  - Les captures de jeu de l'utilisateur s'intègrent dans la carte centrale (`.cardvis`) ou en plein cadre derrière le halo.
+  - Ancien style « dynamique » (flashs, contours épais) : `templates/reel-vertical/`, seulement sur demande.
 
 Règles communes :
 - **Source unique** : `brand/<marque>/` (`brand.css`, `brand.json`, `logo.png`, `fonts/`, `README.md`).
