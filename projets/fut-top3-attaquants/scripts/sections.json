@@ -1,29 +1,22 @@
 [
  {
   "id": "hook",
-  "text": "Si t'as croisé un de ces trois attaquants en FUT Champions ce week-end… je sais exactement ce que t'as vécu !"
+  "text": "Si t'as croisé un de ces trois attaquants en fut champions ce week-end, je sais exactement ce que t'as vécu."
  },
  {
   "id": "n3",
-  "text": "Numéro trois, Chawinga… Mais elle court à combien sérieux ?! Quatre-vingt-quatorze de vitesse, tu peux mettre toute ta défense derrière, elle passe quand même ! Tu clignes des yeux, elle est déjà en face de ton gardien ! C'est insupportable !",
-  "seeds": [
-   1234,
-   1234,
-   1234,
-   1234,
-   77
-  ]
+  "text": "3. Chawinga Chawinga, mais elle court à combien sérieux? 94 de vitesse, tu peux mettre toute ta défense derrière, elle passe quand même! Tu clignes des yeux, elle est déjà en face de ton gardien, c'est insupportable."
  },
  {
   "id": "n2",
-  "text": "Numéro deux, Pajor… Elle, c'est encore pire ! Quatre-vingt-treize de vitesse, quatre-vingt-onze de tir… Tu lui laisses un demi-mètre, c'est terminé ! Même quand tu défends bien, elle trouve le moyen de te planter un but !"
+  "text": "2. Pajor Alors Pajor, elle c'est encore pire, 93 de vitesse, 91 de tir, tu lui laisses un demi-mètre, c'est terminé, même quand tu défends bien, elle trouve le moyen de te planter un but."
  },
  {
   "id": "n1",
-  "text": "Et le numéro un… Ferran Torres ! Mais c'est quoi cette carte ?! Quatre-vingt-dix de vitesse, quatre-vingt-six de tir… Le mec se transforme en R neuf contre moi ! Chaque frappe, c'est un but ! J'en pouvais plus !"
+  "text": "1. Ferran Torres Et le numéro un Ferran Torres, mais c'est quoi cette carte? 90 de vitesse, 86 de tir, le mec se transforme en R9 contre moi, chaque frappe c'est un but, j'en pouvais plus!"
  },
  {
   "id": "outro",
-  "text": "Et toi, c'est quel joueur qui t'a fait péter un câble ce week-end en FUT Champions ? Dis-moi en commentaire, qu'on partage notre souffrance !"
+  "text": "Et toi, c'est quel joueur qui t'a fait péter un câble ce week-end en fut champions? Dis-moi en commentaire qu'on partage notre souffrance."
  }
 ]

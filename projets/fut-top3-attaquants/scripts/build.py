@@ -53,6 +53,8 @@ def align():
         n1 = norm(toks[i + 1]["text"]).strip(",.!?…") if i + 1 < len(toks) else ""
         if n0 == "numero" and n1 in ("trois", "deux", "un"):
             out.append({**toks[i], "disp": f"N°{NUM[n1]}", "end": toks[i + 1]["end"], "key": True}); i += 2; continue
+        if toks[i]["text"] in ("3.", "2.", "1.") and (i == 0 or toks[i - 1]["sec"] != toks[i]["sec"]):
+            out.append({**toks[i], "disp": f"N°{toks[i]['text'][0]}", "key": True}); i += 1; continue
         if n0 == "r" and n1 == "neuf":
             out.append({**toks[i], "disp": "R9", "end": toks[i + 1]["end"], "key": True}); i += 2; continue
         d = toks[i]["text"]
@@ -103,9 +105,9 @@ for i in range(3): sfx("pop", 0.9 + 0.15 * i, 0.22, 0.12)
 
 # ------------------------------------------------------------------ étapes du classement
 RANKS = [  # section, rang, mot du nom, image, poste, badge, stats [(valeur, étiquette, mot déclencheur)], note, mot de la note, mot du badge
-    ("n3", 3, "chawinga", "chawinga", "87 · AILIÈRE GAUCHE", "Fusée", [("94", "VITESSE", "quatre")], "Elle passe <b>quand même</b>", "clignes", "insupportable"),
-    ("n2", 2, "pajor", "pajor", "89 · BUTEUSE", "Finisseuse", [("93", "VITESSE", "quatre"), ("91", "TIR", "quatre")], "Un demi-mètre = <b>but</b>", "laisses", "defends"),
-    ("n1", 1, "ferran", "ferran", "86 · BUTEUR", "Mode R9", [("90", "VITESSE", "quatre"), ("86", "TIR", "quatre")], "Chaque frappe = <b>but</b>", "chaque", "mec"),
+    ("n3", 3, "chawinga", "chawinga", "87 · AILIÈRE GAUCHE", "Fusée", [("94", "VITESSE", "94")], "Elle passe <b>quand même</b>", "clignes", "insupportable"),
+    ("n2", 2, "pajor", "pajor", "89 · BUTEUSE", "Finisseuse", [("93", "VITESSE", "93"), ("91", "TIR", "91")], "Un demi-mètre = <b>but</b>", "laisses", "defends"),
+    ("n1", 1, "ferran", "ferran", "86 · BUTEUR", "Mode R9", [("90", "VITESSE", "90"), ("86", "TIR", "86")], "Chaque frappe = <b>but</b>", "chaque", "mec"),
 ]
 for k, (sec, rank, nameword, img, sub, badge, stats, note, noteword, badgeword) in enumerate(RANKS):
     s, e = S[sec][0], (S[RANKS[k + 1][0]][0] if k + 1 < len(RANKS) else S["outro"][0])
