@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="montage-style" content="gaming-premium" />
+    <meta name="brand-default" content="specimen-gaming" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/gaming-fx.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        --cap-left: 50px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+      .cardimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain;
+        filter: drop-shadow(0 0 40px rgba(218, 61, 57, 0.55)) drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6)); }
+      .mini { opacity: 0.95; }
+
+
+      /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : dégradé radial sombre + halo d'accent qui respire */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--charcoal) 0%, var(--charcoal-deep) 55%, #000000 100%); }
+      #halo { position: absolute; left: 90px; top: 380px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.45; filter: blur(30px); }
+
+      /* signature et barre de progression (haut, sous les onglets TikTok) */
+      .handle { position: absolute; left: 70px; top: 120px; font-weight: 700; font-size: 30px; color: var(--silver); opacity: 0.8; }
+      .tracker { position: absolute; left: 70px; top: 165px; display: flex; align-items: center; gap: 12px; }
+      .tracker .lbl { font-weight: 700; font-size: 26px; letter-spacing: 0.08em; color: var(--silver); margin-right: 6px; }
+      .tracker .slot { width: 46px; height: 46px; border-radius: 10px; border: 3px solid var(--dark); background: transparent; }
+
+      /* en-tête de classement « N°x + nom » */
+      .rank { position: absolute; left: 70px; top: 250px; display: flex; align-items: flex-end; gap: 22px; }
+      .rank .no { font-weight: 700; color: var(--accent-soft); line-height: 0.8; display: flex; align-items: flex-start; }
+      .rank .no small { font-size: 70px; margin-top: 18px; }
+      .rank .no b { font-size: 190px; letter-spacing: -0.05em; }
+      .rank .txt { padding-bottom: 14px; }
+      .rank .name { font-weight: 700; font-size: 86px; letter-spacing: -0.03em; line-height: 1; }
+      .rank .sub { font-weight: 700; font-size: 36px; color: var(--silver); margin-top: 8px; letter-spacing: 0.02em; }
+
+      /* carte centrale (visuel, silhouette mystère, anneau) */
+      .stagecard { position: absolute; left: 70px; top: 520px; width: 560px; height: 760px; }
+      .cardvis { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; border: 4px solid var(--accent);
+        box-shadow: 0 0 60px rgba(218, 61, 57, 0.55), 0 30px 80px rgba(0, 0, 0, 0.6); background: var(--panel); }
+      .mystery { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .mystery svg { width: 100%; height: 100%; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%;
+        border: 6px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.55), inset 0 0 40px rgba(218, 61, 57, 0.4); opacity: 0; }
+      .pricepill { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); padding: 12px 34px; border-radius: 999px;
+        background: var(--accent); font-weight: 700; font-size: 40px; white-space: nowrap; box-shadow: 0 0 30px rgba(218, 61, 57, 0.6); }
+
+      /* colonne de droite : badges, encadrés de stats */
+      .side { position: absolute; left: 670px; top: 560px; width: 360px; display: flex; flex-direction: column; gap: 26px; }
+      .badge { display: flex; align-items: center; gap: 16px; }
+      .badge .ico { width: 64px; height: 64px; flex: none; }
+      .badge .bt { font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--accent-soft); }
+      .badge .bv { font-weight: 700; font-size: 36px; line-height: 1.05; }
+      .stat { width: 300px; padding: 18px 26px; border-radius: 22px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.7);
+        box-shadow: inset 0 0 30px rgba(218, 61, 57, 0.18); }
+      .stat .v { font-weight: 700; font-size: 96px; line-height: 0.9; letter-spacing: -0.03em; }
+      .stat .l { font-weight: 700; font-size: 24px; letter-spacing: 0.14em; color: var(--silver); margin-top: 6px; }
+      .note { position: absolute; left: 70px; top: 1330px; font-weight: 700; font-size: 44px; color: var(--ink); }
+      .note b { color: var(--accent-soft); }
+
+      /* grille d'appel à l'action 2×2 */
+      .ctagrid { position: absolute; left: 70px; top: 300px; display: grid; grid-template-columns: 300px 300px; gap: 26px; }
+      .cta-btn { height: 220px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.75);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; font-weight: 700; font-size: 38px;
+        box-shadow: 0 0 30px rgba(218, 61, 57, 0.35); }
+      .cta-btn svg { width: 74px; height: 74px; }
+      .ctanote { position: absolute; left: 70px; top: 800px; width: 626px; text-align: center; font-weight: 700; font-size: 36px; color: var(--silver); }
+
+      /* grands titres (intro / outro) */
+      .bigtitle { position: absolute; left: 70px; top: 520px; width: 940px; font-weight: 700; font-size: 128px; line-height: 0.95; letter-spacing: -0.04em; }
+      .bigtitle .acc { color: var(--accent-soft); }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--silver); margin-bottom: 26px; }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      .cap { position: absolute; left: 70px; top: 1440px; width: 820px; height: 110px; display: flex; align-items: center;
+        font-weight: 700; font-size: 72px; letter-spacing: -0.02em; color: var(--ink); text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent-soft); margin-left: 18px; white-space: nowrap; }
+
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="56.28" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="handle">SPECIMEN GAMING</div>
+      <div class="tracker"><span class="lbl">TOP 3</span><div class="slot" id="slot0"></div><div class="slot" id="slot1"></div><div class="slot" id="slot2"></div></div>
+      <div class="clip" id="hook" data-start="0" data-duration="4.41" data-track-index="2"><div class="bigtitle" style="top:250px; font-size:112px"><div class="kicker" id="hk">FUT CHAMPIONS · CE WEEK-END</div><div id="h1">Ces <span class="acc">3</span> attaquants</div><div id="h2">t'ont rendu fou</div></div><div style="position:absolute; left:70px; top:720px; display:flex; gap:45px"><div class="mini" id="m0" style="width:250px; height:340px"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div><div class="mini" id="m1" style="width:250px; height:340px"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div><div class="mini" id="m2" style="width:250px; height:340px"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div></div><div class="ctanote" id="hn" style="top:1130px; width:940px; text-align:left; font-size:44px">Je sais exactement ce que t'as vécu…</div></div>
+      <div class="clip" id="r3" data-start="4.36" data-duration="14.15" data-track-index="2"><div class="rank"><div class="no" id="r3no"><small>N°</small><b>3</b></div><div class="txt"><div class="name" id="r3nm">Chawinga</div><div class="sub" id="r3sb">87 · AILIÈRE GAUCHE</div></div></div><div class="stagecard"><div class="ring" id="r3rg"></div><div class="mystery" id="r3my"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div><img class="cardimg" id="r3cv" src="assets/cards/chawinga.png" alt="Chawinga"/></div><div class="side"><div class="badge" id="r3bd"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">STYLE</div><div class="bv">Fusée</div></div></div><div class="stat" id="r3s0"><div class="v" id="r3v0">0</div><div class="l">VITESSE</div></div></div><div class="note" id="r3nt">→ Elle passe <b>quand même</b></div></div>
+      <div class="clip" id="r2" data-start="18.46" data-duration="11.33" data-track-index="2"><div class="rank"><div class="no" id="r2no"><small>N°</small><b>2</b></div><div class="txt"><div class="name" id="r2nm">Pajor</div><div class="sub" id="r2sb">89 · BUTEUSE</div></div></div><div class="stagecard"><div class="ring" id="r2rg"></div><div class="mystery" id="r2my"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div><img class="cardimg" id="r2cv" src="assets/cards/pajor.png" alt="Pajor"/></div><div class="side"><div class="badge" id="r2bd"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">STYLE</div><div class="bv">Finisseuse</div></div></div><div class="stat" id="r2s0"><div class="v" id="r2v0">0</div><div class="l">VITESSE</div></div><div class="stat" id="r2s1"><div class="v" id="r2v1">0</div><div class="l">TIR</div></div></div><div class="note" id="r2nt">→ Un demi-mètre = <b>but</b></div></div>
+      <div class="clip" id="r1" data-start="29.74" data-duration="17.03" data-track-index="2"><div class="rank"><div class="no" id="r1no"><small>N°</small><b>1</b></div><div class="txt"><div class="name" id="r1nm">Ferran Torres</div><div class="sub" id="r1sb">86 · BUTEUR</div></div></div><div class="stagecard"><div class="ring" id="r1rg"></div><div class="mystery" id="r1my"><svg viewBox="0 0 100 136" style="width:100%; height:100%"><path d="M50 4 L94 18 V96 Q94 118 50 132 Q6 118 6 96 V18 Z" style="fill:var(--black)" opacity="0.95"/><text x="50" y="84" text-anchor="middle" font-size="52" font-weight="700" style="fill:var(--silver); font-family:var(--font)">?</text></svg></div><img class="cardimg" id="r1cv" src="assets/cards/ferran.png" alt="Ferran Torres"/></div><div class="side"><div class="badge" id="r1bd"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">STYLE</div><div class="bv">Mode R9</div></div></div><div class="stat" id="r1s0"><div class="v" id="r1v0">0</div><div class="l">VITESSE</div></div><div class="stat" id="r1s1"><div class="v" id="r1v1">0</div><div class="l">TIR</div></div></div><div class="note" id="r1nt">→ Chaque frappe = <b>but</b></div></div>
+      <div class="clip" id="outro" data-start="46.72" data-duration="7.36" data-track-index="2"><div class="bigtitle" style="top:250px; font-size:100px"><div id="o1">Et toi,</div><div id="o2">quel joueur t'a fait</div><div id="o3"><span class="acc">péter un câble ?</span></div></div><div class="ctagrid" id="og" style="top:760px"><div class="cta-btn"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" style="fill:var(--ink)"/></svg>Enregistre</div><div class="cta-btn"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z" style="fill:var(--ink)"/></svg>Like</div><div class="cta-btn"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" style="fill:var(--ink)"/></svg>Abonne-toi</div><div class="cta-btn"><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--ink)"/></svg>Partage</div></div><div class="ctanote" id="on" style="top:1260px">Dis-le en commentaire ↓</div></div>
+      <div class="cap clip" id="c0" data-start="0.00" data-duration="0.45" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Si t&#x27;as croisé</div>
+      <div class="cap clip" id="c1" data-start="0.45" data-duration="0.28" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">un de ces</div>
+      <div class="cap clip" id="c2" data-start="0.73" data-duration="0.48" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">trois attaquants</div>
+      <div class="cap clip" id="c3" data-start="1.21" data-duration="0.51" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">en <span class='k' style='margin-left:0'>FUT</span> <span class='k' style='margin-left:0'>Champions</span></div>
+      <div class="cap clip" id="c4" data-start="1.72" data-duration="0.60" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">ce week-end</div>
+      <div class="cap clip" id="c5" data-start="2.32" data-duration="0.70" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">je sais exactement</div>
+      <div class="cap clip" id="c6" data-start="3.02" data-duration="0.49" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">ce que t&#x27;as</div>
+      <div class="cap clip" id="c7" data-start="3.51" data-duration="0.85" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">vécu </div>
+      <div class="cap clip" id="c8" data-start="4.49" data-duration="1.96" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>N°3</span> <span class='k' style='margin-left:0'>Chawinga</span></div>
+      <div class="cap clip" id="c9" data-start="6.45" data-duration="1.30" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Mais elle court</div>
+      <div class="cap clip" id="c10" data-start="7.75" data-duration="1.78" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">à combien sérieux</div>
+      <div class="cap clip" id="c11" data-start="9.53" data-duration="0.20" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div class="cap clip" id="c12" data-start="9.69" data-duration="1.08" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>94</span> de <span class='k' style='margin-left:0'>vitesse</span></div>
+      <div class="cap clip" id="c13" data-start="10.77" data-duration="0.57" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">tu peux mettre</div>
+      <div class="cap clip" id="c14" data-start="11.34" data-duration="0.44" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">toute ta défense</div>
+      <div class="cap clip" id="c15" data-start="11.78" data-duration="0.42" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">derrière</div>
+      <div class="cap clip" id="c16" data-start="12.20" data-duration="0.59" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">elle passe quand</div>
+      <div class="cap clip" id="c17" data-start="12.79" data-duration="0.38" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">même </div>
+      <div class="cap clip" id="c18" data-start="13.17" data-duration="0.65" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Tu clignes des</div>
+      <div class="cap clip" id="c19" data-start="13.82" data-duration="0.42" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">yeux</div>
+      <div class="cap clip" id="c20" data-start="14.24" data-duration="0.78" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">elle est déjà</div>
+      <div class="cap clip" id="c21" data-start="15.02" data-duration="0.55" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">en face de</div>
+      <div class="cap clip" id="c22" data-start="15.57" data-duration="0.82" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">ton gardien </div>
+      <div class="cap clip" id="c23" data-start="16.39" data-duration="1.82" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">C&#x27;est <span class='k' style='margin-left:0'>insupportable</span></div>
+      <div class="cap clip" id="c24" data-start="18.21" data-duration="0.25" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div class="cap clip" id="c25" data-start="18.47" data-duration="1.37" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>N°2</span> <span class='k' style='margin-left:0'>Pajor</span></div>
+      <div class="cap clip" id="c26" data-start="19.84" data-duration="0.39" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Elle</div>
+      <div class="cap clip" id="c27" data-start="20.23" data-duration="1.44" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">c&#x27;est encore <span class='k' style='margin-left:0'>pire</span></div>
+      <div class="cap clip" id="c28" data-start="21.67" data-duration="0.26" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div class="cap clip" id="c29" data-start="21.93" data-duration="1.17" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>93</span> de <span class='k' style='margin-left:0'>vitesse</span></div>
+      <div class="cap clip" id="c30" data-start="23.10" data-duration="1.03" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>91</span> de <span class='k' style='margin-left:0'>tir</span></div>
+      <div class="cap clip" id="c31" data-start="24.13" data-duration="0.71" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Tu lui laisses</div>
+      <div class="cap clip" id="c32" data-start="24.84" data-duration="0.74" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">un demi-mètre</div>
+      <div class="cap clip" id="c33" data-start="25.58" data-duration="1.17" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">c&#x27;est <span class='k' style='margin-left:0'>terminé</span> </div>
+      <div class="cap clip" id="c34" data-start="26.75" data-duration="0.52" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Même quand tu</div>
+      <div class="cap clip" id="c35" data-start="27.27" data-duration="0.63" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">défends bien</div>
+      <div class="cap clip" id="c36" data-start="27.90" data-duration="0.73" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">elle trouve le</div>
+      <div class="cap clip" id="c37" data-start="28.63" data-duration="0.23" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">moyen de te</div>
+      <div class="cap clip" id="c38" data-start="28.86" data-duration="0.61" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">planter un <span class='k' style='margin-left:0'>but</span></div>
+      <div class="cap clip" id="c39" data-start="29.47" data-duration="0.27" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div class="cap clip" id="c40" data-start="29.78" data-duration="1.24" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Et le <span class='k' style='margin-left:0'>N°1</span></div>
+      <div class="cap clip" id="c41" data-start="31.02" data-duration="1.33" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Ferran</span> <span class='k' style='margin-left:0'>Torres</span> </div>
+      <div class="cap clip" id="c42" data-start="32.35" data-duration="1.07" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Mais c&#x27;est quoi</div>
+      <div class="cap clip" id="c43" data-start="33.42" data-duration="1.74" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">cette carte </div>
+      <div class="cap clip" id="c44" data-start="35.16" data-duration="1.97" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>90</span> de <span class='k' style='margin-left:0'>vitesse</span></div>
+      <div class="cap clip" id="c45" data-start="37.13" data-duration="1.02" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>86</span> de <span class='k' style='margin-left:0'>tir</span></div>
+      <div class="cap clip" id="c46" data-start="38.15" data-duration="0.56" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Le mec se</div>
+      <div class="cap clip" id="c47" data-start="38.71" data-duration="1.25" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">transforme en <span class='k' style='margin-left:0'>R9</span></div>
+      <div class="cap clip" id="c48" data-start="39.96" data-duration="0.99" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">contre moi </div>
+      <div class="cap clip" id="c49" data-start="40.95" data-duration="2.20" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">Chaque frappe</div>
+      <div class="cap clip" id="c50" data-start="43.15" data-duration="1.60" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">c&#x27;est un <span class='k' style='margin-left:0'>but</span></div>
+      <div class="cap clip" id="c51" data-start="44.75" data-duration="0.20" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div class="cap clip" id="c52" data-start="44.95" data-duration="0.86" data-track-index="4" style="gap:0 18px; flex-wrap:wrap">J&#x27;en pouvais plus</div>
+      <div class="cap clip" id="c53" data-start="45.81" data-duration="0.86" data-track-index="4" style="gap:0 18px; flex-wrap:wrap"></div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="54.08" data-duration="2.2" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="voice" class="clip" src="assets/voix_off.wav" data-start="0" data-duration="52.88" data-volume="1" data-track-index="0"></audio>
+    <audio id="a0" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.1" data-volume="0.3" data-track-index="6"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/pop.wav" data-start="0.900" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/pop.wav" data-start="1.050" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/pop.wav" data-start="1.200" data-duration="0.12" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/riser.wav" data-start="4.110" data-duration="1.4" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/impact-sec.wav" data-start="5.510" data-duration="0.35" data-volume="0.5" data-track-index="6"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/ding.wav" data-start="5.610" data-duration="0.7" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/clic.wav" data-start="9.625" data-duration="0.05" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/whoosh-court.wav" data-start="16.740" data-duration="0.6" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/riser.wav" data-start="18.134" data-duration="1.4" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/impact-sec.wav" data-start="19.534" data-duration="0.35" data-volume="0.5" data-track-index="6"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/ding.wav" data-start="19.634" data-duration="0.7" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="a12" class="clip" src="assets/sfx/clic.wav" data-start="21.869" data-duration="0.05" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/clic.wav" data-start="23.044" data-duration="0.05" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a14" class="clip" src="assets/sfx/whoosh-court.wav" data-start="27.114" data-duration="0.6" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a15" class="clip" src="assets/sfx/riser.wav" data-start="29.612" data-duration="1.4" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a16" class="clip" src="assets/sfx/impact-sec.wav" data-start="31.012" data-duration="0.35" data-volume="0.5" data-track-index="6"></audio>
+    <audio id="a17" class="clip" src="assets/sfx/ding.wav" data-start="31.112" data-duration="0.7" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="a18" class="clip" src="assets/sfx/clic.wav" data-start="35.099" data-duration="0.05" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a19" class="clip" src="assets/sfx/clic.wav" data-start="37.069" data-duration="0.05" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a20" class="clip" src="assets/sfx/whoosh-court.wav" data-start="38.219" data-duration="0.6" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a21" class="clip" src="assets/sfx/pop.wav" data-start="47.773" data-duration="0.12" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a22" class="clip" src="assets/sfx/pop.wav" data-start="47.893" data-duration="0.12" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a23" class="clip" src="assets/sfx/pop.wav" data-start="48.013" data-duration="0.12" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a24" class="clip" src="assets/sfx/pop.wav" data-start="48.133" data-duration="0.12" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a25" class="clip" src="assets/sfx/impact-sec.wav" data-start="54.080" data-duration="0.35" data-volume="0.4" data-track-index="6"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const fx = window.GamingFX;
+  fx.breathe(tl, '#halo', 0, 54.08);
+  fx.blurIn(tl, '#hk', 0.1);
+  fx.blurIn(tl, '#h1', 0.3);
+  fx.blurIn(tl, '#h2', 0.55);
+  tl.fromTo('#hook .mini', {opacity: 0, y: 60, filter: 'blur(12px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'back.out(1.6)', stagger: 0.15, immediateRender: true}, 0.9);
+  fx.blurIn(tl, '#hn', 2.34, {blur: 10});
+  fx.blurOut(tl, '#hook', 4.16);
+  fx.blurIn(tl, '#r3no', 4.41, {blur: 24, y: 0, scale: 1.2});
+  tl.fromTo('#r3my', {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', immediateRender: true}, 4.51);
+  tl.set('#r3cv', {opacity: 0}, 4.36);
+  tl.fromTo('#r3nm', {opacity: 0.45, filter: 'blur(22px)'}, {opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out', immediateRender: true}, 5.51);
+  fx.blurIn(tl, '#r3sb', 5.66, {blur: 10});
+  fx.mysteryReveal(tl, '#r3my', '#r3cv', '#r3rg', 5.51);
+  fx.breathe(tl, '#r3cv', 6.11, 12.00, {min: 0.92, max: 1, period: 1.4});
+  fx.trackerFill(tl, '#slot2', 5.51);
+  fx.slideBlur(tl, '#r3s0', 9.63, {x: 60});
+  fx.countUp(tl, '#r3v0', 0, 94, 9.73, 0.6);
+  fx.slideBlur(tl, '#r3bd', 16.84, {x: 60});
+  fx.blurIn(tl, '#r3nt', 13.13, {blur: 12, y: 16});
+  fx.blurOut(tl, '#r3', 18.21);
+  fx.blurIn(tl, '#r2no', 18.51, {blur: 24, y: 0, scale: 1.2});
+  tl.fromTo('#r2my', {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', immediateRender: true}, 18.61);
+  tl.set('#r2cv', {opacity: 0}, 18.46);
+  tl.fromTo('#r2nm', {opacity: 0.45, filter: 'blur(22px)'}, {opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out', immediateRender: true}, 19.53);
+  fx.blurIn(tl, '#r2sb', 19.68, {blur: 10});
+  fx.mysteryReveal(tl, '#r2my', '#r2cv', '#r2rg', 19.53);
+  fx.breathe(tl, '#r2cv', 20.13, 9.26, {min: 0.92, max: 1, period: 1.4});
+  fx.trackerFill(tl, '#slot1', 19.53);
+  fx.slideBlur(tl, '#r2s0', 21.87, {x: 60});
+  fx.countUp(tl, '#r2v0', 0, 93, 21.97, 0.6);
+  fx.slideBlur(tl, '#r2s1', 23.04, {x: 60});
+  fx.countUp(tl, '#r2v1', 0, 91, 23.14, 0.6);
+  fx.slideBlur(tl, '#r2bd', 27.21, {x: 60});
+  fx.blurIn(tl, '#r2nt', 24.33, {blur: 12, y: 16});
+  fx.blurOut(tl, '#r2', 29.49);
+  fx.blurIn(tl, '#r1no', 29.79, {blur: 24, y: 0, scale: 1.2});
+  tl.fromTo('#r1my', {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.35, ease: 'power2.out', immediateRender: true}, 29.89);
+  tl.set('#r1cv', {opacity: 0}, 29.74);
+  tl.fromTo('#r1nm', {opacity: 0.45, filter: 'blur(22px)'}, {opacity: 1, filter: 'blur(0px)', duration: 0.4, ease: 'power2.out', immediateRender: true}, 31.01);
+  fx.blurIn(tl, '#r1sb', 31.16, {blur: 10});
+  fx.mysteryReveal(tl, '#r1my', '#r1cv', '#r1rg', 31.01);
+  fx.breathe(tl, '#r1cv', 31.61, 14.76, {min: 0.92, max: 1, period: 1.4});
+  fx.trackerFill(tl, '#slot0', 31.01);
+  fx.slideBlur(tl, '#r1s0', 35.10, {x: 60});
+  fx.countUp(tl, '#r1v0', 0, 90, 35.20, 0.6);
+  fx.slideBlur(tl, '#r1s1', 37.07, {x: 60});
+  fx.countUp(tl, '#r1v1', 0, 86, 37.17, 0.6);
+  fx.slideBlur(tl, '#r1bd', 38.32, {x: 60});
+  fx.blurIn(tl, '#r1nt', 40.89, {blur: 12, y: 16});
+  fx.blurOut(tl, '#r1', 46.47);
+  fx.blurIn(tl, '#o1', 46.77);
+  fx.blurIn(tl, '#o2', 47.02);
+  fx.blurIn(tl, '#o3', 47.27);
+  fx.ctaGrid(tl, '#og', 47.77);
+  fx.blurIn(tl, '#on', 50.72, {blur: 10});
+  fx.blurIn(tl, '#c0', 0.00, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c1', 0.45, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c2', 0.73, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c3', 1.21, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c4', 1.72, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c5', 2.32, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c6', 3.02, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c7', 3.51, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c8', 4.49, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c9', 6.45, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c10', 7.75, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c11', 9.53, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c12', 9.69, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c13', 10.77, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c14', 11.34, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c15', 11.78, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c16', 12.20, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c17', 12.79, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c18', 13.17, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c19', 13.82, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c20', 14.24, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c21', 15.02, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c22', 15.57, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c23', 16.39, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c24', 18.21, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c25', 18.47, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c26', 19.84, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c27', 20.23, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c28', 21.67, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c29', 21.93, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c30', 23.10, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c31', 24.13, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c32', 24.84, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c33', 25.58, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c34', 26.75, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c35', 27.27, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c36', 27.90, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c37', 28.63, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c38', 28.86, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c39', 29.47, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c40', 29.78, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c41', 31.02, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c42', 32.35, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c43', 33.42, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c44', 35.16, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c45', 37.13, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c46', 38.15, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c47', 38.71, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c48', 39.96, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c49', 40.95, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c50', 43.15, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c51', 44.75, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c52', 44.95, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c53', 45.81, {blur: 10, y: 14, d: 0.22});
+  tl.fromTo('#blackout', {opacity: 0}, {opacity: 1, duration: 0.3, immediateRender: false}, 53.78);
+  fx.blurIn(tl, '#logo', 54.13, {blur: 20, y: 0, scale: 1.1, d: 0.6});
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
