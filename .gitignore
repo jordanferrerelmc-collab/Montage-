@@ -18,3 +18,7 @@ references/*/*.mp4
 projets/*/montage/assets/*.wav
 projets/*/montage/assets/*.mp3
 effets/overlays/
+projets/*/montage-*/renders/
+projets/*/montage-*/.hyperframes/
+projets/*/montage-*/assets/*.mp4
+projets/*/montage-*/assets/*.wav
