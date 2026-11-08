@@ -1,0 +1,547 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="montage-style" content="gaming-premium" />
+    <meta name="brand-default" content="specimen-gaming" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/gaming-fx.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        --cap-left: 50px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+
+      /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : dégradé radial sombre + halo d'accent qui respire */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--charcoal) 0%, var(--charcoal-deep) 55%, #000000 100%); }
+      #halo { position: absolute; left: 90px; top: 380px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.45; filter: blur(30px); }
+
+      /* signature et barre de progression (haut, sous les onglets TikTok) */
+      .handle { position: absolute; left: 70px; top: 120px; font-weight: 700; font-size: 30px; color: var(--silver); opacity: 0.8; }
+      .tracker { position: absolute; left: 70px; top: 165px; display: flex; align-items: center; gap: 12px; }
+      .tracker .lbl { font-weight: 700; font-size: 26px; letter-spacing: 0.08em; color: var(--silver); margin-right: 6px; }
+      .tracker .slot { width: 46px; height: 46px; border-radius: 10px; border: 3px solid var(--dark); background: transparent; }
+
+      /* en-tête de classement « N°x + nom » */
+      .rank { position: absolute; left: 70px; top: 250px; display: flex; align-items: flex-end; gap: 22px; }
+      .rank .no { font-weight: 700; color: var(--accent-soft); line-height: 0.8; display: flex; align-items: flex-start; }
+      .rank .no small { font-size: 70px; margin-top: 18px; }
+      .rank .no b { font-size: 190px; letter-spacing: -0.05em; }
+      .rank .txt { padding-bottom: 14px; }
+      .rank .name { font-weight: 700; font-size: 86px; letter-spacing: -0.03em; line-height: 1; }
+      .rank .sub { font-weight: 700; font-size: 36px; color: var(--silver); margin-top: 8px; letter-spacing: 0.02em; }
+
+      /* carte centrale (visuel, silhouette mystère, anneau) */
+      .stagecard { position: absolute; left: 70px; top: 520px; width: 560px; height: 760px; }
+      .cardvis { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; border: 4px solid var(--accent);
+        box-shadow: 0 0 60px rgba(218, 61, 57, 0.55), 0 30px 80px rgba(0, 0, 0, 0.6); background: var(--panel); }
+      .mystery { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .mystery svg { width: 100%; height: 100%; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%;
+        border: 6px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.55), inset 0 0 40px rgba(218, 61, 57, 0.4); opacity: 0; }
+      .pricepill { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); padding: 12px 34px; border-radius: 999px;
+        background: var(--accent); font-weight: 700; font-size: 40px; white-space: nowrap; box-shadow: 0 0 30px rgba(218, 61, 57, 0.6); }
+
+      /* colonne de droite : badges, encadrés de stats */
+      .side { position: absolute; left: 670px; top: 560px; width: 360px; display: flex; flex-direction: column; gap: 26px; }
+      .badge { display: flex; align-items: center; gap: 16px; }
+      .badge .ico { width: 64px; height: 64px; flex: none; }
+      .badge .bt { font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--accent-soft); }
+      .badge .bv { font-weight: 700; font-size: 36px; line-height: 1.05; }
+      .stat { width: 300px; padding: 18px 26px; border-radius: 22px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.7);
+        box-shadow: inset 0 0 30px rgba(218, 61, 57, 0.18); }
+      .stat .v { font-weight: 700; font-size: 96px; line-height: 0.9; letter-spacing: -0.03em; }
+      .stat .l { font-weight: 700; font-size: 24px; letter-spacing: 0.14em; color: var(--silver); margin-top: 6px; }
+      .note { position: absolute; left: 70px; top: 1330px; font-weight: 700; font-size: 44px; color: var(--ink); }
+      .note b { color: var(--accent-soft); }
+
+      /* grille d'appel à l'action 2×2 */
+      .ctagrid { position: absolute; left: 70px; top: 300px; display: grid; grid-template-columns: 300px 300px; gap: 26px; }
+      .cta-btn { height: 220px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.75);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; font-weight: 700; font-size: 38px;
+        box-shadow: 0 0 30px rgba(218, 61, 57, 0.35); }
+      .cta-btn svg { width: 74px; height: 74px; }
+      .ctanote { position: absolute; left: 70px; top: 800px; width: 626px; text-align: center; font-weight: 700; font-size: 36px; color: var(--silver); }
+
+      /* grands titres (intro / outro) */
+      .bigtitle { position: absolute; left: 70px; top: 520px; width: 940px; font-weight: 700; font-size: 128px; line-height: 0.95; letter-spacing: -0.04em; }
+      .bigtitle .acc { color: var(--accent-soft); }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--silver); margin-bottom: 26px; }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      .cap { position: absolute; left: 70px; top: 1440px; width: 820px; height: 110px; display: flex; align-items: center;
+        font-weight: 700; font-size: 72px; letter-spacing: -0.02em; color: var(--ink); text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent-soft); margin-left: 18px; white-space: nowrap; }
+
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="97.08" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="handle">SPECIMEN GAMING</div>
+      <div class="tracker"><span class="lbl">TACTIQUE</span><div class="slot" id="slot0"></div><div class="slot" id="slot1"></div><div class="slot" id="slot2"></div><div class="slot" id="slot3"></div></div>
+      <div id="cam" style="position:absolute; left:70px; top:470px; width:940px; height:780px; border-radius:34px; overflow:hidden; border:4px solid var(--accent); background:var(--panel); box-shadow:0 0 60px rgba(218, 61, 57, 0.5), 0 30px 80px rgba(0, 0, 0, 0.6); opacity:0"><img id="imgE" src="assets/equipe.jpg" style="position:absolute; left:0; top:0; width:2576px; height:1449px; transform-origin:0 0"/><img id="imgT" src="assets/tactique.jpg" style="position:absolute; left:0; top:0; width:2576px; height:1449px; transform-origin:0 0; opacity:0"/><div class="ring" id="camring"></div></div>
+      <div class="clip" id="hook" data-start="0" data-duration="10.89" data-track-index="2"><div class="rank" style="top:240px"><div class="txt"><div class="sub" id="hk0" style="letter-spacing:0.12em">FC 27 · FUT CHAMPIONS</div><div class="name" id="hk1" style="font-size:96px">Ma tactique <span style="color:var(--accent-soft)">4-3-1-2</span></div></div></div></div>
+      <div class="clip" id="hA" data-start="10.99" data-duration="17.69" data-track-index="2"><div class="rank" style="top:230px"><div class="no" id="hAno"><b style="font-size:150px">01</b></div><div class="txt"><div class="name" id="hAnm">L'attaque</div><div class="sub" id="hAsb">TACTIQUE 4-3-1-2</div></div></div></div>
+      <div class="clip" id="f0" data-start="13.81" data-duration="4.33" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f0a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Feller</div><div class="l">RENARD DES SURFACES</div></div><div class="badge" id="f0b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Soutenir</div></div></div></div>
+      <div class="clip" id="f1" data-start="18.19" data-duration="5.75" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f1a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Chawinga</div><div class="l">FAUSSE 9</div></div><div class="badge" id="f1b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Attaquer</div></div></div></div>
+      <div class="clip" id="f2" data-start="23.99" data-duration="4.49" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f2a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">López</div><div class="l">MENEUSE DE JEU</div></div><div class="badge" id="f2b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Dézoner</div></div></div></div>
+      <div class="clip" id="hM" data-start="28.68" data-duration="17.96" data-track-index="2"><div class="rank" style="top:230px"><div class="no" id="hMno"><b style="font-size:150px">02</b></div><div class="txt"><div class="name" id="hMnm">Le milieu</div><div class="sub" id="hMsb">TACTIQUE 4-3-1-2</div></div></div></div>
+      <div class="clip" id="f3" data-start="31.61" data-duration="4.56" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f3a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Karchaoui</div><div class="l">BOX-TO-BOX</div></div><div class="badge" id="f3b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Gagner le ballon</div></div></div></div>
+      <div class="clip" id="f4" data-start="36.22" data-duration="5.16" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f4a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Schertenleib</div><div class="l">MENEUSE DE JEU</div></div><div class="badge" id="f4b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Défendre</div></div></div></div>
+      <div class="clip" id="f5" data-start="41.43" data-duration="5.01" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f5a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Pedri</div><div class="l">MENEUR DE JEU</div></div><div class="badge" id="f5b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Attaquer</div></div></div></div>
+      <div class="clip" id="hD" data-start="46.64" data-duration="18.72" data-track-index="2"><div class="rank" style="top:230px"><div class="no" id="hDno"><b style="font-size:150px">03</b></div><div class="txt"><div class="name" id="hDnm">La défense</div><div class="sub" id="hDsb">TACTIQUE 4-3-1-2</div></div></div></div>
+      <div class="clip" id="f6" data-start="48.34" data-duration="4.03" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f6a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Bacha</div><div class="l">PISTON</div></div><div class="badge" id="f6b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Soutenir</div></div></div></div>
+      <div class="clip" id="f7" data-start="52.42" data-duration="5.62" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f7a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Valverde</div><div class="l">DÉFENSEUR LATÉRAL</div></div><div class="badge" id="f7b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Polyvalence</div></div></div></div>
+      <div class="clip" id="f8" data-start="58.09" data-duration="4.97" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f8a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Carreras &amp; García</div><div class="l">DÉFENSEURS</div></div><div class="badge" id="f8b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Défendre</div></div></div></div>
+      <div class="clip" id="f9" data-start="63.11" data-duration="2.05" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f9a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">García</div><div class="l">GARDIEN</div></div><div class="badge" id="f9b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Équilibré</div></div></div></div>
+      <div class="clip" id="hR" data-start="65.36" data-duration="12.08" data-track-index="2"><div class="rank" style="top:230px"><div class="no" id="hRno"><b style="font-size:150px">04</b></div><div class="txt"><div class="name" id="hRnm">Les réglages</div><div class="sub" id="hRsb">TACTIQUE 4-3-1-2</div></div></div></div>
+      <div class="clip" id="f10" data-start="68.19" data-duration="4.23" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f10a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Passes courtes</div><div class="l">STYLE DE CONSTRUCTION</div></div><div class="badge" id="f10b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Garder le ballon</div></div></div></div>
+      <div class="clip" id="f11" data-start="72.47" data-duration="4.77" data-track-index="3" style="position:absolute; left:70px; top:1275px; display:flex; align-items:center; gap:22px"><div class="stat" id="f11a" style="width:auto; padding:16px 28px"><div class="v" style="font-size:62px">Haute</div><div class="l">APPROCHE DÉFENSIVE</div></div><div class="badge" id="f11b"><svg viewBox="0 0 24 24" class="ico"><path d="M12 2l3 7h7l-5.5 4.5L18.5 21 12 16.8 5.5 21l2-7.5L2 9h7z" style="fill:var(--accent)"/></svg><div><div class="bt">CONSIGNE</div><div class="bv">Presser</div></div></div></div>
+      <div class="clip" id="fin1" data-start="77.44" data-duration="6.39" data-track-index="2"><div class="rank" style="top:240px"><div class="txt"><div class="sub" id="fa" style="letter-spacing:0.12em">À TESTER SUR FC 27</div><div class="name" id="fb" style="font-size:96px">Ma <span style="color:var(--accent-soft)">4-3-1-2</span> perso</div></div></div><div class="pricepill" id="codepill" style="position:absolute; left:540px; top:1300px; bottom:auto; font-size:54px; padding:18px 44px">CODE : Mpk&amp;2iGeW4At</div></div>
+      <div class="clip" id="fin2" data-start="83.73" data-duration="11.15" data-track-index="2"><div class="bigtitle" style="top:250px; font-size:96px"><div id="q1">Et toi,</div><div id="q2">tu joues <span class="acc">quelle formation ?</span></div></div><div class="ctagrid" id="og" style="top:700px"><div class="cta-btn" id="cbsave"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" style="fill:var(--ink)"/></svg>Enregistre</div><div class="cta-btn" id="cblike"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z" style="fill:var(--ink)"/></svg>Like</div><div class="cta-btn" id="cbsub"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" style="fill:var(--ink)"/></svg>Abonne-toi</div><div class="cta-btn" id="cbshare"><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--ink)"/></svg>Partage</div></div><div class="ctanote" id="on" style="top:1200px">Réponds en commentaire ↓</div><div class="pricepill" style="position:absolute; left:540px; top:1300px; bottom:auto; font-size:40px">CODE : Mpk&amp;2iGeW4At</div></div>
+      <div class="cap clip" id="c0" data-start="0.07" data-duration="0.48" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Tu galères en</div>
+      <div class="cap clip" id="c1" data-start="0.55" data-duration="0.76" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">FUT Champions</div>
+      <div class="cap clip" id="c2" data-start="1.31" data-duration="0.75" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Tu prends trop</div>
+      <div class="cap clip" id="c3" data-start="2.06" data-duration="0.45" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">de buts et</div>
+      <div class="cap clip" id="c4" data-start="2.51" data-duration="0.45" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">t&#x27;arrives pas à</div>
+      <div class="cap clip" id="c5" data-start="2.96" data-duration="1.32" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">construire tes attaques</div>
+      <div class="cap clip" id="c6" data-start="4.28" data-duration="0.89" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Alors teste cette</div>
+      <div class="cap clip" id="c7" data-start="5.17" data-duration="1.84" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">tactique en <span class='k' style='margin-left:0'>4-3-1-2</span></div>
+      <div class="cap clip" id="c8" data-start="7.01" data-duration="0.79" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">sur FC 27</div>
+      <div class="cap clip" id="c9" data-start="7.80" data-duration="0.67" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Et surtout</div>
+      <div class="cap clip" id="c10" data-start="8.47" data-duration="0.95" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">fais bien attention</div>
+      <div class="cap clip" id="c11" data-start="9.42" data-duration="0.45" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">au rôle de</div>
+      <div class="cap clip" id="c12" data-start="9.87" data-duration="1.08" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">chaque joueur</div>
+      <div class="cap clip" id="c13" data-start="10.95" data-duration="0.34" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Devant</div>
+      <div class="cap clip" id="c14" data-start="11.29" data-duration="0.57" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">on joue avec</div>
+      <div class="cap clip" id="c15" data-start="11.86" data-duration="1.96" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">deux attaquants complémentaires</div>
+      <div class="cap clip" id="c16" data-start="13.82" data-duration="0.93" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Feller</span> en renard des</div>
+      <div class="cap clip" id="c17" data-start="14.75" data-duration="0.63" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">surfaces</div>
+      <div class="cap clip" id="c18" data-start="15.38" data-duration="1.06" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>soutenir</span> pour offrir</div>
+      <div class="cap clip" id="c19" data-start="16.44" data-duration="1.22" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">des solutions devant</div>
+      <div class="cap clip" id="c20" data-start="17.66" data-duration="0.54" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">le but</div>
+      <div class="cap clip" id="c21" data-start="18.20" data-duration="0.85" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Chawinga</span> en <span class='k' style='margin-left:0'>fausse</span></div>
+      <div class="cap clip" id="c22" data-start="19.05" data-duration="0.27" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">9</div>
+      <div class="cap clip" id="c23" data-start="19.32" data-duration="1.27" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>attaquer</span> pour apporter</div>
+      <div class="cap clip" id="c24" data-start="20.59" data-duration="0.94" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">du mouvement et</div>
+      <div class="cap clip" id="c25" data-start="21.53" data-duration="1.28" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">créer des décalages</div>
+      <div class="cap clip" id="c26" data-start="22.81" data-duration="1.19" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Et juste derrière</div>
+      <div class="cap clip" id="c27" data-start="24.00" data-duration="1.12" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>López</span> en <span class='k' style='margin-left:0'>meneuse</span></div>
+      <div class="cap clip" id="c28" data-start="25.12" data-duration="0.53" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">de jeu</div>
+      <div class="cap clip" id="c29" data-start="25.65" data-duration="0.65" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>dézoner</span></div>
+      <div class="cap clip" id="c30" data-start="26.30" data-duration="0.64" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">pour faire le</div>
+      <div class="cap clip" id="c31" data-start="26.94" data-duration="0.46" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">lien entre le</div>
+      <div class="cap clip" id="c32" data-start="27.40" data-duration="1.24" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">milieu et l&#x27;attaque</div>
+      <div class="cap clip" id="c33" data-start="28.64" data-duration="0.57" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Maintenant</div>
+      <div class="cap clip" id="c34" data-start="29.21" data-duration="1.06" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">le plus important</div>
+      <div class="cap clip" id="c35" data-start="30.27" data-duration="0.65" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">le milieu de</div>
+      <div class="cap clip" id="c36" data-start="30.92" data-duration="0.70" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">terrain</div>
+      <div class="cap clip" id="c37" data-start="31.62" data-duration="1.56" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Karchaoui</span> en <span class='k' style='margin-left:0'>box-to-box</span></div>
+      <div class="cap clip" id="c38" data-start="33.18" data-duration="0.69" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">gagner le ballon</div>
+      <div class="cap clip" id="c39" data-start="33.87" data-duration="0.97" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">pour récupérer un</div>
+      <div class="cap clip" id="c40" data-start="34.84" data-duration="1.39" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">maximum de ballons</div>
+      <div class="cap clip" id="c41" data-start="36.23" data-duration="1.20" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Schertenleib</span> en <span class='k' style='margin-left:0'>meneuse</span></div>
+      <div class="cap clip" id="c42" data-start="37.43" data-duration="0.48" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">de jeu</div>
+      <div class="cap clip" id="c43" data-start="37.91" data-duration="1.36" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>défendre</span> pour sécuriser</div>
+      <div class="cap clip" id="c44" data-start="39.27" data-duration="1.24" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">l&#x27;axe et participer</div>
+      <div class="cap clip" id="c45" data-start="40.51" data-duration="0.77" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">à la relance</div>
+      <div class="cap clip" id="c46" data-start="41.28" data-duration="0.55" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Et <span class='k' style='margin-left:0'>Pedri</span> en</div>
+      <div class="cap clip" id="c47" data-start="41.83" data-duration="0.79" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>meneur</span> de jeu</div>
+      <div class="cap clip" id="c48" data-start="42.62" data-duration="1.10" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>attaquer</span> pour créer</div>
+      <div class="cap clip" id="c49" data-start="43.72" data-duration="0.87" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">des occasions et</div>
+      <div class="cap clip" id="c50" data-start="44.59" data-duration="2.01" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">accompagner les offensives</div>
+      <div class="cap clip" id="c51" data-start="46.60" data-duration="0.51" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Passons à la</div>
+      <div class="cap clip" id="c52" data-start="47.11" data-duration="0.64" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">défense</div>
+      <div class="cap clip" id="c53" data-start="47.75" data-duration="0.60" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">À gauche</div>
+      <div class="cap clip" id="c54" data-start="48.35" data-duration="1.03" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Bacha</span> en <span class='k' style='margin-left:0'>piston</span></div>
+      <div class="cap clip" id="c55" data-start="49.38" data-duration="1.32" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>soutenir</span> pour apporter</div>
+      <div class="cap clip" id="c56" data-start="50.70" data-duration="0.96" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">de la largeur</div>
+      <div class="cap clip" id="c57" data-start="51.66" data-duration="0.77" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">À droite</div>
+      <div class="cap clip" id="c58" data-start="52.43" data-duration="1.29" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Valverde</span> en <span class='k' style='margin-left:0'>défenseur</span></div>
+      <div class="cap clip" id="c59" data-start="53.72" data-duration="0.59" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">latéral</div>
+      <div class="cap clip" id="c60" data-start="54.31" data-duration="1.55" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>polyvalence</span> pour garder</div>
+      <div class="cap clip" id="c61" data-start="55.86" data-duration="0.82" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">un bon équilibre</div>
+      <div class="cap clip" id="c62" data-start="56.68" data-duration="0.88" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">défensif</div>
+      <div class="cap clip" id="c63" data-start="57.56" data-duration="0.54" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Dans l&#x27;axe</div>
+      <div class="cap clip" id="c64" data-start="58.10" data-duration="1.16" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Carreras</span> et <span class='k' style='margin-left:0'>García</span></div>
+      <div class="cap clip" id="c65" data-start="59.26" data-duration="1.03" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">en <span class='k' style='margin-left:0'>défenseur</span></div>
+      <div class="cap clip" id="c66" data-start="60.29" data-duration="1.35" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>défendre</span> pour protéger</div>
+      <div class="cap clip" id="c67" data-start="61.64" data-duration="1.07" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">la profondeur</div>
+      <div class="cap clip" id="c68" data-start="62.71" data-duration="0.93" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Et notre <span class='k' style='margin-left:0'>gardien</span></div>
+      <div class="cap clip" id="c69" data-start="63.64" data-duration="1.68" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>García</span> en <span class='k' style='margin-left:0'>équilibré</span></div>
+      <div class="cap clip" id="c70" data-start="65.32" data-duration="0.52" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Maintenant</div>
+      <div class="cap clip" id="c71" data-start="65.84" data-duration="0.68" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">les deux réglages</div>
+      <div class="cap clip" id="c72" data-start="66.52" data-duration="0.72" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">à ne surtout</div>
+      <div class="cap clip" id="c73" data-start="67.24" data-duration="0.96" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">pas oublier</div>
+      <div class="cap clip" id="c74" data-start="68.20" data-duration="1.46" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>Construction</span> en passes courtes</div>
+      <div class="cap clip" id="c75" data-start="69.66" data-duration="0.49" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">pour garder le</div>
+      <div class="cap clip" id="c76" data-start="70.15" data-duration="0.78" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">contrôle du ballon</div>
+      <div class="cap clip" id="c77" data-start="70.93" data-duration="0.81" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">et trouver les</div>
+      <div class="cap clip" id="c78" data-start="71.74" data-duration="0.58" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">décalages</div>
+      <div class="cap clip" id="c79" data-start="72.32" data-duration="1.16" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Et approche défensive</div>
+      <div class="cap clip" id="c80" data-start="73.48" data-duration="0.97" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap"><span class='k' style='margin-left:0'>haute</span> pour presser</div>
+      <div class="cap clip" id="c81" data-start="74.45" data-duration="1.39" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">l&#x27;adversaire et récupérer</div>
+      <div class="cap clip" id="c82" data-start="75.84" data-duration="1.56" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">rapidement la possession</div>
+      <div class="cap clip" id="c83" data-start="77.40" data-duration="0.78" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Voilà ma tactique</div>
+      <div class="cap clip" id="c84" data-start="78.18" data-duration="1.95" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">personnalisée en <span class='k' style='margin-left:0'>4-3-1-2</span></div>
+      <div class="cap clip" id="c85" data-start="80.13" data-duration="0.92" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">sur FC 27</div>
+      <div class="cap clip" id="c86" data-start="81.05" data-duration="0.57" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">Je te laisse</div>
+      <div class="cap clip" id="c87" data-start="81.62" data-duration="0.35" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">le <span class='k' style='margin-left:0'>code</span> à</div>
+      <div class="cap clip" id="c88" data-start="81.97" data-duration="0.75" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">l&#x27;écran pour que</div>
+      <div class="cap clip" id="c89" data-start="82.72" data-duration="0.50" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">tu puisses la</div>
+      <div class="cap clip" id="c90" data-start="83.22" data-duration="0.51" data-track-index="4" style="top:1450px; gap:0 18px; flex-wrap:wrap">tester</div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="94.88" data-duration="2.2" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="voice" class="clip" src="assets/voix.wav" data-start="0" data-duration="94.28" data-volume="1" data-track-index="0"></audio>
+    <audio id="a0" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.690" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/impact-sec.wav" data-start="5.940" data-duration="0.35" data-volume="0.45" data-track-index="7"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.1" data-volume="0.3" data-track-index="6"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/riser.wav" data-start="9.990" data-duration="1.0" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/impact-sec.wav" data-start="10.990" data-duration="0.35" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.940" data-duration="0.6" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/whoosh-court.wav" data-start="13.460" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/clic.wav" data-start="13.810" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/whoosh-court.wav" data-start="17.840" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/clic.wav" data-start="18.190" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/whoosh-court.wav" data-start="23.640" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/clic.wav" data-start="23.990" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a12" class="clip" src="assets/sfx/riser.wav" data-start="27.680" data-duration="1.0" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/impact-sec.wav" data-start="28.680" data-duration="0.35" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a14" class="clip" src="assets/sfx/whoosh-court.wav" data-start="28.630" data-duration="0.6" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a15" class="clip" src="assets/sfx/whoosh-court.wav" data-start="31.260" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a16" class="clip" src="assets/sfx/clic.wav" data-start="31.610" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a17" class="clip" src="assets/sfx/whoosh-court.wav" data-start="35.870" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a18" class="clip" src="assets/sfx/clic.wav" data-start="36.220" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a19" class="clip" src="assets/sfx/whoosh-court.wav" data-start="41.080" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a20" class="clip" src="assets/sfx/clic.wav" data-start="41.430" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a21" class="clip" src="assets/sfx/riser.wav" data-start="45.640" data-duration="1.0" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="a22" class="clip" src="assets/sfx/impact-sec.wav" data-start="46.640" data-duration="0.35" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a23" class="clip" src="assets/sfx/whoosh-court.wav" data-start="46.590" data-duration="0.6" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a24" class="clip" src="assets/sfx/whoosh-court.wav" data-start="47.990" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a25" class="clip" src="assets/sfx/clic.wav" data-start="48.340" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a26" class="clip" src="assets/sfx/whoosh-court.wav" data-start="52.070" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a27" class="clip" src="assets/sfx/clic.wav" data-start="52.420" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a28" class="clip" src="assets/sfx/clic.wav" data-start="58.090" data-duration="0.05" data-volume="0.3" data-track-index="6"></audio>
+    <audio id="a29" class="clip" src="assets/sfx/whoosh-court.wav" data-start="62.760" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a30" class="clip" src="assets/sfx/clic.wav" data-start="63.110" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a31" class="clip" src="assets/sfx/whoosh-court.wav" data-start="57.650" data-duration="0.6" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a32" class="clip" src="assets/sfx/riser.wav" data-start="64.360" data-duration="1.0" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="a33" class="clip" src="assets/sfx/impact-sec.wav" data-start="65.360" data-duration="0.35" data-volume="0.35" data-track-index="6"></audio>
+    <audio id="a34" class="clip" src="assets/sfx/whoosh-court.wav" data-start="65.310" data-duration="0.6" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a35" class="clip" src="assets/sfx/whoosh-court.wav" data-start="67.840" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a36" class="clip" src="assets/sfx/clic.wav" data-start="68.190" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a37" class="clip" src="assets/sfx/whoosh-court.wav" data-start="72.120" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a38" class="clip" src="assets/sfx/clic.wav" data-start="72.470" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a39" class="clip" src="assets/sfx/whoosh-court.wav" data-start="77.390" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a40" class="clip" src="assets/sfx/whoosh-court.wav" data-start="81.400" data-duration="0.6" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a41" class="clip" src="assets/sfx/impact-sec.wav" data-start="81.750" data-duration="0.35" data-volume="0.4" data-track-index="7"></audio>
+    <audio id="a42" class="clip" src="assets/sfx/ding.wav" data-start="81.850" data-duration="0.7" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="a43" class="clip" src="assets/sfx/pop.wav" data-start="83.780" data-duration="0.12" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a44" class="clip" src="assets/sfx/pop.wav" data-start="83.900" data-duration="0.12" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a45" class="clip" src="assets/sfx/pop.wav" data-start="84.020" data-duration="0.12" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a46" class="clip" src="assets/sfx/pop.wav" data-start="84.140" data-duration="0.12" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="a47" class="clip" src="assets/sfx/clic.wav" data-start="89.910" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a48" class="clip" src="assets/sfx/impact-sec.wav" data-start="94.880" data-duration="0.35" data-volume="0.4" data-track-index="6"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const fx = window.GamingFX;
+  fx.breathe(tl, '#halo', 0, 94.88);
+  tl.set('#imgE', {x: -109.6, y: 65.4, scale: 0.45}, 0.00);
+  tl.fromTo('#cam', {opacity: 0, scale: 0.9, filter: 'blur(14px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.5, ease: 'power3.out', immediateRender: false}, 0.1);
+  fx.shockwave(tl, '#camring', 5.94, {to: 1.4});
+  tl.set('#imgT', {x: -331.0, y: -25.3, scale: 0.62}, 0.00);
+  tl.to('#imgE', {opacity: 0, duration: 0.4}, 9.32);
+  tl.to('#imgT', {opacity: 1, duration: 0.4}, 9.32);
+  fx.blurIn(tl, '#hk0', 0.15, {blur: 10});
+  fx.blurIn(tl, '#hk1', 5.84, {blur: 22});
+  fx.blurOut(tl, '#hook', 10.59);
+  fx.blurIn(tl, '#hAno', 11.04, {blur: 24, y: 0, scale: 1.2});
+  fx.blurIn(tl, '#hAnm', 11.14);
+  fx.blurIn(tl, '#hAsb', 11.29, {blur: 10});
+  fx.trackerFill(tl, '#slot0', 11.09);
+  fx.blurOut(tl, '#hA', 28.33);
+  fx.slideBlur(tl, '#f0a', 13.81, {x: -60});
+  fx.slideBlur(tl, '#f0b', 14.21, {x: 60});
+  fx.blurOut(tl, '#f0', 17.89, {d: 0.2});
+  fx.slideBlur(tl, '#f1a', 18.19, {x: -60});
+  fx.slideBlur(tl, '#f1b', 18.59, {x: 60});
+  fx.blurOut(tl, '#f1', 23.69, {d: 0.2});
+  fx.slideBlur(tl, '#f2a', 23.99, {x: -60});
+  fx.slideBlur(tl, '#f2b', 24.39, {x: 60});
+  fx.blurOut(tl, '#f2', 28.23, {d: 0.2});
+  fx.blurIn(tl, '#hMno', 28.73, {blur: 24, y: 0, scale: 1.2});
+  fx.blurIn(tl, '#hMnm', 28.83);
+  fx.blurIn(tl, '#hMsb', 28.98, {blur: 10});
+  fx.trackerFill(tl, '#slot1', 28.78);
+  fx.blurOut(tl, '#hM', 46.29);
+  fx.slideBlur(tl, '#f3a', 31.61, {x: -60});
+  fx.slideBlur(tl, '#f3b', 32.01, {x: 60});
+  fx.blurOut(tl, '#f3', 35.92, {d: 0.2});
+  fx.slideBlur(tl, '#f4a', 36.22, {x: -60});
+  fx.slideBlur(tl, '#f4b', 36.62, {x: 60});
+  fx.blurOut(tl, '#f4', 41.13, {d: 0.2});
+  fx.slideBlur(tl, '#f5a', 41.43, {x: -60});
+  fx.slideBlur(tl, '#f5b', 41.83, {x: 60});
+  fx.blurOut(tl, '#f5', 46.19, {d: 0.2});
+  fx.blurIn(tl, '#hDno', 46.69, {blur: 24, y: 0, scale: 1.2});
+  fx.blurIn(tl, '#hDnm', 46.79);
+  fx.blurIn(tl, '#hDsb', 46.94, {blur: 10});
+  fx.trackerFill(tl, '#slot2', 46.74);
+  fx.blurOut(tl, '#hD', 65.01);
+  fx.slideBlur(tl, '#f6a', 48.34, {x: -60});
+  fx.slideBlur(tl, '#f6b', 48.74, {x: 60});
+  fx.blurOut(tl, '#f6', 52.12, {d: 0.2});
+  fx.slideBlur(tl, '#f7a', 52.42, {x: -60});
+  fx.slideBlur(tl, '#f7b', 52.82, {x: 60});
+  fx.blurOut(tl, '#f7', 57.79, {d: 0.2});
+  fx.slideBlur(tl, '#f8a', 58.09, {x: -60});
+  fx.slideBlur(tl, '#f8b', 58.49, {x: 60});
+  fx.blurOut(tl, '#f8', 62.81, {d: 0.2});
+  fx.slideBlur(tl, '#f9a', 63.11, {x: -60});
+  fx.slideBlur(tl, '#f9b', 63.51, {x: 60});
+  fx.blurOut(tl, '#f9', 64.91, {d: 0.2});
+  fx.blurIn(tl, '#hRno', 65.41, {blur: 24, y: 0, scale: 1.2});
+  fx.blurIn(tl, '#hRnm', 65.51);
+  fx.blurIn(tl, '#hRsb', 65.66, {blur: 10});
+  fx.trackerFill(tl, '#slot3', 65.46);
+  fx.blurOut(tl, '#hR', 77.09);
+  fx.slideBlur(tl, '#f10a', 68.19, {x: -60});
+  fx.slideBlur(tl, '#f10b', 68.59, {x: 60});
+  fx.blurOut(tl, '#f10', 72.17, {d: 0.2});
+  fx.slideBlur(tl, '#f11a', 72.47, {x: -60});
+  fx.slideBlur(tl, '#f11b', 72.87, {x: 60});
+  fx.blurOut(tl, '#f11', 76.99, {d: 0.2});
+  fx.blurIn(tl, '#fa', 77.49, {blur: 10});
+  fx.blurIn(tl, '#fb', 77.64);
+  fx.blurIn(tl, '#codepill', 81.75, {blur: 14, y: 20});
+  fx.shockwave(tl, '#camring', 81.75, {to: 1.4});
+  fx.blurOut(tl, ['#fin1', '#cam'], 83.48);
+  fx.ctaGrid(tl, '#og', 83.78);
+  tl.fromTo('#cbsave', {scale: 1.15}, {scale: 1, duration: 0.3, ease: 'back.out(3)', immediateRender: false}, 84.33);
+  fx.blurIn(tl, '#q1', 86.41);
+  fx.blurIn(tl, '#q2', 86.66);
+  fx.blurIn(tl, '#on', 87.01, {blur: 10});
+  tl.fromTo('#cbsub', {scale: 1.18}, {scale: 1, duration: 0.35, ease: 'back.out(3)', immediateRender: false}, 89.91);
+  tl.fromTo('#imgE', {x: -109.6, y: 65.4, scale: 0.45}, {...{x: -364.6, y: -1183.6, scale: 1.35}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 5.74);
+  tl.fromTo('#imgT', {x: -331.0, y: -25.3, scale: 0.62}, {...{x: -821.9, y: -125.2, scale: 1.0}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 10.99);
+  tl.fromTo('#imgT', {x: -821.9, y: -125.2, scale: 1.0}, {...{x: -1910.2, y: -556.7, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 13.51);
+  tl.fromTo('#imgT', {x: -1910.2, y: -556.7, scale: 2.1}, {...{x: -2572.9, y: -556.7, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 17.89);
+  tl.fromTo('#imgT', {x: -2572.9, y: -556.7, scale: 2.1}, {...{x: -2242.9, y: -705.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 23.69);
+  tl.fromTo('#imgT', {x: -2242.9, y: -705.4, scale: 2.1}, {...{x: -821.9, y: -279.8, scale: 1.0}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 28.68);
+  tl.fromTo('#imgT', {x: -821.9, y: -279.8, scale: 1.0}, {...{x: -1861.5, y: -962.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 31.31);
+  tl.fromTo('#imgT', {x: -1861.5, y: -962.4, scale: 2.1}, {...{x: -2242.9, y: -1092.2, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 35.92);
+  tl.fromTo('#imgT', {x: -2242.9, y: -1092.2, scale: 2.1}, {...{x: -2621.6, y: -962.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 41.13);
+  tl.fromTo('#imgT', {x: -2621.6, y: -962.4, scale: 2.1}, {...{x: -692.7, y: -351.9, scale: 0.9}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 46.64);
+  tl.fromTo('#imgT', {x: -692.7, y: -351.9, scale: 0.9}, {...{x: -1418.0, y: -1292.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 48.04);
+  tl.fromTo('#imgT', {x: -1418.0, y: -1292.4, scale: 2.1}, {...{x: -3062.5, y: -1292.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 52.12);
+  tl.fromTo('#imgT', {x: -3062.5, y: -1292.4, scale: 2.1}, {...{x: -1144.8, y: -640.4, scale: 1.25}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 57.70);
+  tl.fromTo('#imgT', {x: -1144.8, y: -640.4, scale: 1.25}, {...{x: -2242.9, y: -1503.4, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 62.81);
+  tl.fromTo('#imgT', {x: -2242.9, y: -1503.4, scale: 2.1}, {...{x: -689.2, y: -606.9, scale: 0.9}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 65.36);
+  tl.fromTo('#imgT', {x: -689.2, y: -606.9, scale: 0.9}, {...{x: -2234.8, y: -1936.1, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 67.89);
+  tl.fromTo('#imgT', {x: -2234.8, y: -1936.1, scale: 2.1}, {...{x: -2994.8, y: -1936.1, scale: 2.1}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 72.17);
+  tl.fromTo('#imgT', {x: -2994.8, y: -1936.1, scale: 2.1}, {...{x: -331.0, y: -25.3, scale: 0.62}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 77.44);
+  tl.fromTo('#imgT', {x: -331.0, y: -25.3, scale: 0.62}, {...{x: -1462.0, y: -69.8, scale: 1.5}, duration: 0.6, ease: 'power3.inOut', immediateRender: false}, 81.45);
+  fx.blurIn(tl, '#c0', 0.07, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c1', 0.55, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c2', 1.31, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c3', 2.06, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c4', 2.51, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c5', 2.96, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c6', 4.28, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c7', 5.17, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c8', 7.01, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c9', 7.80, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c10', 8.47, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c11', 9.42, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c12', 9.87, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c13', 10.95, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c14', 11.29, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c15', 11.86, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c16', 13.82, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c17', 14.75, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c18', 15.38, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c19', 16.44, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c20', 17.66, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c21', 18.20, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c22', 19.05, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c23', 19.32, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c24', 20.59, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c25', 21.53, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c26', 22.81, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c27', 24.00, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c28', 25.12, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c29', 25.65, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c30', 26.30, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c31', 26.94, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c32', 27.40, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c33', 28.64, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c34', 29.21, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c35', 30.27, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c36', 30.92, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c37', 31.62, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c38', 33.18, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c39', 33.87, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c40', 34.84, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c41', 36.23, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c42', 37.43, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c43', 37.91, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c44', 39.27, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c45', 40.51, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c46', 41.28, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c47', 41.83, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c48', 42.62, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c49', 43.72, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c50', 44.59, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c51', 46.60, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c52', 47.11, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c53', 47.75, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c54', 48.35, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c55', 49.38, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c56', 50.70, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c57', 51.66, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c58', 52.43, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c59', 53.72, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c60', 54.31, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c61', 55.86, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c62', 56.68, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c63', 57.56, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c64', 58.10, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c65', 59.26, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c66', 60.29, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c67', 61.64, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c68', 62.71, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c69', 63.64, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c70', 65.32, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c71', 65.84, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c72', 66.52, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c73', 67.24, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c74', 68.20, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c75', 69.66, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c76', 70.15, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c77', 70.93, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c78', 71.74, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c79', 72.32, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c80', 73.48, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c81', 74.45, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c82', 75.84, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c83', 77.40, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c84', 78.18, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c85', 80.13, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c86', 81.05, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c87', 81.62, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c88', 81.97, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c89', 82.72, {blur: 10, y: 14, d: 0.22});
+  fx.blurIn(tl, '#c90', 83.22, {blur: 10, y: 14, d: 0.22});
+  tl.fromTo('#blackout', {opacity: 0}, {opacity: 1, duration: 0.3, immediateRender: false}, 94.58);
+  fx.blurIn(tl, '#logo', 94.93, {blur: 20, y: 0, scale: 1.1, d: 0.6});
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
