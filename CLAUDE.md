@@ -76,3 +76,20 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
   (ex. « vues » → « jus »). Reformuler la phrase et régénérer si besoin.
 - Montage sans visage : voix off + style de la marque (cartes, titres, B-roll fournis par l'utilisateur,
   fond de marque), sans la vidéo de la personne.
+
+## Effets et transitions pro (bibliothèque `effets/`)
+
+À utiliser dans chaque montage pour un rendu de qualité. Détail et liste complète : `effets/README.md`.
+- **191 éléments HyperFrames** dans `effets/compositions/` : 70 transitions (dont shaders WebGL : cinematic-zoom,
+  light-leak, glitch, whip-pan, swirl-vortex, ridged-burn, cross-warp-morph…), effets (grain, vignette, motion blur,
+  camera shake, light leaks), 17 styles de sous-titres, bandeaux, titres, logos/CTA. Copier l'élément voulu dans le
+  projet, puis remplacer ses couleurs et sa police par les variables de la charte (`npm run brand:check` doit rester vert).
+- **Nouvel élément du catalogue** : `cd effets && ../hyperframes/node_modules/.bin/hyperframes add <nom> --no-clipboard`,
+  puis `npm run fx:localize` (GSAP local au lieu du CDN).
+- **Bruitages** `effets/sfx/` (17), **LUT** `effets/luts/` (6), **grain** `effets/overlays/` (régénérés par `npm run fx:assets`).
+- **Étalonnage final** : `npm run grade -- in.mp4 out.mp4 <look> [--grain] [--vignette] [--force 0.8]`.
+  Agency : `or-chaud` ou `film-desature`. Gaming : `punchy-gaming` ou `froid-net`.
+- **Transitions FFmpeg** entre deux vidéos : `npm run transition -- a.mp4 b.mp4 out.mp4 <type> <durée>`.
+- **Remotion** dispose aussi de @remotion/transitions, motion-blur, noise, shapes, paths, lottie et light-leaks.
+- Rendu des shaders : WebGL logiciel (pas de GPU), plus lent mais fonctionnel. Les éléments 3D chargent
+  Three.js depuis cdn.jsdelivr.net (autorisé dans l'environnement « Montage »).

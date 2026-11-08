@@ -109,6 +109,17 @@ Chaque vidéo utilise l'une des deux chartes, choisie avec `BRAND=<marque>` :
 npm run brand:check   # refuse toute couleur hors charte et toute police autre que TeX Gyre Heros
 ```
 
+## Effets et transitions pro
+
+Bibliothèque `effets/` : 191 éléments du catalogue HyperFrames (70 transitions, effets, sous-titres, titres,
+bandeaux, logos), bruitages, filtres couleur (LUT) et grain. Voir `effets/README.md`.
+
+```bash
+npm run grade -- in.mp4 out.mp4 or-chaud --grain --vignette   # étalonnage
+npm run transition -- a.mp4 b.mp4 out.mp4 smoothleft 0.5     # transition entre deux vidéos
+npm run fx:assets                                            # régénère bruitages, LUT et grain
+```
+
 ## Options facultatives
 
 - **MusicGen** — musique générée localement : `pip install transformers torch soundfile numpy`

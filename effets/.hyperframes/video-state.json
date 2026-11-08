@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "historyId": null,
+  "currentRevision": null,
+  "pendingChanges": true,
+  "files": {},
+  "revisions": {},
+  "checks": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "snapshots": {
+    "latest": null,
+    "revisions": {},
+    "unversioned": []
+  },
+  "renders": {
+    "latest": {
+      "id": "0381f27f-b41b-4994-9054-08d93408d521",
+      "completedAt": 1794136553892,
+      "output": "/home/user/Montage-/out/fx/thermal-distortion.mp4",
+      "status": "completed",
+      "revision": null
+    },
+    "retainedRevisions": []
+  },
+  "pendingArtifactCleanup": []
+}
