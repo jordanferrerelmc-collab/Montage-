@@ -115,3 +115,14 @@ bibliothèque `templates/motion-3d/motion3d.js` (voir son README), exemple `proj
   dans la page (le contrôle statique le cherche). Bloom : seuil élevé (0,8) pour éviter la surexposition.
 - Pas de modèles 3D tiers (licences) : objets procéduraux, ou modèles .glb fournis par l'utilisateur.
 - Rendu lent sans GPU : lancer le rendu en arrière-plan.
+
+## Skill « effects » (51 effets face caméra, tiers, MIT)
+
+Installé dans `.claude/skills/effects` (voir `SKILL.md` et `INSTALL-MONTAGE.md`). Commande `/effects <nom>` :
+effets qui suivent le visage (mot géant derrière la tête, crochets « locked-on », orbite de reels, spotlight,
+tampon, checklist, iMessage, liquid glass, etc.). Mise en route d'une session : `npm run effects:setup` (≈ 2 min).
+- **Charte** : ses effets utilisent leurs propres polices (Archivo Black, Anton, Inter…) et couleurs (rouge du
+  tampon…), **non conformes** aux chartes Specimen. Dans un montage de marque, ne l'utiliser que si l'utilisateur
+  le demande explicitement, et le signaler ; sinon préférer les modèles maison (`reel-editorial`, `reel-gaming`).
+- Ses rendus gardent l'audio d'origine et n'ajoutent ni sous-titres ni sons : enchaîner ensuite avec nos
+  sous-titres et bruitages si besoin.
