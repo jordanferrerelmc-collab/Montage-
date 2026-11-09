@@ -105,19 +105,22 @@
         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
         mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
       #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+      /* zones sûres TikTok (charte gaming) : rien sous les onglets du haut, ni dans la colonne d'icônes, ni dans la description */
+      .handle { top: 200px; } .tracker { top: 245px; }
+      .cap { top: var(--cap-top); left: var(--cap-left); width: var(--cap-width); }
       #game { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 45%; }
       #pan { position: absolute; left: 0; top: 0; width: 3414px; height: 1920px; }
       #pan video, #pan img { position: absolute; left: 0; top: 0; width: 3414px; height: 1920px; }
       #vign { position: absolute; inset: 0; pointer-events: none; z-index: 0;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 30%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, 0.7) 100%); }
-      .hook { position: absolute; left: 70px; top: 330px; width: 860px; }
+      .hook { position: absolute; left: 70px; top: 360px; width: 840px; }
       .htitle { font-weight: 700; font-size: 96px; letter-spacing: -0.03em; line-height: 0.95; text-shadow: 0 4px 0 rgba(0, 0, 0, 0.55), 0 6px 30px rgba(0, 0, 0, 0.85); }
       .htitle.big { font-size: 230px; color: var(--accent-soft); letter-spacing: -0.05em; }
       .emo { position: absolute; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
       .ering { position: absolute; left: 50%; top: 50%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .tcard { position: absolute; left: 70px; top: 300px; width: 470px; padding: 24px; border-radius: 30px; border: 3px solid var(--accent);
+      .tcard { position: absolute; left: 50px; top: 330px; width: 470px; padding: 24px; border-radius: 30px; border: 3px solid var(--accent);
         background: rgba(28, 29, 33, 0.82); box-shadow: 0 0 40px rgba(218, 61, 57, 0.4), 0 30px 70px rgba(0, 0, 0, 0.6); }
       .tlab { position: absolute; left: 24px; top: 22px; font-weight: 700; font-size: 32px; letter-spacing: 0.06em; color: var(--accent-soft); }
       .pitch { position: relative; margin-top: 56px; width: 422px; height: 560px; border-radius: 18px; border: 2px solid var(--silver);
@@ -220,8 +223,8 @@
       <div class="handle">SPECIMEN GAMING</div>
       <div class="tracker"><span class="lbl">TACTIQUE</span><div class="slot" id="slot0"></div><div class="slot" id="slot1"></div><div class="slot" id="slot2"></div></div>
       <div class="clip hook" id="hook" data-start="0" data-duration="2.87" data-track-index="2"><div class="kicker" id="hk">FC · TACTIQUE</div><div class="htitle" id="ht1">Tu joues en</div><div class="htitle big" id="ht2">4-3-1-2</div></div>
-      <div class="clip emo" id="e1" data-start="2.92" data-duration="1.54" data-track-index="3" style="left:600px; top:330px; font-size:260px"><div class="ering" id="e1r"></div><span id="e1c">❌</span></div>
-      <div class="clip emo" id="e2" data-start="4.56" data-duration="1.13" data-track-index="3" style="left:760px; top:300px; font-size:180px"><div class="ering" id="e2r"></div><span id="e2c">🎯</span></div>
+      <div class="clip emo" id="e1" data-start="3.36" data-duration="1.10" data-track-index="3" style="left:560px; top:380px; font-size:260px"><div class="ering" id="e1r"></div><span id="e1c">❌</span></div>
+      <div class="clip emo" id="e2" data-start="4.56" data-duration="1.13" data-track-index="3" style="left:640px; top:380px; font-size:180px"><div class="ering" id="e2r"></div><span id="e2c">🎯</span></div>
       <div class="clip emo" id="e3" data-start="13.11" data-duration="0.52" data-track-index="3" style="left:380px; top:520px; font-size:300px"><div class="ering" id="e3r"></div><span id="e3c">💥</span></div>
       <div class="clip emo" id="e4" data-start="13.63" data-duration="0.56" data-track-index="3" style="left:400px; top:520px; font-size:300px"><div class="ering" id="e4r"></div><span id="e4c">⚽</span></div>
       <div class="clip tcard" id="tc" data-start="4.51" data-duration="8.45" data-track-index="2"><div class="tlab" id="tl1">1 · ÉCARTE</div><div class="tlab" id="tl2">2 · REVIENS DANS L'AXE</div><div class="pitch"><i class="mid"></i><i class="circ"></i><i class="box top"></i><i class="box bot"></i><svg class="arrows" viewBox="0 0 100 100" preserveAspectRatio="none"><path id="aL" d="M14 70 Q6 50 8 30" pathLength="1"/><path id="aR" d="M86 70 Q94 50 92 30" pathLength="1"/><path id="c1" d="M50 38 L36 16" pathLength="1"/><path id="c2" d="M36 16 L64 16" pathLength="1"/><path id="c3" d="M64 16 L50 38" pathLength="1"/></svg><b class="pl " id="pG" style="left:50%; top:92%"></b><b class="pl " id="pDG" style="left:14%; top:72%"></b><b class="pl " id="pDCG" style="left:38%; top:77%"></b><b class="pl " id="pDCD" style="left:62%; top:77%"></b><b class="pl " id="pDD" style="left:86%; top:72%"></b><b class="pl " id="pMG" style="left:24%; top:55%"></b><b class="pl " id="pMC" style="left:50%; top:59%"></b><b class="pl " id="pMD" style="left:76%; top:55%"></b><b class="pl acc" id="pMOC" style="left:50%; top:38%"></b><b class="pl acc" id="pBG" style="left:36%; top:16%"></b><b class="pl acc" id="pBD" style="left:64%; top:16%"></b></div></div>
@@ -255,7 +258,7 @@
     </div>
     <audio id="a0" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.1" data-volume="0.3" data-track-index="6"></audio>
     <audio id="a1" class="clip" src="assets/sfx/impact-sec.wav" data-start="0.630" data-duration="0.35" data-volume="0.35" data-track-index="7"></audio>
-    <audio id="a2" class="clip" src="assets/sfx/pop.wav" data-start="2.920" data-duration="0.3" data-volume="0.3" data-track-index="6"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/pop.wav" data-start="3.360" data-duration="0.3" data-volume="0.3" data-track-index="6"></audio>
     <audio id="a3" class="clip" src="assets/sfx/pop.wav" data-start="4.560" data-duration="0.3" data-volume="0.3" data-track-index="6"></audio>
     <audio id="a4" class="clip" src="assets/sfx/pop.wav" data-start="13.110" data-duration="0.3" data-volume="0.3" data-track-index="6"></audio>
     <audio id="a5" class="clip" src="assets/sfx/pop.wav" data-start="13.630" data-duration="0.3" data-volume="0.3" data-track-index="6"></audio>
@@ -295,8 +298,8 @@
   fx.blurIn(tl, '#ht1', 0.15);
   fx.blurIn(tl, '#ht2', 0.63, {blur: 24, scale: 1.2, y: 0});
   fx.blurOut(tl, '#hook', 2.57);
-  tl.fromTo('#e1c', {scale: 0, rotation: -30}, {scale: 1, rotation: -10, duration: 0.45, ease: 'back.out(2.2)', immediateRender: true}, 2.920);
-  fx.shockwave(tl, '#e1r', 2.970);
+  tl.fromTo('#e1c', {scale: 0, rotation: -30}, {scale: 1, rotation: -10, duration: 0.45, ease: 'back.out(2.2)', immediateRender: true}, 3.360);
+  fx.shockwave(tl, '#e1r', 3.410);
   fx.blurOut(tl, '#e1', 4.210);
   tl.fromTo('#e2c', {scale: 0, rotation: 24}, {scale: 1, rotation: 8, duration: 0.45, ease: 'back.out(2.2)', immediateRender: true}, 4.560);
   fx.shockwave(tl, '#e2r', 4.610);

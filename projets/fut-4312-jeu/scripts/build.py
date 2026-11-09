@@ -71,8 +71,8 @@ def emoji(eid, char, t, end, x, y, size=220, rot=-8):
     js.append(f"  fx.blurOut(tl, '#{eid}', {end - 0.25:.3f});")
     sfx("pop", t, 0.3, 0.3)
 
-emoji("e1", "❌", W[11], W[14] - 0.1, 600, 330, 260, -10)           # Grosse erreur !
-emoji("e2", "🎯", W[14], W[16] + 0.6, 760, 300, 180, 8)             # Le secret
+emoji("e1", "❌", W[12], W[14] - 0.1, 560, 380, 260, -10)           # Grosse erreur !
+emoji("e2", "🎯", W[14], W[16] + 0.6, 640, 380, 180, 8)             # Le secret
 emoji("e3", "💥", W[40], W[41], 380, 520, 300, -6)                  # Boom !
 emoji("e4", "⚽", W[41], W[42] - 0.05, 400, 520, 300, 10)            # But !
 sfx("impact-boom", W[40], 0.4, 0.9)
@@ -164,19 +164,22 @@ for n, (name, t, vol, d) in enumerate(audio):
     aud.append(f'<audio id="a{n}" class="clip" src="{src}" data-start="{t:.3f}" data-duration="{d}" data-volume="{vol}" data-track-index="{tr}"></audio>')
 
 EXTRA_CSS = """
+      /* zones sûres TikTok (charte gaming) : rien sous les onglets du haut, ni dans la colonne d'icônes, ni dans la description */
+      .handle { top: 200px; } .tracker { top: 245px; }
+      .cap { top: var(--cap-top); left: var(--cap-left); width: var(--cap-width); }
       #game { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 45%; }
       #pan { position: absolute; left: 0; top: 0; width: 3414px; height: 1920px; }
       #pan video, #pan img { position: absolute; left: 0; top: 0; width: 3414px; height: 1920px; }
       #vign { position: absolute; inset: 0; pointer-events: none; z-index: 0;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.35) 30%, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0) 62%, rgba(0, 0, 0, 0.7) 100%); }
-      .hook { position: absolute; left: 70px; top: 330px; width: 860px; }
+      .hook { position: absolute; left: 70px; top: 360px; width: 840px; }
       .htitle { font-weight: 700; font-size: 96px; letter-spacing: -0.03em; line-height: 0.95; text-shadow: 0 4px 0 rgba(0, 0, 0, 0.55), 0 6px 30px rgba(0, 0, 0, 0.85); }
       .htitle.big { font-size: 230px; color: var(--accent-soft); letter-spacing: -0.05em; }
       .emo { position: absolute; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
       .ering { position: absolute; left: 50%; top: 50%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .tcard { position: absolute; left: 70px; top: 300px; width: 470px; padding: 24px; border-radius: 30px; border: 3px solid var(--accent);
+      .tcard { position: absolute; left: 50px; top: 330px; width: 470px; padding: 24px; border-radius: 30px; border: 3px solid var(--accent);
         background: rgba(28, 29, 33, 0.82); box-shadow: 0 0 40px rgba(218, 61, 57, 0.4), 0 30px 70px rgba(0, 0, 0, 0.6); }
       .tlab { position: absolute; left: 24px; top: 22px; font-weight: 700; font-size: 32px; letter-spacing: 0.06em; color: var(--accent-soft); }
       .pitch { position: relative; margin-top: 56px; width: 422px; height: 560px; border-radius: 18px; border: 2px solid var(--silver);
