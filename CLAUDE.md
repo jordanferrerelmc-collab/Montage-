@@ -126,3 +126,14 @@ tampon, checklist, iMessage, liquid glass, etc.). Mise en route d'une session : 
   le demande explicitement, et le signaler ; sinon préférer les modèles maison (`reel-editorial`, `reel-gaming`).
 - Ses rendus gardent l'audio d'origine et n'ajoutent ni sous-titres ni sons : enchaîner ensuite avec nos
   sous-titres et bruitages si besoin.
+
+## Skill « html-demo » (MengTo/Skills, MIT)
+
+Installé avec `npx skills add MengTo/Skills --skill html-demo` dans `.claude/skills/html-demo` (provenance dans
+`skills-lock.json`). Sert à **simuler une application en HTML** (fenêtre façon Mac, curseur scripté, texte tapé,
+barre d'étapes), chaque image calculée depuis une seule horloge `View(t)` : démos produit, tutoriels d'interface,
+« comme un enregistrement d'écran mais en HTML ».
+- Démo : servir la racine du skill (`python3 -m http.server`) puis ouvrir `/demo/index.html`.
+- Captures : `node scripts/shoot.mjs <url> <prefix> --at 1,2.5 [--frozen]` (Playwright préinstallé).
+- Pour une vidéo : le principe `View(t)` est compatible avec nos rendus HyperFrames (horloge pilotée par la timeline) ;
+  appliquer alors la charte de la marque (police, couleurs) — la démo d'origine utilise Geist, hors charte.
