@@ -47,7 +47,8 @@
 
   /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
   --cap-top: 1120px;
-  --cap-left: 50px;
+  /* texte CENTRÉ, marges égales de 110 px (évite les bords et la colonne d'icônes TikTok) */
+  --cap-left: 110px;
   --cap-width: 860px;
   --ill-top: 230px;
 }

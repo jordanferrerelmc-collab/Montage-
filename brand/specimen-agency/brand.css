@@ -42,8 +42,9 @@
 
   /* mise en page Instagram Reels */
   --cap-top: 1260px;
-  --cap-left: 60px;
-  --cap-width: 960px;
+  /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+  --cap-left: 90px;
+  --cap-width: 900px;
   --ill-top: 150px;
 }
 

@@ -48,6 +48,10 @@ Règles communes :
   pas d'or ni de jaune dans Gaming.
 - **Obligatoire** sur chaque vidéo : sous-titres blancs à contour noir avec mots clés à la couleur
   d'accent de la marque, cartes de la marque, flashs de la marque, écran de fin avec le logo de la marque.
+- **Texte toujours centré à l'écran** (demande de l'utilisateur, 09/11/2026) : sous-titres, titres, notes et appels
+  à l'action sont centrés horizontalement, dans la colonne `var(--cap-left)` / `var(--cap-width)` de la charte
+  (marges égales : 90 px Agency, 110 px Gaming). Jamais de texte aligné ou collé contre un bord : il serait coupé ou
+  caché par l'interface (bords arrondis, icônes TikTok / Instagram). Vérifier sur `hyperframes snapshot`.
 - La bande floutée `#shade` ne sert qu'à masquer des sous-titres déjà incrustés dans la source :
   la retirer si la vidéo source n'en a pas.
 - **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) doit être vert, en plus de `hyperframes check`.

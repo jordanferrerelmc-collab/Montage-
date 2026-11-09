@@ -19,7 +19,7 @@ import html, json, os, shutil, subprocess
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
 # colonne utile de chaque marque (gauche, largeur) : TikTok évite la colonne d'icônes à droite
-LAYOUT = {"specimen-agency": (60, 960), "specimen-gaming": (50, 860)}
+LAYOUT = {"specimen-agency": (90, 900), "specimen-gaming": (110, 860)}   # colonne centrée, marges égales
 
 STUB = "const ease=()=>0,typed=()=>'',cue=()=>0,held=()=>false,glide=()=>({});"
 
