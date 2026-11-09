@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "agent-skills/web-design/html-demo/SKILL.md",
       "computedHash": "7139afc0194b340899ff1ba4abbf40b834a5b10e0cfb4d1a282aef34bd63e8ad"
+    },
+    "steal": {
+      "source": "Melvynx/video-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/steal/SKILL.md",
+      "computedHash": "642448c17d3a5c286d45ae18a902b3279a0768ea9d150e762ab0965a6ea44551"
     }
   }
 }

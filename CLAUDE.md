@@ -140,3 +140,19 @@ barre d'étapes), chaque image calculée depuis une seule horloge `View(t)` : d�
   fenêtre pilotée par la timeline, sous-titre et bruitages par étape. Exemples : `projets/app-demo-agency/`
   (« Du rush au Reel ») et `projets/app-demo-gaming/` (« Ma 4-3-1-2 en 4 étapes »). Le skill d'origine reste intact
   (Geist, hors charte) pour des pages web.
+
+## Skill « steal » (Melvynx/video-agent-skills, installé le 09/11/2026)
+
+Installé avec `npx skills add Melvynx/video-agent-skills --skill steal` dans `.agents/skills/steal`
+(lien `.claude/skills/steal`, provenance dans `skills-lock.json`). Sert à **mesurer le style de montage d'un Reel ou
+d'un TikTok de référence** (coupes par seconde, rythme, bruitages sur les coupes, niveau de la musique sous la voix,
+taille du visage et zooms) au lieu de l'estimer à l'œil. Mise en route d'une session : `npm run steal:setup` (yt-dlp).
+Lire aussi `.agents/skills/steal/references/learnings.md` (erreurs déjà rejetées : trop de clics, zooms trop forts…).
+
+Adaptation à ce dépôt (le skill vise le moteur `short-editing` de l'auteur, **non installé ici**) :
+- Mesures et notes dans `references/<nom>/` (planches, `cuts.txt`, spectrogramme, `STYLE.md` avec chaque valeur mesurée).
+- Application avec **nos** modèles (`reel-editorial`, `reel-gaming`, `app-demo`) : on copie le rythme, la mise en page,
+  les zooms et le placement des sons — **jamais les couleurs ni la police** de l'autre créateur, qui restent celles de la
+  charte Specimen choisie (`npm run brand:check` doit rester vert). Bruitages pris dans `effets/sfx/`.
+- Instagram / TikTok : essayer `yt-dlp` ; s'il est bloqué, demander à l'utilisateur d'envoyer le fichier vidéo.
+- Avant de livrer : comparaison image par image original / copie (commande de l'étape 5 du skill).
