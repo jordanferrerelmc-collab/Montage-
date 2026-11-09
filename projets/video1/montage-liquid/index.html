@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="brand-default" content="specimen-agency" />
+    <meta name="montage-style" content="liquid-glass" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        --cap-left: 60px;
+        --cap-width: 960px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+
+      /* ---- style « Vidéo liquide glass » (réf. references/video-liquide-glass) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+
+      /* caméra : vidéo, grand mot « verre » derrière la tête, sujet détouré par-dessus */
+      #cam, #push { position: absolute; inset: 0; transform-origin: 50% 30%; }
+      #cam video, #cam img.broll { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* mots en italique, blancs, serrés (petites lignes) */
+      .it { font-weight: 700; font-style: italic; letter-spacing: -0.045em; line-height: 0.95; color: var(--ink);
+        text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45); white-space: nowrap; }
+
+      /* titre derrière la tête : petite ligne, mot géant en verre liquide, petite ligne décalée */
+      .glass-title { position: absolute; left: 0; width: 1080px; text-align: center; }
+      .glass-title .it { display: block; font-size: 84px; }
+      .glass-title .top { margin-bottom: -18px; position: relative; z-index: 2; }
+      .glass-title .bot { margin-top: -26px; padding-left: 300px; position: relative; z-index: 2; }
+      .glass { display: inline-block; font-weight: 700; font-style: italic; letter-spacing: -0.05em; line-height: 0.86; padding: 0 30px;
+        text-transform: uppercase; color: transparent; -webkit-background-clip: text; background-clip: text;
+        background-image: var(--glass-fill); background-size: 220% 100%; opacity: 0.96;
+        filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.38)); }
+
+      /* flou léger pour masquer des sous-titres déjà incrustés dans la source (option) */
+      #soften { position: absolute; left: 0; top: 1250px; width: 1080px; height: 300px; display: block;
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%); }
+
+      /* sous-titres devant, à hauteur de poitrine */
+      .lg-cap { position: absolute; left: 60px; width: 960px; text-align: center; font-size: 78px; }
+      .lg-cap .k { color: var(--accent-soft, var(--accent)); }
+
+      /* transition « lentille » : flou plein cadre + surexposition douce (pas de flash dur) */
+      #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 60% at 50% 45%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="28.8" data-width="1080" data-height="1920">
+      <div id="cam"><div id="push">
+        <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="28.8" data-has-audio="true" data-volume="1" data-track-index="0"></video>
+        <div class="glass-title clip" id="g0" style="top:110px; --glass-fill: linear-gradient(100deg, var(--black) 0%, var(--gold-deep) 28%, var(--ivory) 50%, var(--gold-deep) 72%, var(--black) 100%)" data-start="0.000" data-duration="1.960" data-track-index="2"><span class="it top" id="g0t">tes vidéos</span><span class="glass" id="g0g" style="font-size:300px">200</span><span class="it bot" id="g0b">vues</span></div>
+        <div class="glass-title clip" id="g1" style="top:140px; --glass-fill: linear-gradient(100deg, var(--black) 0%, var(--gold-deep) 28%, var(--ivory) 50%, var(--gold-deep) 72%, var(--black) 100%)" data-start="8.270" data-duration="2.090" data-track-index="2"><span class="it top" id="g1t">non, c&#x27;est</span><span class="glass" id="g1g" style="font-size:287px">faux</span></div>
+        <div class="glass-title clip" id="g2" style="top:140px; --glass-fill: linear-gradient(100deg, var(--black) 0%, var(--gold-deep) 28%, var(--ivory) 50%, var(--gold-deep) 72%, var(--black) 100%)" data-start="11.710" data-duration="1.540" data-track-index="2"><span class="it top" id="g2t">je commence par le</span><span class="glass" id="g2g" style="font-size:143px">résultat</span></div>
+        <div class="glass-title clip" id="g3" style="top:140px; --glass-fill: linear-gradient(100deg, var(--black) 0%, var(--gold-deep) 28%, var(--ivory) 50%, var(--gold-deep) 72%, var(--black) 100%)" data-start="23.170" data-duration="0.750" data-track-index="2"><span class="it top" id="g3t">il n&#x27;y a pas de</span><span class="glass" id="g3g" style="font-size:191px">secret</span></div>
+        <video id="clip-subject" class="clip" src="assets/subject.webm" data-start="0" data-duration="26.0" muted data-track-index="1"></video>
+        
+      </div></div>
+      <div id="soften"></div>
+      <div class="lg-cap it clip" id="c0" style="top:1270px" data-start="1.970" data-duration="0.750" data-track-index="4">ce n&#x27;est pas</div>
+      <div class="lg-cap it clip" id="c1" style="top:1310px" data-start="2.720" data-duration="0.580" data-track-index="4"><span class='k'>l&#x27;algo</span></div>
+      <div class="lg-cap it clip" id="c2" style="top:1270px" data-start="3.300" data-duration="1.025" data-track-index="4">c&#x27;est ça Si</div>
+      <div class="lg-cap it clip" id="c3" style="top:1310px" data-start="4.325" data-duration="0.615" data-track-index="4">tu commences</div>
+      <div class="lg-cap it clip" id="c4" style="top:1270px" data-start="4.940" data-duration="0.600" data-track-index="4">toujours</div>
+      <div class="lg-cap it clip" id="c5" style="top:1310px" data-start="5.540" data-duration="0.800" data-track-index="4">tes vidéos</div>
+      <div class="lg-cap it clip" id="c6" style="top:1270px" data-start="6.340" data-duration="1.010" data-track-index="4">par « bonjour,</div>
+      <div class="lg-cap it clip" id="c7" style="top:1310px" data-start="7.350" data-duration="0.340" data-track-index="4">je vais</div>
+      <div class="lg-cap it clip" id="c8" style="top:1270px" data-start="7.690" data-duration="0.340" data-track-index="4">parler</div>
+      <div class="lg-cap it clip" id="c9" style="top:1310px" data-start="8.030" data-duration="0.250" data-track-index="4">de… »</div>
+      <div class="lg-cap it clip" id="c10" style="top:1270px" data-start="10.880" data-duration="0.840" data-track-index="4">que je fais</div>
+      <div class="lg-cap it clip" id="c11" style="top:1310px" data-start="13.520" data-duration="0.300" data-track-index="4">1.</div>
+      <div class="lg-cap it clip" id="c12" style="top:1270px" data-start="13.820" data-duration="0.510" data-track-index="4"><span class='k'>avant</span></div>
+      <div class="lg-cap it clip" id="c13" style="top:1310px" data-start="14.330" data-duration="0.670" data-track-index="4"><span class='k'>/ après</span></div>
+      <div class="lg-cap it clip" id="c14" style="top:1270px" data-start="15.000" data-duration="0.770" data-track-index="4">2.</div>
+      <div class="lg-cap it clip" id="c15" style="top:1310px" data-start="15.770" data-duration="0.560" data-track-index="4">je coupe</div>
+      <div class="lg-cap it clip" id="c16" style="top:1270px" data-start="16.330" data-duration="0.850" data-track-index="4">tous les <span class='k'>blancs</span></div>
+      <div class="lg-cap it clip" id="c17" style="top:1310px" data-start="17.180" data-duration="0.250" data-track-index="4">pour</div>
+      <div class="lg-cap it clip" id="c18" style="top:1270px" data-start="17.430" data-duration="0.610" data-track-index="4">que la vidéo</div>
+      <div class="lg-cap it clip" id="c19" style="top:1310px" data-start="18.040" data-duration="0.620" data-track-index="4">soit <span class='k'>fluide</span></div>
+      <div class="lg-cap it clip" id="c20" style="top:1270px" data-start="18.660" data-duration="0.620" data-track-index="4">Et en 3.</div>
+      <div class="lg-cap it clip" id="c21" style="top:1310px" data-start="19.280" data-duration="0.500" data-track-index="4">j&#x27;incite</div>
+      <div class="lg-cap it clip" id="c22" style="top:1270px" data-start="19.780" data-duration="0.440" data-track-index="4">les gens</div>
+      <div class="lg-cap it clip" id="c23" style="top:1310px" data-start="20.220" data-duration="0.750" data-track-index="4">à <span class='k'>commenter</span></div>
+      <div class="lg-cap it clip" id="c24" style="top:1270px" data-start="20.970" data-duration="0.580" data-track-index="4">ou à <span class='k'>partager</span></div>
+      <div class="lg-cap it clip" id="c25" style="top:1310px" data-start="21.550" data-duration="0.730" data-track-index="4">la vidéo</div>
+      <div class="lg-cap it clip" id="c26" style="top:1270px" data-start="22.280" data-duration="0.480" data-track-index="4">C&#x27;est ce qui</div>
+      <div class="lg-cap it clip" id="c27" style="top:1310px" data-start="22.760" data-duration="0.420" data-track-index="4">marche</div>
+      <div class="lg-cap it clip" id="c28" style="top:1270px" data-start="24.180" data-duration="0.390" data-track-index="4">envoie</div>
+      <div class="lg-cap it clip" id="c29" style="top:1310px" data-start="24.570" data-duration="0.310" data-track-index="4">ça à un</div>
+      <div class="lg-cap it clip" id="c30" style="top:1270px" data-start="24.880" data-duration="0.270" data-track-index="4"><span class='k'>pote</span></div>
+      <div class="lg-cap it clip" id="c31" style="top:1310px" data-start="25.150" data-duration="0.900" data-track-index="4">qui a besoin</div>
+      <div id="lens"></div>
+      <div class="clip" id="endcard" data-start="26.05" data-duration="2.75" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/></div>
+    </div>
+    <audio id="sfx0" class="clip" src="assets/sfx/whoosh-court.wav" data-start="3.740" data-duration="0.6" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="sfx1" class="clip" src="assets/sfx/whoosh-court.wav" data-start="8.150" data-duration="0.6" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="sfx2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.490" data-duration="0.6" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="sfx3" class="clip" src="assets/sfx/whoosh-court.wav" data-start="13.380" data-duration="0.6" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="sfx4" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.830" data-duration="0.6" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="sfx5" class="clip" src="assets/sfx/whoosh-court.wav" data-start="18.540" data-duration="0.6" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="sfx6" class="clip" src="assets/sfx/whoosh-court.wav" data-start="22.150" data-duration="0.6" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="sfx7" class="clip" src="assets/sfx/whoosh-court.wav" data-start="24.050" data-duration="0.6" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="sfx8" class="clip" src="assets/sfx/impact-boom.wav" data-start="3.820" data-duration="0.9" data-volume="0.32" data-track-index="6"></audio>
+    <audio id="sfx9" class="clip" src="assets/sfx/impact-sec.wav" data-start="26.050" data-duration="0.5" data-volume="0.3" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#push", {scale: 1.000}, {scale: 1.060, duration: 3.860, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#push", {scale: 1.100}, {scale: 1.166, duration: 4.410, ease: "none", immediateRender: false}, 3.860);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 3.640);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 3.860);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 3.660);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 3.860);
+  tl.fromTo("#push", {scale: 1.020}, {scale: 1.081, duration: 2.340, ease: "none", immediateRender: false}, 8.270);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 8.050);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 8.270);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 8.070);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 8.270);
+  tl.fromTo("#push", {scale: 1.120}, {scale: 1.187, duration: 2.890, ease: "none", immediateRender: false}, 10.610);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 10.390);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 10.610);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 10.410);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 10.610);
+  tl.fromTo("#push", {scale: 1.040}, {scale: 1.102, duration: 1.450, ease: "none", immediateRender: false}, 13.500);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 13.280);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 13.500);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 13.300);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 13.500);
+  tl.fromTo("#push", {scale: 1.100}, {scale: 1.166, duration: 3.710, ease: "none", immediateRender: false}, 14.950);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 14.730);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 14.950);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 14.750);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 14.950);
+  tl.fromTo("#push", {scale: 1.020}, {scale: 1.081, duration: 3.610, ease: "none", immediateRender: false}, 18.660);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 18.440);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 18.660);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 18.460);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 18.660);
+  tl.fromTo("#push", {scale: 1.120}, {scale: 1.187, duration: 1.900, ease: "none", immediateRender: false}, 22.270);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 22.050);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 22.270);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 22.070);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 22.270);
+  tl.fromTo("#push", {scale: 1.040}, {scale: 1.102, duration: 1.880, ease: "none", immediateRender: false}, 24.170);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(22px) brightness(1.12)", duration: 0.22, ease: "power2.in", immediateRender: false}, 23.950);
+  tl.fromTo("#cam", {filter: "blur(22px) brightness(1.12)"}, {filter: "blur(0px) brightness(1)", duration: 0.28, ease: "power2.out", immediateRender: false}, 24.170);
+  tl.fromTo("#lens", {opacity: 0}, {opacity: 0.7, duration: 0.2, ease: "sine.in", immediateRender: false}, 23.970);
+  tl.to("#lens", {opacity: 0, duration: 0.3, ease: "sine.out"}, 24.170);
+  tl.fromTo("#g0t", {opacity: 0, filter: "blur(16px)", y: 0, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: true}, 0.020);
+  tl.fromTo("#g0g", {opacity: 0, filter: "blur(26px)", y: 0, scale: 1.12}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.32, ease: "power2.out", immediateRender: true}, 0.140);
+  tl.fromTo("#g0b", {opacity: 0, filter: "blur(16px)", y: 0, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: true}, 0.450);
+  tl.fromTo("#g0g", {backgroundPosition: "0% 50%"}, {backgroundPosition: "100% 50%", duration: 1.960, ease: "none", immediateRender: true}, 0.000);
+  tl.to("#g0", {opacity: 0, filter: "blur(14px)", duration: 0.16, ease: "power1.in"}, 1.780);
+  tl.fromTo("#g1t", {opacity: 0, filter: "blur(16px)", y: 0, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: true}, 8.290);
+  tl.fromTo("#g1g", {opacity: 0, filter: "blur(26px)", y: 0, scale: 1.12}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.32, ease: "power2.out", immediateRender: true}, 8.410);
+  tl.fromTo("#g1g", {backgroundPosition: "0% 50%"}, {backgroundPosition: "100% 50%", duration: 2.090, ease: "none", immediateRender: true}, 8.270);
+  tl.to("#g1", {opacity: 0, filter: "blur(14px)", duration: 0.16, ease: "power1.in"}, 10.180);
+  tl.fromTo("#g2t", {opacity: 0, filter: "blur(16px)", y: 0, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: true}, 11.730);
+  tl.fromTo("#g2g", {opacity: 0, filter: "blur(26px)", y: 0, scale: 1.12}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.32, ease: "power2.out", immediateRender: true}, 11.850);
+  tl.fromTo("#g2g", {backgroundPosition: "0% 50%"}, {backgroundPosition: "100% 50%", duration: 1.540, ease: "none", immediateRender: true}, 11.710);
+  tl.to("#g2", {opacity: 0, filter: "blur(14px)", duration: 0.16, ease: "power1.in"}, 13.070);
+  tl.fromTo("#g3t", {opacity: 0, filter: "blur(16px)", y: 0, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.22, ease: "power2.out", immediateRender: true}, 23.190);
+  tl.fromTo("#g3g", {opacity: 0, filter: "blur(26px)", y: 0, scale: 1.12}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.32, ease: "power2.out", immediateRender: true}, 23.310);
+  tl.fromTo("#g3g", {backgroundPosition: "0% 50%"}, {backgroundPosition: "100% 50%", duration: 0.750, ease: "none", immediateRender: true}, 23.170);
+  tl.to("#g3", {opacity: 0, filter: "blur(14px)", duration: 0.16, ease: "power1.in"}, 23.740);
+  tl.fromTo("#c0", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 1.970);
+  tl.to("#c0", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 2.600);
+  tl.fromTo("#c1", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 2.720);
+  tl.to("#c1", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 3.180);
+  tl.fromTo("#c2", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 3.300);
+  tl.to("#c2", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 4.205);
+  tl.fromTo("#c3", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 4.325);
+  tl.to("#c3", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 4.820);
+  tl.fromTo("#c4", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 4.940);
+  tl.to("#c4", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 5.420);
+  tl.fromTo("#c5", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 5.540);
+  tl.to("#c5", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 6.220);
+  tl.fromTo("#c6", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 6.340);
+  tl.to("#c6", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 7.230);
+  tl.fromTo("#c7", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 7.350);
+  tl.fromTo("#c8", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 7.690);
+  tl.fromTo("#c9", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 8.030);
+  tl.fromTo("#c10", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 10.880);
+  tl.to("#c10", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 11.600);
+  tl.fromTo("#c11", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 13.520);
+  tl.fromTo("#c12", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 13.820);
+  tl.to("#c12", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 14.210);
+  tl.fromTo("#c13", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 14.330);
+  tl.to("#c13", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 14.880);
+  tl.fromTo("#c14", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 15.000);
+  tl.to("#c14", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 15.650);
+  tl.fromTo("#c15", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 15.770);
+  tl.to("#c15", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 16.210);
+  tl.fromTo("#c16", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 16.330);
+  tl.to("#c16", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 17.060);
+  tl.fromTo("#c17", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 17.180);
+  tl.fromTo("#c18", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 17.430);
+  tl.to("#c18", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 17.920);
+  tl.fromTo("#c19", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 18.040);
+  tl.to("#c19", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 18.540);
+  tl.fromTo("#c20", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 18.660);
+  tl.to("#c20", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 19.160);
+  tl.fromTo("#c21", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 19.280);
+  tl.to("#c21", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 19.660);
+  tl.fromTo("#c22", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 19.780);
+  tl.fromTo("#c23", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 20.220);
+  tl.to("#c23", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 20.850);
+  tl.fromTo("#c24", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 20.970);
+  tl.to("#c24", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 21.430);
+  tl.fromTo("#c25", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 21.550);
+  tl.to("#c25", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 22.160);
+  tl.fromTo("#c26", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 22.280);
+  tl.to("#c26", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 22.640);
+  tl.fromTo("#c27", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 22.760);
+  tl.fromTo("#c28", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 24.180);
+  tl.fromTo("#c29", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 24.570);
+  tl.fromTo("#c30", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 24.880);
+  tl.fromTo("#c31", {opacity: 0, filter: "blur(12px)", y: 10, scale: 1.0}, {opacity: 1, filter: "blur(0px)", y: 0, scale: 1, duration: 0.16, ease: "power2.out", immediateRender: true}, 25.150);
+  tl.to("#c31", {opacity: 0, filter: "blur(10px)", duration: 0.12, ease: "power1.in"}, 25.930);
+  tl.fromTo("#cam", {filter: "blur(0px) brightness(1)"}, {filter: "blur(26px) brightness(1.15)", duration: 0.3, ease: "power2.in", immediateRender: false}, 25.750);
+  tl.fromTo("#logo", {opacity: 0, scale: 1.08, filter: "blur(20px)"}, {opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.out", immediateRender: true}, 26.100);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

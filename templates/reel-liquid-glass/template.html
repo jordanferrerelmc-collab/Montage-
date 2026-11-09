@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="{{BRAND}}" />
+    <meta name="brand-default" content="specimen-agency" />
+    <meta name="montage-style" content="liquid-glass" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+{{BRAND_CSS}}
+
+      /* ---- style « Vidéo liquide glass » (réf. references/video-liquide-glass) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+
+      /* caméra : vidéo, grand mot « verre » derrière la tête, sujet détouré par-dessus */
+      #cam, #push { position: absolute; inset: 0; transform-origin: 50% 30%; }
+      #cam video, #cam img.broll { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* mots en italique, blancs, serrés (petites lignes) */
+      .it { font-weight: 700; font-style: italic; letter-spacing: -0.045em; line-height: 0.95; color: var(--ink);
+        text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45); white-space: nowrap; }
+
+      /* titre derrière la tête : petite ligne, mot géant en verre liquide, petite ligne décalée */
+      .glass-title { position: absolute; left: 0; width: 1080px; text-align: center; }
+      .glass-title .it { display: block; font-size: 84px; }
+      .glass-title .top { margin-bottom: -18px; position: relative; z-index: 2; }
+      .glass-title .bot { margin-top: -26px; padding-left: 300px; position: relative; z-index: 2; }
+      .glass { display: inline-block; font-weight: 700; font-style: italic; letter-spacing: -0.05em; line-height: 0.86; padding: 0 30px;
+        text-transform: uppercase; color: transparent; -webkit-background-clip: text; background-clip: text;
+        background-image: var(--glass-fill); background-size: 220% 100%; opacity: 0.96;
+        filter: drop-shadow(0 8px 26px rgba(0, 0, 0, 0.38)); }
+
+      /* flou léger pour masquer des sous-titres déjà incrustés dans la source (option) */
+      #soften { position: absolute; left: 0; top: 1250px; width: 1080px; height: 300px; display: {{SOFTEN}};
+        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000000 22%, #000000 78%, transparent 100%); }
+
+      /* sous-titres devant, à hauteur de poitrine */
+      .lg-cap { position: absolute; left: 60px; width: 960px; text-align: center; font-size: 78px; }
+      .lg-cap .k { color: var(--accent-soft, var(--accent)); }
+
+      /* transition « lentille » : flou plein cadre + surexposition douce (pas de flash dur) */
+      #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 80% 60% at 50% 45%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DUR}}" data-width="1080" data-height="1920">
+      <div id="cam"><div id="push">
+        <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="{{DUR}}" data-has-audio="true" data-volume="1" data-track-index="0"></video>
+        {{BEHIND}}
+        <video id="clip-subject" class="clip" src="assets/subject.webm" data-start="0" data-duration="{{SUBJECT_DUR}}" muted data-track-index="1"></video>
+        {{BROLL}}
+      </div></div>
+      <div id="soften"></div>
+      {{CAPTIONS}}
+      <div id="lens"></div>
+      {{ENDCARD}}
+    </div>
+    {{SFX}}
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+{{JS}}
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

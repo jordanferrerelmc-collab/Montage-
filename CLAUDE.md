@@ -156,3 +156,11 @@ Adaptation à ce dépôt (le skill vise le moteur `short-editing` de l'auteur, *
   charte Specimen choisie (`npm run brand:check` doit rester vert). Bruitages pris dans `effets/sfx/`.
 - Instagram / TikTok : essayer `yt-dlp` ; s'il est bloqué, demander à l'utilisateur d'envoyer le fichier vidéo.
 - Avant de livrer : comparaison image par image original / copie (commande de l'étape 5 du skill).
+
+### Style « Vidéo liquide glass » (mesuré avec steal, 09/11/2026)
+
+Pour **les deux marques**, selon le sujet de la vidéo. Fiche : `references/video-liquide-glass/STYLE.md` ;
+modèle : `templates/reel-liquid-glass/` ; exemple : `projets/video1/scripts/build_liquid_glass.py`.
+Sous-titres italiques blancs qui entrent / sortent en flou, mot géant en « verre » aux couleurs de la charte derrière la
+tête (sujet détouré), poussée lente, transitions en flou plein cadre, impact grave en fin d'accroche, coupes de B-roll
+sur le rythme. À utiliser quand l'utilisateur demande ce style (« liquide glass », « liquid glass »).
