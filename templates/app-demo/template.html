@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="{{BRAND}}" />
+    <meta name="brand-default" content="specimen-agency" />
+    <meta name="montage-style" content="app-demo" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/step-window.js"></script>
+    <script src="assets/app-demo.js"></script>
+    <link rel="stylesheet" href="assets/step-window.css" />
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+{{BRAND_CSS}}
+    </style>
+    <link rel="stylesheet" href="assets/specimen-window.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--black); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 110% 70% at 50% 40%, var(--panel) 0%, var(--black) 70%); }
+      #halo { position: absolute; left: 140px; top: 620px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.28; filter: blur(40px); }
+      .head { position: absolute; left: {{LEFT}}px; top: {{HEAD_TOP}}px; width: {{WIDTH}}px; }
+      .kick { font-weight: 700; font-size: 30px; letter-spacing: 0.2em; color: var(--accent); }
+      .ttl { font-weight: 700; font-size: 104px; line-height: 0.95; letter-spacing: -0.04em; margin-top: 18px; }
+      .ttl .a { color: var(--accent-soft, var(--accent)); }
+      #win { position: absolute; left: {{WIN_LEFT}}px; top: {{WIN_TOP}}px; width: {{WIN_W}}px; transform-origin: 50% 0; }
+      .say { position: absolute; left: {{LEFT}}px; top: {{SAY_TOP}}px; width: {{WIDTH}}px; font-weight: 700; font-size: 58px; line-height: 1.12;
+        letter-spacing: -0.02em; text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .say .a { color: var(--accent-soft, var(--accent)); }
+      /* #endcard et #logo : styles de la charte (brand.css) */
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DUR}}" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="head" id="head"><div class="kick" id="kick">{{KICKER}}</div><div class="ttl" id="ttl">{{TITLE}}</div></div>
+      <div id="win"></div>
+      {{SAYS}}
+      <div id="blackout"></div>
+      {{ENDCARD}}
+    </div>
+    {{AUDIO}}
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const { ease, typed, cue, held, glide } = window.AppDemo;
+{{STEPS_JS}}
+      const demo = window.AppDemo.bind(tl, document.getElementById("win"), { steps: STEPS, tabs: {{TABS}}, label: {{LABEL}}, start: {{WIN_START}} });
+      const blurIn = (s, t, o = {}) => tl.fromTo(s, { opacity: 0, filter: "blur(18px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: o.d || 0.45, ease: "power3.out", immediateRender: true }, t);
+      const blurOut = (s, t) => tl.to(s, { opacity: 0, filter: "blur(14px)", duration: 0.3 }, t);
+      tl.fromTo("#halo", { opacity: 0.2, scale: 0.95 }, { opacity: 0.38, scale: 1.08, duration: 1.6, yoyo: true, repeat: {{HALO_REPEAT}}, ease: "sine.inOut", immediateRender: false }, 0);
+      tl.fromTo("#head", { scale: 1.04, transformOrigin: "0 50%" }, { scale: 1, duration: 1.2, ease: "power2.out", immediateRender: true }, 0);
+      tl.fromTo("#win", { opacity: 0, scale: 0.92, y: 60, filter: "blur(16px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out", immediateRender: true }, {{WIN_IN}});
+{{JS}}
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

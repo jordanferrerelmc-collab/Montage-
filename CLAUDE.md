@@ -135,5 +135,8 @@ barre d'étapes), chaque image calculée depuis une seule horloge `View(t)` : d�
 « comme un enregistrement d'écran mais en HTML ».
 - Démo : servir la racine du skill (`python3 -m http.server`) puis ouvrir `/demo/index.html`.
 - Captures : `node scripts/shoot.mjs <url> <prefix> --at 1,2.5 [--frozen]` (Playwright préinstallé).
-- Pour une vidéo : le principe `View(t)` est compatible avec nos rendus HyperFrames (horloge pilotée par la timeline) ;
-  appliquer alors la charte de la marque (police, couleurs) — la démo d'origine utilise Geist, hors charte.
+- **Pour une vidéo : toujours utiliser la version adaptée `templates/app-demo/`** (skill projet `specimen-app-demo`,
+  voir `templates/app-demo/README.md`) : charte de la marque (police, couleurs, logo de fin), kit d'interface `sp-`,
+  fenêtre pilotée par la timeline, sous-titre et bruitages par étape. Exemples : `projets/app-demo-agency/`
+  (« Du rush au Reel ») et `projets/app-demo-gaming/` (« Ma 4-3-1-2 en 4 étapes »). Le skill d'origine reste intact
+  (Geist, hors charte) pour des pages web.

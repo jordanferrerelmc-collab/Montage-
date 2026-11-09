@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Habillage Specimen de la fenêtre « html-demo » (step-window.css, MengTo, MIT).
+   Chargé APRÈS step-window.css. Toutes les couleurs viennent de la charte
+   (variables de brand/<marque>/brand.css) ; police unique var(--font).
+   Tailles agrandies pour une lecture sur téléphone (vidéo 1080 × 1920).
+   ========================================================================== */
+.hd, .hd-win, .hd-bar, .hd-stage, .hd-steps button { font-family: var(--font); }
+
+.hd-win { border-radius: 26px; background: var(--black);
+  box-shadow: 0 0 0 2px var(--accent), 0 0 60px -18px var(--accent), 0 40px 120px rgba(0, 0, 0, 0.7); }
+
+/* barre de titre : pastilles neutres (pas de rouge / jaune / vert macOS), onglet à la couleur d'accent */
+.hd-bar { height: 60px; padding: 0 22px; gap: 12px; background: var(--panel); border-bottom: 1px solid var(--dark);
+  font-size: 22px; font-weight: 700; color: var(--silver, var(--stone)); }
+.hd-bar svg { width: 22px; height: 22px; }
+.hd-lights { gap: 10px; margin-right: 12px; }
+.hd-lights i, .hd-lights i:nth-child(2), .hd-lights i:nth-child(3) { width: 16px; height: 16px; background: var(--dark); }
+.hd-lights i:nth-child(1) { background: var(--accent); }
+.hd-tab { height: 44px; line-height: 1.5; max-width: 420px; padding: 0 16px; border-radius: 12px; gap: 10px; }
+.hd-tab b { width: 16px; height: 16px; border-radius: 5px; background: var(--accent) !important; }
+.hd-tab.on { color: var(--ink); background: var(--panel-muted, var(--dark)); }
+
+/* scène */
+.hd-view, .hd-stage { background: var(--black); }
+.hd-stage { color: var(--ink); font: 700 30px/1.3 var(--font); }
+
+/* curseur : flèche blanche, ombre douce (inchangé), un peu plus grand */
+.hd-cursor svg { transform: scale(1.7); }
+.hd-cursor.press svg { transform: scale(1.45); }
+
+/* barre d'étapes */
+.hd-steps { padding: 10px 12px; gap: 6px; background: var(--panel); border-top: 1px solid var(--dark); }
+.hd-steps button { padding: 14px 16px 18px; gap: 12px; font-size: 24px; font-weight: 700; color: var(--silver, var(--stone)); border-radius: 12px; }
+.hd-steps button.on { color: var(--ink); background: var(--panel-muted, var(--dark)); }
+.hd-n { font: 700 18px/1 var(--font); color: var(--accent-soft, var(--accent)); letter-spacing: 0.08em; }
+.hd-steps button.on .hd-n { color: var(--ink); }
+.hd-steps i { left: 16px; right: 16px; bottom: 6px; height: 4px;
+  background: linear-gradient(90deg, var(--accent) calc(var(--p) * 100%), transparent calc(var(--p) * 100%)), var(--dark); }
+
+/* ---------------------------------------------------------------- kit d'interface Specimen (1200 × 750)
+   Préfixe sp- ; à composer dans le html de chaque étape. */
+.sp-app { position: absolute; inset: 0; display: grid; grid-template-columns: 300px 1fr; background: var(--black); }
+.sp-side { background: var(--panel); border-right: 1px solid var(--dark); padding: 28px 22px; display: flex; flex-direction: column; gap: 16px; }
+.sp-side h4 { font-size: 24px; letter-spacing: 0.14em; color: var(--accent); }
+.sp-main { position: relative; padding: 28px 32px; display: flex; flex-direction: column; gap: 22px; }
+.sp-title { font-size: 46px; letter-spacing: -0.02em; }
+.sp-muted { color: var(--silver, var(--stone)); font-size: 26px; }
+.sp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 12px; height: 64px; padding: 0 30px; border-radius: 16px;
+  background: var(--accent); color: var(--black); font-size: 30px; }
+.sp-btn.ghost { background: transparent; color: var(--ink); border: 2px solid var(--accent); }
+.sp-card { background: var(--panel); border: 2px solid var(--dark); border-radius: 18px; padding: 20px 22px; }
+.sp-card.on { border-color: var(--accent); }
+.sp-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.sp-chip { display: inline-flex; align-items: center; height: 44px; padding: 0 18px; border-radius: 999px; border: 2px solid var(--dark);
+  color: var(--silver, var(--stone)); font-size: 26px; }
+.sp-chip.on { border-color: var(--accent); color: var(--black); background: var(--accent); }
+.sp-progress { height: 14px; border-radius: 99px; background: var(--dark); overflow: hidden; }
+.sp-progress i { display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: var(--accent); }
+.sp-toast { position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px;
+  padding: 18px 30px; border-radius: 16px; background: var(--panel); border: 2px solid var(--accent); font-size: 30px; white-space: nowrap; }
+.sp-spin { width: 28px; height: 28px; border-radius: 50%; border: 4px solid var(--dark); border-top-color: var(--accent); }
+.sp-check { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--black); display: inline-flex;
+  align-items: center; justify-content: center; font-size: 22px; }
+
+/* vidéo : aucune transition CSS (chaque image doit dépendre du seul temps de la timeline) */
+.hd *, .hd *::before, .hd *::after { transition: none !important; animation: none !important; }

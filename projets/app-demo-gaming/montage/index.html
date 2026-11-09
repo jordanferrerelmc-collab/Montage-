@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="brand-default" content="specimen-agency" />
+    <meta name="montage-style" content="app-demo" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/step-window.js"></script>
+    <script src="assets/app-demo.js"></script>
+    <link rel="stylesheet" href="assets/step-window.css" />
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        --cap-left: 50px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+    </style>
+    <link rel="stylesheet" href="assets/specimen-window.css" />
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--black); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 110% 70% at 50% 40%, var(--panel) 0%, var(--black) 70%); }
+      #halo { position: absolute; left: 140px; top: 620px; width: 800px; height: 800px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.28; filter: blur(40px); }
+      .head { position: absolute; left: 50px; top: 260px; width: 860px; }
+      .kick { font-weight: 700; font-size: 30px; letter-spacing: 0.2em; color: var(--accent); }
+      .ttl { font-weight: 700; font-size: 104px; line-height: 0.95; letter-spacing: -0.04em; margin-top: 18px; }
+      .ttl .a { color: var(--accent-soft, var(--accent)); }
+      #win { position: absolute; left: 30px; top: 600px; width: 900px; transform-origin: 50% 0; }
+      .say { position: absolute; left: 50px; top: 1372px; width: 860px; font-weight: 700; font-size: 58px; line-height: 1.12;
+        letter-spacing: -0.02em; text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .say .a { color: var(--accent-soft, var(--accent)); }
+      /* #endcard et #logo : styles de la charte (brand.css) */
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22.7" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="head" id="head"><div class="kick" id="kick">SPECIMEN GAMING · TACTIQUE</div><div class="ttl" id="ttl">Ma 4-3-1-2<br><span class='a'>en 4 étapes</span></div></div>
+      <div id="win"></div>
+      <div class="say clip" id="say0" data-start="1.30" data-duration="4.40" data-track-index="3">Choisis la <span class='a'>4-3-1-2</span></div>
+      <div class="say clip" id="say1" data-start="5.70" data-duration="4.80" data-track-index="3">Un <span class='a'>rôle</span> à chaque poste</div>
+      <div class="say clip" id="say2" data-start="10.50" data-duration="4.40" data-track-index="3">Jeu court, pressing <span class='a'>haut</span></div>
+      <div class="say clip" id="say3" data-start="14.90" data-duration="4.60" data-track-index="3">Copie le <span class='a'>code</span></div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="20.30" data-duration="2.4" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="a0" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.1" data-volume="0.3" data-track-index="6"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/montee-ui.wav" data-start="0.700" data-duration="0.5" data-volume="0.25" data-track-index="7"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/clic.wav" data-start="2.000" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/clic.wav" data-start="3.200" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/frappe-clavier.wav" data-start="6.000" data-duration="0.08" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.650" data-duration="0.5" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/clic.wav" data-start="11.400" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/clic.wav" data-start="12.600" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.450" data-duration="0.5" data-volume="0.14" data-track-index="6"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/clic.wav" data-start="16.900" data-duration="0.05" data-volume="0.4" data-track-index="6"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/frappe-clavier.wav" data-start="15.200" data-duration="0.08" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.850" data-duration="0.5" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="a12" class="clip" src="assets/sfx/validation.wav" data-start="19.400" data-duration="0.45" data-volume="0.25" data-track-index="6"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/impact-boom.wav" data-start="20.300" data-duration="0.9" data-volume="0.35" data-track-index="6"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const { ease, typed, cue, held, glide } = window.AppDemo;
+      // Démo « Ma 4-3-1-2 en 4 étapes » (Specimen Gaming) — scène 1200 × 750, interface 100 % originale (aucune UI du jeu).
+      const CK = '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" style="stroke:currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      const abs = (l, t, w, h, extra = "") => `position:absolute;left:${l}px;top:${t}px;${w ? `width:${w}px;` : ""}${h ? `height:${h}px;` : ""}${extra}`;
+      const side = `<div class="sp-side"><h4>ÉQUIPE</h4>${["XI SPM", "Défense", "Réserve"]
+        .map((n, i) => `<div class="sp-card${i === 0 ? " on" : ""}" style="font-size:26px">${n}</div>`).join("")}
+        <div class="sp-muted" style="margin-top:auto">Specimen Gaming</div></div>`;
+      // joueurs (x %, y %) : gardien, 4 défenseurs, 4 milieux, 2 attaquants ; 4-4-2 → 4-3-1-2
+      const F442 = [[50, 91], [14, 73], [38, 77], [62, 77], [86, 73], [14, 48], [38, 52], [62, 52], [86, 48], [36, 18], [64, 18]];
+      const F4312 = [[50, 91], [14, 73], [38, 77], [62, 77], [86, 73], [24, 54], [50, 58], [76, 54], [50, 36], [36, 15], [64, 15]];
+      const pitch = (l, t, w, h) => `<div id="pitch" style="${abs(l, t, w, h, "border:2px solid var(--dark);border-radius:18px;background:var(--panel)")}">
+        <i style="${abs(0, h / 2 - 1, w, 2, "background:var(--dark)")}"></i>
+        <i style="${abs(w / 2 - 50, h / 2 - 50, 100, 100, "border:2px solid var(--dark);border-radius:50%")}"></i>
+        ${F442.map((_, i) => `<b class="pl" style="position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;border-radius:50%;
+          background:${i >= 9 ? "var(--accent)" : "var(--ink)"};box-shadow:0 0 0 4px var(--black)"></b>`).join("")}</div>`;
+      function place($, from, to, k, hi = -1) {
+        $("#pitch").querySelectorAll(".pl").forEach((el, i) => {
+          el.style.left = `${from[i][0] + (to[i][0] - from[i][0]) * k}%`;
+          el.style.top = `${from[i][1] + (to[i][1] - from[i][1]) * k}%`;
+          el.style.transform = `scale(${i === hi ? 1.35 : 1})`;
+          el.style.background = i === hi || i >= 9 ? "var(--accent)" : "var(--ink)";
+        });
+      }
+      const ROLES = [[9, "Feller", "Renard des surfaces"], [10, "Chawinga", "Fausse 9"], [8, "López", "Meneuse de jeu"],
+        [7, "Pedri", "Meneur de jeu"], [5, "Karchaoui", "Box-to-box"]];
+      const OPTS = ["4-4-2", "4-2-3-1", "4-3-1-2"];
+      const CODE = "Mpk&2iGeW4At";
+      
+      const STEPS = [
+        {
+          id: "form", name: "Formation", dur: 4.4, say: "Choisis la <span class='a'>4-3-1-2</span>", clicks: [0.7, 1.9],
+          html: `<div class="sp-app">${side}<div class="sp-main">
+            <div class="sp-title">Formation</div>${pitch(32, 100, 340, 600)}
+            <div class="sp-muted" style="${abs(420, 108)}">Dispositif</div>
+            <div class="sp-card sp-row" id="dd" style="${abs(420, 150, 440, 70)}"><span id="ddv">4-4-2</span><svg viewBox="0 0 24 24" width="30" height="30"><path d="m6 9 6 6 6-6" fill="none" style="stroke:var(--accent)" stroke-width="3"/></svg></div>
+            <div class="sp-card" id="menu" style="${abs(420, 230, 440, null, "padding:8px")}">${OPTS
+              .map((o) => `<div class="opt" style="height:62px;padding:0 16px;display:flex;align-items:center;border-radius:12px">${o}</div>`).join("")}</div>
+            <div class="sp-card" id="sum" style="${abs(420, 470, 440, null, "display:flex;flex-direction:column;gap:10px")}">
+              <div class="sp-row"><span class="sp-muted">Défense</span><span>4</span></div>
+              <div class="sp-row"><span class="sp-muted">Milieu</span><span>3 + 1</span></div>
+              <div class="sp-row"><span class="sp-muted">Attaque</span><span style="color:var(--accent)">2</span></div></div></div></div>`,
+          draw(t, $) {
+            const open = t >= 0.7 && t < 1.95;
+            $("#menu").style.opacity = open ? 1 : 0;
+            $("#menu").querySelectorAll(".opt").forEach((o, i) => {
+              o.style.background = open && i === 2 && t > 1.5 ? "var(--accent)" : "transparent";
+              o.style.color = open && i === 2 && t > 1.5 ? "var(--black)" : "var(--ink)";
+            });
+            $("#ddv").textContent = t >= 1.9 ? "4-3-1-2" : "4-4-2";
+            $("#dd").classList.toggle("on", open);
+            place($, F442, F4312, ease(t, 2.1, 2.9));
+            $("#sum").style.opacity = ease(t, 2.9, 3.2);
+            return { cursor: glide(t, [[0, 0, 1080, 700], [0.05, 0.6, 960, 185], [1.0, 1.75, 820, 400], [2.3, 3.0, 1100, 700]], [0.7, 1.9]) };
+          },
+        },
+        {
+          id: "roles", name: "Rôles", dur: 4.8, say: "Un <span class='a'>rôle</span> à chaque poste", keys: [[0.3, 3.6]],
+          html: `<div class="sp-app">${side}<div class="sp-main">
+            <div class="sp-title">Rôles</div>${pitch(32, 100, 340, 600)}
+            ${ROLES.map(([, n, r], i) => `<div class="sp-card role" style="${abs(410, 100 + i * 120, 460, 104, "display:flex;flex-direction:column;justify-content:center;gap:4px")}">
+              <span class="nm" style="font-size:32px"></span><span class="sp-muted rl" style="color:var(--accent)"></span></div>`).join("")}</div></div>`,
+          draw(t, $) {
+            const cur = cue(t, ROLES.map((_, i) => [0.3 + i * 0.7, i]), -1);
+            const rows = $(".sp-main").querySelectorAll(".role");
+            ROLES.forEach(([, n, r], i) => {
+              const a = 0.3 + i * 0.7;
+              rows[i].style.opacity = t >= a ? 1 : 0.25;
+              rows[i].classList.toggle("on", i === cur);
+              rows[i].querySelector(".nm").textContent = typed(n, t, a, a + 0.3) || "·";
+              rows[i].querySelector(".rl").textContent = typed(r, t, a + 0.25, a + 0.65);
+            });
+            place($, F4312, F4312, 1, cur < 0 ? -1 : ROLES[cur][0]);
+            const ys = ROLES.map((_, i) => [0.3 + i * 0.7 - 0.25, 0.3 + i * 0.7, 820, 150 + i * 120]);
+            return { cursor: glide(t, [[0, 0, 1080, 700], ...ys, [4.0, 4.6, 1100, 720]]) };
+          },
+        },
+        {
+          id: "set", name: "Réglages", dur: 4.4, say: "Jeu court, pressing <span class='a'>haut</span>", clicks: [0.9, 2.1],
+          html: `<div class="sp-app">${side}<div class="sp-main">
+            <div class="sp-title">Réglages</div>
+            ${[["Construction", ["Équilibrée", "P. courtes", "Longues"], 120], ["Approche défensive", ["Basse", "Équilibrée", "Haute"], 340]]
+              .map(([lbl, opts, y], g) => `<div class="sp-card" style="${abs(32, y, 836, 190)}"><div class="sp-muted">${lbl}</div>
+                ${opts.map((o, j) => `<span class="sp-chip c${g}" style="${abs(28 + j * 262, 96, 240, 56, "justify-content:center")}">${o}</span>`).join("")}</div>`).join("")}
+            <div class="sp-row" id="ok" style="${abs(32, 572, 836, null, "justify-content:flex-start")}"><span class="sp-check">${CK}</span><span>Jeu court · pressing haut</span></div></div></div>`,
+          draw(t, $) {
+            const pick = [t >= 0.9 ? 1 : 0, t >= 2.1 ? 2 : 1];
+            [0, 1].forEach((g) => $(".sp-main").querySelectorAll(".c" + g).forEach((c, j) => c.classList.toggle("on", j === pick[g])));
+            $("#ok").style.opacity = ease(t, 2.4, 2.7);
+            return { cursor: glide(t, [[0, 0, 1080, 700], [0.2, 0.8, 760, 345], [1.3, 2.0, 1010, 565], [2.5, 3.2, 1100, 720]], [0.9, 2.1]) };
+          },
+        },
+        {
+          id: "code", name: "Code", dur: 4.6, say: "Copie le <span class='a'>code</span>", clicks: [2.0], keys: [[0.3, 1.5]],
+          html: `<div class="sp-app">${side}<div class="sp-main">
+            <div class="sp-title">Partager la tactique</div>
+            <div class="sp-card on" style="${abs(32, 110, 836, 330)}">
+              <div class="sp-muted">XI SPM · 4-3-1-2</div>
+              <div id="code" style="margin-top:34px;font-size:76px;letter-spacing:0.04em"></div>
+              <div class="sp-btn" id="cp" style="${abs(560, 236, 250)}">Copier</div></div>
+            <div class="sp-toast" id="toast"><span class="sp-check">${CK}</span>Colle-le dans le jeu</div></div></div>`,
+          draw(t, $) {
+            const c = typed(CODE, t, 0.3, 1.5);
+            $("#code").innerHTML = c + (t < 1.6 && Math.floor(t * 3) % 2 === 0 ? "<span style='color:var(--accent)'>|</span>" : "");
+            const done = t >= 2.0;
+            $("#cp").innerHTML = done ? `${CK}Copié !` : "Copier";
+            $("#cp").classList.toggle("ghost", done);
+            const k = ease(t, 2.2, 2.5);
+            $("#toast").style.opacity = k;
+            $("#toast").style.transform = `translate(-50%, ${(1 - k) * 30}px)`;
+            return { cursor: glide(t, [[0, 0, 1080, 700], [1.0, 1.8, 1015, 380], [2.6, 3.4, 1100, 720]], [2.0]) };
+          },
+        },
+      ];
+      const demo = window.AppDemo.bind(tl, document.getElementById("win"), { steps: STEPS, tabs: ["Tactiques", "XI SPM"], label: "Tactique 4-3-1-2", start: 1.3 });
+      const blurIn = (s, t, o = {}) => tl.fromTo(s, { opacity: 0, filter: "blur(18px)", y: 24 }, { opacity: 1, filter: "blur(0px)", y: 0, duration: o.d || 0.45, ease: "power3.out", immediateRender: true }, t);
+      const blurOut = (s, t) => tl.to(s, { opacity: 0, filter: "blur(14px)", duration: 0.3 }, t);
+      tl.fromTo("#halo", { opacity: 0.2, scale: 0.95 }, { opacity: 0.38, scale: 1.08, duration: 1.6, yoyo: true, repeat: 14, ease: "sine.inOut", immediateRender: false }, 0);
+      tl.fromTo("#head", { scale: 1.04, transformOrigin: "0 50%" }, { scale: 1, duration: 1.2, ease: "power2.out", immediateRender: true }, 0);
+      tl.fromTo("#win", { opacity: 0, scale: 0.92, y: 60, filter: "blur(16px)" }, { opacity: 1, scale: 1, y: 0, filter: "blur(0px)", duration: 0.6, ease: "power3.out", immediateRender: true }, 0.7);
+      blurIn("#say0", 1.35, { d: 0.35 });
+      blurOut("#say0", 5.40);
+      blurIn("#say1", 5.75, { d: 0.35 });
+      blurOut("#say1", 10.20);
+      blurIn("#say2", 10.55, { d: 0.35 });
+      blurOut("#say2", 14.60);
+      blurIn("#say3", 14.95, { d: 0.35 });
+      blurOut("#head, #win, #say3", 19.85);
+      tl.fromTo("#blackout", { opacity: 0 }, { opacity: 1, duration: 0.35, immediateRender: false }, 20.00);
+      tl.fromTo("#logo", { opacity: 0, scale: 1.1, filter: "blur(20px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.out", immediateRender: true }, 20.35);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
