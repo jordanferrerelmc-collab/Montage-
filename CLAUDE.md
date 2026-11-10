@@ -73,6 +73,15 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
 7. `hyperframes render --quality delivery`, puis `loudnorm` à -14 LUFS (voir `scripts/montage.sh`).
 8. Livrer à l'utilisateur deux fichiers : une version légère (CRF 23, environ 10 Mo) et une version HD.
 
+9. **Toujours terminer la livraison par les descriptions SEO** (demande de l'utilisateur, 10/11/2026), prêtes à copier :
+   - **TikTok** : 1re ligne = accroche avec le mot clé principal (ce que les gens tapent dans la recherche), 1 à 2 phrases
+     naturelles avec les mots clés secondaires, un appel à l'action (commente / abonne-toi), **4 hashtags maximum**
+     (1 large + 2 de niche + 1 de marque ou de format), en français.
+   - **YouTube (Shorts)** : un **titre** de moins de 70 caractères (mot clé au début), puis une description de 2 à 4 lignes
+     (mot clé dans la 1re phrase, mots clés secondaires, appel à l'action), **4 hashtags maximum**.
+   - Pas de faux chiffres ni de promesses trompeuses ; mots clés tirés du sujet réel de la vidéo (jeu, mode, tactique…).
+   - Écrire aussi ces textes dans `projets/<nom>/final/description.md`.
+
 Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionnés.
 
 ## Voix clonée de l'utilisateur (montages sans visage)
