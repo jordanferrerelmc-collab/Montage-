@@ -52,10 +52,10 @@ def emoji(eid, char, t, end, x, y, size=220, rot=-8):
     js.append(f"  fx.blurOut(tl, '#{eid}', {end - 0.2:.3f});")
     sfx("pop", t, 0.25, 0.12)
 
-emoji("e1", "💡", W[9], W[12] - 0.05, 730, 400, 190, -8)             # une astuce
-emoji("e2", "🏆", W[13], W[17] - 0.05, 110, 420, 200, 8)             # gagner tous vos matchs
-emoji("e3", "📈", W[18], W[22] - 0.05, 730, 420, 190, -6)            # beaucoup de points
-emoji("e4", "😤", W[34], JOINS[2] - 0.05, 110, 380, 210, 8)          # bordel
+emoji("e1", "💡", W[9], W[12] - 0.05, 420, 1235, 150, -8)             # une astuce
+emoji("e2", "🏆", W[13], W[17] - 0.05, 420, 1235, 150, 8)             # gagner tous vos matchs
+emoji("e3", "📈", W[18], W[22] - 0.05, 420, 1235, 150, -6)            # beaucoup de points
+emoji("e4", "😤", W[34], JOINS[2] - 0.05, 420, 1235, 150, 8)          # bordel
 
 # bouton « X » de la manette (dessin original aux couleurs de la charte)
 XBTN = ('<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" style="fill:var(--charcoal-deep); stroke:var(--accent)" stroke-width="6"/>'
@@ -102,7 +102,7 @@ js.append(f"  fx.blurIn(tl, '#logo', {MAIN + 0.05:.2f}, {{blur: 20, y: 0, scale:
 sfx("impact-sec", MAIN, 0.3, 0.35)
 
 EXTRA_CSS = """
-      #cam { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 24%; }
+      #cam { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 60%; }   /* zoom ancré au menton : le visage ne descend pas vers les émojis */
       #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
       #vign { position: absolute; inset: 0; pointer-events: none;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.25) 15%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0.35) 100%); }
@@ -110,17 +110,17 @@ EXTRA_CSS = """
       .bar { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 250px; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.25); overflow: hidden; }
       .bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
       /* sous-titres centrés, sur la poitrine, zone sûre TikTok */
-      .cap { display: block; top: 1180px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 86px;
+      #root .cap { display: block; top: 1440px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 86px;
         -webkit-text-stroke: 12px rgba(0, 0, 0, 0.9); paint-order: stroke fill; text-shadow: 0 6px 26px rgba(0, 0, 0, 0.8); }
-      .cap .k { margin: 0; }
-      .emo { position: absolute; width: 240px; text-align: center; line-height: 1; z-index: 5; }
+      #root .cap .k { margin: 0; }
+      .emo { position: absolute; width: 240px; /* zone libre entre le menton et les sous-titres : jamais sur le visage */ text-align: center; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
-      .ering { position: absolute; left: 50%; top: 50%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%;
+      .ering { position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .xbtn { position: absolute; left: 110px; width: 260px; top: 380px; height: 320px; text-align: center; z-index: 5; }
-      .xbtn #xbi { display: inline-block; width: 210px; height: 210px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
+      .xbtn { position: absolute; left: 410px; width: 260px; top: 1225px; height: 200px; text-align: center; z-index: 5; }
+      .xbtn #xbi { display: inline-block; width: 160px; height: 160px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
       .xbtn #xbi svg { width: 100%; height: 100%; }
-      .xlab { font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
+      .xlab { display: none; font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
 """
 
 A = f"{ROOT}/montage/assets"

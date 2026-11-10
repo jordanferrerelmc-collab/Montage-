@@ -106,7 +106,7 @@
         -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
         mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
       #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
-      #cam { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 24%; }
+      #cam { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 60%; }   /* zoom ancré au menton : le visage ne descend pas vers les émojis */
       #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
       #vign { position: absolute; inset: 0; pointer-events: none;
         background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.25) 15%, rgba(0, 0, 0, 0) 24%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.5) 75%, rgba(0, 0, 0, 0.35) 100%); }
@@ -114,17 +114,17 @@
       .bar { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 250px; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.25); overflow: hidden; }
       .bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
       /* sous-titres centrés, sur la poitrine, zone sûre TikTok */
-      .cap { display: block; top: 1180px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 86px;
+      #root .cap { display: block; top: 1440px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 86px;
         -webkit-text-stroke: 12px rgba(0, 0, 0, 0.9); paint-order: stroke fill; text-shadow: 0 6px 26px rgba(0, 0, 0, 0.8); }
-      .cap .k { margin: 0; }
-      .emo { position: absolute; width: 240px; text-align: center; line-height: 1; z-index: 5; }
+      #root .cap .k { margin: 0; }
+      .emo { position: absolute; width: 240px; /* zone libre entre le menton et les sous-titres : jamais sur le visage */ text-align: center; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
-      .ering { position: absolute; left: 50%; top: 50%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%;
+      .ering { position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .xbtn { position: absolute; left: 110px; width: 260px; top: 380px; height: 320px; text-align: center; z-index: 5; }
-      .xbtn #xbi { display: inline-block; width: 210px; height: 210px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
+      .xbtn { position: absolute; left: 410px; width: 260px; top: 1225px; height: 200px; text-align: center; z-index: 5; }
+      .xbtn #xbi { display: inline-block; width: 160px; height: 160px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
       .xbtn #xbi svg { width: 100%; height: 100%; }
-      .xlab { font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
+      .xlab { display: none; font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
 
 
       /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
@@ -208,10 +208,10 @@
       <div id="vign"></div>
       <div class="handle">SPECIMEN GAMING</div>
       <div class="bar"><i id="barfill"></i></div>
-      <div class="clip emo" id="e1" data-start="3.25" data-duration="0.78" data-track-index="3" style="left:730px; top:400px; font-size:190px"><div class="ering" id="e1r"></div><span id="e1c">💡</span></div>
-      <div class="clip emo" id="e2" data-start="4.44" data-duration="1.22" data-track-index="3" style="left:110px; top:420px; font-size:200px"><div class="ering" id="e2r"></div><span id="e2c">🏆</span></div>
-      <div class="clip emo" id="e3" data-start="5.77" data-duration="0.89" data-track-index="3" style="left:730px; top:420px; font-size:190px"><div class="ering" id="e3r"></div><span id="e3c">📈</span></div>
-      <div class="clip emo" id="e4" data-start="10.81" data-duration="0.39" data-track-index="3" style="left:110px; top:380px; font-size:210px"><div class="ering" id="e4r"></div><span id="e4c">😤</span></div>
+      <div class="clip emo" id="e1" data-start="3.25" data-duration="0.78" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e1r"></div><span id="e1c">💡</span></div>
+      <div class="clip emo" id="e2" data-start="4.44" data-duration="1.22" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e2r"></div><span id="e2c">🏆</span></div>
+      <div class="clip emo" id="e3" data-start="5.77" data-duration="0.89" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e3r"></div><span id="e3c">📈</span></div>
+      <div class="clip emo" id="e4" data-start="10.81" data-duration="0.39" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e4r"></div><span id="e4c">😤</span></div>
       <div class="clip xbtn" id="xb" data-start="7.97" data-duration="1.93" data-track-index="3"><div class="ering" id="xbr"></div><div id="xbi"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" style="fill:var(--charcoal-deep); stroke:var(--accent)" stroke-width="6"/><path d="M32 32 L68 68 M68 32 L32 68" style="stroke:var(--ink)" stroke-width="10" stroke-linecap="round"/></svg></div><div class="xlab" id="xbl">PASSE</div></div>
       <div class="cap clip" id="c0" data-start="0.01" data-duration="1.32" data-track-index="4">Comment on dit, les</div>
       <div class="cap clip" id="c1" data-start="1.33" data-duration="0.75" data-track-index="4">gars ?</div>
