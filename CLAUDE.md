@@ -52,10 +52,11 @@ Règles communes :
   à l'action sont centrés horizontalement, dans la colonne `var(--cap-left)` / `var(--cap-width)` de la charte
   (marges égales : 90 px Agency, 110 px Gaming). Jamais de texte aligné ou collé contre un bord : il serait coupé ou
   caché par l'interface (bords arrondis, icônes TikTok / Instagram). Vérifier sur `hyperframes snapshot`.
-- **Jamais d'émoji, d'illustration ni de texte sur le visage** (demande de l'utilisateur, 10/11/2026). Face caméra :
-  ancrer les zooms au niveau du menton (`transform-origin: 50% 60%`) pour que le visage ne descende pas, et placer
-  émojis / illustrations dans la zone libre entre le menton et les sous-titres (≈ 1220-1380 px), ou sur les côtés
-  hors du visage. Vérifier chaque émoji sur `hyperframes snapshot`, y compris pendant les coups de zoom.
+- **Jamais d'émoji ni d'illustration sur le visage NI sur les sous-titres** (demande de l'utilisateur, 10/11/2026).
+  Face caméra : ancrer les zooms au niveau du menton (`transform-origin: 50% 60%`) pour que le visage ne descende pas ;
+  placer émojis / illustrations **juste au-dessus des sous-titres** (≈ 1220-1380 px, sous-titres à 1440 px), petits
+  (≈ 140 px) avec une onde de choc qui ne déborde pas (`fx.shockwave(..., {to: 1.0})`, anneau de 180 px).
+  Vérifier chaque émoji sur `hyperframes snapshot`, y compris pendant les coups de zoom.
 - La bande floutée `#shade` ne sert qu'à masquer des sous-titres déjà incrustés dans la source :
   la retirer si la vidéo source n'en a pas.
 - **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) doit être vert, en plus de `hyperframes check`.

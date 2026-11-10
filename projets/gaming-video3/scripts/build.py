@@ -48,14 +48,14 @@ def emoji(eid, char, t, end, x, y, size=220, rot=-8):
     body.append(f'<div class="clip emo" id="{eid}" data-start="{t:.2f}" data-duration="{end - t:.2f}" data-track-index="3" '
                 f'style="left:{x}px; top:{y}px; font-size:{size}px"><div class="ering" id="{eid}r"></div><span id="{eid}c">{char}</span></div>')
     js.append(f"  tl.fromTo('#{eid}c', {{scale: 0, rotation: {rot * 3}}}, {{scale: 1, rotation: {rot}, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}}, {t:.3f});")
-    js.append(f"  fx.shockwave(tl, '#{eid}r', {t + 0.04:.3f});")
+    js.append(f"  fx.shockwave(tl, '#{eid}r', {t + 0.04:.3f}, {{to: 1.0}});")
     js.append(f"  fx.blurOut(tl, '#{eid}', {end - 0.2:.3f});")
     sfx("pop", t, 0.25, 0.12)
 
-emoji("e1", "💡", W[9], W[12] - 0.05, 420, 1235, 150, -8)             # une astuce
-emoji("e2", "🏆", W[13], W[17] - 0.05, 420, 1235, 150, 8)             # gagner tous vos matchs
-emoji("e3", "📈", W[18], W[22] - 0.05, 420, 1235, 150, -6)            # beaucoup de points
-emoji("e4", "😤", W[34], JOINS[2] - 0.05, 420, 1235, 150, 8)          # bordel
+emoji("e1", "💡", W[9], W[12] - 0.05, 420, 1220, 140, -8)             # une astuce
+emoji("e2", "🏆", W[13], W[17] - 0.05, 420, 1220, 140, 8)             # gagner tous vos matchs
+emoji("e3", "📈", W[18], W[22] - 0.05, 420, 1220, 140, -6)            # beaucoup de points
+emoji("e4", "😤", W[34], JOINS[2] - 0.05, 420, 1220, 140, 8)          # bordel
 
 # bouton « X » de la manette (dessin original aux couleurs de la charte)
 XBTN = ('<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" style="fill:var(--charcoal-deep); stroke:var(--accent)" stroke-width="6"/>'
@@ -65,7 +65,7 @@ body.append(f'<div class="clip xbtn" id="xb" data-start="{xa:.2f}" data-duration
             f'<div class="ering" id="xbr"></div><div id="xbi">{XBTN}</div><div class="xlab" id="xbl">PASSE</div></div>')
 js.append(f"  tl.fromTo('#xbi', {{scale: 0, rotation: -40}}, {{scale: 1, rotation: 0, duration: 0.4, ease: 'back.out(2.4)', immediateRender: true}}, {xa:.3f});")
 js.append(f"  tl.fromTo('#xbi', {{scale: 1}}, {{scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false}}, {W[29]:.3f});")
-js.append(f"  fx.shockwave(tl, '#xbr', {W[29]:.3f});")
+js.append(f"  fx.shockwave(tl, '#xbr', {W[29]:.3f}, {{to: 1.0}});")
 js.append(f"  fx.blurIn(tl, '#xbl', {W[29] + 0.05:.3f}, {{blur: 8, d: 0.2}});")
 js.append(f"  fx.blurOut(tl, '#xb', {xb - 0.2:.3f});")
 sfx("clic", W[29], 0.45, 0.1); sfx("impact-sec", W[29] + 0.02, 0.3, 0.35)
@@ -115,10 +115,10 @@ EXTRA_CSS = """
       #root .cap .k { margin: 0; }
       .emo { position: absolute; width: 240px; /* zone libre entre le menton et les sous-titres : jamais sur le visage */ text-align: center; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
-      .ering { position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
+      .ering { position: absolute; left: 50%; top: 50%; width: 180px; height: 180px; margin: -90px 0 0 -90px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .xbtn { position: absolute; left: 410px; width: 260px; top: 1225px; height: 200px; text-align: center; z-index: 5; }
-      .xbtn #xbi { display: inline-block; width: 160px; height: 160px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
+      .xbtn { position: absolute; left: 410px; width: 260px; top: 1220px; height: 160px; text-align: center; z-index: 5; }
+      .xbtn #xbi { display: inline-block; width: 140px; height: 140px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
       .xbtn #xbi svg { width: 100%; height: 100%; }
       .xlab { display: none; font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
 """

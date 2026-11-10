@@ -119,10 +119,10 @@
       #root .cap .k { margin: 0; }
       .emo { position: absolute; width: 240px; /* zone libre entre le menton et les sous-titres : jamais sur le visage */ text-align: center; line-height: 1; z-index: 5; }
       .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
-      .ering { position: absolute; left: 50%; top: 50%; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
+      .ering { position: absolute; left: 50%; top: 50%; width: 180px; height: 180px; margin: -90px 0 0 -90px; border-radius: 50%;
         border: 6px solid var(--accent); opacity: 0; }
-      .xbtn { position: absolute; left: 410px; width: 260px; top: 1225px; height: 200px; text-align: center; z-index: 5; }
-      .xbtn #xbi { display: inline-block; width: 160px; height: 160px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
+      .xbtn { position: absolute; left: 410px; width: 260px; top: 1220px; height: 160px; text-align: center; z-index: 5; }
+      .xbtn #xbi { display: inline-block; width: 140px; height: 140px; filter: drop-shadow(0 0 30px rgba(218, 61, 57, 0.7)); }
       .xbtn #xbi svg { width: 100%; height: 100%; }
       .xlab { display: none; font-weight: 700; font-size: 44px; letter-spacing: 0.2em; color: var(--ink); text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8); }
 
@@ -208,10 +208,10 @@
       <div id="vign"></div>
       <div class="handle">SPECIMEN GAMING</div>
       <div class="bar"><i id="barfill"></i></div>
-      <div class="clip emo" id="e1" data-start="3.25" data-duration="0.78" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e1r"></div><span id="e1c">💡</span></div>
-      <div class="clip emo" id="e2" data-start="4.44" data-duration="1.22" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e2r"></div><span id="e2c">🏆</span></div>
-      <div class="clip emo" id="e3" data-start="5.77" data-duration="0.89" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e3r"></div><span id="e3c">📈</span></div>
-      <div class="clip emo" id="e4" data-start="10.81" data-duration="0.39" data-track-index="3" style="left:420px; top:1235px; font-size:150px"><div class="ering" id="e4r"></div><span id="e4c">😤</span></div>
+      <div class="clip emo" id="e1" data-start="3.25" data-duration="0.78" data-track-index="3" style="left:420px; top:1220px; font-size:140px"><div class="ering" id="e1r"></div><span id="e1c">💡</span></div>
+      <div class="clip emo" id="e2" data-start="4.44" data-duration="1.22" data-track-index="3" style="left:420px; top:1220px; font-size:140px"><div class="ering" id="e2r"></div><span id="e2c">🏆</span></div>
+      <div class="clip emo" id="e3" data-start="5.77" data-duration="0.89" data-track-index="3" style="left:420px; top:1220px; font-size:140px"><div class="ering" id="e3r"></div><span id="e3c">📈</span></div>
+      <div class="clip emo" id="e4" data-start="10.81" data-duration="0.39" data-track-index="3" style="left:420px; top:1220px; font-size:140px"><div class="ering" id="e4r"></div><span id="e4c">😤</span></div>
       <div class="clip xbtn" id="xb" data-start="7.97" data-duration="1.93" data-track-index="3"><div class="ering" id="xbr"></div><div id="xbi"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" style="fill:var(--charcoal-deep); stroke:var(--accent)" stroke-width="6"/><path d="M32 32 L68 68 M68 32 L32 68" style="stroke:var(--ink)" stroke-width="10" stroke-linecap="round"/></svg></div><div class="xlab" id="xbl">PASSE</div></div>
       <div class="cap clip" id="c0" data-start="0.01" data-duration="1.32" data-track-index="4">Comment on dit, les</div>
       <div class="cap clip" id="c1" data-start="1.33" data-duration="0.75" data-track-index="4">gars ?</div>
@@ -281,20 +281,20 @@
   fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});
   tl.fromTo('#barfill', {scaleX: 0}, {scaleX: 1, duration: 12.25, ease: 'none', immediateRender: true}, 0);
   tl.fromTo('#e1c', {scale: 0, rotation: -24}, {scale: 1, rotation: -8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 3.250);
-  fx.shockwave(tl, '#e1r', 3.290);
+  fx.shockwave(tl, '#e1r', 3.290, {to: 1.0});
   fx.blurOut(tl, '#e1', 3.830);
   tl.fromTo('#e2c', {scale: 0, rotation: 24}, {scale: 1, rotation: 8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 4.440);
-  fx.shockwave(tl, '#e2r', 4.480);
+  fx.shockwave(tl, '#e2r', 4.480, {to: 1.0});
   fx.blurOut(tl, '#e2', 5.460);
   tl.fromTo('#e3c', {scale: 0, rotation: -18}, {scale: 1, rotation: -6, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 5.770);
-  fx.shockwave(tl, '#e3r', 5.810);
+  fx.shockwave(tl, '#e3r', 5.810, {to: 1.0});
   fx.blurOut(tl, '#e3', 6.460);
   tl.fromTo('#e4c', {scale: 0, rotation: 24}, {scale: 1, rotation: 8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 10.810);
-  fx.shockwave(tl, '#e4r', 10.850);
+  fx.shockwave(tl, '#e4r', 10.850, {to: 1.0});
   fx.blurOut(tl, '#e4', 11.000);
   tl.fromTo('#xbi', {scale: 0, rotation: -40}, {scale: 1, rotation: 0, duration: 0.4, ease: 'back.out(2.4)', immediateRender: true}, 7.970);
   tl.fromTo('#xbi', {scale: 1}, {scale: 0.82, duration: 0.08, yoyo: true, repeat: 1, ease: 'power2.out', immediateRender: false}, 8.740);
-  fx.shockwave(tl, '#xbr', 8.740);
+  fx.shockwave(tl, '#xbr', 8.740, {to: 1.0});
   fx.blurIn(tl, '#xbl', 8.790, {blur: 8, d: 0.2});
   fx.blurOut(tl, '#xb', 9.700);
   tl.fromTo('#c0', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.010);
