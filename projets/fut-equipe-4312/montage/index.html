@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="montage-style" content="gaming-premium" />
+    <meta name="brand-default" content="specimen-gaming" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/gaming-fx.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        /* texte CENTRÉ, marges égales de 110 px (évite les bords et la colonne d'icônes TikTok) */
+        --cap-left: 110px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+      #game { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 45%; }
+      #game video { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #vign { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.55) 82%, rgba(0, 0, 0, 0.3) 100%); }
+      .handle { top: 200px; left: var(--cap-left); width: var(--cap-width); text-align: center; }
+      .bar { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 250px; height: 8px; border-radius: 99px; background: rgba(255, 255, 255, 0.18); overflow: hidden; }
+      .bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; }
+      /* sous-titres centrés, zone sûre TikTok */
+      .cap { display: block; top: 1380px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 84px; text-shadow: 0 4px 0 rgba(0, 0, 0, 0.6), 0 6px 26px rgba(0, 0, 0, 0.9); }
+      .cap .k { margin: 0; }
+      .emo { position: absolute; left: var(--cap-left); width: var(--cap-width); text-align: center; line-height: 1; z-index: 5; }
+      .emo span { display: inline-block; filter: drop-shadow(0 12px 30px rgba(0, 0, 0, 0.6)); }
+      .ering { position: absolute; left: 50%; top: 50%; width: 360px; height: 360px; margin: -180px 0 0 -180px; border-radius: 50%;
+        border: 6px solid var(--accent); opacity: 0; }
+      .zring { position: absolute; left: 50%; top: 940px; width: 700px; height: 700px; margin: -350px 0 0 -350px; border-radius: 50%;
+        border: 8px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.6); opacity: 0; }
+
+
+      /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : dégradé radial sombre + halo d'accent qui respire */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--charcoal) 0%, var(--charcoal-deep) 55%, #000000 100%); }
+      #halo { position: absolute; left: 90px; top: 380px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.45; filter: blur(30px); }
+
+      /* signature et barre de progression (haut, sous les onglets TikTok) */
+      .handle { position: absolute; left: 70px; top: 120px; font-weight: 700; font-size: 30px; color: var(--silver); opacity: 0.8; }
+      .tracker { position: absolute; left: 70px; top: 165px; display: flex; align-items: center; gap: 12px; }
+      .tracker .lbl { font-weight: 700; font-size: 26px; letter-spacing: 0.08em; color: var(--silver); margin-right: 6px; }
+      .tracker .slot { width: 46px; height: 46px; border-radius: 10px; border: 3px solid var(--dark); background: transparent; }
+
+      /* en-tête de classement « N°x + nom » */
+      .rank { position: absolute; left: 70px; top: 250px; display: flex; align-items: flex-end; gap: 22px; }
+      .rank .no { font-weight: 700; color: var(--accent-soft); line-height: 0.8; display: flex; align-items: flex-start; }
+      .rank .no small { font-size: 70px; margin-top: 18px; }
+      .rank .no b { font-size: 190px; letter-spacing: -0.05em; }
+      .rank .txt { padding-bottom: 14px; }
+      .rank .name { font-weight: 700; font-size: 86px; letter-spacing: -0.03em; line-height: 1; }
+      .rank .sub { font-weight: 700; font-size: 36px; color: var(--silver); margin-top: 8px; letter-spacing: 0.02em; }
+
+      /* carte centrale (visuel, silhouette mystère, anneau) */
+      .stagecard { position: absolute; left: 70px; top: 520px; width: 560px; height: 760px; }
+      .cardvis { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; border: 4px solid var(--accent);
+        box-shadow: 0 0 60px rgba(218, 61, 57, 0.55), 0 30px 80px rgba(0, 0, 0, 0.6); background: var(--panel); }
+      .mystery { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .mystery svg { width: 100%; height: 100%; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%;
+        border: 6px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.55), inset 0 0 40px rgba(218, 61, 57, 0.4); opacity: 0; }
+      .pricepill { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); padding: 12px 34px; border-radius: 999px;
+        background: var(--accent); font-weight: 700; font-size: 40px; white-space: nowrap; box-shadow: 0 0 30px rgba(218, 61, 57, 0.6); }
+
+      /* colonne de droite : badges, encadrés de stats */
+      .side { position: absolute; left: 670px; top: 560px; width: 360px; display: flex; flex-direction: column; gap: 26px; }
+      .badge { display: flex; align-items: center; gap: 16px; }
+      .badge .ico { width: 64px; height: 64px; flex: none; }
+      .badge .bt { font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--accent-soft); }
+      .badge .bv { font-weight: 700; font-size: 36px; line-height: 1.05; }
+      .stat { width: 300px; padding: 18px 26px; border-radius: 22px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.7);
+        box-shadow: inset 0 0 30px rgba(218, 61, 57, 0.18); }
+      .stat .v { font-weight: 700; font-size: 96px; line-height: 0.9; letter-spacing: -0.03em; }
+      .stat .l { font-weight: 700; font-size: 24px; letter-spacing: 0.14em; color: var(--silver); margin-top: 6px; }
+      .note { position: absolute; left: var(--cap-left); width: var(--cap-width); text-align: center; top: 1330px; font-weight: 700; font-size: 44px; color: var(--ink); }
+      .note b { color: var(--accent-soft); }
+
+      /* grille d'appel à l'action 2×2 */
+      .ctagrid { position: absolute; left: 70px; top: 300px; display: grid; grid-template-columns: 300px 300px; gap: 26px; }
+      .cta-btn { height: 220px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.75);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; font-weight: 700; font-size: 38px;
+        box-shadow: 0 0 30px rgba(218, 61, 57, 0.35); }
+      .cta-btn svg { width: 74px; height: 74px; }
+      .ctanote { position: absolute; left: 70px; top: 800px; width: 626px; text-align: center; font-weight: 700; font-size: 36px; color: var(--silver); }
+
+      /* grands titres (intro / outro) */
+      .bigtitle { position: absolute; left: var(--cap-left); top: 520px; width: var(--cap-width); text-align: center; font-weight: 700; font-size: 128px; line-height: 0.95; letter-spacing: -0.04em; }
+      .bigtitle .acc { color: var(--accent-soft); }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--silver); margin-bottom: 26px; }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      /* sous-titres CENTRÉS dans la zone sûre de la charte (jamais collés aux bords) */
+      .cap { position: absolute; left: var(--cap-left); top: 1440px; width: var(--cap-width); height: 110px; display: flex; align-items: center;
+        justify-content: center; text-align: center;
+        font-weight: 700; font-size: 72px; letter-spacing: -0.02em; color: var(--ink); text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent-soft); margin-left: 18px; white-space: nowrap; }
+
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="13.05" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div id="game"><video id="gv" class="clip" src="assets/plans.mp4" data-start="0" data-duration="10.52" data-has-audio="true" data-volume="0.25" data-track-index="0"></video></div>
+      <div id="vign"></div>
+      <div class="clip zring" id="zr" data-start="6.18" data-duration="0.8" data-track-index="2"></div>
+      <div class="handle">SPECIMEN GAMING</div>
+      <div class="bar"><i id="barfill"></i></div>
+      <div class="clip emo" id="e1" data-start="0.82" data-duration="1.18" data-track-index="3" style="top:330px; font-size:240px"><div class="ering" id="e1r"></div><span id="e1c">🤨</span></div>
+      <div class="clip emo" id="e2" data-start="2.18" data-duration="2.17" data-track-index="3" style="top:1100px; font-size:220px"><div class="ering" id="e2r"></div><span id="e2c">👀</span></div>
+      <div class="clip emo" id="e3" data-start="4.44" data-duration="0.91" data-track-index="3" style="top:1120px; font-size:240px"><div class="ering" id="e3r"></div><span id="e3c">😤</span></div>
+      <div class="clip emo" id="e4" data-start="6.33" data-duration="0.72" data-track-index="3" style="top:300px; font-size:230px"><div class="ering" id="e4r"></div><span id="e4c">🤦</span></div>
+      <div class="clip emo" id="e5" data-start="7.49" data-duration="0.96" data-track-index="3" style="top:300px; font-size:200px"><div class="ering" id="e5r"></div><span id="e5c">🔁</span></div>
+      <div class="clip emo" id="e6" data-start="9.68" data-duration="1.07" data-track-index="3" style="top:330px; font-size:260px"><div class="ering" id="e6r"></div><span id="e6c">🤡</span></div>
+      <div class="cap clip" id="c0" data-start="0.06" data-duration="0.72" data-track-index="4">Attendez</div>
+      <div class="cap clip" id="c1" data-start="0.78" data-duration="0.72" data-track-index="4">c&#x27;est quoi</div>
+      <div class="cap clip" id="c2" data-start="1.50" data-duration="0.56" data-track-index="4">ça ?</div>
+      <div class="cap clip" id="c3" data-start="2.06" data-duration="0.44" data-track-index="4">Une équipe</div>
+      <div class="cap clip" id="c4" data-start="2.50" data-duration="0.55" data-track-index="4"><span class='k'>originale</span></div>
+      <div class="cap clip" id="c5" data-start="3.05" data-duration="0.30" data-track-index="4">en <span class='k'>fut</span></div>
+      <div class="cap clip" id="c6" data-start="3.35" data-duration="1.05" data-track-index="4">de <span class='k'>Champions ?</span></div>
+      <div class="cap clip" id="c7" data-start="4.40" data-duration="0.51" data-track-index="4">Ah bah</div>
+      <div class="cap clip" id="c8" data-start="4.91" data-duration="0.49" data-track-index="4"><span class='k'>non !</span></div>
+      <div class="cap clip" id="c9" data-start="5.40" data-duration="0.29" data-track-index="4">Encore</div>
+      <div class="cap clip" id="c10" data-start="5.69" data-duration="0.45" data-track-index="4">ce <span class='k'>foutu</span></div>
+      <div class="cap clip" id="c11" data-start="6.14" data-duration="0.93" data-track-index="4"><span class='k'>4-3-1-2</span></div>
+      <div class="cap clip" id="c12" data-start="7.07" data-duration="0.91" data-track-index="4">avec les <span class='k'>mêmes</span></div>
+      <div class="cap clip" id="c13" data-start="7.98" data-duration="0.54" data-track-index="4"><span class='k'>joueurs !</span></div>
+      <div class="cap clip" id="c14" data-start="8.52" data-duration="0.51" data-track-index="4">Mais vous jouez</div>
+      <div class="cap clip" id="c15" data-start="9.03" data-duration="0.21" data-track-index="4">tous</div>
+      <div class="cap clip" id="c16" data-start="9.24" data-duration="0.40" data-track-index="4">sur le <span class='k'>même</span></div>
+      <div class="cap clip" id="c17" data-start="9.64" data-duration="0.29" data-track-index="4"><span class='k'>compte</span></div>
+      <div class="cap clip" id="c18" data-start="9.93" data-duration="0.82" data-track-index="4">ou quoi ?</div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="10.75" data-duration="2.3" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="a0" class="clip" src="assets/sfx/whoosh-court.wav" data-start="1.970" data-duration="0.5" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/whoosh-court.wav" data-start="4.320" data-duration="0.5" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="7.020" data-duration="0.5" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/whoosh-court.wav" data-start="8.420" data-duration="0.5" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.320" data-duration="0.5" data-volume="0.18" data-track-index="6"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/impact-boom.wav" data-start="6.180" data-duration="0.9" data-volume="0.4" data-track-index="7"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/pop.wav" data-start="0.820" data-duration="0.12" data-volume="0.28" data-track-index="6"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/pop.wav" data-start="2.180" data-duration="0.12" data-volume="0.28" data-track-index="7"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/pop.wav" data-start="4.440" data-duration="0.12" data-volume="0.28" data-track-index="7"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/pop.wav" data-start="6.330" data-duration="0.12" data-volume="0.28" data-track-index="6"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/pop.wav" data-start="7.490" data-duration="0.12" data-volume="0.28" data-track-index="7"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/pop.wav" data-start="9.680" data-duration="0.12" data-volume="0.28" data-track-index="6"></audio>
+    <audio id="a12" class="clip" src="assets/voix.wav" data-start="0.000" data-duration="10.527" data-volume="1.0" data-track-index="8"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/impact-sec.wav" data-start="10.750" data-duration="0.35" data-volume="0.3" data-track-index="6"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const fx = window.GamingFX;
+  tl.set('#game', {transformOrigin: '50% 45%'}, 0.000);
+  tl.fromTo('#game', {scale: 1.12}, {scale: 1.0, duration: 0.35, ease: 'power3.out', immediateRender: true}, 0.000);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.05, duration: 1.700, ease: 'none', immediateRender: false}, 0.350);
+  tl.set('#game', {transformOrigin: '50% 45%'}, 2.050);
+  tl.fromTo('#game', {scale: 1.12}, {scale: 1.0, duration: 0.35, ease: 'power3.out', immediateRender: false}, 2.050);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.05, duration: 2.000, ease: 'none', immediateRender: false}, 2.400);
+  tl.fromTo('#game', {filter: 'blur(10px)'}, {filter: 'blur(0px)', duration: 0.18, ease: 'power2.out', immediateRender: false}, 2.050);
+  tl.set('#game', {transformOrigin: '50% 45%'}, 4.400);
+  tl.fromTo('#game', {scale: 1.12}, {scale: 1.0, duration: 0.35, ease: 'power3.out', immediateRender: false}, 4.400);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.05, duration: 0.650, ease: 'none', immediateRender: false}, 4.750);
+  tl.fromTo('#game', {filter: 'blur(10px)'}, {filter: 'blur(0px)', duration: 0.18, ease: 'power2.out', immediateRender: false}, 4.400);
+  tl.set('#game', {transformOrigin: '50% 45%'}, 7.100);
+  tl.fromTo('#game', {scale: 1.12}, {scale: 1.0, duration: 0.35, ease: 'power3.out', immediateRender: false}, 7.100);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.05, duration: 1.050, ease: 'none', immediateRender: false}, 7.450);
+  tl.fromTo('#game', {filter: 'blur(10px)'}, {filter: 'blur(0px)', duration: 0.18, ease: 'power2.out', immediateRender: false}, 7.100);
+  tl.set('#game', {transformOrigin: '50% 45%'}, 8.500);
+  tl.fromTo('#game', {scale: 1.12}, {scale: 1.0, duration: 0.35, ease: 'power3.out', immediateRender: false}, 8.500);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.05, duration: 1.670, ease: 'none', immediateRender: false}, 8.850);
+  tl.fromTo('#game', {filter: 'blur(10px)'}, {filter: 'blur(0px)', duration: 0.18, ease: 'power2.out', immediateRender: false}, 8.500);
+  tl.set('#game', {transformOrigin: '446px 971px'}, 5.400);
+  tl.fromTo('#game', {scale: 1.0}, {scale: 1.45, duration: 0.780, ease: 'power1.inOut', immediateRender: false}, 5.400);
+  tl.fromTo('#game', {filter: 'blur(10px)'}, {filter: 'blur(0px)', duration: 0.18, ease: 'power2.out', immediateRender: false}, 5.400);
+  tl.fromTo('#game', {scale: 2.6}, {scale: 2.2, duration: 0.5, ease: 'power3.out', immediateRender: false}, 6.180);
+  tl.fromTo('#game', {scale: 2.2}, {scale: 2.3, duration: 0.420, ease: 'none', immediateRender: false}, 6.680);
+  fx.shockwave(tl, '#zr', 6.180);
+  fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});
+  tl.fromTo('#barfill', {scaleX: 0}, {scaleX: 1, duration: 10.75, ease: 'none', immediateRender: true}, 0);
+  tl.fromTo('#e1c', {scale: 0, rotation: -24}, {scale: 1, rotation: -8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 0.820);
+  fx.shockwave(tl, '#e1r', 0.860);
+  fx.blurOut(tl, '#e1', 1.780);
+  tl.fromTo('#e2c', {scale: 0, rotation: 18}, {scale: 1, rotation: 6, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 2.180);
+  fx.shockwave(tl, '#e2r', 2.220);
+  fx.blurOut(tl, '#e2', 4.130);
+  tl.fromTo('#e3c', {scale: 0, rotation: -18}, {scale: 1, rotation: -6, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 4.440);
+  fx.shockwave(tl, '#e3r', 4.480);
+  fx.blurOut(tl, '#e3', 5.130);
+  tl.fromTo('#e4c', {scale: 0, rotation: 24}, {scale: 1, rotation: 8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 6.330);
+  fx.shockwave(tl, '#e4r', 6.370);
+  fx.blurOut(tl, '#e4', 6.830);
+  tl.fromTo('#e5c', {scale: 0, rotation: -18}, {scale: 1, rotation: -6, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 7.490);
+  fx.shockwave(tl, '#e5r', 7.530);
+  fx.blurOut(tl, '#e5', 8.230);
+  tl.fromTo('#e6c', {scale: 0, rotation: 24}, {scale: 1, rotation: 8, duration: 0.42, ease: 'back.out(2.2)', immediateRender: true}, 9.680);
+  fx.shockwave(tl, '#e6r', 9.720);
+  fx.blurOut(tl, '#e6', 10.530);
+  tl.fromTo('#c0', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.060);
+  tl.fromTo('#c1', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.780);
+  tl.fromTo('#c2', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 1.500);
+  tl.fromTo('#c3', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 2.060);
+  tl.fromTo('#c4', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 2.500);
+  tl.fromTo('#c5', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 3.050);
+  tl.fromTo('#c6', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 3.350);
+  tl.fromTo('#c7', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.400);
+  tl.fromTo('#c8', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.910);
+  tl.fromTo('#c9', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.400);
+  tl.fromTo('#c10', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.690);
+  tl.fromTo('#c11', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 6.140);
+  tl.fromTo('#c12', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 7.070);
+  tl.fromTo('#c13', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 7.980);
+  tl.fromTo('#c14', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 8.520);
+  tl.fromTo('#c15', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.030);
+  tl.fromTo('#c16', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.240);
+  tl.fromTo('#c17', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.640);
+  tl.fromTo('#c18', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.930);
+  tl.fromTo('#game', {filter: 'blur(0px) brightness(1)'}, {filter: 'blur(16px) brightness(0.5)', duration: 0.25, immediateRender: false}, 10.27);
+  tl.fromTo('#blackout', {opacity: 0}, {opacity: 1, duration: 0.25, immediateRender: false}, 10.50);
+  fx.blurIn(tl, '#logo', 10.80, {blur: 20, y: 0, scale: 1.1, d: 0.6});
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
