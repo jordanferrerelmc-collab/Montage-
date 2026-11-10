@@ -2,7 +2,7 @@
 
 assets/plans.mp4 (scripts/track.py puis scripts/prep.py) : 9 plans verticaux qui suivent le joueur contrôlé.
 Sous-titres centrés mot à mot, transitions « zoom à travers » entre les parties, coups de zoom sur les mots forts,
-titres de partie sous la barre de progression (jamais sur les sous-titres).
+titres de partie en haut sous la signature (jamais sur les sous-titres).
 """
 import html, json, os, re, shutil, wave
 
@@ -68,11 +68,9 @@ for n, (a, b, z0, z1, ease) in enumerate(events):
 # image figée floutée sous l'appel à l'action
 js.append(f"  tl.fromTo('#game', {{filter: 'blur(0px) brightness(1)'}}, {{filter: 'blur(14px) brightness(0.5)', duration: 0.4, ease: 'power2.out', immediateRender: false}}, {W[105] - 0.15:.3f});")
 
-# ------------------------------------------------------------------ signature + barre de progression
+# ------------------------------------------------------------------ signature (pas de barre de progression : demande de l'utilisateur)
 body.append('<div class="handle">SPECIMEN GAMING</div>')
-body.append('<div class="bar"><i id="barfill"></i></div>')
 js.append("  fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});")
-js.append(f"  tl.fromTo('#barfill', {{scaleX: 0}}, {{scaleX: 1, duration: {MAIN:.2f}, ease: 'none', immediateRender: true}}, 0);")
 
 # ------------------------------------------------------------------ accroche + titres de partie (en haut, sous la barre)
 body.append(f'<div class="clip hook" id="hook" data-start="0" data-duration="{PARTS[0] - 0.1:.2f}" data-track-index="2">'

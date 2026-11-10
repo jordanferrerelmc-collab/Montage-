@@ -215,7 +215,6 @@
       <div id="game"><video id="gv" class="clip" src="assets/plans.mp4" data-start="0" data-duration="38.0" data-has-audio="true" data-volume="0.2" data-track-index="0"></video></div>
       <div id="vign"></div>
       <div class="handle">SPECIMEN GAMING</div>
-      <div class="bar"><i id="barfill"></i></div>
       <div class="clip hook" id="hook" data-start="0" data-duration="5.73" data-track-index="2"><div class="hk" id="hk">FC 27 · TACTIQUE</div><div class="hbig" id="hbig">4-3-1-2</div></div>
       <div class="clip plabel" id="pl0" data-start="6.03" data-duration="4.21" data-track-index="2"><div class="ps">ASTUCE 1</div><div class="pb">Appel dirigé du piston</div></div>
       <div class="clip plabel" id="pl1" data-start="10.44" data-duration="8.00" data-track-index="2"><div class="ps">ASTUCE 2</div><div class="pb"><span class="key">L1</span><i>+</i><span class="key"><svg viewBox="0 0 24 24"><path d="M12 4 L21 20 H3 Z" fill="none" style="stroke:var(--ink)" stroke-width="2.6" stroke-linejoin="round"/></svg></span></div></div>
@@ -336,7 +335,6 @@
   tl.fromTo('#game', {scale: 1.350}, {scale: 1.000, duration: 1.600, ease: 'power3.out', immediateRender: false}, 32.570);
   tl.fromTo('#game', {filter: 'blur(0px) brightness(1)'}, {filter: 'blur(14px) brightness(0.5)', duration: 0.4, ease: 'power2.out', immediateRender: false}, 34.370);
   fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});
-  tl.fromTo('#barfill', {scaleX: 0}, {scaleX: 1, duration: 38.00, ease: 'none', immediateRender: true}, 0);
   fx.blurIn(tl, '#hk', 0.1, {blur: 10});
   fx.blurIn(tl, '#hbig', 0.46, {blur: 24, scale: 1.25, y: 0});
   fx.blurOut(tl, '#hook', 5.43);

@@ -25,7 +25,7 @@ elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateu
   - CTA en pilule dorée, écran de fin avec le logo.
 - **Gaming → « gaming premium »** (`templates/reel-gaming/` + bibliothèque d'animations `gaming-fx.js`,
   exemple complet : `projets/demo-style-gaming/scripts/build.py`), d'après la vidéo de référence `references/gaming-style/` :
-  - fond sombre en dégradé radial, halo rouge qui respire ; signature « SPECIMEN GAMING » et barre de progression en haut ;
+  - fond sombre en dégradé radial, halo rouge qui respire ; signature « SPECIMEN GAMING » en haut (sans barre de progression, voir règles communes) ;
   - révélation mystère : silhouette « ? » → visuel révélé avec onde de choc (`fx.mysteryReveal`) ;
   - textes en défocalisation (`fx.blurIn` / `fx.blurOut`), classement « N° + nom + sous-titre » ;
   - encadrés de stats et badges qui glissent (`fx.slideBlur`), note « → … », compteur en pastille (`fx.countUp`) ;
@@ -57,6 +57,8 @@ Règles communes :
   placer émojis / illustrations **juste au-dessus des sous-titres** (≈ 1220-1380 px, sous-titres à 1440 px), petits
   (≈ 140 px) avec une onde de choc qui ne déborde pas (`fx.shockwave(..., {to: 1.0})`, anneau de 180 px).
   Vérifier chaque émoji sur `hyperframes snapshot`, y compris pendant les coups de zoom.
+- **Pas de barre de progression** (demande de l'utilisateur, 10/11/2026) : ne plus mettre la barre rouge (`.bar`) ni les
+  cases de progression (`.tracker`) sous la signature « SPECIMEN GAMING ». La signature seule reste en haut.
 - La bande floutée `#shade` ne sert qu'à masquer des sous-titres déjà incrustés dans la source :
   la retirer si la vidéo source n'en a pas.
 - **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) doit être vert, en plus de `hyperframes check`.
