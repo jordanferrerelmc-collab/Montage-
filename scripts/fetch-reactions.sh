@@ -2,6 +2,8 @@
 # Télécharge les sons de réaction (« woaah », foule, rires…) depuis Mixkit dans effets/sfx/reactions/.
 # Licence Mixkit (gratuite) : utilisation libre dans nos vidéos, mais PAS de redistribution des fichiers seuls
 # → ces sons ne sont pas versionnés (dépôt public) ; relancer `npm run sfx:reactions` dans une nouvelle session.
+# Sons validés par l'utilisateur (11/11/2026) : yes-victoire-groupe, foule-acclame-court, foule-joie,
+# foule-victoire-enorme, foule-stade-cris. Les autres restent téléchargés mais ne sont pas à utiliser.
 # Réseau : mixkit.co et assets.mixkit.co doivent être autorisés (environnement « Montage »).
 set -e
 cd "$(dirname "$0")/.."

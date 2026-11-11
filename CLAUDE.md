@@ -119,7 +119,10 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
   télécharge 14 sons Mixkit dans `effets/sfx/reactions/` (non versionnés : la licence Mixkit autorise l'usage dans nos
   vidéos, pas la redistribution des fichiers ; hôtes `mixkit.co` / `assets.mixkit.co` autorisés dans l'environnement
   « Montage »). À relancer au début d'une session qui en a besoin. Usage : **1 à 3 par vidéo, sur les vrais temps forts**
-  (but, révélation, chute), volume 0,3 à 0,5 sous la voix, jamais en continu. Pour en ajouter : compléter la liste
+  (but, révélation, chute), volume 0,3 à 0,5 sous la voix, jamais en continu.
+  **Sons validés par l'utilisateur (11/11/2026) : uniquement `yes-victoire-groupe`, `foule-acclame-court`, `foule-joie`,
+  `foule-victoire-enorme`, `foule-stade-cris`** (n° 6 à 10 du fichier d'écoute). Ne pas utiliser les autres
+  (surprises, cris seuls, huées, rires) sans nouvelle demande. Pour en ajouter : compléter la liste
   `id nom` du script (id Mixkit visible dans l'URL du son).
 - **Étalonnage final** : `npm run grade -- in.mp4 out.mp4 <look> [--grain] [--vignette] [--force 0.8]`.
   Agency : `or-chaud` ou `film-desature`. Gaming : `punchy-gaming` ou `froid-net`.
