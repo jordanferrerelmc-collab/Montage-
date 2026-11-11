@@ -115,6 +115,12 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 - **Nouvel élément du catalogue** : `cd effets && ../hyperframes/node_modules/.bin/hyperframes add <nom> --no-clipboard`,
   puis `npm run fx:localize` (GSAP local au lieu du CDN).
 - **Bruitages** `effets/sfx/` (17), **LUT** `effets/luts/` (6), **grain** `effets/overlays/` (régénérés par `npm run fx:assets`).
+- **Sons de réaction** (« woaah », surprise, cris de victoire, foule de stade, huées, rires) : `npm run sfx:reactions`
+  télécharge 14 sons Mixkit dans `effets/sfx/reactions/` (non versionnés : la licence Mixkit autorise l'usage dans nos
+  vidéos, pas la redistribution des fichiers ; hôtes `mixkit.co` / `assets.mixkit.co` autorisés dans l'environnement
+  « Montage »). À relancer au début d'une session qui en a besoin. Usage : **1 à 3 par vidéo, sur les vrais temps forts**
+  (but, révélation, chute), volume 0,3 à 0,5 sous la voix, jamais en continu. Pour en ajouter : compléter la liste
+  `id nom` du script (id Mixkit visible dans l'URL du son).
 - **Étalonnage final** : `npm run grade -- in.mp4 out.mp4 <look> [--grain] [--vignette] [--force 0.8]`.
   Agency : `or-chaud` ou `film-desature`. Gaming : `punchy-gaming` ou `froid-net`.
 - **Transitions FFmpeg** entre deux vidéos : `npm run transition -- a.mp4 b.mp4 out.mp4 <type> <durée>`.
