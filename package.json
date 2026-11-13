@@ -31,6 +31,9 @@
     "transition": "bash scripts/transition.sh",
     "effects:setup": "(command -v apt-get >/dev/null && (apt-get install -y -q libegl1 libgles2 >/dev/null 2>&1 || true)); cd .claude/skills/effects && ([ -x .venv/bin/python ] || uv venv -q -p 3.12 .venv) && uv pip install -q -p .venv/bin/python -r requirements.txt && bash scripts/setup.sh",
     "steal:setup": "command -v yt-dlp >/dev/null || pip install -q --break-system-packages yt-dlp",
-    "sfx:reactions": "bash scripts/fetch-reactions.sh"
+    "sfx:reactions": "bash scripts/fetch-reactions.sh",
+    "sfx:openverse": "python3 scripts/sfx-openverse.py",
+    "earshot:setup": "bash scripts/install-earshot.sh",
+    "earshot": "/opt/earshot-src/.venv/bin/python -m earshot"
   }
 }

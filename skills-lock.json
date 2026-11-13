@@ -1,17 +1,29 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
+    "earshot": {
+      "source": "Leonxlnx/earshot",
+      "sourceType": "github",
+      "skillPath": "skills/earshot/SKILL.md",
+      "computedHash": "07a6100d2f2110f38e33d1892d03efa614f7b35335580a60fc7d2b17d39de5ec"
+    },
     "html-demo": {
       "source": "MengTo/Skills",
       "sourceType": "github",
       "skillPath": "agent-skills/web-design/html-demo/SKILL.md",
-      "computedHash": "7139afc0194b340899ff1ba4abbf40b834a5b10e0cfb4d1a282aef34bd63e8ad"
+      "computedHash": ""
+    },
+    "real-sound": {
+      "source": "Leonxlnx/earshot",
+      "sourceType": "github",
+      "skillPath": "skills/real-sound/SKILL.md",
+      "computedHash": "0caed483c0c11a7b3dcc7e449d2856a1845a9ea13251f2708ff0e9c4397045fb"
     },
     "steal": {
       "source": "Melvynx/video-agent-skills",
       "sourceType": "github",
       "skillPath": "skills/steal/SKILL.md",
-      "computedHash": "642448c17d3a5c286d45ae18a902b3279a0768ea9d150e762ab0965a6ea44551"
+      "computedHash": "fa037217f27a9aa653990d613e1dfa9162181b87a8543c448be9ea3415833dc2"
     }
   }
 }

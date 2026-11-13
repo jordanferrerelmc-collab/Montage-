@@ -115,6 +115,24 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 - **Nouvel élément du catalogue** : `cd effets && ../hyperframes/node_modules/.bin/hyperframes add <nom> --no-clipboard`,
   puis `npm run fx:localize` (GSAP local au lieu du CDN).
 - **Bruitages** `effets/sfx/` (17), **LUT** `effets/luts/` (6), **grain** `effets/overlays/` (régénérés par `npm run fx:assets`).
+- **Source des effets sonores : Openverse** (demande de l'utilisateur, 13/11/2026 ; https://openverse.org, projet
+  WordPress/openverse). Pour tout nouveau bruitage (whoosh, impact, clic, foule, ambiance…), chercher d'abord sur Openverse :
+  `npm run sfx:openverse -- cherche "<mots clés en anglais>"`, puis `-- prends <id> <nom> [--debut --fin]` (son dans
+  `effets/sfx/openverse/`, non versionné ; `manifest.json` versionné ; `-- sync` les retélécharge dans une nouvelle session).
+  Licences acceptées : **cc0 / pdm** (aucun crédit) et **by** (crédit de l'auteur OBLIGATOIRE : ajouter les lignes de
+  `npm run sfx:openverse -- credits <noms>` à la fin des descriptions TikTok / YouTube et dans `final/description.md`).
+  Refusées : nc, nd, sa. **Limite constatée le 13/11/2026** : la recherche (`api.openverse.org`) fonctionne, mais le
+  téléchargement des fichiers (`cdn.freesound.org`) est refusé par le filtrage réseau de la plateforme (403), même hôte
+  autorisé — ne pas chercher à le contourner. Procédure : donner à l'utilisateur les liens des pages trouvées par
+  `cherche`, il télécharge et envoie les fichiers, puis `-- prends <id> <nom> --fichier <fichier envoyé>`.
+  En attendant : bruitages maison de `effets/sfx/` (17, synthétisés) et réactions Mixkit validées (ci-dessous).
+- **Choisir un son sans l'entendre : skill `earshot`** (Leonxlnx/earshot, MIT, installé le 13/11/2026 dans
+  `.agents/skills/earshot`, lien `.claude/skills/earshot`). Ne jamais dire qu'un son « va bien » sans une mesure earshot :
+  `npm run earshot -- rank "<description>" <dossier> --top 5`, `find` (meilleur extrait), `describe`, `realness`,
+  `timeline <vidéo>` (relecture d'un mixage). Moteur + modèles hors dépôt : `npm run earshot:setup` au début d'une session
+  qui en a besoin (≈ 5 à 10 min, plusieurs Go). Le skill associé `real-sound` (même dépôt, `.agents/skills/real-sound`)
+  décrit la méthode complète de bande-son (liste de repères, licences, mixage, contrôle) : s'en inspirer, en gardant
+  nos règles (voix au premier plan, -14 LUFS, 1 à 3 réactions par vidéo).
 - **Sons de réaction** (« woaah », surprise, cris de victoire, foule de stade, huées, rires) : `npm run sfx:reactions`
   télécharge 14 sons Mixkit dans `effets/sfx/reactions/` (non versionnés : la licence Mixkit autorise l'usage dans nos
   vidéos, pas la redistribution des fichiers ; hôtes `mixkit.co` / `assets.mixkit.co` autorisés dans l'environnement
