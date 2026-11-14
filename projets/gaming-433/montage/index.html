@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="montage-style" content="gaming-premium" />
+    <meta name="brand-default" content="specimen-gaming" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/gaming-fx.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        /* texte CENTRÉ, marges égales de 110 px (évite les bords et la colonne d'icônes TikTok) */
+        --cap-left: 110px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+      #game { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 47%; }
+      #game video { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #vign { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.3) 22%, rgba(0, 0, 0, 0) 34%, rgba(0, 0, 0, 0) 64%, rgba(0, 0, 0, 0.55) 80%, rgba(0, 0, 0, 0.35) 100%); }
+      .handle { top: 200px; left: var(--cap-left); width: var(--cap-width); text-align: center; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+      /* titres : centrés, en haut, loin des sous-titres */
+      .plabel { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 258px; text-align: center; }
+      .ps { display: inline-block; padding: 8px 22px; border-radius: 999px; background: var(--accent); font-weight: 700; font-size: 30px;
+        letter-spacing: 0.16em; color: var(--ink); }
+      .pb { margin-top: 14px; font-weight: 700; font-size: 74px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); white-space: nowrap;
+        -webkit-text-stroke: 10px rgba(0, 0, 0, 0.85); paint-order: stroke fill; }
+      .pb b { color: var(--accent-soft); }
+      .pb .xl { font-size: 126px; letter-spacing: -0.04em; line-height: 1; -webkit-text-stroke: 14px rgba(0, 0, 0, 0.85); paint-order: stroke fill; }
+      .pb .sm { font-size: 58px; }
+      .pb { font-size: 68px; }
+      .bigcode { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 1090px; text-align: center; font-weight: 700; font-size: 112px;
+        letter-spacing: 0.01em; color: var(--ink); -webkit-text-stroke: 14px var(--accent); paint-order: stroke fill; text-shadow: 0 10px 40px rgba(0, 0, 0, 0.8); }
+      /* sous-titres centrés, zone sûre TikTok, contour noir */
+      #root .cap { display: block; top: 1380px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 84px;
+        -webkit-text-stroke: 12px rgba(0, 0, 0, 0.9); paint-order: stroke fill; text-shadow: 0 6px 26px rgba(0, 0, 0, 0.8); }
+      #root .cap .k { margin: 0; }
+      .pill { position: absolute; left: 50%; top: 540px; transform: translateX(-50%); display: flex; align-items: center; gap: 20px;
+        white-space: nowrap; padding: 28px 48px; border-radius: 999px; background: var(--accent); font-weight: 700; font-size: 60px;
+        box-shadow: 0 0 50px rgba(218, 61, 57, 0.6); }
+      .pill svg { width: 60px; height: 60px; }
+
+
+      /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : dégradé radial sombre + halo d'accent qui respire */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--charcoal) 0%, var(--charcoal-deep) 55%, #000000 100%); }
+      #halo { position: absolute; left: 90px; top: 380px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.45; filter: blur(30px); }
+
+      /* signature et barre de progression (haut, sous les onglets TikTok) */
+      .handle { position: absolute; left: 70px; top: 120px; font-weight: 700; font-size: 30px; color: var(--silver); opacity: 0.8; }
+      .tracker { position: absolute; left: 70px; top: 165px; display: flex; align-items: center; gap: 12px; }
+      .tracker .lbl { font-weight: 700; font-size: 26px; letter-spacing: 0.08em; color: var(--silver); margin-right: 6px; }
+      .tracker .slot { width: 46px; height: 46px; border-radius: 10px; border: 3px solid var(--dark); background: transparent; }
+
+      /* en-tête de classement « N°x + nom » */
+      .rank { position: absolute; left: 70px; top: 250px; display: flex; align-items: flex-end; gap: 22px; }
+      .rank .no { font-weight: 700; color: var(--accent-soft); line-height: 0.8; display: flex; align-items: flex-start; }
+      .rank .no small { font-size: 70px; margin-top: 18px; }
+      .rank .no b { font-size: 190px; letter-spacing: -0.05em; }
+      .rank .txt { padding-bottom: 14px; }
+      .rank .name { font-weight: 700; font-size: 86px; letter-spacing: -0.03em; line-height: 1; }
+      .rank .sub { font-weight: 700; font-size: 36px; color: var(--silver); margin-top: 8px; letter-spacing: 0.02em; }
+
+      /* carte centrale (visuel, silhouette mystère, anneau) */
+      .stagecard { position: absolute; left: 70px; top: 520px; width: 560px; height: 760px; }
+      .cardvis { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; border: 4px solid var(--accent);
+        box-shadow: 0 0 60px rgba(218, 61, 57, 0.55), 0 30px 80px rgba(0, 0, 0, 0.6); background: var(--panel); }
+      .mystery { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .mystery svg { width: 100%; height: 100%; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%;
+        border: 6px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.55), inset 0 0 40px rgba(218, 61, 57, 0.4); opacity: 0; }
+      .pricepill { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); padding: 12px 34px; border-radius: 999px;
+        background: var(--accent); font-weight: 700; font-size: 40px; white-space: nowrap; box-shadow: 0 0 30px rgba(218, 61, 57, 0.6); }
+
+      /* colonne de droite : badges, encadrés de stats */
+      .side { position: absolute; left: 670px; top: 560px; width: 360px; display: flex; flex-direction: column; gap: 26px; }
+      .badge { display: flex; align-items: center; gap: 16px; }
+      .badge .ico { width: 64px; height: 64px; flex: none; }
+      .badge .bt { font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--accent-soft); }
+      .badge .bv { font-weight: 700; font-size: 36px; line-height: 1.05; }
+      .stat { width: 300px; padding: 18px 26px; border-radius: 22px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.7);
+        box-shadow: inset 0 0 30px rgba(218, 61, 57, 0.18); }
+      .stat .v { font-weight: 700; font-size: 96px; line-height: 0.9; letter-spacing: -0.03em; }
+      .stat .l { font-weight: 700; font-size: 24px; letter-spacing: 0.14em; color: var(--silver); margin-top: 6px; }
+      .note { position: absolute; left: var(--cap-left); width: var(--cap-width); text-align: center; top: 1330px; font-weight: 700; font-size: 44px; color: var(--ink); }
+      .note b { color: var(--accent-soft); }
+
+      /* grille d'appel à l'action 2×2 */
+      .ctagrid { position: absolute; left: 70px; top: 300px; display: grid; grid-template-columns: 300px 300px; gap: 26px; }
+      .cta-btn { height: 220px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.75);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; font-weight: 700; font-size: 38px;
+        box-shadow: 0 0 30px rgba(218, 61, 57, 0.35); }
+      .cta-btn svg { width: 74px; height: 74px; }
+      .ctanote { position: absolute; left: 70px; top: 800px; width: 626px; text-align: center; font-weight: 700; font-size: 36px; color: var(--silver); }
+
+      /* grands titres (intro / outro) */
+      .bigtitle { position: absolute; left: var(--cap-left); top: 520px; width: var(--cap-width); text-align: center; font-weight: 700; font-size: 128px; line-height: 0.95; letter-spacing: -0.04em; }
+      .bigtitle .acc { color: var(--accent-soft); }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--silver); margin-bottom: 26px; }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      /* sous-titres CENTRÉS dans la zone sûre de la charte (jamais collés aux bords) */
+      .cap { position: absolute; left: var(--cap-left); top: 1440px; width: var(--cap-width); height: 110px; display: flex; align-items: center;
+        justify-content: center; text-align: center;
+        font-weight: 700; font-size: 72px; letter-spacing: -0.02em; color: var(--ink); text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent-soft); margin-left: 18px; white-space: nowrap; }
+
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20.05" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div id="game"><video id="gv" class="clip" src="assets/plans.mp4" data-start="0" data-duration="17.75" data-has-audio="true" data-volume="0.2" data-track-index="0"></video></div>
+      <div id="vign"></div>
+      <div class="handle">SPECIMEN GAMING</div>
+      <div class="clip plabel" id="pl0" data-start="0.05" data-duration="3.65" data-track-index="2"><div class="ps">FC 27 · TACTIQUE</div><div class="pb"><span class='xl'>LA <b>4-3-3</b></span><br/>QUI NE PERD PLUS</div></div>
+      <div class="clip plabel" id="pl1" data-start="3.90" data-duration="1.84" data-track-index="2"><div class="ps">AVANT</div><div class="pb">But sur but…</div></div>
+      <div class="clip plabel" id="pl2" data-start="5.94" data-duration="1.15" data-track-index="2"><div class="ps">ALORS</div><div class="pb">J'ai <b>tout changé</b></div></div>
+      <div class="clip plabel" id="pl3" data-start="7.29" data-duration="0.97" data-track-index="2"><div class="ps">EN POINTE</div><div class="pb"><b>Fausse 9</b></div></div>
+      <div class="clip plabel" id="pl4" data-start="8.46" data-duration="1.84" data-track-index="2"><div class="ps">LE JEU</div><div class="pb"><span class='sm'>Passes <b>courtes</b> · <b>Équilibrée</b></span></div></div>
+      <div class="clip plabel" id="pl5" data-start="10.50" data-duration="1.53" data-track-index="2"><div class="ps">RÉGLAGE</div><div class="pb"><span class='xl'>LIGNE : <b>40</b></span></div></div>
+      <div class="clip plabel" id="pl6" data-start="12.23" data-duration="2.12" data-track-index="2"><div class="ps">RÉSULTAT</div><div class="pb">Plus personne <b>ne passe</b></div></div>
+      <div class="clip plabel" id="pl7" data-start="14.55" data-duration="3.20" data-track-index="2"><div class="ps">LE CODE</div><div class="pb">CODE 👇 <b>COPIE-LE</b></div></div>
+      <div class="clip bigcode" id="code" data-start="14.85" data-duration="2.90" data-track-index="3">zAMddZP99@BS</div>
+      <div class="clip pill" id="cta" data-start="16.19" data-duration="1.56" data-track-index="3"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" style="fill:var(--ink)"/></svg>Abonne-toi</div>
+      <div class="cap clip" id="c0" data-start="0.06" data-duration="0.90" data-track-index="4">Cette tactique</div>
+      <div class="cap clip" id="c1" data-start="0.96" data-duration="0.81" data-track-index="4"><span class='k'>4-3-3</span></div>
+      <div class="cap clip" id="c2" data-start="1.77" data-duration="1.03" data-track-index="4">m&#x27;a fait <span class='k'>arrêter</span></div>
+      <div class="cap clip" id="c3" data-start="2.80" data-duration="0.86" data-track-index="4">de <span class='k'>perdre</span></div>
+      <div class="cap clip" id="c4" data-start="3.66" data-duration="0.46" data-track-index="4">Avant</div>
+      <div class="cap clip" id="c5" data-start="4.12" data-duration="0.72" data-track-index="4">je prenais</div>
+      <div class="cap clip" id="c6" data-start="4.84" data-duration="0.24" data-track-index="4"><span class='k'>but</span></div>
+      <div class="cap clip" id="c7" data-start="5.08" data-duration="0.62" data-track-index="4">sur <span class='k'>but</span></div>
+      <div class="cap clip" id="c8" data-start="5.70" data-duration="0.70" data-track-index="4">Alors j&#x27;ai <span class='k'>tout</span></div>
+      <div class="cap clip" id="c9" data-start="6.40" data-duration="0.65" data-track-index="4"><span class='k'>changé</span></div>
+      <div class="cap clip" id="c10" data-start="7.05" data-duration="0.49" data-track-index="4"><span class='k'>Fausse</span> <span class='k'>9</span></div>
+      <div class="cap clip" id="c11" data-start="7.54" data-duration="0.68" data-track-index="4">en pointe</div>
+      <div class="cap clip" id="c12" data-start="8.22" data-duration="0.26" data-track-index="4">Passes</div>
+      <div class="cap clip" id="c13" data-start="8.48" data-duration="0.48" data-track-index="4"><span class='k'>courtes,</span></div>
+      <div class="cap clip" id="c14" data-start="8.96" data-duration="0.66" data-track-index="4">approche</div>
+      <div class="cap clip" id="c15" data-start="9.62" data-duration="0.64" data-track-index="4"><span class='k'>équilibrée</span></div>
+      <div class="cap clip" id="c16" data-start="10.26" data-duration="0.44" data-track-index="4"><span class='k'>Hauteur</span></div>
+      <div class="cap clip" id="c17" data-start="10.70" data-duration="0.72" data-track-index="4">de <span class='k'>ligne</span></div>
+      <div class="cap clip" id="c18" data-start="11.42" data-duration="0.57" data-track-index="4"><span class='k'>40</span></div>
+      <div class="cap clip" id="c19" data-start="11.99" data-duration="0.87" data-track-index="4">Résultat ?</div>
+      <div class="cap clip" id="c20" data-start="12.86" data-duration="0.74" data-track-index="4">Plus <span class='k'>personne</span></div>
+      <div class="cap clip" id="c21" data-start="13.60" data-duration="0.71" data-track-index="4">ne <span class='k'>passe</span></div>
+      <div class="cap clip" id="c22" data-start="14.31" data-duration="0.39" data-track-index="4">Le <span class='k'>code</span></div>
+      <div class="cap clip" id="c23" data-start="14.70" data-duration="0.76" data-track-index="4">est à l&#x27;écran</div>
+      <div class="cap clip" id="c24" data-start="15.46" data-duration="0.74" data-track-index="4"><span class='k'>Copie-le</span></div>
+      <div class="cap clip" id="c25" data-start="16.20" data-duration="0.34" data-track-index="4"><span class='k'>Abonne-toi</span></div>
+      <div class="cap clip" id="c26" data-start="16.54" data-duration="1.21" data-track-index="4">pour la prochaine</div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="17.75" data-duration="2.3" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="voix" class="clip" src="assets/voix.wav" data-start="0" data-duration="17.55" data-volume="1" data-track-index="6"></audio>
+    <audio id="react" class="clip" src="assets/reaction.wav" data-start="13.80" data-duration="2.6" data-volume="0.3" data-track-index="12"></audio>
+    <audio id="a0" class="clip" src="assets/sfx/clic.wav" data-start="3.700" data-duration="0.05" data-volume="0.3" data-track-index="7"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.540" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="6.890" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/whoosh-court.wav" data-start="8.060" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.100" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/whoosh-court.wav" data-start="11.830" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.150" data-duration="0.6" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/impact-sec.wav" data-start="1.000" data-duration="0.35" data-volume="0.32" data-track-index="7"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/impact-boom.wav" data-start="11.460" data-duration="0.9" data-volume="0.36" data-track-index="8"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/ding.wav" data-start="15.500" data-duration="0.7" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.1" data-volume="0.28" data-track-index="8"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/pop.wav" data-start="14.850" data-duration="0.12" data-volume="0.25" data-track-index="7"></audio>
+    <audio id="a12" class="clip" src="assets/sfx/pop.wav" data-start="16.190" data-duration="0.12" data-volume="0.25" data-track-index="8"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/impact-sec.wav" data-start="17.750" data-duration="0.35" data-volume="0.3" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const fx = window.GamingFX;
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 5.480);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 5.740);
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 6.830);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 7.090);
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 8.000);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 8.260);
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 10.040);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 10.300);
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 11.770);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 12.030);
+  tl.fromTo('#game', {filter: 'blur(0px)'}, {filter: 'blur(14px)', duration: 0.24, ease: 'power2.in', immediateRender: false}, 14.090);
+  tl.fromTo('#game', {filter: 'blur(14px)'}, {filter: 'blur(0px)', duration: 0.34, ease: 'power2.out', immediateRender: false}, 14.350);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.600, ease: 'power3.out', immediateRender: true}, 0.000);
+  tl.fromTo('#game', {scale: 1.200}, {scale: 1.000, duration: 0.900, ease: 'power3.out', immediateRender: false}, 1.000);
+  tl.fromTo('#game', {scale: 1.200}, {scale: 1.000, duration: 0.700, ease: 'power3.out', immediateRender: false}, 3.700);
+  tl.fromTo('#game', {scale: 1.180}, {scale: 1.000, duration: 0.120, ease: 'power3.out', immediateRender: false}, 5.360);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 5.480);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 5.740);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 6.830);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 7.090);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 8.000);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 8.260);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.380, ease: 'power3.out', immediateRender: false}, 9.660);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 10.040);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 10.300);
+  tl.fromTo('#game', {scale: 1.260}, {scale: 1.000, duration: 0.310, ease: 'power3.out', immediateRender: false}, 11.460);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 11.770);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 12.030);
+  tl.fromTo('#game', {scale: 1.220}, {scale: 1.000, duration: 0.290, ease: 'power3.out', immediateRender: false}, 13.800);
+  tl.fromTo('#game', {scale: 1.000}, {scale: 2.400, duration: 0.260, ease: 'power3.in', immediateRender: false}, 14.090);
+  tl.fromTo('#game', {scale: 2.160}, {scale: 1.000, duration: 0.450, ease: 'power3.out', immediateRender: false}, 14.350);
+  tl.fromTo('#game', {scale: 1.200}, {scale: 1.000, duration: 0.900, ease: 'power3.out', immediateRender: false}, 15.500);
+  fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});
+  fx.blurIn(tl, '#pl0', 0.10, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl0', 3.40, {d: 0.25});
+  fx.blurIn(tl, '#pl1', 3.95, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl1', 5.44, {d: 0.25});
+  fx.blurIn(tl, '#pl2', 5.99, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl2', 6.79, {d: 0.25});
+  fx.blurIn(tl, '#pl3', 7.34, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl3', 7.96, {d: 0.25});
+  fx.blurIn(tl, '#pl4', 8.51, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl4', 10.00, {d: 0.25});
+  fx.blurIn(tl, '#pl5', 10.55, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl5', 11.73, {d: 0.25});
+  fx.blurIn(tl, '#pl6', 12.28, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl6', 14.05, {d: 0.25});
+  fx.blurIn(tl, '#pl7', 14.60, {blur: 14, y: -20, d: 0.3});
+  fx.blurOut(tl, '#pl7', 17.45, {d: 0.25});
+  fx.blurIn(tl, '#code', 14.85, {blur: 16, scale: 1.2, y: 0, d: 0.35});
+  fx.blurIn(tl, '#cta', 16.19, {blur: 14, scale: 1.15, y: 0});
+  tl.fromTo('#c0', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.060);
+  tl.fromTo('#c1', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.960);
+  tl.fromTo('#c2', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 1.770);
+  tl.fromTo('#c3', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 2.800);
+  tl.fromTo('#c4', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 3.660);
+  tl.fromTo('#c5', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.120);
+  tl.fromTo('#c6', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.840);
+  tl.fromTo('#c7', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.080);
+  tl.fromTo('#c8', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.700);
+  tl.fromTo('#c9', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 6.400);
+  tl.fromTo('#c10', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 7.050);
+  tl.fromTo('#c11', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 7.540);
+  tl.fromTo('#c12', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 8.220);
+  tl.fromTo('#c13', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 8.480);
+  tl.fromTo('#c14', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 8.960);
+  tl.fromTo('#c15', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.620);
+  tl.fromTo('#c16', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 10.260);
+  tl.fromTo('#c17', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 10.700);
+  tl.fromTo('#c18', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 11.420);
+  tl.fromTo('#c19', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 11.990);
+  tl.fromTo('#c20', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 12.860);
+  tl.fromTo('#c21', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 13.600);
+  tl.fromTo('#c22', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 14.310);
+  tl.fromTo('#c23', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 14.700);
+  tl.fromTo('#c24', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 15.460);
+  tl.fromTo('#c25', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 16.200);
+  tl.fromTo('#c26', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 16.540);
+  tl.fromTo('#blackout', {opacity: 0}, {opacity: 1, duration: 0.25, immediateRender: false}, 17.50);
+  fx.blurIn(tl, '#logo', 17.80, {blur: 20, y: 0, scale: 1.1, d: 0.6});
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
