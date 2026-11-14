@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-gaming" />
+    <meta name="montage-style" content="gaming-premium" />
+    <meta name="brand-default" content="specimen-gaming" />
+    <script src="assets/gsap.min.js"></script>
+    <script src="assets/gaming-fx.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Gaming (TikTok) — SOURCE UNIQUE des couleurs, police et styles.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         ========================================================================== */
+      
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --red: #da3d39;
+        --red-light: #ff5a4e;
+        --red-dark: #a82a27;
+        --charcoal: #2c2d32;
+        --charcoal-deep: #1c1d21;
+        --silver: #c9cbd1;
+        --ink: #ffffff;
+        --flash: #ffffff;
+        --panel: rgba(28, 29, 33, 0.92);
+        --panel-muted: rgba(44, 45, 50, 0.92);
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles (accent = couleur de marque) */
+        --accent: var(--red);
+        --accent-soft: var(--red-light);
+        --gold: var(--red);            /* compatibilité avec les modèles existants */
+        --gold-light: var(--red-light);
+        --black: var(--charcoal-deep);
+        --ivory: var(--ink);
+        --taupe: var(--silver);
+        --stone: var(--silver);
+        --dark: var(--charcoal);
+        --gold-grad: linear-gradient(135deg, #ff5a4e 0%, #da3d39 55%, #a82a27 100%);
+      
+        /* mise en page TikTok : éviter les onglets du haut, la colonne d'icônes à droite et la légende du bas */
+        --cap-top: 1120px;
+        /* texte CENTRÉ, marges égales de 110 px (évite les bords et la colonne d'icônes TikTok) */
+        --cap-left: 110px;
+        --cap-width: 860px;
+        --ill-top: 230px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .cap { font-weight: 800; letter-spacing: 0.01em; }
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green, .hl-red { color: var(--red-light); }   /* mot clé */
+      .hl-soft { color: var(--silver); }                                          /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 18px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 8px 8px 0 var(--red); border: 4px solid var(--red); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { background: var(--red); border-color: var(--ink); box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.55); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.02em; color: var(--ink); }
+      .big small { font-size: 52px; font-weight: 700; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--red-light); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ink); color: var(--charcoal-deep); border-radius: 14px; letter-spacing: 0.04em; }
+      .num { color: var(--red-light); display: inline-block; }
+      .bubble { background: var(--ink); color: var(--charcoal-deep); border: 4px solid var(--red); font-weight: 600; font-size: 56px;
+        padding: 36px 48px; border-radius: 28px 28px 28px 6px; box-shadow: 8px 8px 0 var(--red); max-width: 820px; }
+      .stamp { font-weight: 800; font-size: 200px; color: var(--ink); background: var(--red); border: 14px solid var(--ink); border-radius: 16px;
+        letter-spacing: 0.04em; padding: 0 50px; transform: rotate(-8deg); line-height: 1.15; box-shadow: 12px 12px 0 rgba(0, 0, 0, 0.6); }
+      .num-badge { width: 170px; height: 170px; border-radius: 22px; background: var(--red); color: var(--ink); border: 6px solid var(--ink);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; transform: rotate(-6deg);
+        box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--red); color: var(--ink); font-weight: 800; font-size: 66px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 0;
+        clip-path: polygon(28px 0, 100% 0, calc(100% - 28px) 100%, 0 100%); box-shadow: none; }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--red); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--charcoal); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 60px; }
+      #logo { width: 1000px; height: auto;
+        -webkit-mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%);
+        mask-image: radial-gradient(ellipse 72% 70% at 50% 50%, #000000 70%, transparent 100%); }
+      #tagline { width: 1080px; text-align: center; font-weight: 700; font-size: 52px; letter-spacing: 0.12em; color: var(--ink); }
+      #game { position: absolute; inset: 0; overflow: hidden; transform-origin: 50% 45%; }
+      #game video { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #vign { position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 24%, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.55) 78%, rgba(0, 0, 0, 0.35) 100%); }
+      #wave .ring { opacity: 0; top: 860px; }
+      .handle { top: 200px; left: var(--cap-left); width: var(--cap-width); text-align: center; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6); }
+      .plabel { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 270px; text-align: center; }
+      .ps { display: inline-block; padding: 8px 22px; border-radius: 999px; background: var(--accent); font-weight: 700; font-size: 30px;
+        letter-spacing: 0.16em; color: var(--ink); }
+      .pb { margin-top: 14px; font-weight: 700; font-size: 80px; letter-spacing: -0.02em; line-height: 1.05; color: var(--ink); white-space: nowrap;
+        -webkit-text-stroke: 12px rgba(0, 0, 0, 0.85); paint-order: stroke fill; }
+      .pb b { color: var(--accent-soft); }
+      #answer .pb { font-size: 120px; }
+      .step { position: absolute; left: 50%; top: 1210px; transform: translateX(-50%); display: flex; align-items: center; gap: 18px; white-space: nowrap;
+        padding: 14px 34px; border-radius: 22px; background: rgba(28, 29, 33, 0.86); border: 3px solid var(--accent);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); }
+      .step .sn { font-weight: 700; font-size: 28px; letter-spacing: 0.14em; color: var(--silver); }
+      .step .sv { font-weight: 700; font-size: 52px; color: var(--ink); }
+      #root .cap { display: block; top: 1380px; height: 130px; line-height: 130px; text-align: center; white-space: nowrap; font-size: 84px;
+        -webkit-text-stroke: 12px rgba(0, 0, 0, 0.9); paint-order: stroke fill; text-shadow: 0 6px 26px rgba(0, 0, 0, 0.8); }
+      #root .cap.big { font-size: 104px; }
+      #root .cap .k { margin: 0; }
+      .pill { position: absolute; left: 50%; top: 1240px; transform: translateX(-50%); display: flex; align-items: center; gap: 16px;
+        white-space: nowrap; padding: 16px 40px; border-radius: 999px; background: var(--accent); font-weight: 700; font-size: 44px;
+        box-shadow: 0 0 50px rgba(218, 61, 57, 0.6); }
+      .pill svg { width: 46px; height: 46px; }
+
+
+      /* ---- style « gaming premium » (réf. references/gaming-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--charcoal-deep); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : dégradé radial sombre + halo d'accent qui respire */
+      #bg { position: absolute; inset: 0;
+        background: radial-gradient(ellipse 120% 80% at 50% 38%, var(--charcoal) 0%, var(--charcoal-deep) 55%, #000000 100%); }
+      #halo { position: absolute; left: 90px; top: 380px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, transparent 65%); opacity: 0.45; filter: blur(30px); }
+
+      /* signature et barre de progression (haut, sous les onglets TikTok) */
+      .handle { position: absolute; left: 70px; top: 120px; font-weight: 700; font-size: 30px; color: var(--silver); opacity: 0.8; }
+      .tracker { position: absolute; left: 70px; top: 165px; display: flex; align-items: center; gap: 12px; }
+      .tracker .lbl { font-weight: 700; font-size: 26px; letter-spacing: 0.08em; color: var(--silver); margin-right: 6px; }
+      .tracker .slot { width: 46px; height: 46px; border-radius: 10px; border: 3px solid var(--dark); background: transparent; }
+
+      /* en-tête de classement « N°x + nom » */
+      .rank { position: absolute; left: 70px; top: 250px; display: flex; align-items: flex-end; gap: 22px; }
+      .rank .no { font-weight: 700; color: var(--accent-soft); line-height: 0.8; display: flex; align-items: flex-start; }
+      .rank .no small { font-size: 70px; margin-top: 18px; }
+      .rank .no b { font-size: 190px; letter-spacing: -0.05em; }
+      .rank .txt { padding-bottom: 14px; }
+      .rank .name { font-weight: 700; font-size: 86px; letter-spacing: -0.03em; line-height: 1; }
+      .rank .sub { font-weight: 700; font-size: 36px; color: var(--silver); margin-top: 8px; letter-spacing: 0.02em; }
+
+      /* carte centrale (visuel, silhouette mystère, anneau) */
+      .stagecard { position: absolute; left: 70px; top: 520px; width: 560px; height: 760px; }
+      .cardvis { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; border: 4px solid var(--accent);
+        box-shadow: 0 0 60px rgba(218, 61, 57, 0.55), 0 30px 80px rgba(0, 0, 0, 0.6); background: var(--panel); }
+      .mystery { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+      .mystery svg { width: 100%; height: 100%; }
+      .ring { position: absolute; left: 50%; top: 50%; width: 820px; height: 820px; margin: -410px 0 0 -410px; border-radius: 50%;
+        border: 6px solid var(--accent); box-shadow: 0 0 40px rgba(218, 61, 57, 0.55), inset 0 0 40px rgba(218, 61, 57, 0.4); opacity: 0; }
+      .pricepill { position: absolute; left: 50%; bottom: -34px; transform: translateX(-50%); padding: 12px 34px; border-radius: 999px;
+        background: var(--accent); font-weight: 700; font-size: 40px; white-space: nowrap; box-shadow: 0 0 30px rgba(218, 61, 57, 0.6); }
+
+      /* colonne de droite : badges, encadrés de stats */
+      .side { position: absolute; left: 670px; top: 560px; width: 360px; display: flex; flex-direction: column; gap: 26px; }
+      .badge { display: flex; align-items: center; gap: 16px; }
+      .badge .ico { width: 64px; height: 64px; flex: none; }
+      .badge .bt { font-weight: 700; font-size: 22px; letter-spacing: 0.12em; color: var(--accent-soft); }
+      .badge .bv { font-weight: 700; font-size: 36px; line-height: 1.05; }
+      .stat { width: 300px; padding: 18px 26px; border-radius: 22px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.7);
+        box-shadow: inset 0 0 30px rgba(218, 61, 57, 0.18); }
+      .stat .v { font-weight: 700; font-size: 96px; line-height: 0.9; letter-spacing: -0.03em; }
+      .stat .l { font-weight: 700; font-size: 24px; letter-spacing: 0.14em; color: var(--silver); margin-top: 6px; }
+      .note { position: absolute; left: var(--cap-left); width: var(--cap-width); text-align: center; top: 1330px; font-weight: 700; font-size: 44px; color: var(--ink); }
+      .note b { color: var(--accent-soft); }
+
+      /* grille d'appel à l'action 2×2 */
+      .ctagrid { position: absolute; left: 70px; top: 300px; display: grid; grid-template-columns: 300px 300px; gap: 26px; }
+      .cta-btn { height: 220px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(28, 29, 33, 0.75);
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; font-weight: 700; font-size: 38px;
+        box-shadow: 0 0 30px rgba(218, 61, 57, 0.35); }
+      .cta-btn svg { width: 74px; height: 74px; }
+      .ctanote { position: absolute; left: 70px; top: 800px; width: 626px; text-align: center; font-weight: 700; font-size: 36px; color: var(--silver); }
+
+      /* grands titres (intro / outro) */
+      .bigtitle { position: absolute; left: var(--cap-left); top: 520px; width: var(--cap-width); text-align: center; font-weight: 700; font-size: 128px; line-height: 0.95; letter-spacing: -0.04em; }
+      .bigtitle .acc { color: var(--accent-soft); }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.14em; color: var(--silver); margin-bottom: 26px; }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      /* sous-titres CENTRÉS dans la zone sûre de la charte (jamais collés aux bords) */
+      .cap { position: absolute; left: var(--cap-left); top: 1440px; width: var(--cap-width); height: 110px; display: flex; align-items: center;
+        justify-content: center; text-align: center;
+        font-weight: 700; font-size: 72px; letter-spacing: -0.02em; color: var(--ink); text-shadow: 0 4px 22px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent-soft); margin-left: 18px; white-space: nowrap; }
+
+      #blackout { position: absolute; inset: 0; background: #000000; opacity: 0; pointer-events: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21.9" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div id="game"><video id="gv" class="clip" src="assets/plans.mp4" data-start="0" data-duration="19.6" data-has-audio="true" data-volume="0.4" data-track-index="0"></video></div>
+      <div id="vign"></div>
+      <div class="clip" id="wave" data-start="10.00" data-duration="1.2" data-track-index="1"><div class="ring" id="ring"></div></div>
+      <div class="handle">SPECIMEN GAMING</div>
+      <div class="clip plabel" id="hook" data-start="0.00" data-duration="4.05" data-track-index="2"><div class="ps">FC 27 · PACK OPENING</div><div class="pb">75 000 CRÉDITS = <b>???</b></div></div>
+      <div class="clip plabel" id="answer" data-start="10.08" data-duration="1.00" data-track-index="2"><div class="ps">75 000 CRÉDITS =</div><div class="pb"><b>BRONZE</b> 85</div></div>
+      <div class="clip plabel" id="nx0" data-start="11.11" data-duration="1.89" data-track-index="2"><div class="ps">DERRIÈRE</div><div class="pb">Griezmann</div></div>
+      <div class="clip plabel" id="nx1" data-start="13.03" data-duration="0.97" data-track-index="2"><div class="ps">DERRIÈRE</div><div class="pb">Alexander-Arnold</div></div>
+      <div class="clip plabel" id="nx2" data-start="14.03" data-duration="0.47" data-track-index="2"><div class="ps">DERRIÈRE</div><div class="pb">Isco</div></div>
+      <div class="clip plabel" id="nx3" data-start="14.53" data-duration="0.47" data-track-index="2"><div class="ps">DERRIÈRE</div><div class="pb">Tchouaméni</div></div>
+      <div class="clip plabel" id="ask" data-start="15.05" data-duration="4.55" data-track-index="2"><div class="ps">ET TOI ?</div><div class="pb">Rentable <b>ou</b> arnaque ?</div></div>
+      <div class="clip step" id="st0" data-start="4.10" data-duration="1.35" data-track-index="3"><span class="sn">LE PACK</span><span class="sv">Origines déchaînées</span></div>
+      <div class="clip step" id="st1" data-start="5.50" data-duration="0.86" data-track-index="3"><span class="sn">CONTENU</span><span class="sv">20 joueurs Or</span></div>
+      <div class="clip step" id="st2" data-start="7.10" data-duration="1.10" data-track-index="3"><span class="sn">LE PAYS</span><span class="sv">Angleterre</span></div>
+      <div class="clip step" id="st3" data-start="8.25" data-duration="0.85" data-track-index="3"><span class="sn">LE CLUB</span><span class="sv">Chelsea</span></div>
+      <div class="clip step" id="st4" data-start="9.15" data-duration="0.85" data-track-index="3"><span class="sn">LA NOTE</span><span class="sv">85</span></div>
+      <div class="clip pill" id="cta" data-start="17.00" data-duration="1.39" data-track-index="3">Commente <b>« RENTABLE »</b> ou <b>« ARNAQUE »</b></div>
+      <div class="clip pill" id="cta2" data-start="18.39" data-duration="1.21" data-track-index="3"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" style="fill:var(--ink)"/></svg>Abonne-toi</div>
+      <div class="cap clip" id="c0" data-start="0.02" data-duration="0.45" data-track-index="4">J&#x27;ai payé</div>
+      <div class="cap clip" id="c1" data-start="0.47" data-duration="1.00" data-track-index="4"><span class='k'>75 000</span></div>
+      <div class="cap clip" id="c2" data-start="1.47" data-duration="0.51" data-track-index="4"><span class='k'>crédits</span></div>
+      <div class="cap clip" id="c3" data-start="1.98" data-duration="0.89" data-track-index="4">pour <span class='k'>de l&#x27;or</span></div>
+      <div class="cap clip" id="c4" data-start="2.87" data-duration="0.59" data-track-index="4">J&#x27;ai eu du</div>
+      <div class="cap clip" id="c5" data-start="3.46" data-duration="0.59" data-track-index="4"><span class='k'>bronze</span></div>
+      <div class="cap clip" id="c6" data-start="4.05" data-duration="0.13" data-track-index="4"><span class='k'>Pack</span></div>
+      <div class="cap clip" id="c7" data-start="4.18" data-duration="0.51" data-track-index="4"><span class='k'>Origines</span></div>
+      <div class="cap clip" id="c8" data-start="4.69" data-duration="0.81" data-track-index="4"><span class='k'>déchaînées</span></div>
+      <div class="cap clip" id="c9" data-start="5.50" data-duration="0.30" data-track-index="4"><span class='k'>20</span></div>
+      <div class="cap clip" id="c10" data-start="5.80" data-duration="0.52" data-track-index="4"><span class='k'>joueurs</span></div>
+      <div class="cap clip" id="c11" data-start="6.32" data-duration="0.73" data-track-index="4"><span class='k'>J&#x27;ouvre</span></div>
+      <div class="cap clip" id="c12" data-start="7.05" data-duration="1.11" data-track-index="4"><span class='k'>Angleterre</span></div>
+      <div class="cap clip" id="c13" data-start="8.16" data-duration="0.93" data-track-index="4"><span class='k'>Chelsea</span></div>
+      <div class="cap clip" id="c14" data-start="9.09" data-duration="0.87" data-track-index="4"><span class='k'>85</span></div>
+      <div class="cap clip big" id="c15" data-start="9.96" data-duration="1.08" data-track-index="4"><span class='k'>BRONZE !</span></div>
+      <div class="cap clip" id="c16" data-start="11.04" data-duration="0.82" data-track-index="4">Derrière</div>
+      <div class="cap clip" id="c17" data-start="11.86" data-duration="1.11" data-track-index="4"><span class='k'>Griezmann</span></div>
+      <div class="cap clip" id="c18" data-start="12.97" data-duration="0.99" data-track-index="4"><span class='k'>Alexander-Arnold</span></div>
+      <div class="cap clip" id="c19" data-start="13.96" data-duration="0.50" data-track-index="4"><span class='k'>Isco</span></div>
+      <div class="cap clip" id="c20" data-start="14.46" data-duration="0.50" data-track-index="4"><span class='k'>Tchouaméni</span></div>
+      <div class="cap clip" id="c21" data-start="14.96" data-duration="0.54" data-track-index="4"><span class='k'>Rentable</span></div>
+      <div class="cap clip" id="c22" data-start="15.51" data-duration="1.46" data-track-index="4">ou <span class='k'>arnaque ?</span></div>
+      <div class="cap clip" id="c23" data-start="16.96" data-duration="1.39" data-track-index="4"><span class='k'>Dis-le</span> en commentaire</div>
+      <div class="cap clip" id="c24" data-start="18.35" data-duration="1.25" data-track-index="4">Et <span class='k'>abonne-toi !</span></div>
+      <div id="blackout"></div>
+      <div class="clip" id="endcard" data-start="19.6" data-duration="2.3" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Gaming"/></div>
+    </div>
+    <audio id="voix" class="clip" src="assets/voix.wav" data-start="0" data-duration="19.57" data-volume="1" data-track-index="6"></audio>
+    <audio id="react" class="clip" src="assets/reaction.wav" data-start="10.05" data-duration="2.6" data-volume="0.35" data-track-index="12"></audio>
+    <audio id="a0" class="clip" src="assets/sfx/pop.wav" data-start="11.110" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/pop.wav" data-start="13.030" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/pop.wav" data-start="14.030" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/pop.wav" data-start="14.530" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/pop.wav" data-start="4.130" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/pop.wav" data-start="5.530" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/pop.wav" data-start="7.130" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/pop.wav" data-start="8.280" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/pop.wav" data-start="9.180" data-duration="0.12" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/pop.wav" data-start="17.000" data-duration="0.12" data-volume="0.24" data-track-index="7"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/ding.wav" data-start="18.490" data-duration="0.7" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/whoosh-long.wav" data-start="0.000" data-duration="1.0" data-volume="0.25" data-track-index="7"></audio>
+    <audio id="a12" class="clip" src="assets/sfx/impact-sec.wav" data-start="2.900" data-duration="0.35" data-volume="0.28" data-track-index="7"></audio>
+    <audio id="a13" class="clip" src="assets/sfx/whoosh-court.wav" data-start="3.870" data-duration="0.5" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="a14" class="clip" src="assets/sfx/whoosh-court.wav" data-start="6.180" data-duration="0.5" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="a15" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.900" data-duration="0.5" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="a16" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.820" data-duration="0.5" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="a17" class="clip" src="assets/sfx/riser.wav" data-start="8.900" data-duration="1.1" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="a18" class="clip" src="assets/sfx/impact-boom.wav" data-start="10.000" data-duration="0.9" data-volume="0.5" data-track-index="7"></audio>
+    <audio id="a19" class="clip" src="assets/sfx/impact-sec.wav" data-start="19.600" data-duration="0.35" data-volume="0.3" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const fx = window.GamingFX;
+  tl.fromTo('#game', {scale: 1.160}, {scale: 1.000, duration: 0.700, ease: 'power3.out', immediateRender: true}, 0.000);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 1.500);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 2.900);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 4.050);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 5.450);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 6.360);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 7.050);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 8.200);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 9.100);
+  tl.fromTo('#game', {scale: 1.400}, {scale: 1.000, duration: 0.700, ease: 'expo.out', immediateRender: false}, 10.000);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 11.080);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 13.000);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 14.000);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 14.500);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 15.000);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 16.000);
+  tl.fromTo('#game', {scale: 1.140}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 17.000);
+  tl.fromTo('#game', {scale: 1.100}, {scale: 1.000, duration: 0.500, ease: 'power3.out', immediateRender: false}, 18.300);
+  tl.fromTo('#gv', {filter: 'blur(0px)'}, {filter: 'blur(28px) brightness(0.8)', duration: 0.12, immediateRender: false}, 2.900);
+  tl.to('#gv', {filter: 'blur(0px) brightness(1)', duration: 0.12}, 3.990);
+  tl.fromTo('#game', {filter: 'blur(18px) brightness(1.5)'}, {filter: 'blur(0px) brightness(1)', duration: 0.5, ease: 'power2.out', immediateRender: false}, 10.000);
+  tl.fromTo('#game', {filter: 'blur(0px) brightness(1)'}, {filter: 'blur(14px) brightness(0.5)', duration: 0.3, ease: 'power2.in', immediateRender: false}, 19.300);
+  tl.fromTo('#ring', {opacity: 0.95, scale: 0.2}, {opacity: 0, scale: 1.6, duration: 0.9, ease: 'power2.out', immediateRender: false}, 10.000);
+  fx.blurIn(tl, '.handle', 0.05, {blur: 8, d: 0.3});
+  fx.blurIn(tl, '#hook', 0.00, {blur: 12, y: -16, d: 0.18});
+  fx.blurOut(tl, '#hook', 3.80, {d: 0.2});
+  fx.blurIn(tl, '#answer', 10.08, {blur: 12, y: -16, d: 0.28});
+  fx.blurOut(tl, '#answer', 10.83, {d: 0.2});
+  fx.blurIn(tl, '#nx0 .pb', 11.11, {blur: 10, y: -10, d: 0.15});
+  fx.blurIn(tl, '#nx1 .pb', 13.03, {blur: 10, y: -10, d: 0.15});
+  fx.blurIn(tl, '#nx2 .pb', 14.03, {blur: 10, y: -10, d: 0.15});
+  fx.blurIn(tl, '#nx3 .pb', 14.53, {blur: 10, y: -10, d: 0.15});
+  fx.blurIn(tl, '#ask', 15.05, {blur: 12, y: -16, d: 0.28});
+  fx.blurOut(tl, '#ask', 19.35, {d: 0.2});
+  fx.slideBlur(tl, '#st0', 4.13, {x: -60});
+  fx.blurOut(tl, '#st0', 5.25, {d: 0.16});
+  fx.slideBlur(tl, '#st1', 5.53, {x: -60});
+  fx.blurOut(tl, '#st1', 6.16, {d: 0.16});
+  fx.slideBlur(tl, '#st2', 7.13, {x: -60});
+  fx.blurOut(tl, '#st2', 8.00, {d: 0.16});
+  fx.slideBlur(tl, '#st3', 8.28, {x: -60});
+  fx.blurOut(tl, '#st3', 8.90, {d: 0.16});
+  fx.slideBlur(tl, '#st4', 9.18, {x: -60});
+  fx.blurOut(tl, '#st4', 9.80, {d: 0.16});
+  fx.blurIn(tl, '#cta', 17.00, {blur: 14, scale: 1.15, y: 0});
+  fx.blurOut(tl, '#cta', 18.19, {d: 0.18});
+  fx.blurIn(tl, '#cta2', 18.39, {blur: 14, scale: 1.15, y: 0});
+  tl.fromTo('#c0', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.020);
+  tl.fromTo('#c1', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 0.470);
+  tl.fromTo('#c2', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 1.470);
+  tl.fromTo('#c3', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 1.980);
+  tl.fromTo('#c4', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 2.870);
+  tl.fromTo('#c5', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 3.460);
+  tl.fromTo('#c6', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.050);
+  tl.fromTo('#c7', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.180);
+  tl.fromTo('#c8', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 4.690);
+  tl.fromTo('#c9', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.500);
+  tl.fromTo('#c10', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 5.800);
+  tl.fromTo('#c11', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 6.320);
+  tl.fromTo('#c12', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 7.050);
+  tl.fromTo('#c13', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 8.160);
+  tl.fromTo('#c14', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.090);
+  tl.fromTo('#c15', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 9.960);
+  tl.fromTo('#c16', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 11.040);
+  tl.fromTo('#c17', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 11.860);
+  tl.fromTo('#c18', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 12.970);
+  tl.fromTo('#c19', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 13.960);
+  tl.fromTo('#c20', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 14.460);
+  tl.fromTo('#c21', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 14.960);
+  tl.fromTo('#c22', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 15.505);
+  tl.fromTo('#c23', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 16.960);
+  tl.fromTo('#c24', {opacity: 0, scale: 1.25, filter: 'blur(8px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.16, ease: 'back.out(2)', immediateRender: true}, 18.350);
+  tl.fromTo('#blackout', {opacity: 0}, {opacity: 1, duration: 0.25, immediateRender: false}, 19.35);
+  fx.blurIn(tl, '#logo', 19.65, {blur: 20, y: 0, scale: 1.1, d: 0.6});
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
