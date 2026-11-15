@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="{{BRAND}}" />
+    <meta name="montage-style" content="conseil" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+{{BRAND_CSS}}
+
+      /* ---- modèle « conseil » : Reel de 20 s sans visage (voix off + titres + cartes), style éditorial ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--black); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : noir profond, halo or qui respire, anneaux fins qui tournent lentement */
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 95% 60% at 50% 36%, var(--dark) 0%, var(--black) 72%); }
+      #halo { position: absolute; left: 90px; top: 240px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, rgba(227, 178, 92, 0) 68%); opacity: 0.3; }
+      .orbit { position: absolute; left: 50%; top: 690px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0.22; }
+      #o1 { width: 1240px; height: 1240px; margin: -620px 0 0 -620px; border-style: dashed; }
+      #o2 { width: 1560px; height: 1560px; margin: -780px 0 0 -780px; opacity: 0.12; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 62% at 50% 42%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.72) 100%); }
+
+      /* signature en haut */
+      #sig { position: absolute; left: var(--cap-left); top: 196px; width: var(--cap-width); text-align: center; font-weight: 700;
+        font-size: 30px; letter-spacing: 0.42em; color: var(--accent); }
+      #sig i { display: block; width: 90px; height: 3px; margin: 22px auto 0; background: var(--accent); }
+
+      /* scène : un visuel par phrase, centré dans la colonne de la charte */
+      #stage { position: absolute; inset: 0; transform-origin: 50% 36%; }
+      .scene { position: absolute; left: var(--cap-left); top: 300px; width: var(--cap-width); height: 800px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; text-align: center; }
+      .small { font-weight: 700; font-size: 62px; letter-spacing: -0.03em; line-height: 1.05; }
+      .huge { font-weight: 700; letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; color: var(--accent); }
+      .card { width: 820px; border-radius: 40px; border: 3px solid var(--accent); background: var(--panel); padding: 50px 54px;
+        box-shadow: 0 34px 80px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 22px; align-items: center; }
+      .card.light { background: var(--ivory); color: var(--black); }
+      .card .label { font-weight: 700; font-size: 32px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+      .card.light .label { color: var(--gold-deep); }
+      .card .text { font-weight: 700; font-size: 68px; letter-spacing: -0.03em; line-height: 1.04; }
+      .duo { display: flex; flex-direction: column; gap: 30px; align-items: center; }
+      .duo .card { padding: 36px 48px; }
+      .duo .card .text { font-size: 58px; }
+      .steps { display: flex; flex-direction: column; gap: 26px; width: 820px; }
+      .step { display: flex; align-items: center; gap: 30px; border-radius: 999px; border: 3px solid var(--accent); background: var(--panel);
+        padding: 22px 44px 22px 22px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
+      .step b { flex: none; width: 96px; height: 96px; border-radius: 50%; background: var(--gold-grad); color: var(--black);
+        display: flex; align-items: center; justify-content: center; font-size: 54px; font-weight: 700; }
+      .step span { flex: 1; text-align: center; font-weight: 700; font-size: 54px; letter-spacing: -0.03em; line-height: 1.05; padding-right: 30px; }
+
+      /* appel à l'action : deux pilules or */
+      .ctas { display: flex; flex-direction: column; gap: 34px; align-items: center; }
+      .pill { display: flex; align-items: center; gap: 24px; white-space: nowrap; padding: 34px 64px; border-radius: 999px;
+        background: var(--gold-grad); color: var(--black); font-weight: 700; font-size: 66px; letter-spacing: -0.02em;
+        box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45); }
+      .pill svg { width: 70px; height: 70px; }
+      .pill.ghost { background: var(--panel); color: var(--ink); border: 3px solid var(--accent); }
+
+      /* sous-titres mot à mot (1 à 3 mots), blancs, sans contour, mots clés en or */
+      .cap { position: absolute; left: var(--cap-left); top: 1190px; width: var(--cap-width); height: 130px; display: flex;
+        align-items: center; justify-content: center; gap: 0 20px; font-weight: 700; font-size: 76px; letter-spacing: -0.02em;
+        white-space: nowrap; color: var(--ink); text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent); }
+
+      /* transition douce : halo lumineux */
+      #bloom { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 70% 50% at 50% 36%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="{{DUR}}" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="orbit" id="o1"></div>
+      <div class="orbit" id="o2"></div>
+      <div id="vig"></div>
+      <div id="sig">{{SIGNATURE}}<i></i></div>
+      <div id="stage">
+        {{SCENES}}
+      </div>
+      {{CAPTIONS}}
+      <div id="bloom"></div>
+      {{ENDCARD}}
+    </div>
+    {{AUDIO}}
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+{{JS}}
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

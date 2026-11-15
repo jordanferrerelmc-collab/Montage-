@@ -1,0 +1,19 @@
+{
+  "id": "001-zero-client",
+  "titre": "Il postait tous les jours. Zéro client.",
+  "theme": "storytelling",
+  "legende": "Il postait tous les jours. Zéro client. 👇\n\nUne belle photo ne suffit plus. Ce que les gens retiennent, c'est une histoire : ta cuisine, ton équipe, ton pourquoi.\n\n🎬 Montre les coulisses de ton commerce cette semaine.\n\n📌 Enregistre ce Reel pour ton prochain tournage.\n➕ Abonne-toi pour un conseil chaque jour.\n📩 Devis gratuit en message privé.\n\n#communitymanager #974 #lareunion #commercelocal #marketingdigital",
+  "plans": [
+    {"voix": "Il postait tous les jours. Zéro client.", "cles": ["zéro", "client"],
+     "visuel": {"type": "titre", "petit": "Il postait tous les jours", "grand": "ZÉRO|CLIENT"}},
+    {"voix": "Un restaurateur. De belles photos de plats, chaque matin.", "cles": ["photos"],
+     "visuel": {"type": "carte", "label": "Son compte", "texte": "De belles photos|de plats"}},
+    {"voix": "Résultat : personne ne réagit.", "cles": ["personne"],
+     "visuel": {"type": "titre", "petit": "Résultat", "grand": "PERSONNE"}},
+    {"voix": "Un jour, il filme sa cuisine, son équipe, son histoire.", "cles": ["cuisine", "équipe", "histoire"],
+     "visuel": {"type": "etapes", "etapes": ["Sa cuisine", "Son équipe", "Son histoire"]}},
+    {"voix": "Les gens n'achètent pas un plat. Ils achètent une histoire.", "cles": ["histoire"], "fort": true,
+     "visuel": {"type": "duo", "cartes": [{"label": "Ce que tu montres", "texte": "Un plat"}, {"label": "Ce qu'ils achètent", "texte": "Une histoire", "clair": true}]}},
+    {"voix": "Abonne-toi, et enregistre ce Reel.", "visuel": {"type": "cta"}}
+  ]
+}
