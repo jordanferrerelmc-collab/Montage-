@@ -26,3 +26,6 @@ projets/*/montage-*/assets/*.webm
 references/*/work/
 effets/sfx/reactions/
 effets/sfx/openverse/*.wav
+
+# visuels de cartes fournis (non redistribuables), régénérés par scripts/prep.py
+projets/*/montage/assets/cartes/
