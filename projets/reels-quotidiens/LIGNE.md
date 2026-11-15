@@ -33,6 +33,8 @@ Instagram. Pas les community managers, pas le grand public.
 
 ```bash
 npm run voix:install                      # une fois par session (≈ 5 min, 6 Go)
+# modèle de transcription (relecture de la voix), s'il manque dans ~/.cache/hyperframes/whisper/models/ :
+curl -fsL -o ~/.cache/hyperframes/whisper/models/ggml-small.bin https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.bin
 /root/.venvs/voice/bin/python projets/reels-quotidiens/scripts/make_reel.py projets/reels-quotidiens/specs/<NNN-nom>.json
 ```
 
