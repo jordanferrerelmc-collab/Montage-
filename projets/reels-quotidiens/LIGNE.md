@@ -58,6 +58,10 @@ curl -fsL -o ~/.cache/hyperframes/whisper/models/ggml-small.bin https://huggingf
 - Après succès : ajouter `{id, date, media_id / permalien}` à `publies.json`, valider et pousser.
 - Si la file est vide ou si la publication échoue : **ne rien publier d'autre**, ne pas réessayer en boucle,
   prévenir l'utilisateur avec le message d'erreur exact.
+- **Délai dépassé (constaté le 15/11/2026)** : `execute_action` peut répondre « timed out after 60s » alors que le Reel
+  est bien publié. Ne JAMAIS relancer : relire d'abord les publications du jour (`get_data`, champs `timestamp`,
+  `media_id`, `media_caption`, `media_permalink`, `date_preset=last_3dT`, sans `force_refresh`) ; ne republier que si
+  le Reel est absent après plusieurs minutes.
 - Une seule publication par créneau. Jamais deux fois le même Reel.
 
 ## Suivi
