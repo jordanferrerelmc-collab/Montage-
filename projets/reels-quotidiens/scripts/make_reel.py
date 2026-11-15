@@ -80,6 +80,11 @@ for i, p in enumerate(plans):
             generer(p["voix"], seed, tmp)
             heard = transcrire(tmp, f"{W}/tr")
             sc, d = score(p["voix"], heard), dur(tmp)
+            # le modèle ajoute parfois un souffle ou un bruit après le dernier mot : on coupe juste après la parole
+            if heard and d - heard[-1]["end"] > 0.3:
+                fin = heard[-1]["end"] + 0.2
+                run("ffmpeg", "-v", "error", "-y", "-i", tmp, "-af", f"atrim=0:{fin:.3f},afade=t=out:st={fin - 0.12:.3f}:d=0.12", tmp + ".c.wav")
+                os.replace(tmp + ".c.wav", tmp); d = dur(tmp)
             # une phrase trop longue pour son nombre de mots = bafouillage ou bruit ajouté par le modèle
             lent = d > 0.62 * len(mots(p["voix"])) + 0.9
             print(f"  plan {i} essai {essai} (seed {seed}) : {sc:.2f} {d:.2f}s{' LENT' if lent else ''} « {' '.join(x['text'] for x in heard)} »", flush=True)
