@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="conseil" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+        --cap-left: 90px;
+        --cap-width: 900px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+
+      /* ---- modèle « conseil » : Reel de 20 s sans visage (voix off + titres + cartes), style éditorial ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--black); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--ink); }
+
+      /* fond : noir profond, halo or qui respire, anneaux fins qui tournent lentement */
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 95% 60% at 50% 36%, var(--dark) 0%, var(--black) 72%); }
+      #halo { position: absolute; left: 90px; top: 240px; width: 900px; height: 900px; border-radius: 50%;
+        background: radial-gradient(circle, var(--accent) 0%, rgba(227, 178, 92, 0) 68%); opacity: 0.3; }
+      .orbit { position: absolute; left: 50%; top: 690px; border-radius: 50%; border: 2px solid var(--accent); opacity: 0.22; }
+      #o1 { width: 1240px; height: 1240px; margin: -620px 0 0 -620px; border-style: dashed; }
+      #o2 { width: 1560px; height: 1560px; margin: -780px 0 0 -780px; opacity: 0.12; }
+      #vig { position: absolute; inset: 0; background: radial-gradient(ellipse 80% 62% at 50% 42%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.72) 100%); }
+
+      /* signature en haut */
+      #sig { position: absolute; left: var(--cap-left); top: 196px; width: var(--cap-width); text-align: center; font-weight: 700;
+        font-size: 30px; letter-spacing: 0.42em; color: var(--accent); }
+      #sig i { display: block; width: 90px; height: 3px; margin: 22px auto 0; background: var(--accent); }
+
+      /* scène : un visuel par phrase, centré dans la colonne de la charte */
+      #stage { position: absolute; inset: 0; transform-origin: 50% 36%; }
+      .scene { position: absolute; left: var(--cap-left); top: 300px; width: var(--cap-width); height: 800px;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; text-align: center; }
+      .small { font-weight: 700; font-size: 62px; letter-spacing: -0.03em; line-height: 1.05; }
+      .huge { font-weight: 700; letter-spacing: -0.045em; line-height: 0.9; text-transform: uppercase; color: var(--accent); }
+      .card { width: 820px; border-radius: 40px; border: 3px solid var(--accent); background: var(--panel); padding: 50px 54px;
+        box-shadow: 0 34px 80px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 22px; align-items: center; }
+      .card.light { background: var(--ivory); color: var(--black); }
+      .card .label { font-weight: 700; font-size: 32px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
+      .card.light .label { color: var(--dark); }
+      .card .text { font-weight: 700; font-size: 68px; letter-spacing: -0.03em; line-height: 1.04; }
+      .duo { display: flex; flex-direction: column; gap: 30px; align-items: center; }
+      .duo .card { padding: 36px 48px; }
+      .duo .card .text { font-size: 58px; }
+      .steps { display: flex; flex-direction: column; gap: 26px; width: 820px; }
+      .step { display: flex; align-items: center; gap: 30px; border-radius: 999px; border: 3px solid var(--accent); background: var(--panel);
+        padding: 22px 44px 22px 22px; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45); }
+      .step b { flex: none; width: 96px; height: 96px; border-radius: 50%; background: var(--gold-grad); color: var(--black);
+        display: flex; align-items: center; justify-content: center; font-size: 54px; font-weight: 700; }
+      .step span { flex: 1; text-align: center; font-weight: 700; font-size: 54px; letter-spacing: -0.03em; line-height: 1.05; padding-right: 30px; }
+
+      /* appel à l'action : deux pilules or */
+      .ctas { display: flex; flex-direction: column; gap: 34px; align-items: center; }
+      .pill { display: flex; align-items: center; gap: 24px; white-space: nowrap; padding: 34px 64px; border-radius: 999px;
+        background: var(--gold-grad); color: var(--black); font-weight: 700; font-size: 66px; letter-spacing: -0.02em;
+        box-shadow: 0 26px 60px rgba(0, 0, 0, 0.45); }
+      .pill svg { width: 70px; height: 70px; }
+      .pill.ghost { background: var(--panel); color: var(--ink); border: 3px solid var(--accent); }
+
+      /* sous-titres mot à mot (1 à 3 mots), blancs, sans contour, mots clés en or */
+      .cap { position: absolute; left: var(--cap-left); top: 1190px; width: var(--cap-width); height: 130px; display: flex;
+        align-items: center; justify-content: center; gap: 0 20px; font-weight: 700; font-size: 76px; letter-spacing: -0.02em;
+        white-space: nowrap; color: var(--ink); text-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); }
+      .cap .k { color: var(--accent); }
+
+      /* transition douce : halo lumineux */
+      #bloom { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 70% 50% at 50% 36%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.8) 40%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="20.18" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="halo"></div>
+      <div class="orbit" id="o1"></div>
+      <div class="orbit" id="o2"></div>
+      <div id="vig"></div>
+      <div id="sig">SPECIMEN AGENCY<i></i></div>
+      <div id="stage">
+        <div class="scene clip" id="s0" data-start="0.00" data-duration="2.37" data-track-index="2"><div class="small" id="s0a">Tu as</div><div class="huge" id="s0b" style="font-size:153px">3<br/>SECONDES</div></div>
+        <div class="scene clip" id="s1" data-start="2.37" data-duration="2.47" data-track-index="3"><div class="card" id="s1a"><div class="label">L&#x27;erreur</div><div class="text">Commencer<br/>par son logo</div></div></div>
+        <div class="scene clip" id="s2" data-start="4.84" data-duration="1.25" data-track-index="2"><div class="small" id="s2a">Tout le monde</div><div class="huge" id="s2b" style="font-size:230px">PASSE</div></div>
+        <div class="scene clip" id="s3" data-start="6.09" data-duration="2.16" data-track-index="3"><div class="card light" id="s3a"><div class="label">La solution</div><div class="text">Commencer par<br/>une question</div></div></div>
+        <div class="scene clip" id="s4" data-start="8.24" data-duration="1.99" data-track-index="2"><div class="small" id="s4a">Même boutique</div><div class="huge" id="s4b" style="font-size:230px">MÊME<br/>OFFRE</div></div>
+        <div class="scene clip" id="s5" data-start="10.23" data-duration="1.80" data-track-index="3"><div class="small" id="s5a">Cette fois</div><div class="huge" id="s5b" style="font-size:175px">ILS<br/>RESTENT</div></div>
+        <div class="scene clip" id="s6" data-start="12.03" data-duration="2.69" data-track-index="2"><div class="small" id="s6a">Ta première phrase</div><div class="huge" id="s6b" style="font-size:175px">DÉCIDE<br/>DE TOUT</div></div>
+        <div class="scene clip" id="s7" data-start="14.72" data-duration="3.26" data-track-index="3"><div class="ctas"><div class="pill" id="s7a"><svg viewBox="0 0 24 24"><path d="M11 4h2v7h7v2h-7v7h-2v-7H4v-2h7z" style="fill:var(--black)"/></svg>Abonne-toi</div><div class="pill ghost" id="s7b"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z" style="fill:var(--accent)"/></svg>Enregistre ce Reel</div></div></div>
+      </div>
+      <div class="cap clip" id="c0_0" data-start="0.17" data-duration="0.52" data-track-index="5"><span>Tu</span><span>as</span><span class='k'>trois</span></div>
+      <div class="cap clip" id="c0_1" data-start="0.69" data-duration="0.74" data-track-index="5"><span class='k'>secondes</span></div>
+      <div class="cap clip" id="c0_2" data-start="1.43" data-duration="0.47" data-track-index="5"><span>Pas</span><span>une</span><span>de</span></div>
+      <div class="cap clip" id="c0_3" data-start="1.90" data-duration="0.47" data-track-index="5"><span>plus</span></div>
+      <div class="cap clip" id="c1_0" data-start="2.48" data-duration="1.08" data-track-index="5"><span>Une</span><span>boutique</span><span>commence</span></div>
+      <div class="cap clip" id="c1_1" data-start="3.56" data-duration="0.61" data-track-index="5"><span>sa</span><span>vidéo</span><span>par</span></div>
+      <div class="cap clip" id="c1_2" data-start="4.17" data-duration="0.67" data-track-index="5"><span>son</span><span class='k'>logo</span></div>
+      <div class="cap clip" id="c2_0" data-start="4.96" data-duration="0.61" data-track-index="5"><span>Tout</span><span>le</span><span>monde</span></div>
+      <div class="cap clip" id="c2_1" data-start="5.57" data-duration="0.51" data-track-index="5"><span class='k'>passe</span></div>
+      <div class="cap clip" id="c3_0" data-start="6.17" data-duration="1.00" data-track-index="5"><span>Elle</span><span>recommence</span></div>
+      <div class="cap clip" id="c3_1" data-start="7.17" data-duration="1.08" data-track-index="5"><span>avec</span><span>une</span><span class='k'>question</span></div>
+      <div class="cap clip" id="c4_0" data-start="8.35" data-duration="1.04" data-track-index="5"><span class='k'>Même</span><span>boutique</span></div>
+      <div class="cap clip" id="c4_1" data-start="9.39" data-duration="0.84" data-track-index="5"><span class='k'>Même</span><span>offre</span></div>
+      <div class="cap clip" id="c5_0" data-start="10.33" data-duration="0.53" data-track-index="5"><span>Cette</span><span>fois</span></div>
+      <div class="cap clip" id="c5_1" data-start="10.86" data-duration="1.17" data-track-index="5"><span>les</span><span>gens</span><span class='k'>restent</span></div>
+      <div class="cap clip" id="c6_0" data-start="12.07" data-duration="1.20" data-track-index="5"><span>Ta</span><span class='k'>première</span><span class='k'>phrase</span></div>
+      <div class="cap clip" id="c6_1" data-start="13.27" data-duration="1.45" data-track-index="5"><span>décide</span><span>de</span><span class='k'>tout</span></div>
+      <div id="bloom"></div>
+      <div class="clip" id="endcard" data-start="17.98" data-duration="2.2" data-track-index="6"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/><div id="tagline">VOTRE IMAGE.<br/>NOTRE EXPERTISE.</div></div>
+    </div>
+    <audio id="voice" class="clip" src="assets/voix_off.wav" data-start="0" data-duration="17.28" data-volume="1" data-track-index="0"></audio>
+    <audio id="a0" class="clip" src="assets/sfx/whoosh-court.wav" data-start="2.249" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a1" class="clip" src="assets/sfx/impact-sec.wav" data-start="0.050" data-duration="0.35" data-volume="0.3" data-track-index="8"></audio>
+    <audio id="a2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="4.722" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a3" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.967" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a4" class="clip" src="assets/sfx/whoosh-court.wav" data-start="8.124" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a5" class="clip" src="assets/sfx/whoosh-court.wav" data-start="10.111" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a6" class="clip" src="assets/sfx/whoosh-court.wav" data-start="11.912" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a7" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.604" data-duration="0.6" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="a8" class="clip" src="assets/sfx/ding.wav" data-start="12.112" data-duration="0.7" data-volume="0.18" data-track-index="9"></audio>
+    <audio id="a9" class="clip" src="assets/sfx/pop.wav" data-start="14.774" data-duration="0.12" data-volume="0.25" data-track-index="9"></audio>
+    <audio id="a10" class="clip" src="assets/sfx/pop.wav" data-start="15.884" data-duration="0.12" data-volume="0.25" data-track-index="8"></audio>
+    <audio id="a11" class="clip" src="assets/sfx/impact-sec.wav" data-start="17.980" data-duration="0.35" data-volume="0.3" data-track-index="8"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo('#stage', {scale: 1}, {scale: 1.05, duration: 17.98, ease: 'none'}, 0);
+  tl.fromTo('#halo', {opacity: 0.22, scale: 0.94}, {opacity: 0.4, scale: 1.08, duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: 10}, 0);
+  tl.fromTo('#o1', {rotation: 0}, {rotation: 40, duration: 20.18, ease: 'none'}, 0);
+  tl.fromTo('#sig', {opacity: 0, y: -16}, {opacity: 1, y: 0, duration: 0.5, ease: 'power2.out'}, 0.1);
+  tl.fromTo('#s0a', {opacity: 0, y: 24, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out'}, 0.05);
+  tl.fromTo('#s0b', {opacity: 0, scale: 1.18, filter: 'blur(18px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out'}, 0.22);
+  tl.fromTo('#s0b', {color: '#e3b25c'}, {color: '#ffffff', duration: 0.6, ease: 'power1.inOut', immediateRender: false}, 1.12);
+  tl.to('#s0', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 2.19);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 2.27);
+  tl.fromTo('#c0_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 0.17);
+  tl.fromTo('#c0_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 0.69);
+  tl.fromTo('#c0_2', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 1.43);
+  tl.fromTo('#c0_3', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 1.90);
+  tl.fromTo('#s1a', {opacity: 0, y: 70, rotation: -4, scale: 0.92}, {opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.5, ease: 'back.out(1.5)'}, 2.42);
+  tl.to('#s1', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 4.66);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 4.74);
+  tl.fromTo('#c1_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 2.48);
+  tl.fromTo('#c1_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 3.56);
+  tl.fromTo('#c1_2', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 4.17);
+  tl.fromTo('#s2a', {opacity: 0, y: 24, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out'}, 4.89);
+  tl.fromTo('#s2b', {opacity: 0, scale: 1.18, filter: 'blur(18px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out'}, 5.06);
+  tl.fromTo('#s2b', {color: '#e3b25c'}, {color: '#ffffff', duration: 0.6, ease: 'power1.inOut', immediateRender: false}, 5.39);
+  tl.to('#s2', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 5.91);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 5.99);
+  tl.fromTo('#c2_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 4.96);
+  tl.fromTo('#c2_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 5.57);
+  tl.fromTo('#s3a', {opacity: 0, y: 70, rotation: -4, scale: 0.92}, {opacity: 1, y: 0, rotation: 0, scale: 1, duration: 0.5, ease: 'back.out(1.5)'}, 6.14);
+  tl.to('#s3', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 8.06);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 8.14);
+  tl.fromTo('#c3_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 6.17);
+  tl.fromTo('#c3_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 7.17);
+  tl.fromTo('#s4a', {opacity: 0, y: 24, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out'}, 8.29);
+  tl.fromTo('#s4b', {opacity: 0, scale: 1.18, filter: 'blur(18px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out'}, 8.46);
+  tl.fromTo('#s4b', {color: '#e3b25c'}, {color: '#ffffff', duration: 0.6, ease: 'power1.inOut', immediateRender: false}, 9.36);
+  tl.to('#s4', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 10.05);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 10.13);
+  tl.fromTo('#c4_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 8.35);
+  tl.fromTo('#c4_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 9.39);
+  tl.fromTo('#s5a', {opacity: 0, y: 24, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out'}, 10.28);
+  tl.fromTo('#s5b', {opacity: 0, scale: 1.18, filter: 'blur(18px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out'}, 10.45);
+  tl.fromTo('#s5b', {color: '#e3b25c'}, {color: '#ffffff', duration: 0.6, ease: 'power1.inOut', immediateRender: false}, 11.33);
+  tl.to('#s5', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 11.85);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 11.93);
+  tl.fromTo('#c5_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 10.33);
+  tl.fromTo('#c5_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 10.86);
+  tl.fromTo('#s6a', {opacity: 0, y: 24, filter: 'blur(10px)'}, {opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.35, ease: 'power2.out'}, 12.08);
+  tl.fromTo('#s6b', {opacity: 0, scale: 1.18, filter: 'blur(18px)'}, {opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out'}, 12.25);
+  tl.fromTo('#s6b', {color: '#e3b25c'}, {color: '#ffffff', duration: 0.6, ease: 'power1.inOut', immediateRender: false}, 13.15);
+  tl.to('#s6', {opacity: 0, filter: 'blur(14px)', scale: 0.97, duration: 0.18, ease: 'power1.in'}, 14.54);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.16, duration: 0.12, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 14.62);
+  tl.fromTo('#c6_0', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 12.07);
+  tl.fromTo('#c6_1', {opacity: 0, y: 14, scale: 0.96}, {opacity: 1, y: 0, scale: 1, duration: 0.14, ease: 'power2.out'}, 13.27);
+  tl.fromTo('#s7a', {opacity: 0, scale: 0.7}, {opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2)'}, 14.77);
+  tl.fromTo('#s7b', {opacity: 0, scale: 0.7}, {opacity: 1, scale: 1, duration: 0.45, ease: 'back.out(2)'}, 15.88);
+  tl.to('#s7a', {scale: 1.06, duration: 0.3, yoyo: true, repeat: 1, ease: 'sine.inOut'}, 16.43);
+  tl.fromTo('#bloom', {opacity: 0}, {opacity: 0.5, duration: 0.2, yoyo: true, repeat: 1, ease: 'sine.inOut', immediateRender: false}, 17.78);
+  tl.fromTo('#endcard', {opacity: 0}, {opacity: 1, duration: 0.25, ease: 'power1.out'}, 17.98);
+  tl.fromTo('#logo', {scale: 0.82, opacity: 0}, {scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.6)'}, 18.03);
+  tl.fromTo('#tagline', {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.5, ease: 'power2.out'}, 18.38);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
