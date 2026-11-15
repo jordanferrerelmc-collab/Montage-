@@ -1,6 +1,7 @@
 # Reels quotidiens — Specimen Agency (@specimenagency974)
 
-Deux Reels de 20 s par jour, publiés à **8 h** et **19 h, heure de La Réunion** (demande de l'utilisateur, 15/11/2026).
+**Un Reel de 20 s par jour, publié à 8 h, heure de La Réunion** (demande de l'utilisateur, 15/11/2026 : d'abord deux
+par jour à 8 h et 19 h, puis ramené à un seul à 8 h le jour même ; la tâche de 19 h est désactivée).
 Objectif du compte : donner des conseils aux entreprises et obtenir des clients potentiels (devis en message privé).
 
 ## Cible
