@@ -1,21 +1,96 @@
 {
-  "id": "002-trois-secondes",
-  "titre": "Tu as trois secondes. Pas une de plus.",
-  "theme": "accroche",
-  "legende": "Tu as 3 secondes. Pas une de plus. ⏱️\n\nSi ta vidéo commence par ton logo, les gens passent à la suivante. Commence par une question que ton client se pose vraiment.\n\n🎯 Avant de publier, relis ta première phrase : donne-t-elle envie de rester ?\n\n📌 Enregistre ce Reel pour ta prochaine vidéo.\n➕ Abonne-toi pour un conseil chaque jour.\n📩 Devis gratuit en message privé.\n\n#communitymanager #974 #lareunion #reelsinstagram #entrepreneur974",
-  "plans": [
-    {"voix": "Tu as trois secondes. Pas une de plus.", "cles": ["trois", "secondes"],
-     "visuel": {"type": "titre", "petit": "Tu as", "grand": "3|SECONDES"}},
-    {"voix": "Une boutique commence sa vidéo par son logo.", "cles": ["logo"],
-     "visuel": {"type": "carte", "label": "L'erreur", "texte": "Commencer|par son logo"}},
-    {"voix": "Tout le monde passe.", "cles": ["passe"],
-     "visuel": {"type": "titre", "petit": "Tout le monde", "grand": "PASSE"}},
-    {"voix": "Elle recommence, avec une question.", "cles": ["question"],
-     "visuel": {"type": "carte", "label": "La solution", "texte": "Commencer par|une question", "clair": true}},
-    {"voix": "Cette fois, les gens restent.", "cles": ["restent"],
-     "visuel": {"type": "titre", "petit": "Cette fois", "grand": "ILS|RESTENT"}},
-    {"voix": "Ta première phrase décide de tout.", "cles": ["première", "phrase", "tout"], "fort": true,
-     "visuel": {"type": "titre", "petit": "Ta première phrase", "grand": "DÉCIDE|DE TOUT"}},
-    {"voix": "Abonne-toi, et enregistre ce Reel.", "visuel": {"type": "cta"}}
-  ]
+ "id": "002-trois-secondes",
+ "titre": "Tu as trois secondes. Pas une de plus.",
+ "theme": "accroche",
+ "legende": "Tu as 3 secondes. Pas une de plus. ⏱️\n\nSi ta vidéo commence par ton logo, les gens passent à la suivante. Commence par une question que ton client se pose vraiment.\n\n🎯 Avant de publier, relis ta première phrase : donne-t-elle envie de rester ?\n\n📌 Enregistre ce Reel pour ta prochaine vidéo.\n➕ Abonne-toi pour un conseil chaque jour.\n📩 Devis gratuit en message privé.\n\n#communitymanager #974 #lareunion #reelsinstagram #entrepreneur974",
+ "plans": [
+  {
+   "voix": "Tu as trois secondes. Pas une de plus.",
+   "cles": [
+    "trois",
+    "secondes"
+   ],
+   "visuel": {
+    "type": "titre",
+    "petit": "Tu as",
+    "grand": "3|SECONDES"
+   }
+  },
+  {
+   "voix": "Une boutique commence sa vidéo par son logo.",
+   "cles": [
+    "logo"
+   ],
+   "visuel": {
+    "type": "carte",
+    "label": "L'erreur",
+    "texte": "Commencer|par son logo"
+   }
+  },
+  {
+   "voix": "Tout le monde passe.",
+   "cles": [
+    "passe"
+   ],
+   "visuel": {
+    "type": "titre",
+    "petit": "Tout le monde",
+    "grand": "PASSE"
+   }
+  },
+  {
+   "voix": "Elle recommence, avec une question.",
+   "cles": [
+    "question"
+   ],
+   "visuel": {
+    "type": "carte",
+    "label": "La solution",
+    "texte": "Commencer par|une question",
+    "clair": true
+   }
+  },
+  {
+   "voix": "Même boutique. Même offre.",
+   "cles": [
+    "même"
+   ],
+   "visuel": {
+    "type": "titre",
+    "petit": "Même boutique",
+    "grand": "MÊME|OFFRE"
+   }
+  },
+  {
+   "voix": "Cette fois, les gens restent.",
+   "cles": [
+    "restent"
+   ],
+   "visuel": {
+    "type": "titre",
+    "petit": "Cette fois",
+    "grand": "ILS|RESTENT"
+   }
+  },
+  {
+   "voix": "Ta première phrase décide de tout.",
+   "cles": [
+    "première",
+    "phrase",
+    "tout"
+   ],
+   "fort": true,
+   "visuel": {
+    "type": "titre",
+    "petit": "Ta première phrase",
+    "grand": "DÉCIDE|DE TOUT"
+   }
+  },
+  {
+   "voix": "Abonne-toi, et enregistre ce Reel.",
+   "visuel": {
+    "type": "cta"
+   }
+  }
+ ]
 }
