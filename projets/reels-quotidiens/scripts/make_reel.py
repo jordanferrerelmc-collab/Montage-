@@ -86,7 +86,7 @@ for i, p in enumerate(plans):
             note = sc - (0.3 if lent else 0)
             if best is None or note > best[0]:
                 best = (note, seed, heard, sc, d); shutil.copy(tmp, wav)
-            if sc >= 0.92 and not lent: break
+            if sc >= 0.97 and not lent: break
         json.dump({"seed": best[1], "score": best[3], "dur": best[4], "heard": best[2]}, open(meta, "w"), ensure_ascii=False)
     m = json.load(open(meta, encoding="utf-8"))
     p["_wav"], p["_heard"], p["_score"] = wav, m["heard"], m["score"]
@@ -149,7 +149,7 @@ ICON = {
 }
 def taille(lignes, maxi=230, mini=96):
     n = max(len(l) for l in lignes)
-    return int(max(mini, min(maxi, 900 / (0.6 * n))))
+    return int(max(mini, min(maxi, 860 / (0.7 * n))))
 
 js.append(f"  tl.fromTo('#stage', {{scale: 1}}, {{scale: 1.05, duration: {MAIN:.2f}, ease: 'none'}}, 0);")
 js.append(f"  tl.fromTo('#halo', {{opacity: 0.22, scale: 0.94}}, {{opacity: 0.4, scale: 1.08, duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: {int(DUR / 2.2) + 1}}}, 0);")
