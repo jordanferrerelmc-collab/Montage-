@@ -27,3 +27,5 @@ references/*/work/
 effets/sfx/reactions/
 effets/sfx/openverse/*.wav
 projets/*/montage/assets/.tmp-*
+effets/sfx/utilisateur/*.wav
+effets/sfx/utilisateur/work/

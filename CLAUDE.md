@@ -141,6 +141,11 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
   qui en a besoin (≈ 5 à 10 min, plusieurs Go). Le skill associé `real-sound` (même dépôt, `.agents/skills/real-sound`)
   décrit la méthode complète de bande-son (liste de repères, licences, mixage, contrôle) : s'en inspirer, en gardant
   nos règles (voix au premier plan, -14 LUFS, 1 à 3 réactions par vidéo).
+- **Sons fournis par l'utilisateur** (16/11/2026, « à intégrer si besoin ») : 8 effets dans `effets/sfx/utilisateur/`
+  (`clavier-apple`, `tic-flutter`, `chargement-donnees`, `ui`, `montee-impact`, `impact-grave`, `clic-focus`,
+  `montee-shepard` ; tableau d'usage dans son `README.md`). Non versionnés (droits inconnus, pack tiers) : dans une nouvelle
+  session, demander la vidéo source ou la redéposer dans `effets/sfx/utilisateur/work/source.mp4`, puis `./decoupe.sh`.
+  À préférer aux bruitages maison synthétisés quand ils conviennent (clic d'interface, impact, montée).
 - **Sons de réaction** (« woaah », surprise, cris de victoire, foule de stade, huées, rires) : `npm run sfx:reactions`
   télécharge 14 sons Mixkit dans `effets/sfx/reactions/` (non versionnés : la licence Mixkit autorise l'usage dans nos
   vidéos, pas la redistribution des fichiers ; hôtes `mixkit.co` / `assets.mixkit.co` autorisés dans l'environnement
