@@ -89,6 +89,14 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
    - Pas de faux chiffres ni de promesses trompeuses ; mots clés tirés du sujet réel de la vidéo (jeu, mode, tactique…).
    - Écrire aussi ces textes dans `projets/<nom>/final/description.md`.
 
+10. **Son : voix claire sur toute vidéo face caméra** (demande de l'utilisateur, 16/11/2026). Avant le montage :
+    `npm run voix:claire -- <source> work/voix_claire.wav` (réduction de bruit RNNoise, modèle « bd » cloné dans
+    `/opt/rnnoise-models` ; égalisation voix, dé-esseur, compression douce, limiteur), remplacer la piste son de la
+    vidéo par cette voix, **transcrire sur la voix nettoyée** (modèle `large-v3-turbo` si `small` hésite ; le télécharger
+    avec curl dans `~/.cache/hyperframes/whisper/models/`), et sortir la vidéo finale à **-14 LUFS en deux passes**
+    (mesure puis `linear=true`). Mesurer l'écart voix / bruit avant et après et le dire à l'utilisateur.
+    Exemple : `projets/agency-video2/` (voiture : écart 19 dB → 34 dB).
+
 Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionnés.
 
 ## Voix clonée de l'utilisateur (montages sans visage)

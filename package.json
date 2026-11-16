@@ -34,6 +34,7 @@
     "sfx:reactions": "bash scripts/fetch-reactions.sh",
     "sfx:openverse": "python3 scripts/sfx-openverse.py",
     "earshot:setup": "bash scripts/install-earshot.sh",
-    "earshot": "/opt/earshot-src/.venv/bin/python -m earshot"
+    "earshot": "/opt/earshot-src/.venv/bin/python -m earshot",
+    "voix:claire": "bash scripts/clean-voice.sh"
   }
 }

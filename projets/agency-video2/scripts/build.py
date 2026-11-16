@@ -50,10 +50,11 @@ js.append('  tl.fromTo("#punch", {scale: 1.045}, {scale: 1.0, duration: 0.3, eas
 def title(n, start, end, small, big, top=230):
     size = min(200, int(1250 / max(4, len(big))))
     behind.append(f'<div class="behind clip" id="t{n}" style="--title-top:{top}px" data-start="{start:.3f}" data-duration="{end - start:.3f}" data-track-index="2">'
-                  f'<span class="small">{html.escape(small)}</span><span class="huge" style="font-size:{size}px">{html.escape(big)}</span></div>')
+                  f'<span class="small">{html.escape(small)}</span><span class="huge" style="font-size:{size}px; color:var(--accent)">{html.escape(big)}</span></div>')
     js.append(f'  tl.fromTo("#t{n} .small", {{opacity: 0, y: 20}}, {{opacity: 1, y: 0, duration: 0.25, ease: "power2.out", immediateRender: true}}, {start:.3f});')
     js.append(f'  tl.fromTo("#t{n} .huge", {{opacity: 0, scale: 1.12}}, {{opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: true}}, {start + 0.08:.3f});')
-    js.append(f'  tl.fromTo("#t{n} .huge", {{color: "var(--accent)"}}, {{color: "var(--ink)", duration: 0.5, ease: "none", immediateRender: false}}, {start + 0.6:.3f});')
+    # or → blanc : bascule nette (GSAP n'interpole pas les variables CSS : un fondu passait par un gris illisible)
+    js.append(f'  tl.set("#t{n} .huge", {{color: "var(--ink)"}}, {start + 0.7:.3f});')
     js.append(f'  tl.fromTo("#t{n}", {{opacity: 1}}, {{opacity: 0, duration: 0.2, immediateRender: false}}, {end - 0.2:.3f});')
 
 title(0, 0.30, 3.05, "pourquoi on m'a pas appris ça", "plus tôt ?")
