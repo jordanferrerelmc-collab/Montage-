@@ -1,0 +1,19 @@
+{
+ "id": "003-qui-es-tu",
+ "titre": "Ta boutique est belle. Mais qui es-tu ?",
+ "theme": "montrer son visage",
+ "legende": "Ta boutique est belle. Mais qui es-tu ? 👋\n\nUn compte sans visage ressemble à un catalogue. Les gens font confiance à une personne : montre-toi, dis bonjour, explique ton métier.\n\n🎥 Cette semaine, publie une vidéo où l'on te voit, même dix secondes.\n\n📌 Enregistre ce Reel pour ton prochain tournage.\n➕ Abonne-toi pour un conseil chaque jour.\n📩 Devis gratuit en message privé.\n\n#communitymanager #974 #lareunion #commercelocal #entrepreneur974",
+ "plans": [
+  {"voix": "Ta boutique est belle. Mais qui es-tu ?", "cles": ["qui", "es-tu"],
+   "visuel": {"type": "titre", "petit": "Ta boutique est belle", "grand": "MAIS QUI|ES-TU ?"}},
+  {"voix": "Une fleuriste ne montrait que ses bouquets.", "cles": ["bouquets"],
+   "visuel": {"type": "carte", "label": "Son compte", "texte": "Des bouquets,|rien d'autre"}},
+  {"voix": "Jolis. Mais froids.", "cles": ["froids"],
+   "visuel": {"type": "titre", "petit": "Jolis", "grand": "MAIS|FROIDS"}},
+  {"voix": "Un matin, elle se filme. Elle dit bonjour. Elle explique son métier.", "cles": ["filme", "bonjour", "métier"],
+   "visuel": {"type": "etapes", "etapes": ["Elle se filme", "Elle dit bonjour", "Elle explique son métier"]}},
+  {"voix": "On n'achète pas à un logo. On achète à quelqu'un.", "cles": ["logo", "quelqu'un"], "fort": true,
+   "visuel": {"type": "duo", "cartes": [{"label": "On oublie", "texte": "Un logo"}, {"label": "On fait confiance à", "texte": "Un visage", "clair": true}]}},
+  {"voix": "Abonne-toi, et enregistre ce Reel.", "seed": 1248, "visuel": {"type": "cta"}}
+ ]
+}
