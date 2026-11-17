@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="editorial" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* charte de marque injectée (brand/<marque>/brand.css) */
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+        --cap-left: 90px;
+        --cap-width: 900px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+      /* visage : zooms ancrés au menton ; rien sur le visage ni sur les sous-titres */
+      #root #cam, #root #punch { transform-origin: 50% 58%; }
+      #root .behind .small { font-size: 58px; }
+      /* sous-titres blancs à contour noir, centrés, mots clés en or */
+      #root .cap { top: 1470px; left: var(--cap-left); width: var(--cap-width); height: 110px; font-size: 72px;
+        -webkit-text-stroke: 10px rgba(0, 0, 0, 0.9); paint-order: stroke fill; text-shadow: 0 4px 18px rgba(0, 0, 0, 0.55); }
+      #root .cap .kw { color: var(--accent-soft, var(--accent)); margin: 0 0.22em; }
+      /* cartes du script : bande entre le menton et les sous-titres */
+      .note, .pill-cta { position: absolute; left: 50%; top: 1270px; transform: translateX(-50%); max-width: var(--cap-width);
+        display: flex; align-items: center; justify-content: center; gap: 18px; padding: 22px 36px; border-radius: 30px; white-space: nowrap;
+        font-weight: 700; font-size: 42px; letter-spacing: -0.01em; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .note { background: var(--panel); color: var(--ink); border: 3px solid var(--accent); }
+      .note b { color: var(--accent-soft, var(--accent)); font-weight: 700; }
+      .note.light { background: var(--ivory); color: var(--black); }
+      .note .num { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; border-radius: 50%;
+        background: var(--accent); color: var(--black); font-size: 38px; flex: none; }
+      .note.wrap { display: block; text-align: center; line-height: 1.25; }
+      .pill-cta span { text-align: left; line-height: 1.15; }
+      .note .ico, .pill-cta .ico { width: 56px; height: 56px; flex: none; }
+      .pill-cta { border-radius: 999px; background: var(--gold-grad); color: var(--black); font-size: 40px; padding: 24px 40px; }
+
+
+      /* ---- style de montage « éditorial » (réf. references/reel-style) ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+
+      /* caméra : fond vidéo, titres « derrière le sujet », sujet détouré par-dessus */
+      #cam, #punch { position: absolute; inset: 0; transform-origin: 50% 34%; }
+      #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+
+      /* titres derrière la tête : petite ligne + très grande ligne */
+      .behind { position: absolute; left: 0; top: var(--title-top, 300px); width: 1080px; padding: 60px 0; text-align: center; color: var(--ink);
+        text-shadow: 0 4px 22px rgba(0, 0, 0, 0.45);
+        background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0, 0, 0, 0.42) 0%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0) 100%); }
+      .behind .small { display: block; margin-bottom: 18px; font-weight: 700; font-size: 66px; letter-spacing: -0.03em; line-height: 1; }
+      .behind .huge { display: block; font-weight: 700; letter-spacing: -0.045em; line-height: 0.86; text-transform: uppercase; }
+
+      /* flou très léger pour masquer d'éventuels sous-titres incrustés dans la source (option) */
+      #soften { position: absolute; left: 0; top: 1110px; width: 1080px; height: 520px; display: none;
+        backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+        -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 25%, #000000 75%, transparent 100%);
+        mask-image: linear-gradient(180deg, transparent 0%, #000000 25%, #000000 75%, transparent 100%); }
+
+      /* sous-titres : un mot (ou deux) à la fois, sans contour */
+      .cap { position: absolute; left: 90px; top: 1085px; width: 900px; height: 110px; display: flex;
+        align-items: center; justify-content: center; font-weight: 700; font-size: 66px; letter-spacing: -0.02em;
+        color: var(--ink); text-shadow: 0 3px 16px rgba(0, 0, 0, 0.55); }
+      .cap.key { font-size: 76px; }
+
+      /* cartes flottantes */
+      .deck { position: absolute; left: 0; top: 1240px; width: 1080px; height: 440px; }
+      .card { position: absolute; border-radius: 34px; overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+        border: 3px solid var(--accent); background: var(--panel); color: var(--ink); display: flex; flex-direction: column;
+        justify-content: space-between; padding: 30px; }
+      .card.light { background: var(--ivory); color: var(--black); }
+      .card.light .label { color: var(--black); }
+      .card .label { font-weight: 700; font-size: 30px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+      .card .value { font-weight: 700; font-size: 92px; letter-spacing: -0.03em; line-height: 0.95; }
+      .card .text { font-weight: 700; font-size: 46px; letter-spacing: -0.02em; line-height: 1.1; }
+      .card svg { width: 100%; }
+      .ring { width: 210px; height: 210px; align-self: center; }
+      .bars { display: flex; align-items: center; justify-content: center; height: 160px; }
+      .bars i { display: block; width: 26px; margin: 0 5px; border-radius: 8px; background: var(--accent); transform-origin: 50% 50%; }
+      .bars i.gap { background: var(--taupe); }
+      .pill { position: absolute; left: 50%; top: 1460px; transform: translateX(-50%); display: flex; align-items: center; gap: 22px;
+        white-space: nowrap; padding: 30px 52px; border-radius: 999px; background: var(--gold-grad); color: var(--black);
+        font-weight: 700; font-size: 54px; letter-spacing: -0.02em; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .pill svg { width: 66px; height: 66px; }
+
+      /* transitions douces : halo lumineux */
+      #bloom { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 70% 55% at 50% 40%, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.85) 45%, rgba(255, 255, 255, 0) 100%); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="33.17" data-width="1080" data-height="1920">
+      <div id="cam"><div id="punch">
+        <video id="clip-main" class="clip" src="assets/cut.mp4" data-start="0" data-duration="30.47" data-has-audio="true" data-volume="1" data-track-index="0"></video>
+        <div class="behind clip" id="t0" style="--title-top:40px" data-start="0.000" data-duration="2.170" data-track-index="2"><span class="small">tes futurs clients</span><span class="huge" style="font-size:113px; color:var(--accent)">SONT À CÔTÉ</span></div>
+        <div class="behind clip" id="t1" style="--title-top:40px" data-start="5.780" data-duration="2.660" data-track-index="2"><span class="small">petite</span><span class="huge" style="font-size:190px; color:var(--accent)">ASTUCE</span></div>
+        <div class="behind clip" id="t2" style="--title-top:40px" data-start="24.940" data-duration="2.840" data-track-index="2"><span class="small">c&#x27;est</span><span class="huge" style="font-size:178px; color:var(--accent)">GRATUIT</span></div>
+        <video id="clip-subject" class="clip" src="assets/subject.webm" data-start="0" data-duration="30.47" muted data-track-index="1"></video>
+      </div></div>
+      <div id="soften"></div>
+      <div class="note wrap clip" id="k0" data-start="2.170" data-duration="3.510" data-track-index="3">Sans lieu = <b>pas de clientèle</b><br/>de proximité</div>
+      <div class="note clip" id="k1" data-start="8.490" data-duration="2.740" data-track-index="3"><span class='num'>1</span> Ajoute le lieu <svg class="ico" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z" style="fill:var(--accent)"/><circle cx="12" cy="9" r="2.6" style="fill:var(--black)"/></svg></div>
+      <div class="note clip" id="k2" data-start="11.480" data-duration="3.620" data-track-index="3"><span class='num'>2</span> Ville + métier dans la légende</div>
+      <div class="note light clip" id="k3" data-start="15.150" data-duration="3.320" data-track-index="3">« boulangerie à Saint-Denis »</div>
+      <div class="note clip" id="k4" data-start="18.720" data-duration="4.350" data-track-index="3"><span class='num'>2</span> Ville + métier dans la légende</div>
+      <div class="note clip" id="k5" data-start="23.320" data-duration="4.510" data-track-index="3">Gratuit. <b>2 secondes.</b></div>
+      <div class="pill-cta clip" id="k6" data-start="27.880" data-duration="2.590" data-track-index="3"><svg class="ico" viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4z" style="fill:var(--black)"/><rect x="7" y="3" width="9" height="6" style="fill:var(--ivory)"/><rect x="7" y="13" width="10" height="6" rx="1" style="fill:var(--ivory)"/></svg><span>Enregistre + partage<br/>à un commerçant</span></div>
+      <div class="cap clip" id="c0" data-start="0.060" data-duration="0.700" data-track-index="4">Quand tu <span class='kw'>postes</span></div>
+      <div class="cap clip" id="c1" data-start="0.760" data-duration="0.780" data-track-index="4">sans <span class='kw'>préciser</span></div>
+      <div class="cap clip" id="c2" data-start="1.540" data-duration="0.640" data-track-index="4">où tu es</div>
+      <div class="cap clip" id="c3" data-start="2.180" data-duration="0.940" data-track-index="4">la <span class='kw'>plateforme</span></div>
+      <div class="cap clip" id="c4" data-start="3.120" data-duration="0.460" data-track-index="4">ne sait</div>
+      <div class="cap clip" id="c5" data-start="3.580" data-duration="0.530" data-track-index="4">pas à qui</div>
+      <div class="cap clip" id="c6" data-start="4.110" data-duration="0.750" data-track-index="4">te <span class='kw'>montrer</span></div>
+      <div class="cap clip" id="c7" data-start="4.860" data-duration="0.440" data-track-index="4">et où te</div>
+      <div class="cap clip" id="c8" data-start="5.300" data-duration="0.440" data-track-index="4">montrer</div>
+      <div class="cap clip" id="c9" data-start="5.740" data-duration="1.120" data-track-index="4">Petite <span class='kw'>astuce :</span></div>
+      <div class="cap clip" id="c10" data-start="6.860" data-duration="1.640" data-track-index="4">à chaque publication</div>
+      <div class="cap clip" id="c11" data-start="8.500" data-duration="0.980" data-track-index="4">ajoute le <span class='kw'>lieu</span></div>
+      <div class="cap clip" id="c12" data-start="9.480" data-duration="1.740" data-track-index="4">et ta <span class='kw'>géolocalisation.</span></div>
+      <div class="cap clip" id="c13" data-start="11.220" data-duration="0.330" data-track-index="4">Écris</div>
+      <div class="cap clip" id="c14" data-start="11.550" data-duration="0.810" data-track-index="4">ta <span class='kw'>ville</span></div>
+      <div class="cap clip" id="c15" data-start="12.360" data-duration="1.250" data-track-index="4">ou ton <span class='kw'>quartier</span></div>
+      <div class="cap clip" id="c16" data-start="13.610" data-duration="0.870" data-track-index="4">en <span class='kw'>légende,</span></div>
+      <div class="cap clip" id="c17" data-start="14.480" data-duration="1.440" data-track-index="4">avec par exemple</div>
+      <div class="cap clip" id="c18" data-start="15.920" data-duration="0.940" data-track-index="4"><span class='kw'>« boulangerie</span></div>
+      <div class="cap clip" id="c19" data-start="16.860" data-duration="1.320" data-track-index="4">à <span class='kw'>Saint-Denis »</span></div>
+      <div class="cap clip" id="c20" data-start="18.180" data-duration="0.980" data-track-index="4">N&#x27;oublie</div>
+      <div class="cap clip" id="c21" data-start="19.160" data-duration="0.690" data-track-index="4">pas de rajouter</div>
+      <div class="cap clip" id="c22" data-start="19.850" data-duration="0.470" data-track-index="4">ta <span class='kw'>ville</span></div>
+      <div class="cap clip" id="c23" data-start="20.320" data-duration="0.670" data-track-index="4">et le <span class='kw'>métier</span></div>
+      <div class="cap clip" id="c24" data-start="20.990" data-duration="0.590" data-track-index="4">en <span class='kw'>légende</span></div>
+      <div class="cap clip" id="c25" data-start="21.580" data-duration="1.510" data-track-index="4">dans la publication</div>
+      <div class="cap clip" id="c26" data-start="23.090" data-duration="0.315" data-track-index="4">Fais-le</div>
+      <div class="cap clip" id="c27" data-start="23.405" data-duration="1.495" data-track-index="4">sur <span class='kw'>chaque</span> publication</div>
+      <div class="cap clip" id="c28" data-start="24.900" data-duration="0.740" data-track-index="4">c&#x27;est <span class='kw'>gratuit</span></div>
+      <div class="cap clip" id="c29" data-start="25.640" data-duration="0.550" data-track-index="4">et ça prend</div>
+      <div class="cap clip" id="c30" data-start="26.190" data-duration="0.530" data-track-index="4"><span class='kw'>deux</span></div>
+      <div class="cap clip" id="c31" data-start="26.720" data-duration="1.170" data-track-index="4"><span class='kw'>secondes</span></div>
+      <div class="cap clip" id="c32" data-start="27.890" data-duration="0.400" data-track-index="4">Enregistre</div>
+      <div class="cap clip" id="c33" data-start="28.290" data-duration="0.290" data-track-index="4">la <span class='kw'>vidéo</span></div>
+      <div class="cap clip" id="c34" data-start="28.580" data-duration="0.720" data-track-index="4">et envoie-la</div>
+      <div class="cap clip" id="c35" data-start="29.300" data-duration="0.500" data-track-index="4">à un <span class='kw'>commerçant</span></div>
+      <div class="cap clip" id="c36" data-start="29.800" data-duration="0.670" data-track-index="4">de ton <span class='kw'>quartier</span></div>
+      <div id="bloom"></div>
+      <div class="clip" id="endcard" data-start="30.47" data-duration="2.7" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/><div id="tagline">VOTRE IMAGE.<br/>NOTRE EXPERTISE.</div></div>
+    </div>
+    <audio id="sfx0" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.580" data-duration="0.5" data-volume="0.12" data-track-index="6"></audio>
+    <audio id="sfx1" class="clip" src="assets/sfx/whoosh-court.wav" data-start="11.130" data-duration="0.5" data-volume="0.12" data-track-index="7"></audio>
+    <audio id="sfx2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="18.370" data-duration="0.5" data-volume="0.12" data-track-index="8"></audio>
+    <audio id="sfx3" class="clip" src="assets/sfx/whoosh-court.wav" data-start="22.970" data-duration="0.5" data-volume="0.12" data-track-index="6"></audio>
+    <audio id="sfx4" class="clip" src="assets/sfx/whoosh-court.wav" data-start="27.730" data-duration="0.5" data-volume="0.12" data-track-index="7"></audio>
+    <audio id="sfx5" class="clip" src="assets/sfx/ui.wav" data-start="2.170" data-duration="0.49" data-volume="0.22" data-track-index="8"></audio>
+    <audio id="sfx6" class="clip" src="assets/sfx/ui.wav" data-start="8.490" data-duration="0.49" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="sfx7" class="clip" src="assets/sfx/ui.wav" data-start="11.480" data-duration="0.49" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="sfx8" class="clip" src="assets/sfx/ui.wav" data-start="15.150" data-duration="0.49" data-volume="0.22" data-track-index="8"></audio>
+    <audio id="sfx9" class="clip" src="assets/sfx/ui.wav" data-start="18.720" data-duration="0.49" data-volume="0.22" data-track-index="6"></audio>
+    <audio id="sfx10" class="clip" src="assets/sfx/ui.wav" data-start="23.320" data-duration="0.49" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="sfx11" class="clip" src="assets/sfx/ui.wav" data-start="27.880" data-duration="0.49" data-volume="0.22" data-track-index="8"></audio>
+    <audio id="sfx12" class="clip" src="assets/sfx/impact-grave.wav" data-start="26.230" data-duration="1.2" data-volume="0.16" data-track-index="6"></audio>
+    <audio id="sfx13" class="clip" src="assets/sfx/whoosh-court.wav" data-start="30.270" data-duration="0.5" data-volume="0.14" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#c0", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 0.060);
+  tl.fromTo("#c1", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 0.760);
+  tl.fromTo("#c2", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 1.540);
+  tl.fromTo("#c3", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 2.180);
+  tl.fromTo("#c4", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 3.120);
+  tl.fromTo("#c5", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 3.580);
+  tl.fromTo("#c6", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 4.110);
+  tl.fromTo("#c7", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 4.860);
+  tl.fromTo("#c8", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 5.300);
+  tl.fromTo("#c9", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 5.740);
+  tl.fromTo("#c10", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 6.860);
+  tl.fromTo("#c11", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 8.500);
+  tl.fromTo("#c12", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 9.480);
+  tl.fromTo("#c13", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 11.220);
+  tl.fromTo("#c14", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 11.550);
+  tl.fromTo("#c15", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 12.360);
+  tl.fromTo("#c16", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 13.610);
+  tl.fromTo("#c17", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 14.480);
+  tl.fromTo("#c18", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 15.920);
+  tl.fromTo("#c19", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 16.860);
+  tl.fromTo("#c20", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 18.180);
+  tl.fromTo("#c21", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 19.160);
+  tl.fromTo("#c22", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 19.850);
+  tl.fromTo("#c23", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 20.320);
+  tl.fromTo("#c24", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 20.990);
+  tl.fromTo("#c25", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 21.580);
+  tl.fromTo("#c26", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 23.090);
+  tl.fromTo("#c27", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 23.405);
+  tl.fromTo("#c28", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 24.900);
+  tl.fromTo("#c29", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 25.640);
+  tl.fromTo("#c30", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 26.190);
+  tl.fromTo("#c31", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 26.720);
+  tl.fromTo("#c32", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 27.890);
+  tl.fromTo("#c33", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 28.290);
+  tl.fromTo("#c34", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 28.580);
+  tl.fromTo("#c35", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 29.300);
+  tl.fromTo("#c36", {opacity: 0, y: 14}, {opacity: 1, y: 0, duration: 0.12, ease: "power2.out", immediateRender: true}, 29.800);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.040, duration: 5.780, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.7, duration: 0.16, ease: "sine.in", immediateRender: false}, 5.620);
+  tl.fromTo("#bloom", {opacity: 0.7}, {opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false}, 5.780);
+  tl.fromTo("#cam", {scale: 1.080}, {scale: 1.123, duration: 5.550, ease: "none", immediateRender: false}, 5.780);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.7, duration: 0.16, ease: "sine.in", immediateRender: false}, 11.170);
+  tl.fromTo("#bloom", {opacity: 0.7}, {opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false}, 11.330);
+  tl.fromTo("#cam", {scale: 1.020}, {scale: 1.061, duration: 7.240, ease: "none", immediateRender: false}, 11.330);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.7, duration: 0.16, ease: "sine.in", immediateRender: false}, 18.410);
+  tl.fromTo("#bloom", {opacity: 0.7}, {opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false}, 18.570);
+  tl.fromTo("#cam", {scale: 1.100}, {scale: 1.144, duration: 4.600, ease: "none", immediateRender: false}, 18.570);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.7, duration: 0.16, ease: "sine.in", immediateRender: false}, 23.010);
+  tl.fromTo("#bloom", {opacity: 0.7}, {opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false}, 23.170);
+  tl.fromTo("#cam", {scale: 1.030}, {scale: 1.071, duration: 4.760, ease: "none", immediateRender: false}, 23.170);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.7, duration: 0.16, ease: "sine.in", immediateRender: false}, 27.770);
+  tl.fromTo("#bloom", {opacity: 0.7}, {opacity: 0, duration: 0.34, ease: "sine.out", immediateRender: false}, 27.930);
+  tl.fromTo("#cam", {scale: 1.080}, {scale: 1.123, duration: 2.540, ease: "none", immediateRender: false}, 27.930);
+  tl.fromTo("#punch", {scale: 1.0}, {scale: 1.045, duration: 0.08, ease: "power1.out", immediateRender: false}, 17.020);
+  tl.fromTo("#punch", {scale: 1.045}, {scale: 1.0, duration: 0.35, ease: "power2.out", immediateRender: false}, 17.520);
+  tl.fromTo("#punch", {scale: 1.0}, {scale: 1.045, duration: 0.08, ease: "power1.out", immediateRender: false}, 26.230);
+  tl.fromTo("#punch", {scale: 1.045}, {scale: 1.0, duration: 0.35, ease: "power2.out", immediateRender: false}, 26.730);
+  tl.fromTo("#t0 .small", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out", immediateRender: true}, 0.000);
+  tl.fromTo("#t0 .huge", {opacity: 0, scale: 1.12}, {opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: true}, 0.080);
+  tl.set("#t0 .huge", {color: "var(--ink)"}, 0.700);
+  tl.fromTo("#t0", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 1.970);
+  tl.fromTo("#t1 .small", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out", immediateRender: true}, 5.780);
+  tl.fromTo("#t1 .huge", {opacity: 0, scale: 1.12}, {opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: true}, 5.860);
+  tl.set("#t1 .huge", {color: "var(--ink)"}, 6.480);
+  tl.fromTo("#t1", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 8.240);
+  tl.fromTo("#t2 .small", {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.25, ease: "power2.out", immediateRender: true}, 24.940);
+  tl.fromTo("#t2 .huge", {opacity: 0, scale: 1.12}, {opacity: 1, scale: 1, duration: 0.35, ease: "power3.out", immediateRender: true}, 25.020);
+  tl.set("#t2 .huge", {color: "var(--ink)"}, 25.640);
+  tl.fromTo("#t2", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 27.580);
+  tl.fromTo("#k0", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 2.170);
+  tl.fromTo("#k0", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 5.480);
+  tl.fromTo("#k1", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 8.490);
+  tl.fromTo("#k1", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 11.030);
+  tl.fromTo("#k2", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 11.480);
+  tl.fromTo("#k2", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 14.900);
+  tl.fromTo("#k3", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 15.150);
+  tl.fromTo("#k3", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 18.270);
+  tl.fromTo("#k4", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 18.720);
+  tl.fromTo("#k4", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 22.870);
+  tl.fromTo("#k5", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 23.320);
+  tl.fromTo("#k5", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 27.630);
+  tl.fromTo("#k6", {opacity: 0, y: 40, scale: 0.92}, {opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "back.out(1.6)", immediateRender: true}, 27.880);
+  tl.fromTo("#k6", {opacity: 1}, {opacity: 0, duration: 0.2, immediateRender: false}, 30.270);
+  tl.fromTo("#bloom", {opacity: 0}, {opacity: 0.9, duration: 0.2, immediateRender: false}, 30.270);
+  tl.fromTo("#bloom", {opacity: 0.9}, {opacity: 0, duration: 0.5, immediateRender: false}, 30.470);
+  tl.fromTo("#logo", {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: true}, 30.520);
+  tl.fromTo("#tagline", {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: true}, 30.970);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
