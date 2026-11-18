@@ -79,6 +79,20 @@ for f in files:
         print(f"✗ {rel} [{spec['name']}] : hors charte {sorted(issues)}")
     else:
         print(f"✓ {rel} [{spec['name']}]")
+# Remotion : aucune couleur ni police en dur dans remotion/src (tout passe par src/brand.ts)
+if not args:
+    for f in sorted(glob.glob(f"{ROOT}/remotion/src/**/*.ts*", recursive=True)):
+        if f.endswith("brand.ts"): continue
+        txt = open(f, encoding="utf-8").read()
+        issues = set(re.findall(r"[\"'`]#[0-9a-fA-F]{3,8}[\"'`]", txt))
+        issues |= {"rgb(" + ",".join(r) + ")" for r in RGB.findall(txt)}
+        issues |= {"police " + m for m in re.findall(r"fontFamily\s*:\s*([\"'`][^\"'`]*[\"'`])", txt)}
+        rel = os.path.relpath(f, ROOT)
+        if issues:
+            bad += 1
+            print(f"✗ {rel} [Remotion] : en dur {sorted(issues)} — utiliser brand.* de src/brand.ts")
+        else:
+            print(f"✓ {rel} [Remotion]")
 if bad:
     print("\nCharte non respectée. Utilisez uniquement les variables de brand/<marque>/brand.css.")
     sys.exit(1)

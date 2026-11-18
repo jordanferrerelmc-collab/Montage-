@@ -1,20 +1,26 @@
 import {
   AbsoluteFill,
   Easing,
+  Img,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { brand, loadBrandFont } from "./brand";
+
+loadBrandFont();
 
 export type IntroProps = {
   title: string;
   subtitle: string;
 };
 
+// Intro aux couleurs et à la police de la marque choisie (BRAND=… npm run remotion:brand).
 export const Intro: React.FC<IntroProps> = ({ title, subtitle }) => {
   const frame = useCurrentFrame();
-  const { fps, durationInFrames } = useVideoConfig();
+  const { fps, durationInFrames, width, height } = useVideoConfig();
+  const vertical = height > width;
 
   const titleScale = spring({ frame, fps, config: { damping: 200 } });
   const bar = interpolate(frame, [6, 30], [0, 1], {
@@ -26,6 +32,10 @@ export const Intro: React.FC<IntroProps> = ({ title, subtitle }) => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+  const logoIn = interpolate(frame, [50, 70], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
   const fadeOut = interpolate(frame, [durationInFrames - 18, durationInFrames], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
@@ -34,28 +44,30 @@ export const Intro: React.FC<IntroProps> = ({ title, subtitle }) => {
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0b0d12",
+        backgroundColor: brand.bg,
         alignItems: "center",
         justifyContent: "center",
-        fontFamily: "Helvetica Neue, Arial, sans-serif",
-        color: "#f4f1ea",
+        textAlign: "center",
+        fontFamily: brand.font,
+        color: brand.text,
         gap: 32,
+        padding: vertical ? "0 90px" : 0,
         opacity: fadeOut,
       }}
     >
       <div
         style={{
-          width: 640,
+          width: vertical ? 420 : 640,
           height: 12,
-          backgroundColor: "#ff5a36",
+          backgroundColor: brand.accent,
           transform: `scaleX(${bar})`,
-          transformOrigin: "left center",
+          transformOrigin: "center",
         }}
       />
       <h1
         style={{
           margin: 0,
-          fontSize: 140,
+          fontSize: vertical ? 120 : 140,
           fontWeight: 700,
           letterSpacing: "-0.04em",
           lineHeight: 1,
@@ -74,6 +86,7 @@ export const Intro: React.FC<IntroProps> = ({ title, subtitle }) => {
       >
         {subtitle}
       </p>
+      <Img src={brand.logo} style={{ height: vertical ? 120 : 90, marginTop: 24, opacity: logoIn }} />
     </AbsoluteFill>
   );
 };

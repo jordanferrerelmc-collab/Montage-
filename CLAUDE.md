@@ -162,6 +162,37 @@ Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionn�
 - Rendu des shaders : WebGL logiciel (pas de GPU), plus lent mais fonctionnel. Les éléments 3D chargent
   Three.js depuis cdn.jsdelivr.net (autorisé dans l'environnement « Montage »).
 
+## Higgsfield (génération IA, connecteur MCP) — ajouté le 18/11/2026
+
+Connecté à la demande de l'utilisateur (outils `mcp__Higgsfield__*`). Compte **gratuit, 4 crédits** au 18/11/2026
+(`balance` pour vérifier). À utiliser **en complément** de HyperFrames / Remotion, jamais à leur place :
+- Usages utiles au montage : B-roll / plans d'illustration (`generate_video`, 9:16 pour Reels et TikTok ;
+  `models_explore action=recommend` pour choisir le modèle), images (`generate_image`), détourage (`remove_background`),
+  recadrage vertical (`reframe`), agrandissement (`upscale_video`, `upscale_image`), bruitages (`generate_audio`,
+  modèle `mirelo_text_to_audio`), séparation voix / musique (`separate_stems`), analyse de vidéo (`video_analysis_create`).
+- **Crédits = argent de l'utilisateur** : toujours estimer d'abord (`estimate_video_cost`, `estimate_image_cost`,
+  `estimate_audio_cost`), annoncer le coût et **attendre son accord explicite** avant toute génération. Ne jamais
+  relancer une génération dont le résultat est incertain (risque de payer deux fois).
+- Fichiers locaux : `media_upload` → `curl PUT` → `media_confirm` ; récupérer le résultat avec curl dans
+  `projets/<nom>/src/` (non versionné). Le bac à sable `sandbox_exec` est une autre machine : ne pas y monter nos vidéos.
+- **Charte** : les plans générés ne contiennent **aucun texte ni logo** (demandez-le dans le prompt) ; titres,
+  sous-titres et logo viennent toujours de nos modèles. Couleurs du prompt tirées du `brand.json` de la marque
+  (or / noir / ivoire pour Agency ; rouge / anthracite pour Gaming). Pas de visage d'une vraie personne sans son accord.
+- Ne pas publier sur TikTok ni Meta via Higgsfield (`tiktok_*`, `meta_ads_*`) sans demande explicite.
+
+## Remotion (React → vidéo) — aux couleurs de la charte
+
+Dossier `remotion/` (Remotion 4.0.541 + transitions, motion-blur, noise, shapes, paths, lottie, light-leaks, three).
+- La charte est copiée dans `remotion/public/brand/` (non versionné) par `BRAND=<marque> npm run remotion:brand`
+  (fait automatiquement par `remotion:dev` et `remotion:render`). Les compositions importent `src/brand.ts` et
+  n'utilisent que `brand.accent`, `brand.bg`, `brand.panel`, `brand.text`, `brand.font`, `brand.logo`, `brand.colors.*`,
+  et appellent `loadBrandFont()` (TeX Gyre Heros). **Aucune couleur ni `fontFamily` en dur** : `npm run brand:check`
+  contrôle aussi `remotion/src/`.
+- Compositions : `Intro` (1920×1080) et `IntroVertical` (1080×1920, Reels / TikTok). Image fixe :
+  `cd remotion && bash ../scripts/with-browser.sh npx remotion still IntroVertical out/x.png --frame=90`.
+- Usage : séquences animées en React (intros, génériques, graphiques de données) à enchaîner avec les montages
+  HyperFrames (`npm run montage` ou `npm run transition`).
+
 ## Motion design 3D (pubs « 3D + interfaces »)
 
 **EN PAUSE (demande de l'utilisateur, 08/11/2026) : ne pas utiliser ce style dans les montages, sauf nouvelle demande

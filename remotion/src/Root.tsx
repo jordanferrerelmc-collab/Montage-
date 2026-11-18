@@ -3,6 +3,7 @@ import { Intro, type IntroProps } from "./Intro";
 
 export const RemotionRoot: React.FC = () => {
   return (
+    <>
     <Composition
       id="Intro"
       component={Intro}
@@ -12,5 +13,16 @@ export const RemotionRoot: React.FC = () => {
       height={1080}
       defaultProps={{ title: "Montage", subtitle: "Remotion · React → MP4" } satisfies IntroProps}
     />
+    {/* Format Reel / TikTok */}
+    <Composition
+      id="IntroVertical"
+      component={Intro}
+      durationInFrames={150}
+      fps={30}
+      width={1080}
+      height={1920}
+      defaultProps={{ title: "Montage", subtitle: "Remotion · React → MP4" } satisfies IntroProps}
+    />
+    </>
   );
 };

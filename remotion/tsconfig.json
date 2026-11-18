@@ -5,9 +5,10 @@
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
     "strict": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "lib": ["DOM", "ES2022"]
+    "lib": ["DOM", "DOM.Iterable", "ES2022"]
   },
   "include": ["src"]
 }
