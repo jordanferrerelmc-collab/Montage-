@@ -107,6 +107,19 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
 
 Les médias lourds (`src/`, `work/`, `final/`, `renders/`) ne sont pas versionnés.
 
+## Scripts de voix off pour ElevenLabs (demande de l'utilisateur, 19/11/2026)
+
+**À chaque demande de script** (voix off, « script pour ElevenLabs », texte à lire), toujours livrer, prêts à copier :
+1. **Version Multilingual v2 / Turbo** : une phrase par ligne, pause `<break time="0.4s" />` entre les parties
+   (0,3 à 0,6 s selon le rythme voulu).
+2. **Version v3** : même texte, chaque ligne précédée d'une balise de ton entre crochets en français
+   (`[enthousiaste]`, `[confiant]`, `[pédagogue]`, `[convaincu]`, `[énergique]`, `[complice]`, `[mystérieux]`…).
+3. **Réglages conseillés** : langue français, stabilité ≈ 40 %, similarité ≈ 75 %, style ≈ 20 %, vitesse 1,05-1,1
+   (ajuster pour tenir la durée visée ; ≈ 2,7 mots par seconde).
+Règles d'écriture : chiffres en toutes lettres, points de suspension pour une respiration avant un mot fort, guillemets
+autour d'un terme à rechercher, tutoiement comme dans ses vidéos (le signaler si le plan vouvoie), aucun faux chiffre
+(signaler toute statistique inventée du plan). Expliquer en 2-3 lignes ce qui a été ajusté.
+
 ## Voix clonée de l'utilisateur (montages sans visage)
 
 - Voix de référence : `voix/voix_reference.wav`, échantillon propre de 27 s tiré de `projets/video1`.
