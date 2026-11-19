@@ -14,7 +14,14 @@ porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-a
 poser la question avant de monter. La marque se choisit avec `BRAND=<marque>` au moment de la génération ;
 elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateur s'en sert.
 
-**Styles de montage verrouillés** (`montage_style` dans `brand.json`) :
+**STYLE PAR DÉFAUT DE TOUS LES MONTAGES : bulles « liquid glass » façon Apple** (demande de l'utilisateur, 19/11/2026 :
+« Garde ce style pour tous mes montages »). Pour les **deux marques**, teinté aux couleurs de la charte (or Agency, rouge
+Gaming). Modèle : `templates/reel-glass/` (`glass.css` + `README.md`) ; exemple complet : `projets/agency-glass/`
+(`scripts/cut.py` coupe serrée des blancs, `scripts/build.py` composition). Les styles ci-dessous (éditorial, gaming premium,
+liquide glass « mot derrière la tête ») ne servent plus que **sur demande explicite** ; leurs règles de charte, de zones
+sûres et de placement restent valables.
+
+**Anciens styles de montage** (`montage_style.ancien_style` dans `brand.json`) :
 - **Agency → éditorial** (`templates/reel-editorial/`, exemple : `projets/video1/scripts/build_editorial.py`),
   d'après le Reel de référence `references/reel-style/` :
   - sous-titres mot à mot (1 à 3 mots), blancs, TeX Gyre Heros gras, sans contour, ombre douce, à hauteur de poitrine ;

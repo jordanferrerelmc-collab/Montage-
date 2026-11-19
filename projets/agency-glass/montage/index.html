@@ -45,6 +45,11 @@
         --dark: #4a4540;
         --font: "Specimen Heros", sans-serif;
       
+        /* style « bulles liquid glass » (templates/reel-glass) : teinte du verre (r, g, b) et texte de la bulle d'appel à l'action */
+        --glass-tint: 227, 178, 92;
+        --glass-tint-soft: 242, 213, 142;
+        --glass-cta-ink: var(--black);
+      
         /* alias génériques utilisés par les modèles */
         --accent: var(--gold);
         --accent-soft: var(--gold-light);
@@ -94,6 +99,12 @@
       #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
       #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
 
+      /* ==========================================================================
+         Style « bulles liquid glass » façon Apple — STYLE PAR DÉFAUT des montages (demande de l'utilisateur, 19/11/2026).
+         Verre dépoli translucide légèrement teinté en sombre (lisible sur fond clair), reflet spéculaire, liseré lumineux,
+         teinte de la charte (--glass-tint, défini dans brand/<marque>/brand.css : or pour Agency, rouge pour Gaming).
+         Injecté par les scripts de montage après brand.css. Exemple complet : projets/agency-glass/scripts/build.py.
+         ========================================================================== */
       /* ---- bulles « liquid glass » (façon Apple), teinte or de la charte ---- */
       * { margin: 0; padding: 0; box-sizing: border-box; }
       html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
@@ -103,7 +114,7 @@
       #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
         background: radial-gradient(ellipse 75% 55% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); }
       .glass { position: relative; color: var(--ink); border-radius: 999px;
-        background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(11, 11, 13, 0.30) 42%, rgba(11, 11, 13, 0.42) 100%);
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0.30) 42%, rgba(0, 0, 0, 0.42) 100%);
         backdrop-filter: blur(30px) saturate(160%) brightness(0.82); -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(0.82);
         border: 1.5px solid rgba(255, 255, 255, 0.55);
         box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.75), inset 0 -2px 6px rgba(255, 255, 255, 0.18),
@@ -118,15 +129,15 @@
       /* sous-titres : blancs à contour noir léger, mots clés en or */
       .cap { padding: 16px 38px; font-weight: 700; font-size: 64px; letter-spacing: -0.015em; white-space: nowrap;
         -webkit-text-stroke: 5px rgba(0, 0, 0, 0.55); paint-order: stroke fill; }
-      .cap .kw { color: var(--gold-light); }
+      .cap .kw { color: var(--accent-soft); }
       /* accroche */
       .big { border-radius: 58px; padding: 34px 64px 42px; text-align: center; font-weight: 700; font-size: 84px; line-height: 1.05; letter-spacing: -0.03em; }
-      .big b { color: var(--gold-light); font-weight: 700; }
+      .big b { color: var(--accent-soft); font-weight: 700; }
       .eyebrow { display: block; font-size: 26px; letter-spacing: 0.3em; margin-bottom: 14px; color: var(--ivory); opacity: 0.85; }
       /* bulles du script, façon notification */
       .note { display: flex; align-items: center; gap: 22px; border-radius: 40px; padding: 22px 40px 22px 24px; white-space: nowrap; }
       .note .ico { width: 82px; height: 82px; border-radius: 24px; flex: none; display: flex; align-items: center; justify-content: center;
-        background: rgba(11, 11, 13, 0.55); border: 1.5px solid rgba(255, 255, 255, 0.35); }
+        background: rgba(0, 0, 0, 0.55); border: 1.5px solid rgba(255, 255, 255, 0.35); }
       .note .ico svg { width: 50px; height: 50px; }
       .note .tx { display: flex; flex-direction: column; gap: 4px; }
       .note .t { font-weight: 700; font-size: 48px; letter-spacing: -0.02em; }
@@ -135,9 +146,9 @@
       .note .s { font-weight: 700; font-size: 38px; color: var(--ivory); opacity: 0.92; }
       .note.msg { border-radius: 40px 40px 40px 10px; padding: 24px 44px; }
       .note.msg .t { font-size: 50px; }
-      .note.gold { background: linear-gradient(160deg, rgba(242, 213, 142, 0.85) 0%, rgba(227, 178, 92, 0.78) 100%); color: var(--black);
+      .note.gold { background: linear-gradient(160deg, rgba(var(--glass-tint-soft), 0.88) 0%, rgba(var(--glass-tint), 0.8) 100%); color: var(--glass-cta-ink);
         text-shadow: none; border-color: rgba(255, 255, 255, 0.7); }
-      .note.gold .s { color: var(--black); }
+      .note.gold .s { color: var(--glass-cta-ink); }
       .note.gold .ico { background: rgba(255, 255, 255, 0.35); }
     </style>
   </head>

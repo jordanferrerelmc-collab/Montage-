@@ -33,6 +33,11 @@
   --panel-muted: rgba(44, 45, 50, 0.92);
   --font: "Specimen Heros", sans-serif;
 
+  /* style « bulles liquid glass » (templates/reel-glass) : teinte du verre (r, g, b) et texte de la bulle d'appel à l'action */
+  --glass-tint: 218, 61, 57;
+  --glass-tint-soft: 255, 90, 78;
+  --glass-cta-ink: var(--ink);
+
   /* alias génériques utilisés par les modèles (accent = couleur de marque) */
   --accent: var(--red);
   --accent-soft: var(--red-light);

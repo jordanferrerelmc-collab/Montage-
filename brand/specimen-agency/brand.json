@@ -52,7 +52,11 @@
   },
   "forbidden": "Rouge, vert, rose, bleu ou toute couleur hors de cette liste.",
   "montage_style": {
-    "name": "editorial",
-    "description": "Style éditorial premium (référence : references/reel-style) : sous-titres mot à mot blancs sans contour, grands titres derrière la tête (sujet détouré), cartes flottantes, transitions en halo lumineux, zooms lents. Modèle : templates/reel-editorial/."
+    "name": "liquid-glass-apple",
+    "description": "STYLE PAR DÉFAUT depuis le 19/11/2026 (demande de l'utilisateur) : bulles de texte en verre dépoli « liquid glass » façon Apple, teintées aux couleurs de la charte (templates/reel-glass/, exemple projets/agency-glass/). Blancs coupés serré, voix nettoyée.",
+    "ancien_style": {
+      "name": "editorial",
+      "description": "Style éditorial premium (référence : references/reel-style) : sous-titres mot à mot blancs sans contour, grands titres derrière la tête (sujet détouré), cartes flottantes, transitions en halo lumineux, zooms lents. Modèle : templates/reel-editorial/."
+    }
   }
 }

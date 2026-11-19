@@ -130,6 +130,7 @@ aud = [f'<audio id="s{n}" class="clip" src="assets/sfx/{name}.wav" data-start="{
        f'data-volume="{v}" data-track-index="{6 + n % 3}"></audio>' for n, (name, t, v, d) in enumerate(sfx)]
 
 css = open(f"{BRAND_DIR}/brand.css").read()
+glass_css = "\n".join("      " + l for l in open(f"{REPO}/templates/reel-glass/glass.css").read().splitlines())
 page = f"""<!doctype html>
 <html lang="fr">
   <head>
@@ -141,51 +142,7 @@ page = f"""<!doctype html>
     <style>
 {chr(10).join("      " + l for l in css.splitlines())}
 
-      /* ---- bulles « liquid glass » (façon Apple), teinte or de la charte ---- */
-      * {{ margin: 0; padding: 0; box-sizing: border-box; }}
-      html, body {{ width: 1080px; height: 1920px; overflow: hidden; background: #000000; }}
-      #root {{ position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }}
-      #cam {{ position: absolute; inset: 0; transform-origin: 50% 58%; }}
-      #cam video {{ position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }}
-      #lens {{ position: absolute; inset: 0; opacity: 0; pointer-events: none;
-        background: radial-gradient(ellipse 75% 55% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); }}
-      .glass {{ position: relative; color: var(--ink); border-radius: 999px;
-        background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(11, 11, 13, 0.30) 42%, rgba(11, 11, 13, 0.42) 100%);
-        backdrop-filter: blur(30px) saturate(160%) brightness(0.82); -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(0.82);
-        border: 1.5px solid rgba(255, 255, 255, 0.55);
-        box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.75), inset 0 -2px 6px rgba(255, 255, 255, 0.18),
-          inset 0 0 22px rgba(255, 255, 255, 0.12), 0 18px 46px rgba(0, 0, 0, 0.28);
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); }}
-      .glass::after {{ content: ""; position: absolute; left: 8%; right: 8%; top: 5%; height: 38%; border-radius: 999px; pointer-events: none;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0) 100%); }}
-      .topwrap, .midwrap, .capwrap {{ position: absolute; left: var(--cap-left); width: var(--cap-width); display: flex; justify-content: center; }}
-      .topwrap {{ top: 120px; }}
-      .midwrap {{ top: 1215px; }}
-      .capwrap {{ top: 1470px; }}
-      /* sous-titres : blancs à contour noir léger, mots clés en or */
-      .cap {{ padding: 16px 38px; font-weight: 700; font-size: 64px; letter-spacing: -0.015em; white-space: nowrap;
-        -webkit-text-stroke: 5px rgba(0, 0, 0, 0.55); paint-order: stroke fill; }}
-      .cap .kw {{ color: var(--gold-light); }}
-      /* accroche */
-      .big {{ border-radius: 58px; padding: 34px 64px 42px; text-align: center; font-weight: 700; font-size: 84px; line-height: 1.05; letter-spacing: -0.03em; }}
-      .big b {{ color: var(--gold-light); font-weight: 700; }}
-      .eyebrow {{ display: block; font-size: 26px; letter-spacing: 0.3em; margin-bottom: 14px; color: var(--ivory); opacity: 0.85; }}
-      /* bulles du script, façon notification */
-      .note {{ display: flex; align-items: center; gap: 22px; border-radius: 40px; padding: 22px 40px 22px 24px; white-space: nowrap; }}
-      .note .ico {{ width: 82px; height: 82px; border-radius: 24px; flex: none; display: flex; align-items: center; justify-content: center;
-        background: rgba(11, 11, 13, 0.55); border: 1.5px solid rgba(255, 255, 255, 0.35); }}
-      .note .ico svg {{ width: 50px; height: 50px; }}
-      .note .tx {{ display: flex; flex-direction: column; gap: 4px; }}
-      .note .t {{ font-weight: 700; font-size: 48px; letter-spacing: -0.02em; }}
-      .note .t i {{ font-style: normal; display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; margin-right: 10px;
-        border-radius: 50%; background: var(--accent); color: var(--black); font-size: 34px; text-shadow: none; vertical-align: 4px; }}
-      .note .s {{ font-weight: 700; font-size: 38px; color: var(--ivory); opacity: 0.92; }}
-      .note.msg {{ border-radius: 40px 40px 40px 10px; padding: 24px 44px; }}
-      .note.msg .t {{ font-size: 50px; }}
-      .note.gold {{ background: linear-gradient(160deg, rgba(242, 213, 142, 0.85) 0%, rgba(227, 178, 92, 0.78) 100%); color: var(--black);
-        text-shadow: none; border-color: rgba(255, 255, 255, 0.7); }}
-      .note.gold .s {{ color: var(--black); }}
-      .note.gold .ico {{ background: rgba(255, 255, 255, 0.35); }}
+{glass_css}
     </style>
   </head>
   <body>
