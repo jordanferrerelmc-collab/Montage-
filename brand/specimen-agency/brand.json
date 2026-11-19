@@ -52,11 +52,15 @@
   },
   "forbidden": "Rouge, vert, rose, bleu ou toute couleur hors de cette liste.",
   "montage_style": {
-    "name": "liquid-glass-apple",
-    "description": "STYLE PAR DÉFAUT depuis le 19/11/2026 (demande de l'utilisateur) : bulles de texte en verre dépoli « liquid glass » façon Apple, teintées aux couleurs de la charte (templates/reel-glass/, exemple projets/agency-glass/). Blancs coupés serré, voix nettoyée.",
-    "ancien_style": {
-      "name": "editorial",
-      "description": "Style éditorial premium (référence : references/reel-style) : sous-titres mot à mot blancs sans contour, grands titres derrière la tête (sujet détouré), cartes flottantes, transitions en halo lumineux, zooms lents. Modèle : templates/reel-editorial/."
+    "name": "motion-design-clair",
+    "description": "STYLE PAR DÉFAUT depuis le 19/11/2026 (vidéo de référence de l'utilisateur) : motion design sur fond clair de la charte, phrase mot à mot en haut, un objet central par phrase, cartes, coches, transitions zoom (templates/reel-motion/, exemple projets/agency-motion/, couleurs --mo-* de brand.css).",
+    "face_camera": {
+      "name": "liquid-glass-apple",
+      "description": "STYLE PAR DÉFAUT depuis le 19/11/2026 (demande de l'utilisateur) : bulles de texte en verre dépoli « liquid glass » façon Apple, teintées aux couleurs de la charte (templates/reel-glass/, exemple projets/agency-glass/). Blancs coupés serré, voix nettoyée.",
+      "ancien_style": {
+        "name": "editorial",
+        "description": "Style éditorial premium (référence : references/reel-style) : sous-titres mot à mot blancs sans contour, grands titres derrière la tête (sujet détouré), cartes flottantes, transitions en halo lumineux, zooms lents. Modèle : templates/reel-editorial/."
+      }
     }
   }
 }

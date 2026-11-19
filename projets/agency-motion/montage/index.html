@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="motion-design-clair" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* style « bulles liquid glass » (templates/reel-glass) : teinte du verre (r, g, b) et texte de la bulle d'appel à l'action */
+        --glass-tint: 227, 178, 92;
+        --glass-tint-soft: 242, 213, 142;
+        --glass-cta-ink: var(--black);
+      
+        /* style « motion design clair » (templates/reel-motion, 19/11/2026) : fond ivoire, texte noir, mots clés or foncé (lisible sur clair) */
+        --mo-bg: #f7f1e3;
+        --mo-bg-2: #ffffff;
+        --mo-ink: #0b0b0d;
+        --mo-mute: #8a8378;
+        --mo-kw: #b8863b;
+        --mo-accent: #e3b25c;
+        --mo-accent-2: #f2d58e;
+        --mo-on-accent: #0b0b0d;
+        --mo-pill: #0b0b0d;
+        --mo-pill-ink: #f2d58e;
+        --mo-card: #ffffff;
+        --mo-line: #a59d90;
+        --mo-shadow: 80, 50, 10;
+        --mo-deco: 227, 178, 92;
+        --say-top: 200px;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+        --cap-left: 90px;
+        --cap-width: 900px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+      /* ==========================================================================
+         Style « motion design clair » (demande de l'utilisateur, 19/11/2026 : « Le style que je veux pour mes montages.
+         Animations, motion design mais sous mes couleurs »). Fiche mesurée : references/style-motion/STYLE.md.
+         Fond clair de la charte + décor doux, phrase qui s'écrit mot à mot en haut (défloutage), UN objet central par phrase
+         (téléphone, lecteur vidéo, fenêtre de montage, icône d'app, barre de recherche…) qui entre en ressort flouté,
+         cartes flottantes, pastilles numérotées, coches, compteurs. Uniquement les variables --mo-* de brand.css.
+         ========================================================================== */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--mo-bg); }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--mo-ink); }
+      
+      /* ---- décor : fond clair, soleil rayé doux aux couleurs de la charte, points qui dérivent ---- */
+      /* haut de l'écran en --mo-bg-2 (blanc) : les mots clés de la phrase gardent un contraste ≥ 3:1 */
+      #bg { position: absolute; inset: 0; background: linear-gradient(180deg, var(--mo-bg-2) 0%, var(--mo-bg-2) 30%, var(--mo-bg) 72%); }
+      #deco { position: absolute; inset: 0; pointer-events: none; }
+      .sun { position: absolute; left: 160px; width: 760px; height: 380px; top: 1290px; border-radius: 380px 380px 0 0;
+        background: linear-gradient(180deg, rgba(var(--mo-deco), 0.42) 0%, rgba(var(--mo-deco), 0.14) 100%); }
+      .sun::after { content: ""; position: absolute; left: 0; right: 0; top: 46%; bottom: 0;
+        background: repeating-linear-gradient(180deg, rgba(var(--mo-deco), 0) 0 30px, var(--mo-bg) 30px 40px); }
+      .ground { position: absolute; left: 0; right: 0; top: 1670px; height: 250px;
+        background: linear-gradient(180deg, rgba(var(--mo-deco), 0.12) 0%, rgba(var(--mo-deco), 0) 100%); }
+      .dot { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: rgba(var(--mo-deco), 0.35); }
+      .dot.s { width: 12px; height: 12px; }
+      
+      /* ---- caméra : #push = poussée lente par scène, #trans = transitions zoom + flou (fenêtres séparées) ---- */
+      #push, #trans { position: absolute; inset: 0; transform-origin: 50% 46%; }
+      
+      /* ---- signature (Gaming seulement, sans barre de progression) ---- */
+      .sig { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 120px; text-align: center; font-weight: 700;
+        font-size: 30px; letter-spacing: 0.32em; color: var(--mo-ink); opacity: 0.72; }
+      
+      /* ---- la phrase en haut : mot à mot, défloutage, mots clés couleur charte, mot fort en pastille sombre ---- */
+      .say { position: absolute; left: var(--cap-left); width: var(--cap-width); top: var(--say-top); text-align: center;
+        padding: 0 50px; font-weight: 700; font-size: 62px; line-height: 1.24; letter-spacing: -0.02em; color: var(--mo-ink); }
+      /* réserve de 50 px : la phrase suit la caméra, elle ne doit pas toucher les marges pendant une poussée + un coup de zoom */
+      .say .sw { display: inline-block; margin: 0 0.11em; }
+      .say .kw { color: var(--mo-kw); }
+      .say .pill { display: inline-flex; align-items: center; gap: 12px; margin: 0 0.11em; padding: 2px 28px 8px 20px; border-radius: 999px;
+        background: var(--mo-pill); color: var(--mo-pill-ink); box-shadow: 0 10px 26px rgba(var(--mo-shadow), 0.25); vertical-align: 2px; }
+      .say .pill i { width: 0; height: 0; border-left: 18px solid var(--mo-pill-ink); border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+      
+      /* ---- emplacements : une boîte absolue centrée, l'objet animé à l'intérieur (GSAP garde ses transforms) ---- */
+      .slot { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; }
+      .abs { position: absolute; }
+      
+      /* ---- objets centraux ---- */
+      .phone { position: relative; width: 420px; height: 860px; border-radius: 66px; padding: 14px; background: var(--mo-ink);
+        box-shadow: 0 46px 90px rgba(var(--mo-shadow), 0.30); }
+      .phone.sm { width: 330px; height: 676px; border-radius: 54px; padding: 11px; }
+      .phone .scr { position: relative; width: 100%; height: 100%; border-radius: 54px; overflow: hidden; background: var(--mo-accent-2); }
+      .phone.sm .scr { border-radius: 44px; }
+      .phone .island { position: absolute; left: 50%; top: 26px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: var(--mo-ink); z-index: 3; }
+      .player { position: relative; width: 860px; height: 500px; border-radius: 38px; overflow: hidden; background: var(--mo-ink);
+        box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.30); }
+      .player .bar { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.35); }
+      .player .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 5px; background: var(--mo-accent); transform-origin: 0 50%; }
+      .playbtn { position: absolute; left: 50%; top: 50%; width: 130px; height: 92px; margin: -46px 0 0 -65px; border-radius: 28px; background: var(--mo-accent);
+        display: flex; align-items: center; justify-content: center; }
+      .playbtn::after { content: ""; border-left: 34px solid var(--mo-on-accent); border-top: 21px solid transparent; border-bottom: 21px solid transparent; margin-left: 8px; }
+      .win { position: relative; width: 900px; border-radius: 34px; overflow: hidden; background: var(--mo-card); box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.26); }
+      .win .tb { height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 24px; background: var(--mo-ink); }
+      .win .tb i { width: 16px; height: 16px; border-radius: 50%; background: var(--mo-line); }
+      .win .tb i:first-child { background: var(--mo-accent); }
+      .win .tb b { margin-left: 18px; height: 14px; width: 260px; border-radius: 7px; background: var(--mo-mute); opacity: 0.6; }
+      .win .pv { position: relative; height: 380px; margin: 22px 22px 0; border-radius: 20px; overflow: hidden; }
+      .win .tracks { position: relative; padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 14px; }
+      .win .tr { position: relative; height: 54px; border-radius: 12px; background: rgba(var(--mo-shadow), 0.07); }
+      .win .clipb { position: absolute; top: 6px; bottom: 6px; border-radius: 10px; background: var(--mo-accent); }
+      .win .clipb.ink { background: var(--mo-ink); } .win .clipb.soft { background: var(--mo-accent-2); } .win .clipb.line { background: var(--mo-line); }
+      .win .head { position: absolute; top: 12px; bottom: 16px; width: 5px; margin-left: -2px; border-radius: 3px; background: var(--mo-kw); }
+      .win .head::before { content: ""; position: absolute; left: -9px; top: -8px; width: 23px; height: 23px; border-radius: 6px; background: var(--mo-kw); }
+      .app { position: relative; width: 250px; height: 250px; border-radius: 64px; background: var(--mo-ink); display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.32), inset 0 2px 0 rgba(255, 255, 255, 0.18); }
+      .app svg { width: 140px; height: 140px; }
+      .prompt { position: relative; width: 880px; height: 120px; border-radius: 999px; background: var(--mo-card); display: flex; align-items: center; gap: 22px;
+        padding: 0 34px; font-size: 44px; font-weight: 700; color: var(--mo-ink); box-shadow: 0 26px 60px rgba(var(--mo-shadow), 0.22); white-space: nowrap; overflow: hidden; }
+      .prompt .si { width: 52px; height: 52px; flex: none; } .prompt .si svg { width: 100%; height: 100%; }
+      .prompt .ph { color: var(--mo-mute); }
+      .caret { display: inline-block; width: 5px; height: 54px; margin-left: 4px; background: var(--mo-kw); vertical-align: -10px; }
+      
+      /* ---- scène illustrée dans un écran (personnage stylisé, illustration originale) ---- */
+      .scene { position: absolute; inset: 0; }
+      .scene svg { width: 100%; height: 100%; display: block; }
+      .incap { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+      .incap span { font-weight: 700; color: #ffffff; -webkit-text-stroke: 6px #000000; paint-order: stroke fill; letter-spacing: -0.01em; white-space: nowrap; }
+      .incap span b { color: var(--mo-accent-2); }
+      
+      /* ---- cartes flottantes, pastilles, coches, autocollants ---- */
+      .card { display: flex; align-items: center; gap: 18px; padding: 18px 30px 18px 18px; border-radius: 30px; background: var(--mo-card);
+        box-shadow: 0 18px 40px rgba(var(--mo-shadow), 0.20); font-weight: 700; font-size: 34px; white-space: nowrap; color: var(--mo-ink); }
+      .card .ic { width: 62px; height: 62px; border-radius: 18px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--mo-accent-2); }
+      .card .ic svg { width: 38px; height: 38px; }
+      .card small { display: block; font-size: 24px; font-weight: 400; color: var(--mo-mute); margin-top: 2px; }
+      .card .ln { display: flex; flex-direction: column; gap: 10px; }
+      .card .ln b { display: block; height: 14px; width: 230px; border-radius: 7px; background: var(--mo-line); opacity: 0.55; }
+      .card .ln b + b { width: 150px; }
+      .num { width: 92px; height: 92px; border-radius: 50%; background: var(--mo-accent); color: var(--mo-on-accent); display: flex; align-items: center;
+        justify-content: center; font-weight: 700; font-size: 50px; box-shadow: 0 0 0 12px rgba(var(--mo-deco), 0.20), 0 14px 30px rgba(var(--mo-shadow), 0.22); }
+      .num.big { width: 170px; height: 170px; font-size: 96px; box-shadow: 0 0 0 20px rgba(var(--mo-deco), 0.20), 0 22px 44px rgba(var(--mo-shadow), 0.24); }
+      .step { display: flex; align-items: center; gap: 20px; padding: 14px 34px 14px 14px; border-radius: 999px; background: var(--mo-card);
+        box-shadow: 0 14px 34px rgba(var(--mo-shadow), 0.18); font-weight: 700; font-size: 38px; white-space: nowrap; }
+      .step .n { width: 62px; height: 62px; border-radius: 50%; flex: none; background: var(--mo-pill); color: var(--mo-pill-ink); display: flex;
+        align-items: center; justify-content: center; font-size: 34px; }
+      .tick { width: 62px; height: 62px; border-radius: 50%; flex: none; background: var(--mo-accent); display: flex; align-items: center; justify-content: center; }
+      .tick svg { width: 38px; height: 38px; }
+      .tick path { fill: none; stroke: var(--mo-on-accent); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 30; }
+      .stk { width: 150px; height: 150px; border-radius: 50%; background: var(--mo-card); display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 0 14px rgba(var(--mo-deco), 0.18), 0 20px 44px rgba(var(--mo-shadow), 0.22); }
+      .stk svg { width: 84px; height: 84px; }
+      .stk.acc { background: var(--mo-accent); }
+      .ring { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; border-radius: 50%;
+        border: 4px solid var(--mo-accent); opacity: 0; pointer-events: none; }
+      .tag { display: inline-flex; align-items: center; gap: 12px; padding: 10px 26px 12px; border-radius: 999px; font-weight: 700; font-size: 32px;
+        background: var(--mo-pill); color: var(--mo-pill-ink); white-space: nowrap; box-shadow: 0 10px 24px rgba(var(--mo-shadow), 0.22); }
+      .tag.light { background: var(--mo-card); color: var(--mo-ink); }
+      .count { font-weight: 700; font-size: 150px; letter-spacing: -0.04em; color: var(--mo-kw); line-height: 1; white-space: nowrap; }
+      .meter { width: 64px; height: 300px; border-radius: 32px; background: rgba(var(--mo-shadow), 0.08); position: relative; overflow: hidden; }
+      .meter i { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; border-radius: 32px; background: var(--mo-accent); transform-origin: 50% 100%; }
+      .meter.dim i { background: var(--mo-line); }
+      
+      .card.mini { padding: 10px 16px 10px 10px; border-radius: 22px; gap: 12px; }
+      .card.mini .ic { width: 44px; height: 44px; border-radius: 14px; } .card.mini .ic svg { width: 26px; height: 26px; }
+      .card.mini .ln b { width: 150px; height: 11px; } .card.mini .ln b + b { width: 96px; }
+      .coms { position: absolute; left: 16px; right: 16px; top: 80px; display: flex; flex-direction: column; gap: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21.7" data-width="1080" data-height="1920">
+      <div id="bg"></div>
+      <div id="deco"><div class="sun"></div><div class="ground"></div><i class="dot" id="dot0" style="left:130px;top:560px"></i><i class="dot s" id="dot1" style="left:930px;top:470px"></i><i class="dot" id="dot2" style="left:200px;top:1180px"></i><i class="dot s" id="dot3" style="left:880px;top:1080px"></i><i class="dot" id="dot4" style="left:520px;top:1560px"></i><i class="dot s" id="dot5" style="left:960px;top:1500px"></i><i class="dot" id="dot6" style="left:110px;top:1580px"></i></div>
+      <div id="push"><div id="trans">
+        <div class="clip" id="s1" data-start="0.000" data-duration="1.500" data-track-index="1">
+        <div class="say" id="t1"><span class="sw kw" id="t1w0">Trois</span><span class="sw kw" id="t1w1">mots</span><span class="sw" id="t1w2">pour</span><span class="sw" id="t1w3">booster</span><span class="sw" id="t1w4">vos</span><span class="pill" id="t1w5"><i></i>vues.</span></div>
+        <div class="slot" style="top:470px;height:900px"><div class="phone" id="ph1"><div class="island"></div><div class="scr"><div class="scene"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--mo-accent)"/><circle cx="76" cy="34" r="38" style="fill:var(--mo-accent-2)" opacity="0.7"/><circle cx="50" cy="66" r="17" style="fill:var(--mo-card)"/><path d="M16 160c0-31 15-54 34-54s34 23 34 54z" style="fill:var(--mo-ink)"/></svg></div></div></div></div>
+        <div class="abs" style="left:770px;top:600px"><div class="stk" id="k1"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7M14 8h6v6" fill="none" style="stroke:var(--mo-kw)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><i class="ring" id="r1"></i></div>
+        <div class="abs" style="left:160px;top:960px"><div class="stk" id="k2"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--mo-ink)" stroke-width="2.2"/><circle cx="12" cy="12" r="3.2" style="fill:var(--mo-kw)"/></svg></div><i class="ring" id="r2"></i></div>
+        </div>
+        <div class="clip" id="s2" data-start="1.500" data-duration="3.220" data-track-index="1">
+        <div class="say" id="t2"><span class="sw" id="t2w0">Les</span><span class="sw kw" id="t2w1">sous-titres</span><span class="sw" id="t2w2">retiennent</span><span class="sw kw" id="t2w3">l&#x27;attention</span><span class="sw" id="t2w4">et</span><span class="sw" id="t2w5">boostent</span><span class="pill" id="t2w6"><i></i>l&#x27;engagement.</span></div>
+        <div class="slot" style="top:560px;height:500px"><div class="player" id="pl"><div class="scene"><svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><rect width="160" height="100" style="fill:var(--mo-accent)"/><circle cx="128" cy="18" r="34" style="fill:var(--mo-accent-2)" opacity="0.7"/><circle cx="80" cy="42" r="15" style="fill:var(--mo-card)"/><path d="M48 100c0-27 14-44 32-44s32 17 32 44z" style="fill:var(--mo-ink)"/></svg></div><div class="incap" style="bottom:86px"><span style="font-size:58px" id="ic1">retiennent</span></div><div class="incap" style="bottom:86px"><span style="font-size:58px" id="ic2"><b>l'attention</b></span></div><div class="bar"><i id="plb"></i></div></div></div>
+        <div class="abs" style="left:150px;top:1130px"><div class="card" id="ca"><span class="ic"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--mo-ink)" stroke-width="2.2"/><circle cx="12" cy="12" r="3.2" style="fill:var(--mo-kw)"/></svg></span><span>Attention</span></div></div>
+        <div class="abs" style="left:610px;top:1220px"><div class="card" id="cb"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--mo-kw)"/></svg></span><span>J'aime</span></div></div>
+        <div class="abs" style="left:150px;top:1360px"><div class="card" id="cc"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--mo-ink)"/></svg></span><span>Commentaire</span></div></div>
+        <div class="abs" style="left:620px;top:1470px"><div class="card" id="cd"><span class="ic"><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--mo-ink)"/></svg></span><span>Partage</span></div></div>
+        </div>
+        <div class="clip" id="s3" data-start="4.720" data-duration="1.340" data-track-index="1">
+        <div class="say" id="t3"><span class="sw kw" id="t3w0">Étape</span><span class="sw" id="t3w1">par</span><span class="sw kw" id="t3w2">étape.</span></div>
+        <div class="slot" style="top:740px;height:300px"><div style="position:relative;display:flex;gap:70px;align-items:center"><i class="abs" id="lnk" style="left:85px;right:85px;top:50%;height:8px;margin-top:-4px;border-radius:4px;background:var(--mo-line);transform-origin:0 50%"></i><div style="position:relative"><div class="num big" id="n0">1</div><i class="ring" id="nr0"></i></div><div style="position:relative"><div class="num big" id="n1">2</div><i class="ring" id="nr1"></i></div><div style="position:relative"><div class="num big" id="n2">3</div><i class="ring" id="nr2"></i></div></div></div>
+        </div>
+        <div class="clip" id="s4" data-start="6.060" data-duration="3.800" data-track-index="1">
+        <div class="say" id="t4"><span class="sw" id="t4w0">Un</span><span class="sw kw" id="t4w1">texte</span><span class="sw kw" id="t4w2">court,</span><span class="sw kw" id="t4w3">synchronisé,</span><span class="sw" id="t4w4">des</span><span class="sw kw" id="t4w5">overlays</span><span class="sw" id="t4w6">qui</span><span class="sw" id="t4w7">apparaissent</span><span class="sw" id="t4w8">au</span><span class="sw" id="t4w9">bon</span><span class="pill" id="t4w10"><i></i>moment.</span></div>
+        <div class="slot" style="top:545px;height:720px"><div class="win" id="win"><div class="tb"><i></i><i></i><i></i><b></b></div><div class="pv"><div class="scene"><svg viewBox="0 0 160 100" preserveAspectRatio="xMidYMid slice"><rect width="160" height="100" style="fill:var(--mo-accent)"/><circle cx="128" cy="18" r="34" style="fill:var(--mo-accent-2)" opacity="0.7"/><circle cx="80" cy="42" r="15" style="fill:var(--mo-card)"/><path d="M48 100c0-27 14-44 32-44s32 17 32 44z" style="fill:var(--mo-ink)"/></svg></div><div class="incap" style="bottom:40px"><span style="font-size:44px" id="ic4">Un texte <b>court</b></span></div><div class="abs" style="left:40px;top:40px"><div class="stk" id="ov1" style="width:96px;height:96px"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--mo-kw)"/></svg></div></div><div class="abs" style="right:40px;top:60px"><div class="stk" id="ov2" style="width:96px;height:96px"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--mo-kw)"/></svg></div></div></div><div class="tracks"><div class="tr"><i class="clipb ink" style="left:1%;width:98%"></i></div><div class="tr"><i class="clipb" id="cl1" style="left:4%;width:20%"></i><i class="clipb" id="cl2" style="left:26%;width:24%"></i><i class="clipb" id="cl3" style="left:52%;width:20%"></i></div><div class="tr"><i class="clipb soft" id="cl4" style="left:46%;width:16%"></i><i class="clipb soft" id="cl5" style="left:66%;width:14%"></i><i class="clipb soft" id="cl6" style="left:82%;width:14%"></i></div><i class="head" id="head" style="left:4%"></i></div></div></div>
+        <div class="slot" style="top:1295px;height:330px"><div style="display:flex;flex-direction:column;align-items:center;gap:22px"><div class="step" id="sp0"><span class="n">1</span>Texte court<span class="tick" id="tk0"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><div class="step" id="sp1"><span class="n">2</span>Synchronisé<span class="tick" id="tk1"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div><div class="step" id="sp2"><span class="n">3</span>Overlays au bon moment<span class="tick" id="tk2"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div></div>
+        </div>
+        <div class="clip" id="s5" data-start="9.860" data-duration="4.840" data-track-index="1">
+        <div class="say" id="t5a"><span class="pill" id="t5aw0"><i></i>Preuve</span><span class="sw" id="t5aw1">rapide,</span></div>
+        <div class="say" id="t5b"><span class="sw" id="t5bw0">plus</span><span class="sw" id="t5bw1">de</span><span class="sw kw" id="t5bw2">vues</span><span class="sw" id="t5bw3">et</span><span class="sw" id="t5bw4">plus</span><span class="sw" id="t5bw5">de</span><span class="sw kw" id="t5bw6">commentaires</span><span class="sw" id="t5bw7">quand</span><span class="sw" id="t5bw8">les</span><span class="sw kw" id="t5bw9">sous-titres</span><span class="sw" id="t5bw10">accompagnent.</span></div>
+        <div class="slot" style="top:500px;height:720px;gap:150px"><div class="phone sm" id="pa"><div class="island"></div><div class="scr"><div class="scene"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--mo-line)"/><circle cx="76" cy="34" r="38" style="fill:var(--mo-card)" opacity="0.7"/><circle cx="50" cy="66" r="17" style="fill:var(--mo-card)"/><path d="M16 160c0-31 15-54 34-54s34 23 34 54z" style="fill:var(--mo-ink)"/></svg></div></div></div><div class="phone sm" id="pb"><div class="island"></div><div class="scr"><div class="scene"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--mo-accent)"/><circle cx="76" cy="34" r="38" style="fill:var(--mo-accent-2)" opacity="0.7"/><circle cx="50" cy="66" r="17" style="fill:var(--mo-card)"/><path d="M16 160c0-31 15-54 34-54s34 23 34 54z" style="fill:var(--mo-ink)"/></svg></div><div class="incap" style="bottom:70px"><span style="font-size:40px" id="ic5">plus de <b>vues</b></span></div><div class="coms"><div class="card mini" id="cm0"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--mo-ink)"/></svg></span><span class="ln"><b></b><b></b></span></div><div class="card mini" id="cm1"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--mo-ink)"/></svg></span><span class="ln"><b></b><b></b></span></div><div class="card mini" id="cm2"><span class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--mo-ink)"/></svg></span><span class="ln"><b></b><b></b></span></div></div></div></div></div>
+        <div class="abs" style="left:150px;top:1240px;width:300px;text-align:center"><span class="tag light" id="ta">Sans sous-titres</span></div>
+        <div class="abs" style="left:630px;top:1240px;width:300px;text-align:center"><span class="tag" id="tb">Avec sous-titres</span></div>
+        <div class="abs" style="left:830px;top:470px"><div class="stk" id="k5"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--mo-ink)" stroke-width="2.2"/><circle cx="12" cy="12" r="3.2" style="fill:var(--mo-kw)"/></svg></div><i class="ring" id="r5"></i></div>
+        <div class="abs" style="left:705px;top:1350px"><div class="stk acc" id="k6"><svg viewBox="0 0 24 24"><path style="fill:none;stroke:var(--mo-on-accent);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round" d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><i class="ring" id="r6"></i></div>
+        </div>
+        <div class="clip" id="s6" data-start="14.700" data-duration="4.300" data-track-index="1">
+        <div class="say" id="t6" style="font-size:56px"><span class="sw" id="t6w0">Recherchez</span><span class="pill" id="t6w1"><i></i>Astuce Visibilité TikTok</span><span class="sw" id="t6w2">et</span><span class="sw kw" id="t6w3">testez</span><span class="sw" id="t6w4">ces</span><span class="sw kw" id="t6w5">astuces</span><span class="sw" id="t6w6">tout</span><span class="sw" id="t6w7">de</span><span class="sw kw" id="t6w8">suite !</span></div>
+        <div class="slot" style="top:600px;height:140px"><div class="prompt" id="pr"><span class="si"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" style="stroke:var(--mo-ink)" stroke-width="2.4"/><path d="M15.5 15.5 21 21" style="stroke:var(--mo-ink)" stroke-width="2.6" stroke-linecap="round"/></svg></span><span><span id="ty"></span><i class="caret" id="car"></i></span></div></div>
+        <div class="abs" style="left:160px;top:800px"><div class="card" id="re0" style="width:760px"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--mo-kw)"/></svg></span><span class="ln" style="flex:1"><b style="width:380px"></b><b></b></span><span class="tick" id="rk0"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div>
+        <div class="abs" style="left:160px;top:950px"><div class="card" id="re1" style="width:760px"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--mo-kw)"/></svg></span><span class="ln" style="flex:1"><b style="width:380px"></b><b></b></span><span class="tick" id="rk1"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div>
+        <div class="abs" style="left:160px;top:1100px"><div class="card" id="re2" style="width:760px"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--mo-kw)"/></svg></span><span class="ln" style="flex:1"><b style="width:380px"></b><b></b></span><span class="tick" id="rk2"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div></div>
+        <div class="abs" style="left:465px;top:1290px"><div class="stk acc" id="k7"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z" style="fill:var(--mo-on-accent)"/></svg></div><i class="ring" id="r7"></i></div>
+        </div>
+      </div></div>
+      
+      <div class="clip" id="endcard" data-start="19.0" data-duration="2.7" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/><div id="tagline">VOTRE IMAGE.<br/>NOTRE EXPERTISE.</div></div>
+    </div>
+    <audio id="voix" class="clip" src="assets/voix.wav" data-start="0" data-duration="18.76" data-volume="1" data-track-index="6"></audio>
+    <audio id="sfx0" class="clip" src="assets/sfx/ui.wav" data-start="0.590" data-duration="0.49" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="sfx1" class="clip" src="assets/sfx/clic-focus.wav" data-start="1.110" data-duration="0.4" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="sfx2" class="clip" src="assets/sfx/whoosh-court.wav" data-start="1.280" data-duration="0.6" data-volume="0.16" data-track-index="9"></audio>
+    <audio id="sfx3" class="clip" src="assets/sfx/ui.wav" data-start="2.220" data-duration="0.49" data-volume="0.12" data-track-index="10"></audio>
+    <audio id="sfx4" class="clip" src="assets/sfx/ui.wav" data-start="2.800" data-duration="0.49" data-volume="0.12" data-track-index="7"></audio>
+    <audio id="sfx5" class="clip" src="assets/sfx/clic-focus.wav" data-start="3.940" data-duration="0.4" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="sfx6" class="clip" src="assets/sfx/ui.wav" data-start="3.960" data-duration="0.49" data-volume="0.12" data-track-index="9"></audio>
+    <audio id="sfx7" class="clip" src="assets/sfx/whoosh-court.wav" data-start="4.500" data-duration="0.6" data-volume="0.16" data-track-index="10"></audio>
+    <audio id="sfx8" class="clip" src="assets/sfx/ui.wav" data-start="4.700" data-duration="0.49" data-volume="0.15" data-track-index="7"></audio>
+    <audio id="sfx9" class="clip" src="assets/sfx/ui.wav" data-start="5.250" data-duration="0.49" data-volume="0.15" data-track-index="8"></audio>
+    <audio id="sfx10" class="clip" src="assets/sfx/ui.wav" data-start="5.380" data-duration="0.49" data-volume="0.15" data-track-index="9"></audio>
+    <audio id="sfx11" class="clip" src="assets/sfx/whoosh-court.wav" data-start="5.840" data-duration="0.6" data-volume="0.16" data-track-index="10"></audio>
+    <audio id="sfx12" class="clip" src="assets/sfx/ui.wav" data-start="6.040" data-duration="0.49" data-volume="0.15" data-track-index="7"></audio>
+    <audio id="sfx13" class="clip" src="assets/sfx/validation.wav" data-start="6.640" data-duration="0.45" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="sfx14" class="clip" src="assets/sfx/ui.wav" data-start="8.670" data-duration="0.49" data-volume="0.12" data-track-index="9"></audio>
+    <audio id="sfx15" class="clip" src="assets/sfx/clic-focus.wav" data-start="9.520" data-duration="0.4" data-volume="0.18" data-track-index="10"></audio>
+    <audio id="sfx16" class="clip" src="assets/sfx/whoosh-court.wav" data-start="9.640" data-duration="0.6" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="sfx17" class="clip" src="assets/sfx/clic-focus.wav" data-start="9.860" data-duration="0.4" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="sfx18" class="clip" src="assets/sfx/ui.wav" data-start="9.960" data-duration="0.49" data-volume="0.15" data-track-index="9"></audio>
+    <audio id="sfx19" class="clip" src="assets/sfx/ui.wav" data-start="11.310" data-duration="0.49" data-volume="0.13" data-track-index="10"></audio>
+    <audio id="sfx20" class="clip" src="assets/sfx/ui.wav" data-start="12.120" data-duration="0.49" data-volume="0.12" data-track-index="7"></audio>
+    <audio id="sfx21" class="clip" src="assets/sfx/validation.wav" data-start="13.780" data-duration="0.45" data-volume="0.16" data-track-index="8"></audio>
+    <audio id="sfx22" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.480" data-duration="0.6" data-volume="0.16" data-track-index="9"></audio>
+    <audio id="sfx23" class="clip" src="assets/sfx/ui.wav" data-start="14.680" data-duration="0.49" data-volume="0.15" data-track-index="10"></audio>
+    <audio id="sfx24" class="clip" src="assets/sfx/clic-focus.wav" data-start="15.010" data-duration="0.4" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="sfx25" class="clip" src="assets/sfx/clavier-apple.wav" data-start="15.050" data-duration="0.53" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="sfx26" class="clip" src="assets/sfx/clavier-apple.wav" data-start="15.650" data-duration="0.53" data-volume="0.16" data-track-index="9"></audio>
+    <audio id="sfx27" class="clip" src="assets/sfx/validation.wav" data-start="16.970" data-duration="0.45" data-volume="0.14" data-track-index="10"></audio>
+    <audio id="sfx28" class="clip" src="assets/sfx/ui.wav" data-start="17.650" data-duration="0.49" data-volume="0.16" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.05}, duration: 1.500, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#t1w0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 0.020);
+  tl.fromTo("#t1w1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 0.210);
+  tl.fromTo("#t1w2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 0.410);
+  tl.fromTo("#t1w3", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 0.610);
+  tl.fromTo("#t1w4", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 0.960);
+  tl.fromTo("#t1w5", {opacity: 0, scale: 0.5, filter: "blur(12px)"}, {...{opacity: 1, scale: 1, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(2)", immediateRender: true}, 1.110);
+  tl.fromTo("#t1", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 1.280);
+  tl.fromTo("#ph1", {scale: 0.94, y: 20}, {...{scale: 1, y: 0}, duration: 0.800, ease: "power3.out", immediateRender: true}, 0.000);
+  tl.fromTo("#k1", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 0.610);
+  tl.fromTo("#r1", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 0.650);
+  tl.fromTo("#k2", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 1.110);
+  tl.fromTo("#r2", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 1.150);
+  tl.fromTo("#k1", {y: 0}, {y: -8, duration: 0.900, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 1.150);
+  tl.fromTo("#k2", {y: 0}, {y: -8, duration: 0.900, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 1.650);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.35, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 1.260);
+  tl.fromTo("#trans", {scale: 0.920, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 1.500);
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.05}, duration: 3.220, ease: "none", immediateRender: false}, 1.500);
+  tl.fromTo("#t2w0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 1.480);
+  tl.fromTo("#t2w1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 1.960);
+  tl.fromTo("#t2w2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 2.240);
+  tl.fromTo("#t2w3", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 2.780);
+  tl.fromTo("#t2w4", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 3.420);
+  tl.fromTo("#t2w5", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 3.510);
+  tl.fromTo("#t2w6", {opacity: 0, scale: 0.5, filter: "blur(12px)"}, {...{opacity: 1, scale: 1, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(2)", immediateRender: true}, 3.940);
+  tl.fromTo("#t2", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 4.500);
+  tl.fromTo("#pl", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.600, ease: "back.out(1.7)", immediateRender: true}, 1.500);
+  tl.fromTo("#plb", {scaleX: 0}, {...{scaleX: 1}, duration: 3.220, ease: "power3.out", immediateRender: true}, 1.500);
+  tl.fromTo("#ic1", {opacity: 0, scale: 0.7, y: 10, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.350, ease: "back.out(1.7)", immediateRender: true}, 2.240);
+  tl.fromTo("#ic1", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.100, ease: "power2.in", immediateRender: false}, 2.740);
+  tl.fromTo("#ic2", {opacity: 0, scale: 0.7, y: 10, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.350, ease: "back.out(1.7)", immediateRender: true}, 2.780);
+  tl.fromTo("#ca", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 2.820);
+  tl.fromTo("#ca", {y: 0}, {y: -9, duration: 1.700, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 3.370);
+  tl.fromTo("#cb", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 3.550);
+  tl.fromTo("#cb", {y: 0}, {y: -9, duration: 1.400, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 4.100);
+  tl.fromTo("#cc", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 3.980);
+  tl.fromTo("#cc", {y: 0}, {y: -9, duration: 1.900, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 4.530);
+  tl.fromTo("#cd", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 4.200);
+  tl.fromTo("#cd", {y: 0}, {y: -9, duration: 1.500, ease: "sine.inOut", repeat: 0, yoyo: true, immediateRender: false}, 4.750);
+  tl.fromTo("#trans", {scale: 1}, {...{scale: 1.05}, duration: 0.160, ease: "power3.out", immediateRender: false}, 3.550);
+  tl.fromTo("#trans", {scale: 1.05}, {...{scale: 1}, duration: 0.400, ease: "power2.inOut", immediateRender: false}, 3.900);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.35, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 4.480);
+  tl.fromTo("#trans", {scale: 0.920, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 4.720);
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.05}, duration: 1.340, ease: "none", immediateRender: false}, 4.720);
+  tl.fromTo("#t3w0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 4.720);
+  tl.fromTo("#t3w1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 5.270);
+  tl.fromTo("#t3w2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 5.400);
+  tl.fromTo("#t3", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 5.840);
+  tl.fromTo("#n0", {opacity: 0, scale: 0.4, y: 30, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "back.out(1.7)", immediateRender: true}, 4.720);
+  tl.fromTo("#nr0", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 4.760);
+  tl.fromTo("#n1", {opacity: 0, scale: 0.4, y: 30, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "back.out(1.7)", immediateRender: true}, 5.270);
+  tl.fromTo("#nr1", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 5.310);
+  tl.fromTo("#n2", {opacity: 0, scale: 0.4, y: 30, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "back.out(1.7)", immediateRender: true}, 5.400);
+  tl.fromTo("#nr2", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 5.440);
+  tl.fromTo("#lnk", {scaleX: 0}, {...{scaleX: 1}, duration: 0.980, ease: "power3.out", immediateRender: true}, 4.760);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.35, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 5.820);
+  tl.fromTo("#trans", {scale: 0.920, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 6.060);
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.05}, duration: 3.800, ease: "none", immediateRender: false}, 6.060);
+  tl.fromTo("#t4w0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 6.060);
+  tl.fromTo("#t4w1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 6.380);
+  tl.fromTo("#t4w2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 6.550);
+  tl.fromTo("#t4w3", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 7.040);
+  tl.fromTo("#t4w4", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 7.920);
+  tl.fromTo("#t4w5", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 8.300);
+  tl.fromTo("#t4w6", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 8.530);
+  tl.fromTo("#t4w7", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 8.690);
+  tl.fromTo("#t4w8", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 9.270);
+  tl.fromTo("#t4w9", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 9.370);
+  tl.fromTo("#t4w10", {opacity: 0, scale: 0.5, filter: "blur(12px)"}, {...{opacity: 1, scale: 1, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(2)", immediateRender: true}, 9.520);
+  tl.fromTo("#t4", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 9.640);
+  tl.fromTo("#win", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.600, ease: "back.out(1.7)", immediateRender: true}, 6.060);
+  tl.fromTo("#head", {x: 0}, {...{x: 818}, duration: 3.300, ease: "none", immediateRender: true}, 6.360);
+  tl.fromTo("#cl1", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 6.380);
+  tl.fromTo("#cl2", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 6.550);
+  tl.fromTo("#cl3", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 7.040);
+  tl.fromTo("#cl4", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 8.300);
+  tl.fromTo("#cl5", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 8.690);
+  tl.fromTo("#cl6", {scaleX: 0, opacity: 0}, {...{scaleX: 1, opacity: 1}, duration: 0.300, ease: "back.out(1.6)", immediateRender: true}, 9.370);
+  tl.fromTo("#ic4", {opacity: 0, scale: 0.7, y: 10, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.350, ease: "back.out(1.7)", immediateRender: true}, 6.380);
+  tl.fromTo("#ov1", {opacity: 0, scale: 0.4, y: 0, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(1.7)", immediateRender: true}, 8.690);
+  tl.fromTo("#ov2", {opacity: 0, scale: 0.4, y: 0, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(1.7)", immediateRender: true}, 9.370);
+  tl.fromTo("#sp0", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "power3.out", immediateRender: true}, 6.140);
+  tl.fromTo("#tk0", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 6.640);
+  tl.fromTo("#tk0 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 6.720);
+  tl.fromTo("#sp1", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "power3.out", immediateRender: true}, 6.630);
+  tl.fromTo("#tk1", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 7.130);
+  tl.fromTo("#tk1 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 7.210);
+  tl.fromTo("#sp2", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "power3.out", immediateRender: true}, 7.480);
+  tl.fromTo("#tk2", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 9.360);
+  tl.fromTo("#tk2 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 9.440);
+  tl.fromTo("#trans", {scale: 1}, {...{scale: 1.05}, duration: 0.160, ease: "power3.out", immediateRender: false}, 7.080);
+  tl.fromTo("#trans", {scale: 1.05}, {...{scale: 1}, duration: 0.400, ease: "power2.inOut", immediateRender: false}, 7.580);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.35, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 9.620);
+  tl.fromTo("#trans", {scale: 0.920, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 9.860);
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.05}, duration: 4.840, ease: "none", immediateRender: false}, 9.860);
+  tl.fromTo("#t5aw0", {opacity: 0, scale: 0.5, filter: "blur(12px)"}, {...{opacity: 1, scale: 1, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(2)", immediateRender: true}, 9.860);
+  tl.fromTo("#t5aw1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 10.470);
+  tl.fromTo("#t5a", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 10.830);
+  tl.fromTo("#t5bw0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.010);
+  tl.fromTo("#t5bw1", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.200);
+  tl.fromTo("#t5bw2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.330);
+  tl.fromTo("#t5bw3", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.590);
+  tl.fromTo("#t5bw4", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.720);
+  tl.fromTo("#t5bw5", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 11.980);
+  tl.fromTo("#t5bw6", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 12.380);
+  tl.fromTo("#t5bw7", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 13.040);
+  tl.fromTo("#t5bw8", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 13.240);
+  tl.fromTo("#t5bw9", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 13.340);
+  tl.fromTo("#t5bw10", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 13.740);
+  tl.fromTo("#t5b", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 14.480);
+  tl.fromTo("#pa", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.600, ease: "back.out(1.7)", immediateRender: true}, 9.860);
+  tl.fromTo("#pb", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.600, ease: "back.out(1.7)", immediateRender: true}, 9.980);
+  tl.fromTo("#ta", {opacity: 0, x: 0, y: 30, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "power3.out", immediateRender: true}, 10.510);
+  tl.fromTo("#tb", {opacity: 0, x: 0, y: 30, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "power3.out", immediateRender: true}, 10.630);
+  tl.fromTo("#ic5", {opacity: 0, scale: 0.7, y: 10, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.350, ease: "back.out(1.7)", immediateRender: true}, 11.330);
+  tl.fromTo("#k5", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 11.330);
+  tl.fromTo("#r5", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 11.370);
+  tl.fromTo("#k5", {y: 0}, {y: -8, duration: 0.900, ease: "sine.inOut", repeat: 2, yoyo: true, immediateRender: false}, 11.870);
+  tl.fromTo("#cm0", {opacity: 0, x: 0, y: 60, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 12.120);
+  tl.fromTo("#cm1", {opacity: 0, x: 0, y: 60, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 12.320);
+  tl.fromTo("#cm2", {opacity: 0, x: 0, y: 60, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 12.520);
+  tl.fromTo("#pa", {opacity: 1}, {...{opacity: 0.45}, duration: 0.400, ease: "power2.out", immediateRender: false}, 13.740);
+  tl.fromTo("#k6", {opacity: 0, scale: 0.4, y: 20, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.500, ease: "back.out(1.7)", immediateRender: true}, 13.740);
+  tl.fromTo("#r6", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 13.780);
+  tl.fromTo("#trans", {scale: 1}, {...{scale: 1.05}, duration: 0.160, ease: "power3.out", immediateRender: false}, 13.780);
+  tl.fromTo("#trans", {scale: 1.05}, {...{scale: 1}, duration: 0.400, ease: "power2.inOut", immediateRender: false}, 13.930);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.35, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 14.460);
+  tl.fromTo("#trans", {scale: 0.920, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 14.700);
+  tl.fromTo("#push", {scale: 1.0}, {...{scale: 1.04}, duration: 4.300, ease: "none", immediateRender: false}, 14.700);
+  tl.fromTo("#t6w0", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 14.700);
+  tl.fromTo("#t6w1", {opacity: 0, scale: 0.5, filter: "blur(12px)"}, {...{opacity: 1, scale: 1, filter: "blur(0px)"}, duration: 0.450, ease: "back.out(2)", immediateRender: true}, 15.010);
+  tl.fromTo("#t6w2", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 16.230);
+  tl.fromTo("#t6w3", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 16.680);
+  tl.fromTo("#t6w4", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.040);
+  tl.fromTo("#t6w5", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.210);
+  tl.fromTo("#t6w6", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.670);
+  tl.fromTo("#t6w7", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.940);
+  tl.fromTo("#t6w8", {opacity: 0, y: 16, filter: "blur(10px)"}, {...{opacity: 1, y: 0, filter: "blur(0px)"}, duration: 0.300, ease: "power2.out", immediateRender: true}, 18.070);
+  tl.fromTo("#t6", {opacity: 1, scale: 1, filter: "blur(0px)"}, {...{opacity: 0, scale: 0.9, filter: "blur(14px)"}, duration: 0.220, ease: "power2.in", immediateRender: false}, 18.780);
+  tl.fromTo("#pr", {opacity: 0, scale: 0.6, y: 40, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 14.700);
+  (function () { const el = document.querySelector("#ty"), s = "Astuce Visibilit\u00e9 TikTok", o = {n: 0}; tl.fromTo(o, {n: 0}, {n: s.length, duration: 1.412, ease: "none", immediateRender: true, onUpdate: () => { el.textContent = s.slice(0, Math.round(o.n)); } }, 15.050); })();
+  tl.fromTo("#re0", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 16.070);
+  tl.fromTo("#re1", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 16.670);
+  tl.fromTo("#re2", {opacity: 0, x: 0, y: 50, filter: "blur(10px)"}, {...{opacity: 1, x: 0, y: 0, filter: "blur(0px)"}, duration: 0.450, ease: "power3.out", immediateRender: true}, 17.130);
+  tl.fromTo("#rk0", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 16.970);
+  tl.fromTo("#rk0 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.050);
+  tl.fromTo("#rk1", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 17.480);
+  tl.fromTo("#rk1 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.560);
+  tl.fromTo("#rk2", {opacity: 0, scale: 0.4}, {...{opacity: 1, scale: 1}, duration: 0.400, ease: "back.out(2.2)", immediateRender: true}, 17.500);
+  tl.fromTo("#rk2 path", {strokeDashoffset: 30}, {...{strokeDashoffset: 0}, duration: 0.300, ease: "power2.out", immediateRender: true}, 17.580);
+  tl.fromTo("#k7", {opacity: 0, scale: 0.4, y: 20, filter: "blur(16px)"}, {...{opacity: 1, scale: 1, y: 0, filter: "blur(0px)"}, duration: 0.550, ease: "back.out(1.7)", immediateRender: true}, 17.670);
+  tl.fromTo("#r7", {opacity: 0.9, scale: 0.45}, {...{opacity: 0, scale: 1.6}, duration: 0.600, ease: "power2.out", immediateRender: false}, 17.710);
+  tl.fromTo("#trans", {scale: 1}, {...{scale: 1.06}, duration: 0.160, ease: "power3.out", immediateRender: false}, 17.710);
+  tl.fromTo("#trans", {scale: 1.06}, {...{scale: 1}, duration: 0.400, ease: "power2.inOut", immediateRender: false}, 18.310);
+  tl.fromTo("#logo", {opacity: 0, scale: 0.9}, {...{opacity: 1, scale: 1}, duration: 0.700, ease: "power3.out", immediateRender: true}, 19.050);
+  tl.fromTo("#tagline", {opacity: 0, y: 30}, {...{opacity: 1, y: 0}, duration: 0.600, ease: "power3.out", immediateRender: true}, 19.500);
+  tl.fromTo("#trans", {scale: 1, filter: "blur(0px)"}, {...{scale: 1.25, filter: "blur(14px)"}, duration: 0.240, ease: "power3.in", immediateRender: false}, 18.760);
+  tl.fromTo("#trans", {scale: 1.000, filter: "blur(14px)"}, {...{scale: 1, filter: "blur(0px)"}, duration: 0.420, ease: "power3.out", immediateRender: false}, 19.000);
+  tl.fromTo("#dot0", {x: 0, y: 0}, {...{x: 40, y: -60}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot1", {x: 0, y: 0}, {...{x: -40, y: -75}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot2", {x: 0, y: 0}, {...{x: 40, y: -90}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot3", {x: 0, y: 0}, {...{x: -40, y: -105}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot4", {x: 0, y: 0}, {...{x: 40, y: -120}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot5", {x: 0, y: 0}, {...{x: -40, y: -135}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#dot6", {x: 0, y: 0}, {...{x: 40, y: -150}, duration: 19.000, ease: "sine.inOut", immediateRender: true}, 0.000);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

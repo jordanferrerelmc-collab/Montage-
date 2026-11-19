@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Style « motion design clair » (demande de l'utilisateur, 19/11/2026 : « Le style que je veux pour mes montages.
+   Animations, motion design mais sous mes couleurs »). Fiche mesurée : references/style-motion/STYLE.md.
+   Fond clair de la charte + décor doux, phrase qui s'écrit mot à mot en haut (défloutage), UN objet central par phrase
+   (téléphone, lecteur vidéo, fenêtre de montage, icône d'app, barre de recherche…) qui entre en ressort flouté,
+   cartes flottantes, pastilles numérotées, coches, compteurs. Uniquement les variables --mo-* de brand.css.
+   ========================================================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--mo-bg); }
+#root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); color: var(--mo-ink); }
+
+/* ---- décor : fond clair, soleil rayé doux aux couleurs de la charte, points qui dérivent ---- */
+/* haut de l'écran en --mo-bg-2 (blanc) : les mots clés de la phrase gardent un contraste ≥ 3:1 */
+#bg { position: absolute; inset: 0; background: linear-gradient(180deg, var(--mo-bg-2) 0%, var(--mo-bg-2) 30%, var(--mo-bg) 72%); }
+#deco { position: absolute; inset: 0; pointer-events: none; }
+.sun { position: absolute; left: 160px; width: 760px; height: 380px; top: 1290px; border-radius: 380px 380px 0 0;
+  background: linear-gradient(180deg, rgba(var(--mo-deco), 0.42) 0%, rgba(var(--mo-deco), 0.14) 100%); }
+.sun::after { content: ""; position: absolute; left: 0; right: 0; top: 46%; bottom: 0;
+  background: repeating-linear-gradient(180deg, rgba(var(--mo-deco), 0) 0 30px, var(--mo-bg) 30px 40px); }
+.ground { position: absolute; left: 0; right: 0; top: 1670px; height: 250px;
+  background: linear-gradient(180deg, rgba(var(--mo-deco), 0.12) 0%, rgba(var(--mo-deco), 0) 100%); }
+.dot { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: rgba(var(--mo-deco), 0.35); }
+.dot.s { width: 12px; height: 12px; }
+
+/* ---- caméra : #push = poussée lente par scène, #trans = transitions zoom + flou (fenêtres séparées) ---- */
+#push, #trans { position: absolute; inset: 0; transform-origin: 50% 46%; }
+
+/* ---- signature (Gaming seulement, sans barre de progression) ---- */
+.sig { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 120px; text-align: center; font-weight: 700;
+  font-size: 30px; letter-spacing: 0.32em; color: var(--mo-ink); opacity: 0.72; }
+
+/* ---- la phrase en haut : mot à mot, défloutage, mots clés couleur charte, mot fort en pastille sombre ---- */
+.say { position: absolute; left: var(--cap-left); width: var(--cap-width); top: var(--say-top); text-align: center;
+  padding: 0 50px; font-weight: 700; font-size: 62px; line-height: 1.24; letter-spacing: -0.02em; color: var(--mo-ink); }
+/* réserve de 50 px : la phrase suit la caméra, elle ne doit pas toucher les marges pendant une poussée + un coup de zoom */
+.say .sw { display: inline-block; margin: 0 0.11em; }
+.say .kw { color: var(--mo-kw); }
+.say .pill { display: inline-flex; align-items: center; gap: 12px; margin: 0 0.11em; padding: 2px 28px 8px 20px; border-radius: 999px;
+  background: var(--mo-pill); color: var(--mo-pill-ink); box-shadow: 0 10px 26px rgba(var(--mo-shadow), 0.25); vertical-align: 2px; }
+.say .pill i { width: 0; height: 0; border-left: 18px solid var(--mo-pill-ink); border-top: 11px solid transparent; border-bottom: 11px solid transparent; }
+
+/* ---- emplacements : une boîte absolue centrée, l'objet animé à l'intérieur (GSAP garde ses transforms) ---- */
+.slot { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; }
+.abs { position: absolute; }
+
+/* ---- objets centraux ---- */
+.phone { position: relative; width: 420px; height: 860px; border-radius: 66px; padding: 14px; background: var(--mo-ink);
+  box-shadow: 0 46px 90px rgba(var(--mo-shadow), 0.30); }
+.phone.sm { width: 330px; height: 676px; border-radius: 54px; padding: 11px; }
+.phone .scr { position: relative; width: 100%; height: 100%; border-radius: 54px; overflow: hidden; background: var(--mo-accent-2); }
+.phone.sm .scr { border-radius: 44px; }
+.phone .island { position: absolute; left: 50%; top: 26px; width: 120px; height: 34px; margin-left: -60px; border-radius: 20px; background: var(--mo-ink); z-index: 3; }
+.player { position: relative; width: 860px; height: 500px; border-radius: 38px; overflow: hidden; background: var(--mo-ink);
+  box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.30); }
+.player .bar { position: absolute; left: 34px; right: 34px; bottom: 30px; height: 10px; border-radius: 5px; background: rgba(255, 255, 255, 0.35); }
+.player .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 5px; background: var(--mo-accent); transform-origin: 0 50%; }
+.playbtn { position: absolute; left: 50%; top: 50%; width: 130px; height: 92px; margin: -46px 0 0 -65px; border-radius: 28px; background: var(--mo-accent);
+  display: flex; align-items: center; justify-content: center; }
+.playbtn::after { content: ""; border-left: 34px solid var(--mo-on-accent); border-top: 21px solid transparent; border-bottom: 21px solid transparent; margin-left: 8px; }
+.win { position: relative; width: 900px; border-radius: 34px; overflow: hidden; background: var(--mo-card); box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.26); }
+.win .tb { height: 56px; display: flex; align-items: center; gap: 12px; padding: 0 24px; background: var(--mo-ink); }
+.win .tb i { width: 16px; height: 16px; border-radius: 50%; background: var(--mo-line); }
+.win .tb i:first-child { background: var(--mo-accent); }
+.win .tb b { margin-left: 18px; height: 14px; width: 260px; border-radius: 7px; background: var(--mo-mute); opacity: 0.6; }
+.win .pv { position: relative; height: 380px; margin: 22px 22px 0; border-radius: 20px; overflow: hidden; }
+.win .tracks { position: relative; padding: 22px 22px 26px; display: flex; flex-direction: column; gap: 14px; }
+.win .tr { position: relative; height: 54px; border-radius: 12px; background: rgba(var(--mo-shadow), 0.07); }
+.win .clipb { position: absolute; top: 6px; bottom: 6px; border-radius: 10px; background: var(--mo-accent); }
+.win .clipb.ink { background: var(--mo-ink); } .win .clipb.soft { background: var(--mo-accent-2); } .win .clipb.line { background: var(--mo-line); }
+.win .head { position: absolute; top: 12px; bottom: 16px; width: 5px; margin-left: -2px; border-radius: 3px; background: var(--mo-kw); }
+.win .head::before { content: ""; position: absolute; left: -9px; top: -8px; width: 23px; height: 23px; border-radius: 6px; background: var(--mo-kw); }
+.app { position: relative; width: 250px; height: 250px; border-radius: 64px; background: var(--mo-ink); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 40px 80px rgba(var(--mo-shadow), 0.32), inset 0 2px 0 rgba(255, 255, 255, 0.18); }
+.app svg { width: 140px; height: 140px; }
+.prompt { position: relative; width: 880px; height: 120px; border-radius: 999px; background: var(--mo-card); display: flex; align-items: center; gap: 22px;
+  padding: 0 34px; font-size: 44px; font-weight: 700; color: var(--mo-ink); box-shadow: 0 26px 60px rgba(var(--mo-shadow), 0.22); white-space: nowrap; overflow: hidden; }
+.prompt .si { width: 52px; height: 52px; flex: none; } .prompt .si svg { width: 100%; height: 100%; }
+.prompt .ph { color: var(--mo-mute); }
+.caret { display: inline-block; width: 5px; height: 54px; margin-left: 4px; background: var(--mo-kw); vertical-align: -10px; }
+
+/* ---- scène illustrée dans un écran (personnage stylisé, illustration originale) ---- */
+.scene { position: absolute; inset: 0; }
+.scene svg { width: 100%; height: 100%; display: block; }
+.incap { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+.incap span { font-weight: 700; color: #ffffff; -webkit-text-stroke: 6px #000000; paint-order: stroke fill; letter-spacing: -0.01em; white-space: nowrap; }
+.incap span b { color: var(--mo-accent-2); }
+
+/* ---- cartes flottantes, pastilles, coches, autocollants ---- */
+.card { display: flex; align-items: center; gap: 18px; padding: 18px 30px 18px 18px; border-radius: 30px; background: var(--mo-card);
+  box-shadow: 0 18px 40px rgba(var(--mo-shadow), 0.20); font-weight: 700; font-size: 34px; white-space: nowrap; color: var(--mo-ink); }
+.card .ic { width: 62px; height: 62px; border-radius: 18px; flex: none; display: flex; align-items: center; justify-content: center; background: var(--mo-accent-2); }
+.card .ic svg { width: 38px; height: 38px; }
+.card small { display: block; font-size: 24px; font-weight: 400; color: var(--mo-mute); margin-top: 2px; }
+.card .ln { display: flex; flex-direction: column; gap: 10px; }
+.card .ln b { display: block; height: 14px; width: 230px; border-radius: 7px; background: var(--mo-line); opacity: 0.55; }
+.card .ln b + b { width: 150px; }
+.num { width: 92px; height: 92px; border-radius: 50%; background: var(--mo-accent); color: var(--mo-on-accent); display: flex; align-items: center;
+  justify-content: center; font-weight: 700; font-size: 50px; box-shadow: 0 0 0 12px rgba(var(--mo-deco), 0.20), 0 14px 30px rgba(var(--mo-shadow), 0.22); }
+.num.big { width: 170px; height: 170px; font-size: 96px; box-shadow: 0 0 0 20px rgba(var(--mo-deco), 0.20), 0 22px 44px rgba(var(--mo-shadow), 0.24); }
+.step { display: flex; align-items: center; gap: 20px; padding: 14px 34px 14px 14px; border-radius: 999px; background: var(--mo-card);
+  box-shadow: 0 14px 34px rgba(var(--mo-shadow), 0.18); font-weight: 700; font-size: 38px; white-space: nowrap; }
+.step .n { width: 62px; height: 62px; border-radius: 50%; flex: none; background: var(--mo-pill); color: var(--mo-pill-ink); display: flex;
+  align-items: center; justify-content: center; font-size: 34px; }
+.tick { width: 62px; height: 62px; border-radius: 50%; flex: none; background: var(--mo-accent); display: flex; align-items: center; justify-content: center; }
+.tick svg { width: 38px; height: 38px; }
+.tick path { fill: none; stroke: var(--mo-on-accent); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 30; }
+.stk { width: 150px; height: 150px; border-radius: 50%; background: var(--mo-card); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 14px rgba(var(--mo-deco), 0.18), 0 20px 44px rgba(var(--mo-shadow), 0.22); }
+.stk svg { width: 84px; height: 84px; }
+.stk.acc { background: var(--mo-accent); }
+.ring { position: absolute; left: 50%; top: 50%; width: 220px; height: 220px; margin: -110px 0 0 -110px; border-radius: 50%;
+  border: 4px solid var(--mo-accent); opacity: 0; pointer-events: none; }
+.tag { display: inline-flex; align-items: center; gap: 12px; padding: 10px 26px 12px; border-radius: 999px; font-weight: 700; font-size: 32px;
+  background: var(--mo-pill); color: var(--mo-pill-ink); white-space: nowrap; box-shadow: 0 10px 24px rgba(var(--mo-shadow), 0.22); }
+.tag.light { background: var(--mo-card); color: var(--mo-ink); }
+.count { font-weight: 700; font-size: 150px; letter-spacing: -0.04em; color: var(--mo-kw); line-height: 1; white-space: nowrap; }
+.meter { width: 64px; height: 300px; border-radius: 32px; background: rgba(var(--mo-shadow), 0.08); position: relative; overflow: hidden; }
+.meter i { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; border-radius: 32px; background: var(--mo-accent); transform-origin: 50% 100%; }
+.meter.dim i { background: var(--mo-line); }

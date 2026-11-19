@@ -41,6 +41,23 @@
   --glass-tint-soft: 242, 213, 142;
   --glass-cta-ink: var(--black);
 
+  /* style « motion design clair » (templates/reel-motion, 19/11/2026) : fond ivoire, texte noir, mots clés or foncé (lisible sur clair) */
+  --mo-bg: #f7f1e3;
+  --mo-bg-2: #ffffff;
+  --mo-ink: #0b0b0d;
+  --mo-mute: #8a8378;
+  --mo-kw: #b8863b;
+  --mo-accent: #e3b25c;
+  --mo-accent-2: #f2d58e;
+  --mo-on-accent: #0b0b0d;
+  --mo-pill: #0b0b0d;
+  --mo-pill-ink: #f2d58e;
+  --mo-card: #ffffff;
+  --mo-line: #a59d90;
+  --mo-shadow: 80, 50, 10;
+  --mo-deco: 227, 178, 92;
+  --say-top: 200px;
+
   /* alias génériques utilisés par les modèles */
   --accent: var(--gold);
   --accent-soft: var(--gold-light);

@@ -14,7 +14,18 @@ porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-a
 poser la question avant de monter. La marque se choisit avec `BRAND=<marque>` au moment de la génération ;
 elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateur s'en sert.
 
-**STYLE PAR DÉFAUT DE TOUS LES MONTAGES : bulles « liquid glass » façon Apple** (demande de l'utilisateur, 19/11/2026 :
+**STYLE PAR DÉFAUT DES MONTAGES : « motion design clair »** (demande de l'utilisateur, 19/11/2026, avec une vidéo de
+référence : « Le style que je veux pour mes montages. Animations, motion design mais sous mes couleurs »). Pour les
+**deux marques**, uniquement avec les couleurs `--mo-*` de la charte (ivoire / noir / or foncé Agency ; blanc /
+anthracite / rouge Gaming). Fiche mesurée : `references/style-motion/STYLE.md` ; modèle : `templates/reel-motion/`
+(`motion.py`, `motion.css`, `README.md`) ; exemple complet : `projets/agency-motion/` (même script pour les deux marques
+avec `BRAND=`). Fond clair, phrase qui s'écrit mot à mot en haut (mots clés couleur charte, mot fort en pastille sombre),
+un objet central par phrase (téléphone, lecteur, fenêtre de montage, icône, barre de recherche), cartes flottantes,
+pastilles numérotées et coches, une scène toutes les ~2,3 s, transitions zoom + flou, coups de zoom sur les mots forts,
+petits sons d'interface. Dans ce style, la phrase du haut remplace les sous-titres blancs à contour noir.
+Pour une vidéo **face caméra**, garder les bulles liquid glass ci-dessous (et proposer ce style en complément), sauf demande contraire.
+
+**Style face caméra : bulles « liquid glass » façon Apple** (demande de l'utilisateur, 19/11/2026 :
 « Garde ce style pour tous mes montages »). Pour les **deux marques**, teinté aux couleurs de la charte (or Agency, rouge
 Gaming). Modèle : `templates/reel-glass/` (`glass.css` + `README.md`) ; exemple complet : `projets/agency-glass/`
 (`scripts/cut.py` coupe serrée des blancs, `scripts/build.py` composition). **Toujours y ajouter des zooms aux moments importants**
