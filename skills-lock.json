@@ -19,6 +19,14 @@
       "skillPath": "skills/real-sound/SKILL.md",
       "computedHash": "0caed483c0c11a7b3dcc7e449d2856a1845a9ea13251f2708ff0e9c4397045fb"
     },
+    "sfx-sources": {
+      "source": "sxhzju/sfx",
+      "sourceType": "github",
+      "skillPath": "skills/sfx-sources/SKILL.md",
+      "computedHash": "",
+      "commit": "fb4ae3c44078dcc014c42adf1a7623e8a8758467",
+      "localPatch": "kenney(): lien de téléchargement signé /download-link (site modifié)"
+    },
     "steal": {
       "source": "Melvynx/video-agent-skills",
       "sourceType": "github",

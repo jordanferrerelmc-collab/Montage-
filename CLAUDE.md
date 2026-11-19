@@ -160,6 +160,14 @@ autour d'un terme à rechercher, tutoiement comme dans ses vidéos (le signaler 
   autorisé — ne pas chercher à le contourner. Procédure : donner à l'utilisateur les liens des pages trouvées par
   `cherche`, il télécharge et envoie les fichiers, puis `-- prends <id> <nom> --fichier <fichier envoyé>`.
   En attendant : bruitages maison de `effets/sfx/` (17, synthétisés) et réactions Mixkit validées (ci-dessous).
+- **Skill `sfx-sources`** (sxhzju/sfx, MIT, installé le 19/11/2026 dans `.agents/skills/sfx-sources`, lien
+  `.claude/skills/sfx-sources`) : recherche et téléchargement de bruitages. `npm run sfx -- mixkit <mot>` (wav, licence
+  Mixkit), `npm run sfx -- kenney [pack]` (packs **CC0** d'interface, d'impacts, sci-fi, jeu : idéal pour Gaming),
+  `npm run sfx -- get effets/sfx/sources <clés>` (dossier non versionné). Hôtes `kenney.nl` et `freesound.org` ajoutés à
+  l'environnement « Montage ». **Testé le 19/11/2026** : Mixkit et Kenney fonctionnent ; Freesound refuse les requêtes
+  du script (403 du site) et Pixabay n'est pas autorisé (le script contourne la protection Cloudflare en imitant Chrome) :
+  ne pas forcer, passer par Openverse / l'envoi de fichiers par l'utilisateur. Patch local : lien signé Kenney.
+  Toujours choisir parmi les candidats avec `earshot` avant d'intégrer un son.
 - **Choisir un son sans l'entendre : skill `earshot`** (Leonxlnx/earshot, MIT, installé le 13/11/2026 dans
   `.agents/skills/earshot`, lien `.claude/skills/earshot`). Ne jamais dire qu'un son « va bien » sans une mesure earshot :
   `npm run earshot -- rank "<description>" <dossier> --top 5`, `find` (meilleur extrait), `describe`, `realness`,

@@ -36,6 +36,7 @@
     "earshot:setup": "bash scripts/install-earshot.sh",
     "earshot": "/opt/earshot-src/.venv/bin/python -m earshot",
     "voix:claire": "bash scripts/clean-voice.sh",
-    "marges:check": "node scripts/check-marges.mjs"
+    "marges:check": "node scripts/check-marges.mjs",
+    "sfx": "python3 .agents/skills/sfx-sources/scripts/sfx.py"
   }
 }
