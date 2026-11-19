@@ -17,7 +17,8 @@ elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateu
 **STYLE PAR DÉFAUT DE TOUS LES MONTAGES : bulles « liquid glass » façon Apple** (demande de l'utilisateur, 19/11/2026 :
 « Garde ce style pour tous mes montages »). Pour les **deux marques**, teinté aux couleurs de la charte (or Agency, rouge
 Gaming). Modèle : `templates/reel-glass/` (`glass.css` + `README.md`) ; exemple complet : `projets/agency-glass/`
-(`scripts/cut.py` coupe serrée des blancs, `scripts/build.py` composition). Les styles ci-dessous (éditorial, gaming premium,
+(`scripts/cut.py` coupe serrée des blancs, `scripts/build.py` composition). **Toujours y ajouter des zooms aux moments importants**
+(coups de zoom sur les mots forts, transitions zoom entre les parties ; demande du 19/11/2026, détail dans le README du modèle). Les styles ci-dessous (éditorial, gaming premium,
 liquide glass « mot derrière la tête ») ne servent plus que **sur demande explicite** ; leurs règles de charte, de zones
 sûres et de placement restent valables.
 

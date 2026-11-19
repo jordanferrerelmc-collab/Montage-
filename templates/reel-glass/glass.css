@@ -8,7 +8,7 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
 #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
-#cam { position: absolute; inset: 0; transform-origin: 50% 58%; }
+#cam, #zoom { position: absolute; inset: 0; transform-origin: 50% 58%; }   /* #zoom : coups de zoom et transitions zoom */
 #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
 #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
   background: radial-gradient(ellipse 75% 55% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); }

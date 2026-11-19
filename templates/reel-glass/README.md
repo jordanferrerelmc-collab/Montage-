@@ -16,6 +16,13 @@ Demande de l'utilisateur (19/11/2026) : « Garde ce style pour tous mes montages
   En Gaming, garder la signature « SPECIMEN GAMING » en haut et décaler `.topwrap` sous les onglets TikTok (≈ 260 px).
 - **Coupe serrée** de tous les blancs > 0,16 s mesurés sur la voix nettoyée (`projets/agency-glass/scripts/cut.py`),
   coupes masquées par cadrage alterné (1,00 / 1,07) + bref flou « lentille » (4 px, 0,15 s).
+- **Zooms aux moments importants** (demande de l'utilisateur, 19/11/2026), sur l'élément `#zoom` (séparé du cadrage
+  alterné de `#cam`, ancré au menton) :
+  - **coups de zoom** sur chaque mot fort (chiffre, mot clé, chute) : 1,12 à 1,22, puis relâche douce (`power3.out`, 0,75 s) ;
+  - **transitions zoom** entre les parties : plongée vers 1,55 avec flou de mouvement (0,24 s), la partie suivante arrive
+    zoomée et se pose (0,42 s), whoosh discret ;
+  - fenêtres qui ne se chevauchent jamais, départ explicite de chaque tween (rendu déterministe) — voir `punch()` et
+    `through()` dans `projets/agency-glass/scripts/build.py`.
 - Voix nettoyée (`npm run voix:claire`), -14 LUFS en deux passes, sons discrets (clic `ui` par bulle), écran de fin de la charte.
 
 ## Utilisation

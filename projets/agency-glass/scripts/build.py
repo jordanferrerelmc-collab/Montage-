@@ -31,8 +31,8 @@ def pop_out(sel, t):
     js.append(f'  tl.fromTo("{sel}", {{opacity: 1, scaleX: 1, scaleY: 1}}, {{opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}}, {t:.3f});')
 
 # ------------------------------------------------------------------ vidéo : coupes masquées (cadrage alterné), poussée lente
-body.append(f'<div id="cam"><video id="v" class="clip" src="assets/cut.mp4" data-start="0" data-duration="{SPEECH_END}" '
-            'data-has-audio="true" data-volume="1" data-track-index="0"></video></div>')
+body.append(f'<div id="cam"><div id="zoom"><video id="v" class="clip" src="assets/cut.mp4" data-start="0" data-duration="{SPEECH_END}" '
+            'data-has-audio="true" data-volume="1" data-track-index="0"></video></div></div>')
 body.append('<div id="lens"></div>')
 for k, t in enumerate(CUTS):
     nxt = CUTS[k + 1] if k + 1 < len(CUTS) else SPEECH_END
@@ -41,6 +41,34 @@ for k, t in enumerate(CUTS):
     if k:   # « lentille » de verre sur la coupe : bref flou + reflet, pas de flash dur
         js.append(f'  tl.fromTo("#cam", {{filter: "blur(4px) brightness(1.05)"}}, {{filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}}, {t:.3f});')
         js.append(f'  tl.fromTo("#lens", {{opacity: 0.35}}, {{opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}}, {t:.3f});')
+
+# ------------------------------------------------------------------ zooms (style par défaut) : coups de zoom sur les moments
+# importants + transitions « zoom à travers » entre les parties. Sur #zoom (multiplié par le cadrage de #cam), ancré au menton.
+zev = []                                             # (début, fin, de, à, ease)
+def punch(t, z=1.14, hold=0.75):
+    """Coup de zoom sec sur un mot fort, puis relâche douce."""
+    zev.append((t, t + hold, z, 1.0, "power3.out"))
+def through(t, zin=1.55):
+    """Transition zoom : on plonge dans l'image (flou de mouvement), la partie suivante arrive zoomée et se pose."""
+    zev.append((t - 0.24, t, 1.0, zin, "power3.in")); zev.append((t, t + 0.42, zin * 0.82, 1.0, "power3.out"))
+    js.append(f'  tl.fromTo("#zoom", {{filter: "blur(0px)"}}, {{filter: "blur(10px)", duration: 0.22, ease: "power2.in", immediateRender: false}}, {t - 0.24:.3f});')
+    js.append(f'  tl.fromTo("#zoom", {{filter: "blur(10px)"}}, {{filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false}}, {t:.3f});')
+    sfx.append(("whoosh-court", t - 0.2, 0.18, 0.5))
+punch(W[4], 1.12)                                    # préciser
+for t in (W[21], W[32], W[60], W[71]):               # astuce / écris ta ville / fais-le / enregistre
+    through(t)
+punch(W[31], 1.16)                                   # géolocalisation
+punch(W[45], 1.16)                                   # Saint-Denis
+punch(W[54], 1.14)                                   # métier
+punch(W[65], 1.16)                                   # gratuit
+punch(W[69], 1.22, 0.9)                              # deux secondes
+punch(W[78], 1.14)                                   # commerçant
+zev.sort()
+for n, (a, b, z0, z1, ease) in enumerate(zev):
+    if n + 1 < len(zev):
+        b = min(b, zev[n + 1][0])
+    if b - a > 0.04:
+        js.append(f'  tl.fromTo("#zoom", {{scale: {z0:.3f}}}, {{scale: {z1:.3f}, duration: {b - a:.3f}, ease: "{ease}", immediateRender: {"true" if n == 0 else "false"}}}, {a:.3f});')
 
 # ------------------------------------------------------------------ sous-titres dans une bulle de verre (1 à 3 mots)
 fix = {22: "astuce :", 31: "géolocalisation.", 39: "légende,", 43: "« boulangerie", 45: "Saint-Denis »", 71: "Enregistre"}
