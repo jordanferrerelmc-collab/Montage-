@@ -113,8 +113,10 @@ l'or foncé.
 | Halo de l'accent | derrière l'objet central sur fond nuit | `glow=True` |
 | Écran de fin | toujours : logo + slogan de la charte | automatique (`m.write()`) |
 
-Illustrations **maison uniquement** : personnage stylisé (`person()`), pictos SVG de la charte. Jamais de logo ni
-d'interface réelle d'une autre marque (TikTok, YouTube, ChatGPT…), jamais d'émoji sur un visage ou un sous-titre.
+Illustrations **maison** : personnage stylisé (`person()`), pictos SVG de la charte. Pas d'interface réelle d'une autre
+marque, jamais d'émoji sur un visage ou un sous-titre. **Seule exception : les logos d'outils du skill `dev-icons`**
+(Claude, Figma, Notion…), pour désigner l'outil dont parle la vidéo, en couleurs officielles, licence vérifiée
+(voir `CLAUDE.md`). TikTok, Instagram, YouTube et ChatGPT n'y sont pas : pas de substitut dessiné.
 
 ---
 

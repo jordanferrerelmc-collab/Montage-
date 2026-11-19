@@ -1,0 +1,2040 @@
+[
+  {
+    "id": "html",
+    "name": "HTML",
+    "category": "frontend",
+    "aliases": [
+      "html5"
+    ],
+    "hex": "#E34F26",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "css",
+    "name": "CSS",
+    "category": "frontend",
+    "aliases": [
+      "css3"
+    ],
+    "hex": "#663399",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://github.com/CSS-Next/logo.css"
+  },
+  {
+    "id": "js",
+    "name": "JavaScript",
+    "category": "language",
+    "aliases": [
+      "javascript"
+    ],
+    "hex": "#F7DF1E",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": null
+  },
+  {
+    "id": "ts",
+    "name": "TypeScript",
+    "category": "language",
+    "aliases": [
+      "typescript"
+    ],
+    "hex": "#3178C6",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.typescriptlang.org/branding"
+  },
+  {
+    "id": "py",
+    "name": "Python",
+    "category": "language",
+    "aliases": [
+      "python"
+    ],
+    "hex": "#3776AB",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.python.org/community/logos/"
+  },
+  {
+    "id": "go",
+    "name": "Go",
+    "category": "language",
+    "aliases": [
+      "golang"
+    ],
+    "hex": "#00ADD8",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://blog.golang.org/go-brand"
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "category": "language",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-4.0",
+    "guidelines": "https://www.rust-lang.org/policies/media-guide"
+  },
+  {
+    "id": "dotnet",
+    "name": ".NET",
+    "category": "language",
+    "aliases": [
+      "net",
+      "csharp-runtime"
+    ],
+    "hex": "#512BD4",
+    "source": "simple-icons",
+    "license": "CC0-1.0",
+    "guidelines": "https://github.com/dotnet/brand/blob/c7d0f51b8ec59531332d05fb27a5b758a7a3d689/dotnet-styleGuide-2024.pdf"
+  },
+  {
+    "id": "react",
+    "name": "React",
+    "category": "frontend",
+    "aliases": [
+      "reactjs"
+    ],
+    "hex": "#61DAFB",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "nextjs",
+    "name": "Next.js",
+    "category": "frontend",
+    "aliases": [
+      "next"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://vercel.com/design/brands#next-js"
+  },
+  {
+    "id": "vue",
+    "name": "Vue",
+    "category": "frontend",
+    "aliases": [
+      "vuejs"
+    ],
+    "hex": "#4FC08D",
+    "source": "simple-icons",
+    "license": "CC-BY-NC-SA-4.0",
+    "guidelines": "https://github.com/vuejs/art/blob/a1c78b74569b70a25300925b4eacfefcc143b8f6/README.md"
+  },
+  {
+    "id": "svelte",
+    "name": "Svelte",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#FF3E00",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "tailwind",
+    "name": "Tailwind CSS",
+    "category": "frontend",
+    "aliases": [
+      "tailwindcss"
+    ],
+    "hex": "#06B6D4",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://tailwindcss.com/brand"
+  },
+  {
+    "id": "nodejs",
+    "name": "Node.js",
+    "category": "backend",
+    "aliases": [
+      "node"
+    ],
+    "hex": "#5FA04E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://nodejs.org/en/about/branding"
+  },
+  {
+    "id": "cloudflare",
+    "name": "Cloudflare",
+    "category": "cloud",
+    "aliases": [
+      "cf",
+      "workers"
+    ],
+    "hex": "#F38020",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.cloudflare.com/trademark/"
+  },
+  {
+    "id": "vercel",
+    "name": "Vercel",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://vercel.com/geist/brands"
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#2496ED",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "kubernetes",
+    "name": "Kubernetes",
+    "category": "devops",
+    "aliases": [
+      "k8s"
+    ],
+    "hex": "#326CE5",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#F03C2E",
+    "source": "simple-icons",
+    "license": "CC-BY-3.0",
+    "guidelines": null
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "category": "devops",
+    "aliases": [
+      "gh"
+    ],
+    "hex": "#181717",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://github.com/logos"
+  },
+  {
+    "id": "postgres",
+    "name": "PostgreSQL",
+    "category": "database",
+    "aliases": [
+      "postgresql",
+      "pg"
+    ],
+    "hex": "#4169E1",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.postgresql.org/about/policies/trademarks/"
+  },
+  {
+    "id": "mongodb",
+    "name": "MongoDB",
+    "category": "database",
+    "aliases": [
+      "mongo"
+    ],
+    "hex": "#47A248",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "redis",
+    "name": "Redis",
+    "category": "database",
+    "aliases": [],
+    "hex": "#FF4438",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://redis.io/brand-guidelines"
+  },
+  {
+    "id": "supabase",
+    "name": "Supabase",
+    "category": "database",
+    "aliases": [],
+    "hex": "#3FCF8E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "figma",
+    "name": "Figma",
+    "category": "design",
+    "aliases": [],
+    "hex": "#F24E1E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.figma.com/using-the-figma-brand/"
+  },
+  {
+    "id": "linux",
+    "name": "Linux",
+    "category": "os",
+    "aliases": [],
+    "hex": "#FCC624",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "anthropic",
+    "name": "Anthropic",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#191919",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "claude",
+    "name": "Claude",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#D97757",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "c",
+    "name": "C",
+    "category": "language",
+    "aliases": [],
+    "hex": "#A8B9CC",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "category": "language",
+    "aliases": [
+      "c++"
+    ],
+    "hex": "#00599C",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "java",
+    "name": "Java",
+    "category": "language",
+    "aliases": [
+      "openjdk",
+      "jdk"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "BSD-3-Clause",
+    "guidelines": null
+  },
+  {
+    "id": "kotlin",
+    "name": "Kotlin",
+    "category": "language",
+    "aliases": [],
+    "hex": "#7F52FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.jetbrains.com/company/brand/"
+  },
+  {
+    "id": "swift",
+    "name": "Swift",
+    "category": "language",
+    "aliases": [],
+    "hex": "#F05138",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://developer.apple.com/swift/resources/"
+  },
+  {
+    "id": "php",
+    "name": "PHP",
+    "category": "language",
+    "aliases": [],
+    "hex": "#777BB4",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-4.0",
+    "guidelines": null
+  },
+  {
+    "id": "ruby",
+    "name": "Ruby",
+    "category": "language",
+    "aliases": [],
+    "hex": "#CC342D",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-2.5",
+    "guidelines": null
+  },
+  {
+    "id": "dart",
+    "name": "Dart",
+    "category": "language",
+    "aliases": [],
+    "hex": "#0175C2",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "scala",
+    "name": "Scala",
+    "category": "language",
+    "aliases": [],
+    "hex": "#DC322F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "elixir",
+    "name": "Elixir",
+    "category": "language",
+    "aliases": [],
+    "hex": "#4B275F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "haskell",
+    "name": "Haskell",
+    "category": "language",
+    "aliases": [],
+    "hex": "#5D4F85",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "lua",
+    "name": "Lua",
+    "category": "language",
+    "aliases": [],
+    "hex": "#000080",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.lua.org/images/"
+  },
+  {
+    "id": "r",
+    "name": "R",
+    "category": "language",
+    "aliases": [
+      "rlang"
+    ],
+    "hex": "#276DC3",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-4.0",
+    "guidelines": null
+  },
+  {
+    "id": "perl",
+    "name": "Perl",
+    "category": "language",
+    "aliases": [],
+    "hex": "#0073A1",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "category": "language",
+    "aliases": [],
+    "hex": "#9558B2",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "zig",
+    "name": "Zig",
+    "category": "language",
+    "aliases": [],
+    "hex": "#F7A41D",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-4.0",
+    "guidelines": null
+  },
+  {
+    "id": "clojure",
+    "name": "Clojure",
+    "category": "language",
+    "aliases": [],
+    "hex": "#5881D8",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "erlang",
+    "name": "Erlang",
+    "category": "language",
+    "aliases": [],
+    "hex": "#A90533",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "ocaml",
+    "name": "OCaml",
+    "category": "language",
+    "aliases": [],
+    "hex": "#EC6813",
+    "source": "simple-icons",
+    "license": "Unlicense",
+    "guidelines": "https://ocaml.org/logo"
+  },
+  {
+    "id": "solidity",
+    "name": "Solidity",
+    "category": "language",
+    "aliases": [],
+    "hex": "#363636",
+    "source": "simple-icons",
+    "license": "CC-BY-4.0",
+    "guidelines": "https://docs.soliditylang.org/en/v0.8.6/brand-guide.html"
+  },
+  {
+    "id": "bash",
+    "name": "Bash",
+    "category": "language",
+    "aliases": [
+      "shell",
+      "sh"
+    ],
+    "hex": "#4EAA25",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": "https://github.com/odb/official-bash-logo"
+  },
+  {
+    "id": "wasm",
+    "name": "WebAssembly",
+    "category": "language",
+    "aliases": [
+      "webassembly"
+    ],
+    "hex": "#654FF0",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "graphql",
+    "name": "GraphQL",
+    "category": "language",
+    "aliases": [
+      "gql"
+    ],
+    "hex": "#E10098",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://graphql.org/brand"
+  },
+  {
+    "id": "markdown",
+    "name": "Markdown",
+    "category": "language",
+    "aliases": [
+      "md"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "CC0-1.0",
+    "guidelines": "https://github.com/dcurtis/markdown-mark"
+  },
+  {
+    "id": "latex",
+    "name": "LaTeX",
+    "category": "language",
+    "aliases": [
+      "tex"
+    ],
+    "hex": "#008080",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "angular",
+    "name": "Angular",
+    "category": "frontend",
+    "aliases": [
+      "angularjs"
+    ],
+    "hex": "#0F0F11",
+    "source": "simple-icons",
+    "license": "CC-BY-4.0",
+    "guidelines": "https://angular.dev/press-kit"
+  },
+  {
+    "id": "astro",
+    "name": "Astro",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#BC52EE",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "nuxt",
+    "name": "Nuxt",
+    "category": "frontend",
+    "aliases": [
+      "nuxtjs"
+    ],
+    "hex": "#00DC82",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://nuxt.com/design-kit"
+  },
+  {
+    "id": "remix",
+    "name": "Remix",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "solid",
+    "name": "Solid",
+    "category": "frontend",
+    "aliases": [
+      "solidjs"
+    ],
+    "hex": "#2C4F7C",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "qwik",
+    "name": "Qwik",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#AC7EF4",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "gatsby",
+    "name": "Gatsby",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#663399",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.gatsbyjs.com/guidelines/logo"
+  },
+  {
+    "id": "preact",
+    "name": "Preact",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#673AB8",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "lit",
+    "name": "Lit",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#324FFF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "ember",
+    "name": "Ember.js",
+    "category": "frontend",
+    "aliases": [
+      "emberjs"
+    ],
+    "hex": "#E04E39",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://emberjs.com/logos/"
+  },
+  {
+    "id": "jquery",
+    "name": "jQuery",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#0769AD",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://brand.jquery.org/logos/"
+  },
+  {
+    "id": "htmx",
+    "name": "htmx",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#3366CC",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "alpinejs",
+    "name": "Alpine.js",
+    "category": "frontend",
+    "aliases": [
+      "alpine"
+    ],
+    "hex": "#8BC0D0",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "bootstrap",
+    "name": "Bootstrap",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#7952B3",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": "https://getbootstrap.com/docs/5.3/about/brand"
+  },
+  {
+    "id": "sass",
+    "name": "Sass",
+    "category": "frontend",
+    "aliases": [
+      "scss"
+    ],
+    "hex": "#CC6699",
+    "source": "simple-icons",
+    "license": "CC-BY-NC-SA-3.0",
+    "guidelines": "https://sass-lang.com/styleguide/brand"
+  },
+  {
+    "id": "less",
+    "name": "Less",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#1D365D",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "mui",
+    "name": "MUI",
+    "category": "frontend",
+    "aliases": [
+      "materialui"
+    ],
+    "hex": "#007FFF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "chakraui",
+    "name": "Chakra UI",
+    "category": "frontend",
+    "aliases": [
+      "chakra"
+    ],
+    "hex": "#1BB2A9",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "shadcn",
+    "name": "shadcn/ui",
+    "category": "frontend",
+    "aliases": [
+      "shadcnui"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "styledcomponents",
+    "name": "styled-components",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#DB7093",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "redux",
+    "name": "Redux",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#764ABC",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "threejs",
+    "name": "Three.js",
+    "category": "frontend",
+    "aliases": [
+      "three"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "d3",
+    "name": "D3",
+    "category": "frontend",
+    "aliases": [
+      "d3js"
+    ],
+    "hex": "#F9A03C",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "storybook",
+    "name": "Storybook",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#FF4785",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": null
+  },
+  {
+    "id": "vite",
+    "name": "Vite",
+    "category": "frontend",
+    "aliases": [
+      "vitejs"
+    ],
+    "hex": "#9135FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "webpack",
+    "name": "webpack",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#8DD6F9",
+    "source": "simple-icons",
+    "license": "custom",
+    "guidelines": "https://webpack.js.org/branding"
+  },
+  {
+    "id": "babel",
+    "name": "Babel",
+    "category": "frontend",
+    "aliases": [],
+    "hex": "#F9DC3E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "express",
+    "name": "Express",
+    "category": "backend",
+    "aliases": [
+      "expressjs"
+    ],
+    "hex": "#0A0A0A",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "nestjs",
+    "name": "NestJS",
+    "category": "backend",
+    "aliases": [
+      "nest"
+    ],
+    "hex": "#E0234E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "django",
+    "name": "Django",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#092E20",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "flask",
+    "name": "Flask",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#3BABC3",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "fastapi",
+    "name": "FastAPI",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#009688",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "rails",
+    "name": "Ruby on Rails",
+    "category": "backend",
+    "aliases": [
+      "rubyonrails",
+      "ror"
+    ],
+    "hex": "#D30001",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://rubyonrails.org/trademarks/"
+  },
+  {
+    "id": "laravel",
+    "name": "Laravel",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#FF2D20",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "spring",
+    "name": "Spring",
+    "category": "backend",
+    "aliases": [
+      "springboot"
+    ],
+    "hex": "#6DB33F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "deno",
+    "name": "Deno",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": "https://deno.com/brand"
+  },
+  {
+    "id": "bun",
+    "name": "Bun",
+    "category": "backend",
+    "aliases": [
+      "bunjs"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "hono",
+    "name": "Hono",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#E36002",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "prisma",
+    "name": "Prisma",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#2D3748",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "drizzle",
+    "name": "Drizzle",
+    "category": "backend",
+    "aliases": [
+      "drizzleorm"
+    ],
+    "hex": "#C5F74F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "trpc",
+    "name": "tRPC",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#2596BE",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "socketio",
+    "name": "Socket.IO",
+    "category": "backend",
+    "aliases": [
+      "socket.io"
+    ],
+    "hex": "#010101",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "nginx",
+    "name": "NGINX",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#009639",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.nginx.com/press/"
+  },
+  {
+    "id": "apache",
+    "name": "Apache",
+    "category": "backend",
+    "aliases": [
+      "httpd"
+    ],
+    "hex": "#D22128",
+    "source": "simple-icons",
+    "license": "Apache-2.0",
+    "guidelines": "https://www.apache.org/foundation/marks"
+  },
+  {
+    "id": "rabbitmq",
+    "name": "RabbitMQ",
+    "category": "backend",
+    "aliases": [],
+    "hex": "#FF6600",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.rabbitmq.com/trademark-guidelines.html"
+  },
+  {
+    "id": "kafka",
+    "name": "Apache Kafka",
+    "category": "backend",
+    "aliases": [
+      "apachekafka"
+    ],
+    "hex": "#231F20",
+    "source": "simple-icons",
+    "license": "Apache-2.0",
+    "guidelines": "https://www.apache.org/foundation/marks"
+  },
+  {
+    "id": "flutter",
+    "name": "Flutter",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#02569B",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://flutter.dev/brand"
+  },
+  {
+    "id": "android",
+    "name": "Android",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#3DDC84",
+    "source": "simple-icons",
+    "license": "CC-BY-3.0",
+    "guidelines": "https://developer.android.com/distribute/marketing-tools/brand-guidelines#brand-android"
+  },
+  {
+    "id": "expo",
+    "name": "Expo",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#1C2024",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://expo.dev/brand/"
+  },
+  {
+    "id": "ionic",
+    "name": "Ionic",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#3880FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "capacitor",
+    "name": "Capacitor",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#119EFF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "electron",
+    "name": "Electron",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#47848F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "tauri",
+    "name": "Tauri",
+    "category": "mobile",
+    "aliases": [],
+    "hex": "#24C8D8",
+    "source": "simple-icons",
+    "license": "CC-BY-NC-ND-4.0",
+    "guidelines": "https://github.com/tauri-apps/tauri-docs/blob/b1cdfa9d7c6d0b17dae60a90266ddced40a7b384/static/img/Brand_Guidelines.pdf"
+  },
+  {
+    "id": "gcp",
+    "name": "Google Cloud",
+    "category": "cloud",
+    "aliases": [
+      "googlecloud"
+    ],
+    "hex": "#4285F4",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "netlify",
+    "name": "Netlify",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#00C7B7",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.netlify.com/press/"
+  },
+  {
+    "id": "digitalocean",
+    "name": "DigitalOcean",
+    "category": "cloud",
+    "aliases": [
+      "do"
+    ],
+    "hex": "#0080FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.digitalocean.com/press/"
+  },
+  {
+    "id": "firebase",
+    "name": "Firebase",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#DD2C00",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://firebase.google.com/brand-guidelines"
+  },
+  {
+    "id": "render",
+    "name": "Render",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "railway",
+    "name": "Railway",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#0B0D0E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "fly",
+    "name": "Fly.io",
+    "category": "cloud",
+    "aliases": [
+      "flyio"
+    ],
+    "hex": "#24175B",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://fly.io/docs/about/brand"
+  },
+  {
+    "id": "appwrite",
+    "name": "Appwrite",
+    "category": "cloud",
+    "aliases": [],
+    "hex": "#FD366E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://appwrite.io/assets"
+  },
+  {
+    "id": "mysql",
+    "name": "MySQL",
+    "category": "database",
+    "aliases": [],
+    "hex": "#4479A1",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.mysql.com/about/legal/logos.html"
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "category": "database",
+    "aliases": [],
+    "hex": "#003B57",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "mariadb",
+    "name": "MariaDB",
+    "category": "database",
+    "aliases": [],
+    "hex": "#003545",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://mariadb.com/about-us/logos/"
+  },
+  {
+    "id": "cassandra",
+    "name": "Cassandra",
+    "category": "database",
+    "aliases": [],
+    "hex": "#1287B1",
+    "source": "simple-icons",
+    "license": "Apache-2.0",
+    "guidelines": "https://www.apache.org/foundation/marks"
+  },
+  {
+    "id": "elasticsearch",
+    "name": "Elasticsearch",
+    "category": "database",
+    "aliases": [
+      "elastic"
+    ],
+    "hex": "#005571",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "neo4j",
+    "name": "Neo4j",
+    "category": "database",
+    "aliases": [],
+    "hex": "#4581C3",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://neo4j.com/brand/#logo"
+  },
+  {
+    "id": "couchdb",
+    "name": "CouchDB",
+    "category": "database",
+    "aliases": [],
+    "hex": "#E42528",
+    "source": "simple-icons",
+    "license": "Apache-2.0",
+    "guidelines": "https://www.apache.org/foundation/marks"
+  },
+  {
+    "id": "planetscale",
+    "name": "PlanetScale",
+    "category": "database",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "clickhouse",
+    "name": "ClickHouse",
+    "category": "database",
+    "aliases": [],
+    "hex": "#FFCC01",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "influxdb",
+    "name": "InfluxDB",
+    "category": "database",
+    "aliases": [],
+    "hex": "#22ADF6",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://influxdata.github.io/branding/logo/usage/"
+  },
+  {
+    "id": "cockroachdb",
+    "name": "CockroachDB",
+    "category": "database",
+    "aliases": [],
+    "hex": "#6933FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "neon",
+    "name": "Neon",
+    "category": "database",
+    "aliases": [],
+    "hex": "#34D59A",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://neon.com/brand"
+  },
+  {
+    "id": "gitlab",
+    "name": "GitLab",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#FC6D26",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://about.gitlab.com/handbook/marketing/corporate-marketing/brand-activation/trademark-guidelines/"
+  },
+  {
+    "id": "bitbucket",
+    "name": "Bitbucket",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#0052CC",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://atlassian.design/foundations/logos"
+  },
+  {
+    "id": "githubactions",
+    "name": "GitHub Actions",
+    "category": "devops",
+    "aliases": [
+      "actions",
+      "gha"
+    ],
+    "hex": "#2088FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "jenkins",
+    "name": "Jenkins",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#D24939",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-3.0",
+    "guidelines": "https://www.jenkins.io/press/"
+  },
+  {
+    "id": "circleci",
+    "name": "CircleCI",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#343434",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "terraform",
+    "name": "Terraform",
+    "category": "devops",
+    "aliases": [
+      "tf"
+    ],
+    "hex": "#844FBA",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.hashicorp.com/brand"
+  },
+  {
+    "id": "ansible",
+    "name": "Ansible",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#EE0000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "helm",
+    "name": "Helm",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#0F1689",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "prometheus",
+    "name": "Prometheus",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#E6522C",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "grafana",
+    "name": "Grafana",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#F46800",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "podman",
+    "name": "Podman",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#892CA0",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "argocd",
+    "name": "Argo",
+    "category": "devops",
+    "aliases": [
+      "argo"
+    ],
+    "hex": "#EF7B4D",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "vagrant",
+    "name": "Vagrant",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#1868F2",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.hashicorp.com/brand"
+  },
+  {
+    "id": "sentry",
+    "name": "Sentry",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#362D59",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "datadog",
+    "name": "Datadog",
+    "category": "devops",
+    "aliases": [],
+    "hex": "#632CA6",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.datadoghq.com/about/resources/"
+  },
+  {
+    "id": "vim",
+    "name": "Vim",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#019733",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "neovim",
+    "name": "Neovim",
+    "category": "tools",
+    "aliases": [
+      "nvim"
+    ],
+    "hex": "#57A143",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-3.0",
+    "guidelines": null
+  },
+  {
+    "id": "idea",
+    "name": "IntelliJ IDEA",
+    "category": "tools",
+    "aliases": [
+      "intellij"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.jetbrains.com/company/brand/"
+  },
+  {
+    "id": "postman",
+    "name": "Postman",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#FF6C37",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "insomnia",
+    "name": "Insomnia",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#4000BF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "npm",
+    "name": "npm",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#CB3837",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://docs.npmjs.com/policies/logos-and-usage"
+  },
+  {
+    "id": "yarn",
+    "name": "Yarn",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#2C8EBB",
+    "source": "simple-icons",
+    "license": "CC-BY-4.0",
+    "guidelines": "https://github.com/yarnpkg/assets/tree/76d30ca2aebed5b73ea8131d972218fb860bd32d"
+  },
+  {
+    "id": "pnpm",
+    "name": "pnpm",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#F69220",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "jest",
+    "name": "Jest",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#C21325",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "vitest",
+    "name": "Vitest",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#00FF74",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "cypress",
+    "name": "Cypress",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#69D3A7",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "selenium",
+    "name": "Selenium",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#43B02A",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "eslint",
+    "name": "ESLint",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#4B32C3",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "prettier",
+    "name": "Prettier",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#F7B93E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "notion",
+    "name": "Notion",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "discord",
+    "name": "Discord",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#5865F2",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://discord.com/branding"
+  },
+  {
+    "id": "jira",
+    "name": "Jira",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#0052CC",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://atlassian.design/foundations/logos/"
+  },
+  {
+    "id": "obsidian",
+    "name": "Obsidian",
+    "category": "tools",
+    "aliases": [],
+    "hex": "#7C3AED",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://obsidian.md/brand"
+  },
+  {
+    "id": "stackoverflow",
+    "name": "Stack Overflow",
+    "category": "tools",
+    "aliases": [
+      "so"
+    ],
+    "hex": "#F58025",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://stackoverflow.com/legal/trademark-guidance"
+  },
+  {
+    "id": "homebrew",
+    "name": "Homebrew",
+    "category": "tools",
+    "aliases": [
+      "brew"
+    ],
+    "hex": "#FBB040",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "apple",
+    "name": "Apple",
+    "category": "os",
+    "aliases": [
+      "macos",
+      "mac",
+      "ios"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "ubuntu",
+    "name": "Ubuntu",
+    "category": "os",
+    "aliases": [],
+    "hex": "#E95420",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://design.ubuntu.com/brand"
+  },
+  {
+    "id": "debian",
+    "name": "Debian",
+    "category": "os",
+    "aliases": [],
+    "hex": "#A81D33",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-3.0",
+    "guidelines": "https://www.debian.org/logos/"
+  },
+  {
+    "id": "arch",
+    "name": "Arch Linux",
+    "category": "os",
+    "aliases": [
+      "archlinux"
+    ],
+    "hex": "#1793D1",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://wiki.archlinux.org/index.php/DeveloperWiki:TrademarkPolicy#Logo_Usage_Guidelines"
+  },
+  {
+    "id": "fedora",
+    "name": "Fedora",
+    "category": "os",
+    "aliases": [],
+    "hex": "#51A2DA",
+    "source": "simple-icons",
+    "license": "custom",
+    "guidelines": "https://fedoraproject.org/wiki/Legal:Trademark_guidelines"
+  },
+  {
+    "id": "raspberrypi",
+    "name": "Raspberry Pi",
+    "category": "os",
+    "aliases": [
+      "rpi"
+    ],
+    "hex": "#A22846",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.raspberrypi.org/trademark-rules"
+  },
+  {
+    "id": "huggingface",
+    "name": "Hugging Face",
+    "category": "ai",
+    "aliases": [
+      "hf"
+    ],
+    "hex": "#FFD21E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://huggingface.co/brand"
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#EE4C2C",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://github.com/pytorch/pytorch.github.io/blob/381117ec296f002b2de475402ef29cca6c55e209/assets/brand-guidelines/PyTorch-Brand-Guidelines.pdf"
+  },
+  {
+    "id": "tensorflow",
+    "name": "TensorFlow",
+    "category": "ai",
+    "aliases": [
+      "tf2"
+    ],
+    "hex": "#FF6F00",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "langchain",
+    "name": "LangChain",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#7FC8FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "ollama",
+    "name": "Ollama",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "gemini",
+    "name": "Gemini",
+    "category": "ai",
+    "aliases": [
+      "googlegemini"
+    ],
+    "hex": "#8E75B2",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "mistral",
+    "name": "Mistral AI",
+    "category": "ai",
+    "aliases": [
+      "mistralai"
+    ],
+    "hex": "#FA520F",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "copilot",
+    "name": "GitHub Copilot",
+    "category": "ai",
+    "aliases": [
+      "githubcopilot"
+    ],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "MIT",
+    "guidelines": null
+  },
+  {
+    "id": "kaggle",
+    "name": "Kaggle",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#20BEFF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.kaggle.com/brand-guidelines"
+  },
+  {
+    "id": "jupyter",
+    "name": "Jupyter",
+    "category": "ai",
+    "aliases": [
+      "ipynb"
+    ],
+    "hex": "#F37626",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://github.com/jupyter/design"
+  },
+  {
+    "id": "numpy",
+    "name": "NumPy",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#013243",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://github.com/numpy/numpy/blob/main/branding/logo/logoguidelines.md"
+  },
+  {
+    "id": "pandas",
+    "name": "pandas",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#150458",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://pandas.pydata.org/about/citing.html"
+  },
+  {
+    "id": "sklearn",
+    "name": "scikit-learn",
+    "category": "ai",
+    "aliases": [
+      "scikitlearn"
+    ],
+    "hex": "#F7931E",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  },
+  {
+    "id": "opencv",
+    "name": "OpenCV",
+    "category": "ai",
+    "aliases": [],
+    "hex": "#5C3EE8",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://opencv.org/resources/media-kit/"
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "category": "design",
+    "aliases": [],
+    "hex": "#E87D0D",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.blender.org/about/logo"
+  },
+  {
+    "id": "unity",
+    "name": "Unity",
+    "category": "design",
+    "aliases": [],
+    "hex": "#FFFFFF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://unity.com/legal/branding-trademarks"
+  },
+  {
+    "id": "unreal",
+    "name": "Unreal Engine",
+    "category": "design",
+    "aliases": [
+      "unrealengine",
+      "ue"
+    ],
+    "hex": "#0E1128",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.unrealengine.com/en-US/branding"
+  },
+  {
+    "id": "godot",
+    "name": "Godot",
+    "category": "design",
+    "aliases": [
+      "godotengine"
+    ],
+    "hex": "#478CBF",
+    "source": "simple-icons",
+    "license": "CC-BY-4.0",
+    "guidelines": "https://godotengine.org/press"
+  },
+  {
+    "id": "inkscape",
+    "name": "Inkscape",
+    "category": "design",
+    "aliases": [],
+    "hex": "#000000",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-3.0",
+    "guidelines": null
+  },
+  {
+    "id": "gimp",
+    "name": "GIMP",
+    "category": "design",
+    "aliases": [],
+    "hex": "#8C8073",
+    "source": "simple-icons",
+    "license": "CC-BY-SA-4.0",
+    "guidelines": null
+  },
+  {
+    "id": "sketch",
+    "name": "Sketch",
+    "category": "design",
+    "aliases": [],
+    "hex": "#F7B500",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": "https://www.sketch.com/about-us/#press"
+  },
+  {
+    "id": "framer",
+    "name": "Framer",
+    "category": "design",
+    "aliases": [],
+    "hex": "#0055FF",
+    "source": "simple-icons",
+    "license": null,
+    "guidelines": null
+  }
+]

@@ -287,6 +287,19 @@ temporaires non versionnés).
   vérification ; préférer nos sources (Openverse, Kenney CC0, Mixkit, sons de l'utilisateur). Les deux musiques
   « song » de `music.md` sont des titres d'autres artistes : jamais par défaut (risque de son coupé ou de réclamation).
 
+### Skill « dev-icons » (Hirusha-Nikson/pro-icons-skill, installé le 19/11/2026)
+
+Dans `.agents/skills/dev-icons` (lien `.claude/skills/dev-icons`, commit dans `skills-lock.json`) : ≈ 190 logos
+d'outils tech / IA (Simple Icons) en tuiles `dark`, `light` ou `brand`, avec `find.py` (toujours vérifier le nom),
+`compose.py` (rangée de logos), `export.py` (SVG / PNG), `animate.py` (intro HTML). Hors ligne, scripts sans réseau.
+Présents : Claude, Gemini, Notion, Figma, Blender, Discord, Python, Node.js… **Absents** : TikTok, Instagram, YouTube,
+CapCut, Canva, ChatGPT / OpenAI, consoles et plateformes de jeu.
+- Dans un montage : seulement pour **désigner l'outil dont parle la vidéo** (« fait avec Claude et Figma »), jamais comme
+  si la marque soutenait Specimen. Insérer le fichier exporté en `<img>` (couleurs officielles du logo, sans les modifier) ;
+  tuile `dark` sur fond clair, `light` sur fond nuit. Ce sont les seules couleurs hors charte tolérées.
+- Avant usage : `find.py <nom>` affiche la licence. Non commerciales (`*-NC-*` : Vue, Sass, Tauri) interdites pour
+  Specimen (usage commercial) ; `CC-BY` : crédit dans la description (texte de `NOTICE.md`). Jamais de logo dessiné à la main.
+
 ### Style « Vidéo liquide glass » (mesuré avec steal, 09/11/2026)
 
 Pour **les deux marques**, selon le sujet de la vidéo. Fiche : `references/video-liquide-glass/STYLE.md` ;
