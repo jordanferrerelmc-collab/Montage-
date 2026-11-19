@@ -69,7 +69,12 @@ Règles communes :
   cases de progression (`.tracker`) sous la signature « SPECIMEN GAMING ». La signature seule reste en haut.
 - La bande floutée `#shade` ne sert qu'à masquer des sous-titres déjà incrustés dans la source :
   la retirer si la vidéo source n'en a pas.
-- **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) doit être vert, en plus de `hyperframes check`.
+- **Jamais de texte sur les rebords de l'écran** (demande de l'utilisateur, 19/11/2026) : aucun texte ni bulle / carte /
+  pastille à moins de **90 px (Agency) / 110 px (Gaming) des côtés, 90 px du haut, 230 px du bas**, à tout moment, y compris
+  pendant les entrées élastiques et les coups de zoom (seules les images de transition floue plein cadre sont tolérées).
+  Contrôle automatique image par image : `npm run marges:check -- projets/<nom>/montage/index.html` doit être vert.
+  Si une bulle déborde : texte plus court sur 2 lignes, police plus petite ou zoom moins fort — jamais modifier les mots de l'utilisateur.
+- **Avant de livrer** : `npm run brand:check` (couleurs + police, selon la marque) et `npm run marges:check` doivent être verts, en plus de `hyperframes check`.
 - Changer une charte = modifier uniquement `brand/<marque>/`, puis régénérer les vidéos.
 
 ## Monter une nouvelle vidéo (procédure)
@@ -84,7 +89,7 @@ Point de départ : `projets/video1/` (pipeline complet et éprouvé).
    au discours. La charte (couleurs, police, logo) est lue et copiée automatiquement dans
    `montage/assets/brand/`. Lancer avec `BRAND=specimen-gaming` pour le compte gaming
    (`specimen-agency` par défaut).
-6. `hyperframes check`, puis `npm run brand:check`, puis `hyperframes snapshot` pour relire.
+6. `hyperframes check`, puis `npm run brand:check`, puis `npm run marges:check -- montage/index.html`, puis `hyperframes snapshot` pour relire.
 7. `hyperframes render --quality delivery`, puis `loudnorm` à -14 LUFS (voir `scripts/montage.sh`).
 8. Livrer à l'utilisateur deux fichiers : une version légère (CRF 23, environ 10 Mo) et une version HD.
 

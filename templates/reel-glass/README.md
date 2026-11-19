@@ -29,3 +29,10 @@ Demande de l'utilisateur (19/11/2026) : « Garde ce style pour tous mes montages
 Copier `projets/agency-glass/scripts/` (`cut.py`, `build.py`) dans le nouveau projet, adapter les textes et les instants,
 `BRAND` selon le sujet. `build.py` injecte `brand.css` puis `glass.css`. Vérifier : `hyperframes check` (0 erreur de
 contraste), `npm run brand:check`, `hyperframes snapshot` (rien sur le visage).
+
+## Marges de sécurité (19/11/2026)
+
+Aucun texte ni bulle à moins de 90 px (Agency) / 110 px (Gaming) des côtés, 90 px du haut, 230 px du bas, même pendant
+le rebond élastique d'entrée et les coups de zoom. Une bulle large (étapes, cartes côte à côte) doit tenir dans
+`var(--cap-width)` : passer sur deux lignes ou réduire la police plutôt que laisser déborder.
+Vérification : `npm run marges:check -- projets/<nom>/montage/index.html` (Chromium, toutes les 0,1 s).
