@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="liquid-glass-apple" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+        --cap-left: 90px;
+        --cap-width: 900px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+
+      /* ---- bulles « liquid glass » (façon Apple), teinte or de la charte ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+      #cam { position: absolute; inset: 0; transform-origin: 50% 58%; }
+      #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 75% 55% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); }
+      .glass { position: relative; color: var(--ink); border-radius: 999px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(11, 11, 13, 0.30) 42%, rgba(11, 11, 13, 0.42) 100%);
+        backdrop-filter: blur(30px) saturate(160%) brightness(0.82); -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(0.82);
+        border: 1.5px solid rgba(255, 255, 255, 0.55);
+        box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.75), inset 0 -2px 6px rgba(255, 255, 255, 0.18),
+          inset 0 0 22px rgba(255, 255, 255, 0.12), 0 18px 46px rgba(0, 0, 0, 0.28);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); }
+      .glass::after { content: ""; position: absolute; left: 8%; right: 8%; top: 5%; height: 38%; border-radius: 999px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0) 100%); }
+      .topwrap, .midwrap, .capwrap { position: absolute; left: var(--cap-left); width: var(--cap-width); display: flex; justify-content: center; }
+      .topwrap { top: 120px; }
+      .midwrap { top: 1215px; }
+      .capwrap { top: 1470px; }
+      /* sous-titres : blancs à contour noir léger, mots clés en or */
+      .cap { padding: 16px 38px; font-weight: 700; font-size: 64px; letter-spacing: -0.015em; white-space: nowrap;
+        -webkit-text-stroke: 5px rgba(0, 0, 0, 0.55); paint-order: stroke fill; }
+      .cap .kw { color: var(--gold-light); }
+      /* accroche */
+      .big { border-radius: 58px; padding: 34px 64px 42px; text-align: center; font-weight: 700; font-size: 84px; line-height: 1.05; letter-spacing: -0.03em; }
+      .big b { color: var(--gold-light); font-weight: 700; }
+      .eyebrow { display: block; font-size: 26px; letter-spacing: 0.3em; margin-bottom: 14px; color: var(--ivory); opacity: 0.85; }
+      /* bulles du script, façon notification */
+      .note { display: flex; align-items: center; gap: 22px; border-radius: 40px; padding: 22px 40px 22px 24px; white-space: nowrap; }
+      .note .ico { width: 82px; height: 82px; border-radius: 24px; flex: none; display: flex; align-items: center; justify-content: center;
+        background: rgba(11, 11, 13, 0.55); border: 1.5px solid rgba(255, 255, 255, 0.35); }
+      .note .ico svg { width: 50px; height: 50px; }
+      .note .tx { display: flex; flex-direction: column; gap: 4px; }
+      .note .t { font-weight: 700; font-size: 48px; letter-spacing: -0.02em; }
+      .note .t i { font-style: normal; display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; margin-right: 10px;
+        border-radius: 50%; background: var(--accent); color: var(--black); font-size: 34px; text-shadow: none; vertical-align: 4px; }
+      .note .s { font-weight: 700; font-size: 38px; color: var(--ivory); opacity: 0.92; }
+      .note.msg { border-radius: 40px 40px 40px 10px; padding: 24px 44px; }
+      .note.msg .t { font-size: 50px; }
+      .note.gold { background: linear-gradient(160deg, rgba(242, 213, 142, 0.85) 0%, rgba(227, 178, 92, 0.78) 100%); color: var(--black);
+        text-shadow: none; border-color: rgba(255, 255, 255, 0.7); }
+      .note.gold .s { color: var(--black); }
+      .note.gold .ico { background: rgba(255, 255, 255, 0.35); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="28.25" data-width="1080" data-height="1920">
+      <div id="cam"><video id="v" class="clip" src="assets/cut.mp4" data-start="0" data-duration="25.55" data-has-audio="true" data-volume="1" data-track-index="0"></video></div>
+      <div id="lens"></div>
+      <div class="capwrap clip" id="c0" data-start="0.050" data-duration="0.850" data-track-index="4"><div class="glass cap" id="cb0">Quand tu <span class='kw'>postes</span></div></div>
+      <div class="capwrap clip" id="c1" data-start="0.900" data-duration="0.750" data-track-index="4"><div class="glass cap" id="cb1">sans <span class='kw'>préciser</span></div></div>
+      <div class="capwrap clip" id="c2" data-start="1.650" data-duration="0.560" data-track-index="4"><div class="glass cap" id="cb2">où tu es</div></div>
+      <div class="capwrap clip" id="c3" data-start="2.210" data-duration="0.510" data-track-index="4"><div class="glass cap" id="cb3">la <span class='kw'>plateforme</span></div></div>
+      <div class="capwrap clip" id="c4" data-start="2.720" data-duration="0.350" data-track-index="4"><div class="glass cap" id="cb4">ne sait</div></div>
+      <div class="capwrap clip" id="c5" data-start="3.070" data-duration="0.370" data-track-index="4"><div class="glass cap" id="cb5">pas à qui</div></div>
+      <div class="capwrap clip" id="c6" data-start="3.440" data-duration="0.560" data-track-index="4"><div class="glass cap" id="cb6">te <span class='kw'>montrer</span></div></div>
+      <div class="capwrap clip" id="c7" data-start="4.000" data-duration="0.460" data-track-index="4"><div class="glass cap" id="cb7">et où te</div></div>
+      <div class="capwrap clip" id="c8" data-start="4.460" data-duration="0.620" data-track-index="4"><div class="glass cap" id="cb8">montrer</div></div>
+      <div class="capwrap clip" id="c9" data-start="5.080" data-duration="0.740" data-track-index="4"><div class="glass cap" id="cb9">Petite <span class='kw'>astuce :</span></div></div>
+      <div class="capwrap clip" id="c10" data-start="5.820" data-duration="1.290" data-track-index="4"><div class="glass cap" id="cb10">à chaque publication</div></div>
+      <div class="capwrap clip" id="c11" data-start="7.110" data-duration="0.780" data-track-index="4"><div class="glass cap" id="cb11">ajoute le <span class='kw'>lieu</span></div></div>
+      <div class="capwrap clip" id="c12" data-start="7.890" data-duration="1.590" data-track-index="4"><div class="glass cap" id="cb12">et ta <span class='kw'>géolocalisation.</span></div></div>
+      <div class="capwrap clip" id="c13" data-start="9.480" data-duration="0.170" data-track-index="4"><div class="glass cap" id="cb13">Écris</div></div>
+      <div class="capwrap clip" id="c14" data-start="9.650" data-duration="0.590" data-track-index="4"><div class="glass cap" id="cb14">ta <span class='kw'>ville</span></div></div>
+      <div class="capwrap clip" id="c15" data-start="10.240" data-duration="0.950" data-track-index="4"><div class="glass cap" id="cb15">ou ton <span class='kw'>quartier</span></div></div>
+      <div class="capwrap clip" id="c16" data-start="11.190" data-duration="0.710" data-track-index="4"><div class="glass cap" id="cb16">en <span class='kw'>légende,</span></div></div>
+      <div class="capwrap clip" id="c17" data-start="11.900" data-duration="1.070" data-track-index="4"><div class="glass cap" id="cb17">avec par exemple</div></div>
+      <div class="capwrap clip" id="c18" data-start="12.970" data-duration="0.850" data-track-index="4"><div class="glass cap" id="cb18"><span class='kw'>« boulangerie</span></div></div>
+      <div class="capwrap clip" id="c19" data-start="13.820" data-duration="1.420" data-track-index="4"><div class="glass cap" id="cb19">à <span class='kw'>Saint-Denis »</span></div></div>
+      <div class="capwrap clip" id="c20" data-start="15.240" data-duration="0.300" data-track-index="4"><div class="glass cap" id="cb20">N&#x27;oublie</div></div>
+      <div class="capwrap clip" id="c21" data-start="15.540" data-duration="0.740" data-track-index="4"><div class="glass cap" id="cb21">pas de rajouter</div></div>
+      <div class="capwrap clip" id="c22" data-start="16.280" data-duration="0.400" data-track-index="4"><div class="glass cap" id="cb22">ta <span class='kw'>ville</span></div></div>
+      <div class="capwrap clip" id="c23" data-start="16.680" data-duration="0.560" data-track-index="4"><div class="glass cap" id="cb23">et le <span class='kw'>métier</span></div></div>
+      <div class="capwrap clip" id="c24" data-start="17.240" data-duration="0.520" data-track-index="4"><div class="glass cap" id="cb24">en <span class='kw'>légende</span></div></div>
+      <div class="capwrap clip" id="c25" data-start="17.760" data-duration="1.540" data-track-index="4"><div class="glass cap" id="cb25">dans la publication</div></div>
+      <div class="capwrap clip" id="c26" data-start="19.300" data-duration="0.140" data-track-index="4"><div class="glass cap" id="cb26">Fais-le</div></div>
+      <div class="capwrap clip" id="c27" data-start="19.440" data-duration="1.250" data-track-index="4"><div class="glass cap" id="cb27">sur <span class='kw'>chaque</span> publication</div></div>
+      <div class="capwrap clip" id="c28" data-start="20.690" data-duration="0.670" data-track-index="4"><div class="glass cap" id="cb28">c&#x27;est <span class='kw'>gratuit</span></div></div>
+      <div class="capwrap clip" id="c29" data-start="21.360" data-duration="0.580" data-track-index="4"><div class="glass cap" id="cb29">et ça prend</div></div>
+      <div class="capwrap clip" id="c30" data-start="21.940" data-duration="1.100" data-track-index="4"><div class="glass cap" id="cb30"><span class='kw'>deux</span> <span class='kw'>secondes</span></div></div>
+      <div class="capwrap clip" id="c31" data-start="23.040" data-duration="0.250" data-track-index="4"><div class="glass cap" id="cb31">Enregistre</div></div>
+      <div class="capwrap clip" id="c32" data-start="23.290" data-duration="0.320" data-track-index="4"><div class="glass cap" id="cb32">la <span class='kw'>vidéo</span></div></div>
+      <div class="capwrap clip" id="c33" data-start="23.610" data-duration="0.480" data-track-index="4"><div class="glass cap" id="cb33">et envoie-la</div></div>
+      <div class="capwrap clip" id="c34" data-start="24.090" data-duration="0.640" data-track-index="4"><div class="glass cap" id="cb34">à un <span class='kw'>commerçant</span></div></div>
+      <div class="capwrap clip" id="c35" data-start="24.730" data-duration="0.820" data-track-index="4"><div class="glass cap" id="cb35">de ton <span class='kw'>quartier</span></div></div>
+      <div class="topwrap clip" id="hook" data-start="0" data-duration="2.20" data-track-index="2"><div class="glass big" id="hb"><span class="eyebrow">SPECIMEN AGENCY</span>Tes futurs clients<br/><b>sont à côté</b></div></div>
+      <div class="midwrap clip" id="n0" data-start="2.200" data-duration="2.840" data-track-index="3"><div class="glass note " id="nb0"><span class="ico"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/><circle cx="12" cy="12" r="3" style="fill:var(--accent)"/></svg></span><span class="tx"><span class="t">Sans lieu =</span><span class="s">pas de clientèle de proximité</span></span></div></div>
+      <div class="midwrap clip" id="n1" data-start="7.100" data-duration="2.340" data-track-index="3"><div class="glass note " id="nb1"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7z" style="fill:var(--accent)"/><circle cx="12" cy="9" r="2.6" style="fill:var(--black)"/></svg></span><span class="tx"><span class="t"><i>1</i> Ajoute le lieu</span><span class="s">géolocalisation à chaque publication</span></span></div></div>
+      <div class="midwrap clip" id="n2" data-start="9.620" data-duration="2.760" data-track-index="3"><div class="glass note " id="nb2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 10h16M4 15h10" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="tx"><span class="t"><i>2</i> Ville + métier</span><span class="s">dans la légende</span></span></div></div>
+      <div class="midwrap clip" id="n3" data-start="12.410" data-duration="2.790" data-track-index="3"><div class="glass note msg" id="nb3"><span class="tx"><span class="t">boulangerie à Saint-Denis</span></span></div></div>
+      <div class="midwrap clip" id="n4" data-start="15.330" data-duration="3.930" data-track-index="3"><div class="glass note " id="nb4"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 5h16M4 10h16M4 15h10" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="tx"><span class="t"><i>2</i> Ville + métier</span><span class="s">dans la légende</span></span></div></div>
+      <div class="midwrap clip" id="n5" data-start="20.680" data-duration="2.320" data-track-index="3"><div class="glass note " id="nb5"><span class="ico"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z" style="fill:var(--accent)"/></svg></span><span class="tx"><span class="t">Gratuit.</span><span class="s">2 secondes.</span></span></div></div>
+      <div class="midwrap clip" id="n6" data-start="23.030" data-duration="2.520" data-track-index="3"><div class="glass note gold" id="nb6"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 3h13l3 3v15H4z" style="fill:var(--black)"/><rect x="7" y="3" width="9" height="6" style="fill:var(--ivory)"/><rect x="7" y="13" width="10" height="6" rx="1" style="fill:var(--ivory)"/></svg></span><span class="tx"><span class="t">Enregistre + partage</span><span class="s">à un commerçant</span></span></div></div>
+      <div class="clip" id="endcard" data-start="25.55" data-duration="2.7" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/><div id="tagline">VOTRE IMAGE.<br/>NOTRE EXPERTISE.</div></div>
+    </div>
+    <audio id="s0" class="clip" src="assets/sfx/tic-flutter.wav" data-start="0.050" data-duration="0.7" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="s1" class="clip" src="assets/sfx/ui.wav" data-start="2.220" data-duration="0.49" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="s2" class="clip" src="assets/sfx/ui.wav" data-start="7.120" data-duration="0.49" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="s3" class="clip" src="assets/sfx/ui.wav" data-start="9.640" data-duration="0.49" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="s4" class="clip" src="assets/sfx/ui.wav" data-start="12.430" data-duration="0.49" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="s5" class="clip" src="assets/sfx/ui.wav" data-start="15.350" data-duration="0.49" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="s6" class="clip" src="assets/sfx/ui.wav" data-start="20.700" data-duration="0.49" data-volume="0.2" data-track-index="6"></audio>
+    <audio id="s7" class="clip" src="assets/sfx/ui.wav" data-start="23.050" data-duration="0.49" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="s8" class="clip" src="assets/sfx/impact-grave.wav" data-start="21.980" data-duration="1.2" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="s9" class="clip" src="assets/sfx/whoosh-court.wav" data-start="25.300" data-duration="0.5" data-volume="0.14" data-track-index="6"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 2.170, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 2.870, ease: "none", immediateRender: false}, 2.170);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 2.170);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 2.170);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 0.950, ease: "none", immediateRender: false}, 5.040);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 5.040);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 5.040);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.240, ease: "none", immediateRender: false}, 5.990);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 5.990);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 5.990);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 2.130, ease: "none", immediateRender: false}, 7.230);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 7.230);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 7.230);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.120, ease: "none", immediateRender: false}, 9.360);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 9.360);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 9.360);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 1.640, ease: "none", immediateRender: false}, 10.480);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 10.480);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 10.480);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.700, ease: "none", immediateRender: false}, 12.120);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 12.120);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 12.120);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 1.280, ease: "none", immediateRender: false}, 13.820);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 13.820);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 13.820);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.870, ease: "none", immediateRender: false}, 15.100);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 15.100);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 15.100);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 0.780, ease: "none", immediateRender: false}, 16.970);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 16.970);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 16.970);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.380, ease: "none", immediateRender: false}, 17.750);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 17.750);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 17.750);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 1.800, ease: "none", immediateRender: false}, 19.130);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 19.130);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 19.130);
+  tl.fromTo("#cam", {scale: 1.070}, {scale: 1.097, duration: 1.960, ease: "none", immediateRender: false}, 20.930);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 20.930);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 20.930);
+  tl.fromTo("#cam", {scale: 1.000}, {scale: 1.025, duration: 2.660, ease: "none", immediateRender: false}, 22.890);
+  tl.fromTo("#cam", {filter: "blur(4px) brightness(1.05)"}, {filter: "blur(0px) brightness(1)", duration: 0.15, ease: "power2.out", immediateRender: false}, 22.890);
+  tl.fromTo("#lens", {opacity: 0.35}, {opacity: 0, duration: 0.2, ease: "sine.out", immediateRender: false}, 22.890);
+  tl.fromTo("#cb0", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 0.050);
+  tl.fromTo("#cb1", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 0.900);
+  tl.fromTo("#cb2", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 1.650);
+  tl.fromTo("#cb3", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 2.210);
+  tl.fromTo("#cb4", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 2.720);
+  tl.fromTo("#cb5", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 3.070);
+  tl.fromTo("#cb6", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 3.440);
+  tl.fromTo("#cb7", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 4.000);
+  tl.fromTo("#cb8", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 4.460);
+  tl.fromTo("#cb9", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 5.080);
+  tl.fromTo("#cb10", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 5.820);
+  tl.fromTo("#cb11", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 7.110);
+  tl.fromTo("#cb12", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 7.890);
+  tl.fromTo("#cb13", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 9.480);
+  tl.fromTo("#cb14", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 9.650);
+  tl.fromTo("#cb15", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 10.240);
+  tl.fromTo("#cb16", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 11.190);
+  tl.fromTo("#cb17", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 11.900);
+  tl.fromTo("#cb18", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 12.970);
+  tl.fromTo("#cb19", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 13.820);
+  tl.fromTo("#cb20", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 15.240);
+  tl.fromTo("#cb21", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 15.540);
+  tl.fromTo("#cb22", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 16.280);
+  tl.fromTo("#cb23", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 16.680);
+  tl.fromTo("#cb24", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 17.240);
+  tl.fromTo("#cb25", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 17.760);
+  tl.fromTo("#cb26", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 19.300);
+  tl.fromTo("#cb27", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 19.440);
+  tl.fromTo("#cb28", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 20.690);
+  tl.fromTo("#cb29", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 21.360);
+  tl.fromTo("#cb30", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 21.940);
+  tl.fromTo("#cb31", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 23.040);
+  tl.fromTo("#cb32", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 23.290);
+  tl.fromTo("#cb33", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 23.610);
+  tl.fromTo("#cb34", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 24.090);
+  tl.fromTo("#cb35", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 24.730);
+  tl.fromTo("#hb", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: -30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.7, ease: "elastic.out(1, 0.62)", immediateRender: true}, 0.050);
+  tl.fromTo("#hb", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 2.000);
+  tl.fromTo("#nb0", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 2.220);
+  tl.fromTo("#nb0", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 4.860);
+  tl.fromTo("#nb1", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 7.120);
+  tl.fromTo("#nb1", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 9.260);
+  tl.fromTo("#nb2", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 9.640);
+  tl.fromTo("#nb2", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 12.200);
+  tl.fromTo("#nb3", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 12.430);
+  tl.fromTo("#nb3", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 15.020);
+  tl.fromTo("#nb4", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 15.350);
+  tl.fromTo("#nb4", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 19.080);
+  tl.fromTo("#nb5", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 20.700);
+  tl.fromTo("#nb5", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 22.820);
+  tl.fromTo("#nb6", {opacity: 0, scaleX: 0.55, scaleY: 0.35, y: 30}, {opacity: 1, scaleX: 1, scaleY: 1, y: 0, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 23.050);
+  tl.fromTo("#nb6", {opacity: 1, scaleX: 1, scaleY: 1}, {opacity: 0, scaleX: 0.85, scaleY: 0.7, duration: 0.18, ease: "power2.in", immediateRender: false}, 25.370);
+  tl.fromTo("#cam", {filter: "blur(0px)"}, {filter: "blur(18px)", duration: 0.3, ease: "power2.in", immediateRender: false}, 25.250);
+  tl.fromTo("#logo", {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: true}, 25.600);
+  tl.fromTo("#tagline", {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: true}, 26.050);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

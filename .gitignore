@@ -31,3 +31,4 @@ effets/sfx/utilisateur/*.wav
 effets/sfx/utilisateur/work/
 # sons du pack fourni par l'utilisateur (droits inconnus) : recopiés par build.py, jamais versionnés
 projets/agency-geoloc/montage/assets/sfx/
+projets/agency-glass/montage/assets/sfx/
