@@ -1,17 +1,66 @@
 {
   "version": 2,
   "skills": {
+    "broll": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/broll/SKILL.md",
+      "computedHash": "74f5f918c03d9eb7e42748390b7b3e302f2ae5bbdac67d753861a0d595fcf363"
+    },
+    "clips": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/clips/SKILL.md",
+      "computedHash": "c273c3fe5673b9ece70490449d87160c63bf76c72274fa173a9b7c3a06bcd9d3"
+    },
+    "codex-images": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/codex-images/SKILL.md",
+      "computedHash": "e8abdaa8f63415e6d98e874f8085d3067b21526533169c995a0b25f083cc3deb"
+    },
     "earshot": {
       "source": "Leonxlnx/earshot",
       "sourceType": "github",
       "skillPath": "skills/earshot/SKILL.md",
       "computedHash": "07a6100d2f2110f38e33d1892d03efa614f7b35335580a60fc7d2b17d39de5ec"
     },
+    "editing": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/editing/SKILL.md",
+      "computedHash": "68a00b4abd6f7a2108cd7e04c704c76557e80225b40a725aeb1df57d1055f655"
+    },
     "html-demo": {
       "source": "MengTo/Skills",
       "sourceType": "github",
       "skillPath": "agent-skills/web-design/html-demo/SKILL.md",
       "computedHash": ""
+    },
+    "insta-audit": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/insta-audit/SKILL.md",
+      "computedHash": "66dcadfe36291657b56d5974b2baba8b196ff4b9dbb5cefad69d38718f3d01fc"
+    },
+    "outliers": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/outliers/SKILL.md",
+      "computedHash": "f102aa814dbf19315d481e8fe3e82681e076c62d99c99e6cd45aecfc82aa79a2"
+    },
+    "publish": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/publish/SKILL.md",
+      "computedHash": "c6fa7a240f8e0a442b6efb2cf0d7e80eff1dc0bffcc770ba4837e6eb3cf71896"
     },
     "real-sound": {
       "source": "Leonxlnx/earshot",
@@ -27,11 +76,47 @@
       "commit": "fb4ae3c44078dcc014c42adf1a7623e8a8758467",
       "localPatch": "kenney(): lien de téléchargement signé /download-link (site modifié)"
     },
+    "short-editing": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/short-editing/SKILL.md",
+      "computedHash": "9223b6b01d44ea5531b60d6643de67445a9dec60105327d09af1747c30ac4e1c"
+    },
+    "short-translate": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/short-translate/SKILL.md",
+      "computedHash": "6541b7f40e7a338b258b19c13330695ff234931cd793788b6bbffe60203f71ed"
+    },
     "steal": {
       "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
       "sourceType": "github",
       "skillPath": "skills/steal/SKILL.md",
       "computedHash": "fa037217f27a9aa653990d613e1dfa9162181b87a8543c448be9ea3415833dc2"
+    },
+    "studio-script": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/studio-script/SKILL.md",
+      "computedHash": "a85f95ee8556a7c05dc3a4d42fa10e64ef759dc31219e31069b043a95f91bad1"
+    },
+    "studio-setup": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/studio-setup/SKILL.md",
+      "computedHash": "e320a27b49261c73d1ac55027c5155b2566a2eb599c0c0f2f2beb08af7243064"
+    },
+    "vox": {
+      "source": "Melvynx/video-agent-skills",
+      "commit": "f4542923f7f796a1fa0e544cbfc1109d5eec87d8",
+      "sourceType": "github",
+      "skillPath": "skills/vox/SKILL.md",
+      "computedHash": "84485ad3b56dc64e321c877d734520d4072a101e36667cd7d215929e6e837997"
     }
   }
 }

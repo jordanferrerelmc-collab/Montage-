@@ -37,3 +37,6 @@ effets/sfx/sources/
 projets/agency-motion/montage/assets/sfx/
 projets/agency-motion/montage/assets/voix.wav
 __pycache__/
+video-agent/takes/
+video-agent/edits/
+video-agent/.tmp/

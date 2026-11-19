@@ -269,6 +269,24 @@ Adaptation à ce dépôt (le skill vise le moteur `short-editing` de l'auteur, *
 - Instagram / TikTok : essayer `yt-dlp` ; s'il est bloqué, demander à l'utilisateur d'envoyer le fichier vidéo.
 - Avant de livrer : comparaison image par image original / copie (commande de l'étape 5 du skill).
 
+### Suite complète Melvynx/video-agent-skills (installée le 19/11/2026)
+
+`npx skills add Melvynx/video-agent-skills -a claude-code` : 12 skills copiés dans `.claude/skills/` (provenance et
+commit dans `skills-lock.json`) : `editing` (aiguillage), `studio-setup`, `studio-script`, `outliers`, `insta-audit`,
+`short-editing`, `broll`, `clips`, `short-translate`, `codex-images`, `vox`, `publish` ; `steal` reste le lien vers
+`.agents/skills/steal` (même contenu). Ils travaillent dans un dossier `video-agent/` (prises, montages et fichiers
+temporaires non versionnés).
+- **Notre DA prime** (`DA.md`) : `short-editing` a son propre look « papier » (polices, couleurs, musique de fond) ;
+  pour un montage Specimen, ne l'utiliser que sur demande explicite, et toujours avec la charte choisie
+  (`npm run brand:check` vert). Son moteur (Node + Chrome + ffmpeg) s'installe à la première utilisation (`engine/setup.mjs`).
+- **Utiles tels quels** : `studio-script` (scripts, accroches ; garder nos règles ElevenLabs et « aucun faux chiffre »),
+  `clips` (vidéo longue → shorts), `broll` (bibliothèque de ses B-roll), `outliers` / `insta-audit` (analyse de comptes).
+- **Comptes et services tiers** (Treg pour Instagram / TikTok / YouTube, clé ElevenLabs, Codex) : seulement après l'accord
+  de l'utilisateur, coût annoncé avant. `publish` ne publie **jamais** sans son « oui » explicite sur le plan de publication.
+- Sons livrés avec `short-editing` (`assets/sfx/*.mp3`) : licence non précisée dans le skill → ne pas les utiliser sans
+  vérification ; préférer nos sources (Openverse, Kenney CC0, Mixkit, sons de l'utilisateur). Les deux musiques
+  « song » de `music.md` sont des titres d'autres artistes : jamais par défaut (risque de son coupé ou de réclamation).
+
 ### Style « Vidéo liquide glass » (mesuré avec steal, 09/11/2026)
 
 Pour **les deux marques**, selon le sujet de la vidéo. Fiche : `references/video-liquide-glass/STYLE.md` ;
