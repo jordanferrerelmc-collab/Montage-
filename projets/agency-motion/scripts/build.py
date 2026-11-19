@@ -58,19 +58,16 @@ for cid, ic, tt, x, y, t in CARDS:
     m.pop(f"#{cid}", t, sound="ui" if cid in ("ca", "cc") else None, vol=0.12)
     m.bob(f"#{cid}", t + 0.55, B[2], 9, 1.6 + 0.2 * len(tt) % 3)
 m.punch(W[11], 1.05, 0.35)
-m.through(B[2])
+m.wipe(B[2])
 
-# ---------------------------------------------------------------- 3. « Étape par étape. »
-m.scene("s3", B[2], B[3]); m.push(B[2], B[3])
-say("t3", range(13, 16), {13: "kw", 15: "kw"}, B[3])
-m.add('<div class="slot" style="top:740px;height:300px"><div style="position:relative;display:flex;gap:70px;align-items:center">'
-      '<i class="abs" id="lnk" style="left:85px;right:85px;top:50%;height:8px;margin-top:-4px;border-radius:4px;background:var(--mo-line);transform-origin:0 50%"></i>'
-      + "".join(f'<div style="position:relative"><div class="num big" id="n{k}">{k + 1}</div><i class="ring" id="nr{k}"></i></div>' for k in range(3))
-      + "</div></div>")
+# ---------------------------------------------------------------- 3. « Étape par étape. » — fond ÉCLAT (or plein cadre), typo cinétique
+m.scene("s3", B[2], B[3], ground="eclat", fill="lines"); m.push(B[2], B[3], 1.0, 1.03)
+m.kin("k3", [("Étape", False), ("par", False), ("étape.", True)], W[13] - 0.15, B[3], top=560, stagger=[W[13] - 0.15, W[14] - 0.15, W[15] - 0.15])
+m.add('<div class="slot" style="top:1270px;height:160px"><div style="display:flex;gap:44px">'
+      + "".join(f'<div class="num" id="n{k}">{k + 1}</div>' for k in range(3)) + "</div></div>")
 for k, t in enumerate((W[13], W[14], W[15])):
-    m.pop(f"#n{k}", t - 0.04, 0.5, 0.4, 30, sound="ui", vol=0.15); m.shock(f"#nr{k}", t)
-m.grow("#lnk", W[13], W[15] + 0.3 - W[13], "scaleX")
-m.through(B[3])
+    m.pop(f"#n{k}", t + 0.1, 0.45, 0.4, 20, sound="ui" if k == 0 else None, vol=0.15)
+m.wipe(B[3])
 
 # ---------------------------------------------------------------- 4. « Un texte court, synchronisé, des overlays qui apparaissent au bon moment. »
 m.scene("s4", B[3], B[4]); m.push(B[3], B[4])
@@ -95,17 +92,17 @@ for k, t in enumerate((W[21], W[23], W[25])):
 m.pop("#ic4", W[17] - 0.04, 0.35, 0.7, 10)
 m.pop("#ov1", W[23] - 0.04, 0.45, 0.4, 0, sound="ui", vol=0.12); m.pop("#ov2", W[25] - 0.04, 0.45, 0.4, 0)
 STEPS = [("Texte court", W[18]), ("Synchronisé", W[19]), ("Overlays au bon moment", W[24])]
-m.add('<div class="slot" style="top:1295px;height:330px"><div style="display:flex;flex-direction:column;align-items:center;gap:22px">'
+m.add('<div class="slot" style="top:1262px;height:330px"><div style="display:flex;flex-direction:column;align-items:center;gap:22px">'
       + "".join(f'<div class="step" id="sp{k}"><span class="n">{k + 1}</span>{tx}<span class="tick" id="tk{k}">{I["check"]}</span></div>'
                 for k, (tx, _) in enumerate(STEPS)) + "</div></div>")
 for k, (tx, t) in enumerate(STEPS):
-    m.slide(f"#sp{k}", t - 0.45 if k < 2 else W[19] + 0.4, 0, 50)
+    m.slide(f"#sp{k}", t - 0.45 if k < 2 else W[19] + 0.4, 0, 24)
     m.tick(f"#tk{k}", t + 0.05, sound=(k == 0))
 m.punch(W[19], 1.05, 0.5)
 m.through(B[4])
 
 # ---------------------------------------------------------------- 5. « Preuve rapide, plus de vues et plus de commentaires quand les sous-titres accompagnent. »
-m.scene("s5", B[4], B[5]); m.push(B[4], B[5])
+m.scene("s5", B[4], B[5], ground="nuit", fill="grid", glow=True); m.push(B[4], B[5])
 say("t5a", range(27, 29), {27: "pill"}, W[29])
 say("t5b", range(29, 40), {31: "kw", 35: "kw", 38: "kw"}, B[5])
 mini = "".join(f'<div class="card mini" id="cm{k}"><span class="ic">{I["bubble"]}</span><span class="ln"><b></b><b></b></span></div>' for k in range(3))
@@ -149,6 +146,10 @@ for k, t in enumerate((W[45], W[46] + 0.15, W[47])):
 m.add(f'<div class="abs" style="left:465px;top:1290px"><div class="stk acc" id="k7">{I["bolt"].replace("var(--mo-kw)", "var(--mo-on-accent)")}</div><i class="ring" id="r7"></i></div>')
 m.pop("#k7", W[48] - 0.04, 0.55, 0.4, 20, sound="ui", vol=0.16); m.shock("#r7", W[48])
 m.punch(W[48], 1.06, 0.6)
+
+for k, (a, b, lab) in enumerate([(B[0], B[2], "01 / 04 · Pourquoi"), (B[2], B[4], "02 / 04 · La méthode"),
+                                 (B[4], B[5], "03 / 04 · La preuve"), (B[5], MAIN, "04 / 04 · À toi")]):
+    m.chapter(a, b, lab)
 
 EXTRA = """
 .card.mini { padding: 10px 16px 10px 10px; border-radius: 22px; gap: 12px; }

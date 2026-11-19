@@ -14,6 +14,13 @@ porte sur le jeu vidéo, utiliser `specimen-gaming`. Sinon, utiliser `specimen-a
 poser la question avant de monter. La marque se choisit avec `BRAND=<marque>` au moment de la génération ;
 elle est inscrite dans la composition (`<meta name="brand">`) et le vérificateur s'en sert.
 
+**DA DE RÉFÉRENCE : `DA.md` (racine du dépôt) — À LIRE AVANT CHAQUE MONTAGE** (demande de l'utilisateur, 19/11/2026 :
+« Sauvegarde bien ma DA dans un fichier .md »). Elle réunit le style « motion design clair » ci-dessous et les principes
+des références Prompt Motion (`references/style-prompt-motion/STYLE.md` : fond sombre + une seule couleur d'accent,
+typo cinétique géante, HUD, données en images, balayage d'accent, rythme). Trois fonds de scène dans les deux chartes :
+clair (défaut), **nuit** (`.g-nuit`) et **éclat** (`.g-eclat`, accent plein cadre). Toute évolution de la DA se fait
+dans `DA.md` + `templates/reel-motion/` + `brand/<marque>/brand.css`.
+
 **STYLE PAR DÉFAUT DES MONTAGES : « motion design clair »** (demande de l'utilisateur, 19/11/2026, avec une vidéo de
 référence : « Le style que je veux pour mes montages. Animations, motion design mais sous mes couleurs »). Pour les
 **deux marques**, uniquement avec les couleurs `--mo-*` de la charte (ivoire / noir / or foncé Agency ; blanc /

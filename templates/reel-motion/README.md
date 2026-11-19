@@ -44,3 +44,14 @@ intérieur. La phrase a une réserve intérieure de 50 px pour ne jamais toucher
 `hyperframes check` (0 erreur, contraste ≥ 3:1), `npm run brand:check`, `npm run marges:check -- <index.html>`,
 `hyperframes snapshot` sur chaque scène (une phrase de 4 lignes ne doit pas toucher l'objet central : réduire `size=`
 de `m.say()` ou descendre l'objet).
+
+## Ajouts DA « Prompt Motion » (19/11/2026)
+
+DA complète : `DA.md` à la racine. Nouvelles fonctions :
+
+- `m.scene(sid, t0, t1, ground="nuit"|"eclat", fill="grid"|"lines"|"plain", glow=True)` : fond de chapitre
+  (variables `.g-nuit` / `.g-eclat` de `brand.css`) ; le HUD change de couleur tout seul.
+- `m.kin(id, [("Étape", False), ("étape.", True)], t, end, top=560, stagger=[t1, t2…])` : typo cinétique géante.
+- `m.chapter(t0, t1, "02 / 04 · La méthode")` : HUD (coins de cadre + étiquette de chapitre, hors caméra).
+- `m.wipe(t)` : balayage d'accent en bandes diagonales ; la scène change à `t`.
+- `m.dots()`, `m.bars()`, `m.ring()`, `m.network()` : données en images (**valeurs réelles uniquement**).

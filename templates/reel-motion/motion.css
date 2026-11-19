@@ -117,3 +117,69 @@ html, body { width: 1080px; height: 1920px; overflow: hidden; background: var(--
 .meter { width: 64px; height: 300px; border-radius: 32px; background: rgba(var(--mo-shadow), 0.08); position: relative; overflow: hidden; }
 .meter i { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; border-radius: 32px; background: var(--mo-accent); transform-origin: 50% 100%; }
 .meter.dim i { background: var(--mo-line); }
+
+/* ==========================================================================
+   Ajouts DA « Prompt Motion » (19/11/2026, references/style-prompt-motion/STYLE.md) : fonds nuit / éclat,
+   HUD, typo cinétique, données en images, balayage d'accent. Toujours via les variables --mo-* de la charte.
+   ========================================================================== */
+/* fond propre à la scène : couvre le décor clair quand la scène est .g-nuit ou .g-eclat */
+.fill { position: absolute; inset: -120px; background: var(--mo-bg); }
+.fill.grid { background-image: radial-gradient(circle, rgba(var(--mo-grid), 0.22) 2px, transparent 2.6px); background-size: 44px 44px;
+  background-color: var(--mo-bg); }
+.fill.lines { background-image: linear-gradient(rgba(var(--mo-grid), 0.10) 1.5px, transparent 1.5px),
+  linear-gradient(90deg, rgba(var(--mo-grid), 0.10) 1.5px, transparent 1.5px); background-size: 90px 90px; background-color: var(--mo-bg); }
+.glow { position: absolute; left: 50%; top: 50%; width: 1100px; height: 1100px; margin: -550px 0 0 -550px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(var(--mo-deco), 0.32) 0%, rgba(var(--mo-deco), 0) 62%); }
+
+/* HUD : coins de cadre + étiquette de chapitre (hors caméra : ne zoome jamais, reste dans les marges) */
+#hud { position: absolute; inset: 0; pointer-events: none; z-index: 8; }
+#hud .cn { position: absolute; width: 44px; height: 44px; border-color: var(--hud-ink, var(--mo-mute)); border-style: solid; border-width: 0; opacity: 0.6; }
+#hud .c1 { left: 96px; top: 96px; border-left-width: 3px; border-top-width: 3px; }
+#hud .c2 { right: 96px; top: 96px; border-right-width: 3px; border-top-width: 3px; }
+#hud .c3 { left: 96px; top: 1640px; border-left-width: 3px; border-bottom-width: 3px; }
+#hud .c4 { right: 96px; top: 1640px; border-right-width: 3px; border-bottom-width: 3px; }
+#hud .lab { position: absolute; left: var(--cap-left); width: var(--cap-width); top: 1648px; text-align: center; font-weight: 700;
+  font-size: 28px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--hud-ink, var(--mo-mute)); }
+
+/* typo cinétique : 2 à 4 mots géants, révélés par masque ; petite ligne fine dessous */
+.kin { position: absolute; left: var(--cap-left); width: var(--cap-width); text-align: center; font-weight: 700; text-transform: uppercase;
+  line-height: 0.92; letter-spacing: -0.045em; color: var(--mo-ink); }
+.kin .ln { display: block; overflow: hidden; padding: 0.04em 0 0.06em; }
+.kin .ln span { display: inline-block; }
+.kin .ln.kw span { color: var(--mo-kw); }
+.kin small { display: block; margin-top: 34px; font-size: 32px; font-weight: 400; letter-spacing: 0.2em; line-height: 1.3; color: var(--mo-mute); }
+
+/* données en images (jamais de chiffre inventé : les quantités sont des proportions données par l'utilisateur) */
+.dots { display: grid; gap: 14px; }
+.dots i { width: 18px; height: 18px; border-radius: 50%; background: var(--mo-line); display: block; }
+.dots i.on { background: var(--mo-accent); box-shadow: 0 0 14px rgba(var(--mo-deco), 0.7); }
+.bars { display: flex; align-items: flex-end; gap: 26px; height: 420px; }
+.bars .b { width: 96px; display: flex; flex-direction: column; align-items: center; gap: 14px; height: 100%; justify-content: flex-end; }
+.bars .b i { display: block; width: 100%; border-radius: 18px 18px 6px 6px; background: var(--mo-line); transform-origin: 50% 100%; }
+.bars .b.on i { background: var(--mo-accent); box-shadow: 0 0 30px rgba(var(--mo-deco), 0.45); }
+.bars .b span { font-weight: 700; font-size: 26px; color: var(--mo-mute); white-space: nowrap; }
+.ringc { position: relative; width: 360px; height: 360px; }
+.ringc svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ringc .trk { fill: none; stroke: var(--mo-line); stroke-width: 22; opacity: 0.45; }
+.ringc .val { fill: none; stroke: var(--mo-accent); stroke-width: 22; stroke-linecap: round; }
+.ringc b { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 92px; letter-spacing: -0.04em; color: var(--mo-ink); }
+.net { position: relative; width: 860px; height: 640px; }
+.net > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.net > svg path { fill: none; stroke: var(--mo-accent); stroke-width: 3; stroke-dasharray: 1000; opacity: 0.8; }
+.net .nd { position: absolute; transform: translate(-50%, -50%); }
+.net .nd .card { padding: 14px 24px 14px 14px; font-size: 28px; }
+.net .core { width: 150px; height: 150px; border-radius: 50%; background: var(--mo-accent); display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 18px rgba(var(--mo-deco), 0.18), 0 0 70px rgba(var(--mo-deco), 0.55); }
+.net .core svg { width: 74px; height: 74px; }
+
+/* balayage d'accent : bandes diagonales plein cadre (transition « éclat ») */
+#wipe { position: absolute; inset: 0; pointer-events: none; z-index: 9; overflow: hidden; }
+#wipe i { position: absolute; top: -500px; height: 2900px; width: 520px; transform: skewX(-18deg); left: -1150px; }  /* hors cadre au repos, coins inclinés compris */
+#wipe .w1 { background: var(--accent); }
+#wipe .w2 { background: var(--black); }
+#wipe .w3 { background: var(--accent); }
+
+/* objets sur fond nuit : téléphones et fenêtres sombres avec liseré lumineux de l'accent */
+.g-nuit .phone, .g-nuit .player, .g-nuit .app { background: var(--mo-bg-2); box-shadow: 0 0 0 2px rgba(var(--mo-deco), 0.35), 0 40px 90px rgba(0, 0, 0, 0.6), 0 0 80px rgba(var(--mo-deco), 0.18); }
+.g-nuit .phone .island { background: var(--mo-bg); }
+.g-nuit .card, .g-nuit .step, .g-nuit .prompt, .g-nuit .stk { box-shadow: 0 0 0 1.5px rgba(var(--mo-deco), 0.28), 0 18px 40px rgba(0, 0, 0, 0.5); }

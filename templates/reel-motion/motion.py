@@ -54,6 +54,8 @@ class Motion:
         self.info = json.load(open(f"{self.brand_dir}/brand.json"))
         self.body, self.js, self.sfx = [], [], []
         self._open = None          # scène en cours (liste de lignes HTML)
+        self.hud = []              # étiquettes de chapitre (début, fin, texte)
+        self.wipes = 0
         self.stage = []            # contenu animé par la caméra (#push / #trans), rempli par scene() / close()
         self.n = 0
 
@@ -69,9 +71,18 @@ class Motion:
         (self._open if self._open is not None else self.body).append(h)
 
     # ------------------------------------------------------------------ scènes (clips HyperFrames)
-    def scene(self, sid, start, end):
+    def scene(self, sid, start, end, ground=None, fill="grid", glow=False):
+        """Ouvre une scène. ground = None (clair) | "nuit" | "eclat" ; fill = "grid" | "lines" | "plain" (fonds nuit / éclat)."""
         self.close()
-        self._open = [f'<div class="clip" id="{sid}" data-start="{start:.3f}" data-duration="{end - start:.3f}" data-track-index="1">']
+        cls = f' g-{ground}' if ground else ""
+        self._open = [f'<div class="clip{cls}" id="{sid}" data-start="{start:.3f}" data-duration="{end - start:.3f}" data-track-index="1">']
+        hud_ink = {"eclat": "var(--black)", "nuit": "var(--stone)"}.get(ground, "var(--mo-mute)")
+        self.js.append(f'  tl.set("#hud", {{"--hud-ink": "{hud_ink}"}}, {start:.3f});')   # HUD lisible sur chaque fond
+        if ground:
+            self._open.append(f'<div class="fill{"" if fill == "plain" else " " + fill}"></div>')
+        if glow:
+            self._open.append(f'<div class="glow" id="{sid}glow"></div>')
+            self.tw(f"#{sid}glow", "{scale: 0.85, opacity: 0.7}", "{scale: 1.1, opacity: 1}", start, end - start, "sine.inOut")
 
     def close(self):
         if self._open is not None:
@@ -161,6 +172,69 @@ class Motion:
         self.tw("#trans", "{scale: 1}", f"{{scale: {z}}}", t, 0.16, "power3.out", False)
         self.tw("#trans", f"{{scale: {z}}}", "{scale: 1}", t + hold, 0.4, "power2.inOut", False)
 
+
+    # ------------------------------------------------------------------ DA « Prompt Motion » : typo cinétique, données, HUD, balayage
+    def kin(self, kid, lines, t, end, top=700, size=None, small=None, stagger=0.12):
+        """Typo cinétique : 1 à 3 lignes géantes en capitales, révélées par masque. lines = [("TEXTE", kw?)]."""
+        longest = max(len(tx) for tx, _ in lines)
+        size = size or min(210, int(760 / (0.66 * max(4, longest))))
+        rows = "".join(f'<span class="ln{" kw" if kw else ""}"><span id="{kid}l{k}">{html.escape(tx)}</span></span>' for k, (tx, kw) in enumerate(lines))
+        sm = f'<small id="{kid}s">{html.escape(small)}</small>' if small else ""
+        self.add(f'<div class="kin" id="{kid}" style="top:{top}px;font-size:{size}px">{rows}{sm}</div>')
+        times = stagger if isinstance(stagger, (list, tuple)) else [t + k * stagger for k in range(len(lines))]
+        for k in range(len(lines)):
+            self.tw(f"#{kid}l{k}", "{yPercent: 110}", "{yPercent: 0}", times[k], 0.55, "power4.out")
+        if small:
+            self.tw(f"#{kid}s", '{opacity: 0, y: 14, filter: "blur(6px)"}', '{opacity: 1, y: 0, filter: "blur(0px)"}', times[-1] + 0.35, 0.4)
+        self.out(f"#{kid}", end - 0.24, 0.2)      # parti juste avant que le balayage ne le couvre
+
+    def dots(self, did, cols, rows, on, t, d=0.9, size=18, gap=14):
+        """Grille de points (un point = un élément) ; `on` = indices allumés en couleur d'accent."""
+        cells = "".join(f'<i class="{"on" if k in on else ""}"></i>' for k in range(cols * rows))
+        self.add(f'<div class="dots" id="{did}" style="grid-template-columns:repeat({cols},{size}px);gap:{gap}px">{cells}</div>')
+        self.js.append(f'  tl.fromTo("#{did} i", {{scale: 0, opacity: 0}}, {{scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)", '
+                       f'stagger: {{amount: {d}, grid: [{rows}, {cols}], from: "center"}}, immediateRender: true}}, {t:.3f});')
+
+    def bars(self, bid, values, labels, on, t, stagger=0.12):
+        """Barres qui montent ; values = hauteurs relatives 0-1 (proportions réelles), labels = textes courts sous les barres."""
+        cols = "".join(f'<div class="b{" on" if k in on else ""}"><i id="{bid}b{k}" style="height:{max(0.06, v) * 100:.0f}%"></i>'
+                       f'<span>{html.escape(lb)}</span></div>' for k, (v, lb) in enumerate(zip(values, labels)))
+        self.add(f'<div class="bars" id="{bid}">{cols}</div>')
+        for k in range(len(values)):
+            self.tw(f"#{bid}b{k}", "{scaleY: 0}", "{scaleY: 1}", t + k * stagger, 0.7, "power3.out")
+
+    def ring(self, rid, frac, t, label="", d=1.1):
+        """Anneau de progression (frac 0-1, proportion réelle)."""
+        self.add(f'<div class="ringc" id="{rid}"><svg viewBox="0 0 120 120"><circle class="trk" cx="60" cy="60" r="48"/>'
+                 f'<circle class="val" id="{rid}v" cx="60" cy="60" r="48" pathLength="100" stroke-dasharray="100"/></svg>'
+                 f'<b>{html.escape(label)}</b></div>')
+        self.tw(f"#{rid}v", "{strokeDashoffset: 100}", f"{{strokeDashoffset: {100 - frac * 100:.1f}}}", t, d, "power3.out")
+
+    def network(self, nid, core_svg, nodes, t, stagger=0.18):
+        """Réseau : un nœud central (couleur d'accent) relié à des cartes ; nodes = [(x%, y%, html)]. Traits qui se dessinent."""
+        paths = "".join(f'<path id="{nid}p{k}" d="M50 50 L{x} {y}" pathLength="1000"/>' for k, (x, y, _) in enumerate(nodes))
+        nds = "".join(f'<div class="nd" style="left:{x}%;top:{y}%"><div id="{nid}n{k}">{h}</div></div>' for k, (x, y, h) in enumerate(nodes))
+        self.add(f'<div class="net" id="{nid}"><svg viewBox="0 0 100 100" preserveAspectRatio="none">{paths}</svg>'
+                 f'<div class="nd" style="left:50%;top:50%"><div class="core" id="{nid}c">{core_svg}</div></div>{nds}</div>')
+        self.pop(f"#{nid}c", t, 0.55, 0.3, 0)
+        for k in range(len(nodes)):
+            self.tw(f"#{nid}p{k}", "{strokeDashoffset: 1000}", "{strokeDashoffset: 0}", t + 0.2 + k * stagger, 0.45, "power2.out")
+            self.pop(f"#{nid}n{k}", t + 0.45 + k * stagger, 0.45, 0.6, 20)
+
+    def wipe(self, t, d=0.62):
+        """Balayage d'accent plein cadre (bandes diagonales) : la scène change à `t`, au milieu du balayage."""
+        self.wipes += 1
+        for k, sel in enumerate(("w1", "w2", "w3")):
+            self.tw(f"#wipe .{sel}", "{x: 0}", "{x: 3100}", t - d / 2 + k * 0.06, d, "power3.inOut", False)
+        self.sound("whoosh-court", t - d / 2, 0.18)
+
+    def chapter(self, t0, t1, text):
+        """Étiquette de chapitre du HUD (en bas, petites capitales espacées), ex. « 02 / 05 · LA MÉTHODE »."""
+        k = len(self.hud)
+        self.hud.append(f'<div class="lab clip" id="hud{k}" data-start="{t0:.3f}" data-duration="{t1 - t0:.3f}" data-track-index="{12 + k % 2}">'
+                        f'{html.escape(text)}</div>')
+        self.tw(f"#hud{k}", '{opacity: 0, filter: "blur(6px)"}', '{opacity: 1, filter: "blur(0px)"}', t0 + 0.05, 0.35, "power2.out")
+
     # ------------------------------------------------------------------ son
     def sound(self, name, t, vol=0.2):
         self.sfx.append((name, t, vol))
@@ -201,6 +275,9 @@ class Motion:
         for k in range(7):
             self.tw(f"#dot{k}", "{x: 0, y: 0}", f"{{x: {(-1) ** k * 40}, y: {-60 - 15 * k}}}", 0, main_end, "sine.inOut")
         sig = '<div class="sig">SPECIMEN GAMING</div>' if self.brand == "specimen-gaming" else ""
+        hud = ('<div id="hud"><i class="cn c1"></i><i class="cn c2"></i><i class="cn c3"></i><i class="cn c4"></i>'
+               + "".join(self.hud) + "</div>") if self.hud else ""
+        wipe = '<div id="wipe"><i class="w1"></i><i class="w2"></i><i class="w3"></i></div>' if self.wipes else ""
         css = open(f"{self.brand_dir}/brand.css").read()
         mcss = open(f"{HERE}/motion.css").read()
         ind = lambda s, n: "\n".join(" " * n + l for l in s.splitlines())
@@ -225,6 +302,8 @@ class Motion:
       <div id="push"><div id="trans">
 {ind(chr(10).join(self.stage), 8)}
       </div></div>
+      {hud}
+      {wipe}
       {sig}
       {endcard}
     </div>

@@ -56,6 +56,7 @@
   --mo-line: #a59d90;
   --mo-shadow: 80, 50, 10;
   --mo-deco: 227, 178, 92;
+  --mo-grid: 227, 178, 92;
   --say-top: 200px;
 
   /* alias génériques utilisés par les modèles */
@@ -106,3 +107,16 @@
   align-items: center; justify-content: center; gap: 90px; }
 #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
 #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+
+/* --- DA : trois fonds de scène (templates/reel-motion, 19/11/2026) ----------------------------------------
+   clair (par défaut, :root) · .g-nuit = noir profond + or (chapitres « nuit ») · .g-eclat = or plein cadre (mots forts) */
+.g-nuit {
+  --mo-bg: #0b0b0d; --mo-bg-2: #111111; --mo-ink: #f7f1e3; --mo-mute: #a59d90; --mo-kw: #e3b25c;
+  --mo-accent: #e3b25c; --mo-accent-2: #f2d58e; --mo-on-accent: #0b0b0d; --mo-pill: #e3b25c; --mo-pill-ink: #0b0b0d;
+  --mo-card: #111111; --mo-line: #4a4540; --mo-shadow: 0, 0, 0; --mo-deco: 227, 178, 92; --mo-grid: 227, 178, 92;
+}
+.g-eclat {
+  --mo-bg: #e3b25c; --mo-bg-2: #f2d58e; --mo-ink: #0b0b0d; --mo-mute: #4a4540; --mo-kw: #0b0b0d;
+  --mo-accent: #0b0b0d; --mo-accent-2: #f7f1e3; --mo-on-accent: #f2d58e; --mo-pill: #0b0b0d; --mo-pill-ink: #f2d58e;
+  --mo-card: #f7f1e3; --mo-line: #b8863b; --mo-shadow: 80, 50, 10; --mo-deco: 11, 11, 13; --mo-grid: 11, 11, 13;
+}
