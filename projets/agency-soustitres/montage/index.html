@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <meta name="brand" content="specimen-agency" />
+    <meta name="montage-style" content="liquid-glass-motion-design" />
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      /* ==========================================================================
+         Charte Specimen Agency — SOURCE UNIQUE des couleurs et styles de marque.
+         Ne pas redéfinir ces couleurs dans les compositions : utiliser les variables.
+         Toute modification ici s'applique à toutes les prochaines vidéos.
+         ========================================================================== */
+      /* --- Police VERROUILLÉE : TeX Gyre Heros (équivalent libre d'Helvetica Neue, licence GUST — fonts/GUST-FONT-LICENSE.txt) ---
+         Fichiers d'origine non modifiés. Famille propre à la marque : jamais de police de remplacement. */
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-regular.otf") format("opentype");
+        font-weight: 100 599;
+        font-style: normal;
+        font-display: block;
+      }
+      @font-face {
+        font-family: "Specimen Heros";
+        src: url("assets/brand/fonts/texgyreheros-bold.otf") format("opentype");
+        font-weight: 600 900;
+        font-style: normal;
+        font-display: block;
+      }
+      
+      :root {
+        --gold: #e3b25c;
+        --gold-light: #f2d58e;
+        --gold-deep: #b8863b;
+        --gold-grad: linear-gradient(135deg, #f0cd7c 0%, #e1b667 45%, #c79c4d 75%, #bd8e3e 100%);
+        --black: #0b0b0d;
+        --ivory: #f7f1e3;
+        --ink: #ffffff;
+        --flash: #fff8e8;
+        --panel: rgba(11, 11, 13, 0.9);
+        --panel-muted: rgba(40, 38, 35, 0.92);
+        --taupe: #8a8378;
+        --stone: #a59d90;
+        --dark: #4a4540;
+        --font: "Specimen Heros", sans-serif;
+      
+        /* style « bulles liquid glass » (templates/reel-glass) : teinte du verre (r, g, b) et texte de la bulle d'appel à l'action */
+        --glass-tint: 227, 178, 92;
+        --glass-tint-soft: 242, 213, 142;
+        --glass-cta-ink: var(--black);
+      
+        /* alias génériques utilisés par les modèles */
+        --accent: var(--gold);
+        --accent-soft: var(--gold-light);
+      
+        /* mise en page Instagram Reels */
+        --cap-top: 1260px;
+        /* texte CENTRÉ, marges égales de 90 px à gauche et à droite (rien de coupé sur les bords de l'écran) */
+        --cap-left: 90px;
+        --cap-width: 900px;
+        --ill-top: 150px;
+      }
+      
+      /* --- Sous-titres ---------------------------------------------------------- */
+      .w { display: inline-block; -webkit-text-stroke: 14px #000000; paint-order: stroke fill;
+        text-shadow: 0 8px 0 rgba(0, 0, 0, 0.55); transform-origin: 50% 70%; }
+      .hl, .hl-yellow, .hl-pink, .hl-green { color: var(--gold); }       /* mot clé */
+      .hl-soft, .hl-red { color: var(--gold-light); }                       /* mot clé secondaire */
+      
+      /* --- Cartes et éléments graphiques --------------------------------------- */
+      .panel { background: var(--panel); border-radius: 44px; padding: 34px 50px; display: flex; flex-direction: column;
+        align-items: center; gap: 12px; color: var(--ink); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35); border: 4px solid var(--gold); }
+      .panel.row { flex-direction: row; gap: 34px; }
+      .panel.col { padding: 30px 40px; }
+      .panel.green, .panel.accent { border-color: var(--gold-light); box-shadow: 0 0 0 4px rgba(227, 178, 92, 0.35), 0 24px 60px rgba(0, 0, 0, 0.35); }
+      .big { font-weight: 800; font-size: 88px; line-height: 1; text-align: left; letter-spacing: 0.03em; color: var(--ivory); }
+      .big small { font-size: 52px; font-weight: 800; opacity: 0.85; }
+      .kicker { font-weight: 700; font-size: 40px; letter-spacing: 0.22em; color: var(--gold); }
+      .chip { font-weight: 800; font-size: 120px; padding: 10px 50px; background: var(--ivory); color: var(--black); border-radius: 30px; letter-spacing: 0.06em; }
+      .num { color: var(--gold); display: inline-block; }
+      .bubble { background: var(--ivory); color: var(--black); border: 4px solid var(--gold); font-weight: 700; font-size: 56px;
+        padding: 36px 48px; border-radius: 48px 48px 48px 8px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3); max-width: 860px; }
+      .stamp { font-weight: 900; font-size: 210px; color: var(--gold); border: 18px solid var(--gold); border-radius: 36px; letter-spacing: 0.06em;
+        padding: 0 50px; transform: rotate(-10deg); background: var(--panel); line-height: 1.15; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4); }
+      .num-badge { width: 170px; height: 170px; border-radius: 50%; background: var(--black); color: var(--gold); border: 8px solid var(--gold);
+        font-weight: 800; font-size: 120px; display: flex; align-items: center; justify-content: center; box-shadow: 0 14px 0 rgba(0, 0, 0, 0.35); flex: none; }
+      .cta { display: flex; align-items: center; gap: 26px; background: var(--gold-grad); color: var(--black); font-weight: 800; font-size: 70px;
+        letter-spacing: 0.04em; padding: 36px 56px; border-radius: 999px; box-shadow: 0 18px 0 rgba(0, 0, 0, 0.35); }
+      
+      /* --- Transitions ---------------------------------------------------------- */
+      #flash, #redflash, #accentflash { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+      #flash { background: var(--flash); }
+      #redflash, #accentflash { background: var(--gold); mix-blend-mode: screen; }
+      
+      /* --- Écran de fin ----------------------------------------------------------- */
+      #endcard { position: absolute; inset: 0; background: var(--gold-grad); display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 90px; }
+      #logo { width: 700px; height: 700px; border-radius: 50%; box-shadow: 0 40px 80px rgba(80, 50, 10, 0.45); }
+      #tagline { width: 1080px; text-align: center; font-weight: 800; font-size: 56px; line-height: 1.5; letter-spacing: 0.18em; color: var(--black); }
+      /* ==========================================================================
+         Style « bulles liquid glass » façon Apple — STYLE PAR DÉFAUT des montages (demande de l'utilisateur, 19/11/2026).
+         Verre dépoli translucide légèrement teinté en sombre (lisible sur fond clair), reflet spéculaire, liseré lumineux,
+         teinte de la charte (--glass-tint, défini dans brand/<marque>/brand.css : or pour Agency, rouge pour Gaming).
+         Injecté par les scripts de montage après brand.css. Exemple complet : projets/agency-glass/scripts/build.py.
+         ========================================================================== */
+      /* ---- bulles « liquid glass » (façon Apple), teinte or de la charte ---- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+      #cam, #zoom { position: absolute; inset: 0; transform-origin: 50% 58%; }   /* #zoom : coups de zoom et transitions zoom */
+      #cam video { position: absolute; inset: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #lens { position: absolute; inset: 0; opacity: 0; pointer-events: none;
+        background: radial-gradient(ellipse 75% 55% at 50% 45%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%); }
+      .glass { position: relative; color: var(--ink); border-radius: 999px;
+        background: linear-gradient(160deg, rgba(255, 255, 255, 0.22) 0%, rgba(0, 0, 0, 0.30) 42%, rgba(0, 0, 0, 0.42) 100%);
+        backdrop-filter: blur(30px) saturate(160%) brightness(0.82); -webkit-backdrop-filter: blur(30px) saturate(160%) brightness(0.82);
+        border: 1.5px solid rgba(255, 255, 255, 0.55);
+        box-shadow: inset 0 2px 1px rgba(255, 255, 255, 0.75), inset 0 -2px 6px rgba(255, 255, 255, 0.18),
+          inset 0 0 22px rgba(255, 255, 255, 0.12), 0 18px 46px rgba(0, 0, 0, 0.28);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45); }
+      .glass::after { content: ""; position: absolute; left: 8%; right: 8%; top: 5%; height: 38%; border-radius: 999px; pointer-events: none;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0) 100%); }
+      .topwrap, .midwrap, .capwrap { position: absolute; left: var(--cap-left); width: var(--cap-width); display: flex; justify-content: center; }
+      .topwrap { top: 120px; }
+      .midwrap { top: 1215px; }
+      .capwrap { top: 1470px; }
+      /* sous-titres : blancs à contour noir léger, mots clés en or */
+      .cap { padding: 16px 38px; font-weight: 700; font-size: 64px; letter-spacing: -0.015em; white-space: nowrap;
+        -webkit-text-stroke: 5px rgba(0, 0, 0, 0.55); paint-order: stroke fill; }
+      .cap .kw { color: var(--accent-soft); }
+      /* accroche */
+      .big { border-radius: 58px; padding: 34px 64px 42px; text-align: center; font-weight: 700; font-size: 84px; line-height: 1.05; letter-spacing: -0.03em; }
+      .big b { color: var(--accent-soft); font-weight: 700; }
+      .eyebrow { display: block; font-size: 26px; letter-spacing: 0.3em; margin-bottom: 14px; color: var(--ivory); opacity: 0.85; }
+      /* bulles du script, façon notification */
+      .note { display: flex; align-items: center; gap: 22px; border-radius: 40px; padding: 22px 40px 22px 24px; white-space: nowrap; }
+      .note .ico { width: 82px; height: 82px; border-radius: 24px; flex: none; display: flex; align-items: center; justify-content: center;
+        background: rgba(0, 0, 0, 0.55); border: 1.5px solid rgba(255, 255, 255, 0.35); }
+      .note .ico svg { width: 50px; height: 50px; }
+      .note .tx { display: flex; flex-direction: column; gap: 4px; }
+      .note .t { font-weight: 700; font-size: 48px; letter-spacing: -0.02em; }
+      .note .t i { font-style: normal; display: inline-flex; align-items: center; justify-content: center; width: 54px; height: 54px; margin-right: 10px;
+        border-radius: 50%; background: var(--accent); color: var(--black); font-size: 34px; text-shadow: none; vertical-align: 4px; }
+      .note .s { font-weight: 700; font-size: 38px; color: var(--ivory); opacity: 0.92; }
+      .note.msg { border-radius: 40px 40px 40px 10px; padding: 24px 44px; }
+      .note.msg .t { font-size: 50px; }
+      .note.gold { background: linear-gradient(160deg, rgba(var(--glass-tint-soft), 0.88) 0%, rgba(var(--glass-tint), 0.8) 100%); color: var(--glass-cta-ink);
+        text-shadow: none; border-color: rgba(255, 255, 255, 0.7); }
+      .note.gold .s { color: var(--glass-cta-ink); }
+      .note.gold .ico { background: rgba(255, 255, 255, 0.35); }
+      
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000000; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: var(--font); }
+      #bg { position: absolute; inset: 0; background: radial-gradient(ellipse 90% 60% at 50% 42%, var(--panel-muted) 0%, var(--black) 70%); }
+      .blob { position: absolute; border-radius: 50%; filter: blur(90px); }
+      .b1 { left: -120px; top: 200px; width: 620px; height: 620px; background: var(--gold); opacity: 0.32; }
+      .b2 { right: -160px; top: 820px; width: 700px; height: 700px; background: var(--gold-deep); opacity: 0.38; }
+      .b3 { left: 260px; bottom: -160px; width: 560px; height: 560px; background: var(--gold-light); opacity: 0.18; }
+      .grid { position: absolute; inset: 0; opacity: 0.07;
+        background-image: linear-gradient(var(--ivory) 1px, transparent 1px), linear-gradient(90deg, var(--ivory) 1px, transparent 1px);
+        background-size: 90px 90px; }
+      #stage { position: absolute; inset: 0; transform-origin: 50% 46%; perspective: 1600px; }
+      .part { position: absolute; inset: 0; perspective: 1600px; }
+      /* téléphone stylisé (sans logo ni interface d'application réelle) */
+      .phone { position: absolute; left: 270px; top: 330px; width: 540px; height: 1060px; border-radius: 76px; padding: 18px;
+        background: var(--black); border: 3px solid var(--gold-deep);
+        box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 50px 120px rgba(0, 0, 0, 0.7), 0 0 90px rgba(227, 178, 92, 0.22); transform-style: preserve-3d; }
+      .phone.left { left: 70px; width: 470px; height: 920px; top: 400px; }
+      .screen { position: relative; width: 100%; height: 100%; border-radius: 60px; overflow: hidden; background: var(--black); }
+      .scene, .scene svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .side { position: absolute; right: 22px; bottom: 180px; display: flex; flex-direction: column; gap: 30px; }
+      .side span { width: 64px; height: 64px; display: block; filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.6)); }
+      .side.lit span:first-child svg path { fill: var(--accent) !important; }
+      .prog { position: absolute; left: 26px; right: 26px; bottom: 40px; height: 6px; border-radius: 3px; background: rgba(255, 255, 255, 0.25); overflow: hidden; }
+      .prog i { display: block; height: 100%; background: var(--ivory); transform-origin: 0 50%; }
+      .words { position: absolute; left: 0; right: 0; top: 760px; display: flex; justify-content: center; gap: 18px; }
+      .w { padding: 22px 40px; font-weight: 700; font-size: 74px; letter-spacing: -0.03em; }
+      .w.eq { padding: 22px 30px; }
+      .glass.w.gold, .glass.colhead.gold { background: linear-gradient(160deg, rgba(var(--glass-tint-soft), 0.95) 0%, rgba(var(--glass-tint), 0.9) 100%); color: var(--black); text-shadow: none; -webkit-text-stroke: 0; }
+      /* mosaïque 2×2 */
+      .colhead { position: absolute; top: 380px; width: 430px; text-align: center; padding: 16px 0; font-weight: 700; font-size: 40px; }
+      .colhead.l { left: 90px; } .colhead.r { left: 560px; }
+      .mosaic { position: absolute; left: 90px; top: 480px; width: 900px; display: grid; grid-template-columns: 430px 430px; gap: 40px; }
+      .mini { position: relative; }
+      .mini .screen { height: 420px; border-radius: 36px; border: 3px solid var(--dark); }
+      .mini.on .screen { border-color: var(--accent); box-shadow: 0 0 50px rgba(227, 178, 92, 0.35); }
+      .mini.off .screen { filter: grayscale(1) brightness(0.55); }
+      .minicap { position: absolute; left: 50%; bottom: 60px; transform: translateX(-50%); white-space: nowrap; padding: 12px 26px; font-weight: 700; font-size: 34px; }
+      .minicap b { color: var(--accent-soft); }
+      .minicap.big4 { bottom: 120px; font-size: 52px; padding: 16px 36px; }
+      .ov { position: absolute; width: 74px; height: 74px; display: block; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.6)); }
+      .ov svg { width: 100%; height: 100%; }
+      .o1 { right: 26px; top: 30px; } .o2 { left: 40px; top: 200px; } .o3 { right: 110px; top: 120px; } .o4 { left: 60px; top: 470px; }
+      .meter { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
+      .meter .mi { width: 52px; height: 52px; flex: none; } .meter .mi svg { width: 100%; height: 100%; }
+      .meter .bar { flex: 1; height: 18px; border-radius: 9px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+      .meter .bar i { display: block; height: 100%; background: var(--gold-grad); transform-origin: 0 50%; }
+      .mini.off .meter .bar i { background: var(--taupe); }
+      /* étapes */
+      .kar { position: absolute; left: 50%; bottom: 150px; transform: translateX(-50%); white-space: nowrap; padding: 14px 30px; font-weight: 700; font-size: 44px; }
+      .steps { position: absolute; left: 560px; top: 520px; display: flex; flex-direction: column; gap: 36px; }
+      .steps .note { padding: 18px 30px 18px 18px; }
+      .steps .note .t { font-size: 42px; } .steps .note .s { font-size: 30px; }
+      /* preuve */
+      .fh { position: absolute; right: 40px; bottom: 300px; width: 70px; height: 70px; display: block; }
+      .fh svg { width: 100%; height: 100%; }
+      .coms { position: absolute; left: 22px; right: 100px; top: 70px; display: flex; flex-direction: column; gap: 16px; }
+      .com { display: flex; align-items: center; gap: 14px; border-radius: 28px; padding: 14px 22px; font-weight: 700; font-size: 30px; white-space: nowrap; }
+      .com .av { width: 44px; height: 44px; border-radius: 50%; flex: none; background: var(--gold-grad); }
+      .badge { position: absolute; left: 50%; top: 1240px; transform: translateX(-50%); display: flex; align-items: center; gap: 18px;
+        padding: 22px 46px; font-weight: 700; font-size: 58px; }
+      .badge.gold { background: linear-gradient(160deg, rgba(var(--glass-tint-soft), 0.9) 0%, rgba(var(--glass-tint), 0.82) 100%); color: var(--glass-cta-ink); text-shadow: none; }
+      .badge .bi { width: 66px; height: 66px; } .badge .bi svg { width: 100%; height: 100%; } .badge .bi svg path { stroke: var(--black) !important; }
+      /* recherche */
+      .phone.light .screen { background: var(--ivory); }
+      .sr { padding: 90px 30px 0; display: flex; flex-direction: column; gap: 26px; }
+      .searchbar { display: flex; align-items: center; gap: 14px; border-radius: 999px; padding: 22px 24px; font-weight: 700; font-size: 29px; min-height: 92px; white-space: nowrap;
+        background: var(--black) !important; }
+      .searchbar .si { width: 42px; height: 42px; flex: none; } .searchbar .si svg { width: 100%; height: 100%; }
+      .caret { width: 4px; height: 44px; background: var(--accent); display: block; }
+      .res { display: flex; gap: 20px; align-items: center; }
+      .res .th { width: 170px; height: 220px; border-radius: 24px; background: var(--gold-grad); display: flex; align-items: center; justify-content: center; flex: none; }
+      .res .th svg { width: 60px; height: 60px; }
+      .res .rl { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+      .res .rl b { display: block; height: 22px; border-radius: 11px; background: var(--stone); opacity: 0.6; }
+      .res .rl b + b { width: 60%; }
+      .phone.short { height: 940px; }
+      .cta { position: absolute; left: 50%; top: 1318px; transform: translateX(-50%); }
+      /* zones de texte */
+      .lbl { border-radius: 40px; padding: 16px 44px 20px; text-align: center; font-weight: 700; font-size: 50px; letter-spacing: -0.02em; }
+      .capwrap { top: 1500px !important; z-index: 5; }
+      .topwrap { z-index: 5; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="21.7" data-width="1080" data-height="1920">
+      <div id="bg"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i><i class="grid"></i></div>
+      <div class="topwrap clip" id="lb0" data-start="0.05" data-duration="1.42" data-track-index="2"><div class="glass lbl" id="lbb0"><span class="eyebrow">SPECIMEN AGENCY</span>Sous-titres viraux</div></div>
+      <div class="topwrap clip" id="lb1" data-start="1.47" data-duration="3.24" data-track-index="2"><div class="glass lbl" id="lbb1"><span class="eyebrow">SPECIMEN AGENCY</span>Pourquoi ça marche</div></div>
+      <div class="topwrap clip" id="lb2" data-start="4.71" data-duration="5.14" data-track-index="2"><div class="glass lbl" id="lbb2"><span class="eyebrow">SPECIMEN AGENCY</span>Étape par étape</div></div>
+      <div class="topwrap clip" id="lb3" data-start="9.85" data-duration="4.84" data-track-index="2"><div class="glass lbl" id="lbb3"><span class="eyebrow">SPECIMEN AGENCY</span>Preuve rapide</div></div>
+      <div class="topwrap clip" id="lb4" data-start="14.69" data-duration="4.31" data-track-index="2"><div class="glass lbl" id="lbb4"><span class="eyebrow">SPECIMEN AGENCY</span>Recherche</div></div>
+      <div id="stage"><div class="clip part" id="p1" data-start="0" data-duration="1.77" data-track-index="1"><div class="phone" id="ph1"><div class="screen"><div class="scene ken"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div><div class="side "><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--ink)"/></svg></span></div><div class="prog"><i id="pg1"></i></div></div></div><div class="words"><span class="glass w" id="w1">Sous-titres</span><span class="glass w eq" id="w2">=</span><span class="glass w gold" id="w3">vues</span></div></div><div class="clip part" id="p2" data-start="1.37" data-duration="3.64" data-track-index="1"><div class="colhead l glass" id="h2l">Sans sous-titres</div><div class="colhead r glass gold" id="h2r">Avec sous-titres</div><div class="mosaic"><div class="mini off" id="m1"><div class="screen"><div class="scene "><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div></div><div class="meter"><span class="mi"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/><circle cx="12" cy="12" r="3" style="fill:var(--accent)"/></svg></span><span class="bar"><i id="bar1"></i></span></div></div><div class="mini on" id="m2"><div class="screen"><div class="scene "><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div><div class="minicap glass">Texte <b>court</b></div><i class="ov o1"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--accent)"/></svg></i></div><div class="meter"><span class="mi"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/><circle cx="12" cy="12" r="3" style="fill:var(--accent)"/></svg></span><span class="bar"><i id="bar2"></i></span></div></div><div class="mini off" id="m3"><div class="screen"><div class="scene "><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div></div><div class="meter"><span class="mi"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/><circle cx="12" cy="12" r="3" style="fill:var(--accent)"/></svg></span><span class="bar"><i id="bar3"></i></span></div></div><div class="mini on" id="m4"><div class="screen"><div class="scene "><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div><div class="minicap glass">Texte <b>court</b></div><i class="ov o1"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--accent)"/></svg></i></div><div class="meter"><span class="mi"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" style="stroke:var(--accent)" stroke-width="2.2"/><circle cx="12" cy="12" r="3" style="fill:var(--accent)"/></svg></span><span class="bar"><i id="bar4"></i></span></div></div></div></div><div class="clip part" id="p3" data-start="4.61" data-duration="5.54" data-track-index="1"><div class="phone left" id="ph3"><div class="screen"><div class="scene ken"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div><div class="side "><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--ink)"/></svg></span></div><div class="kar glass" id="kar"><span id="kw0">un</span> <span id="kw1">texte</span> <span id="kw2">court</span></div><i class="ov o2" id="ov1"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="ov o3" id="ov2"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--accent)"/></svg></i><i class="ov o4" id="ov3"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7M14 8h6v6" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></i></div></div><div class="steps"><div class="glass note" id="st1"><span class="ico"><svg viewBox="0 0 24 24"><path d="M5 6h14M12 6v13" fill="none" style="stroke:var(--accent)" stroke-width="2.8" stroke-linecap="round"/></svg></span><span class="tx"><span class="t"><i>1</i>Texte court</span><span class="s">1 à 3 mots</span></span></div><div class="glass note" id="st2"><span class="ico"><svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" fill="none" style="stroke:var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="tx"><span class="t"><i>2</i>Synchronisé</span><span class="s">sur la voix</span></span></div><div class="glass note" id="st3"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--accent)"/></svg></span><span class="tx"><span class="t"><i>3</i>Overlays</span><span class="s">au bon moment</span></span></div></div></div><div class="clip part" id="p4" data-start="9.75" data-duration="5.24" data-track-index="1"><div class="phone" id="ph4"><div class="screen"><div class="scene ken"><svg viewBox="0 0 100 160" preserveAspectRatio="xMidYMid slice"><rect width="100" height="160" style="fill:var(--gold-deep)"/><circle cx="78" cy="30" r="40" style="fill:var(--gold)" opacity="0.6"/><circle cx="50" cy="62" r="17" style="fill:var(--ivory)"/><path d="M18 160c0-30 14-52 32-52s32 22 32 52z" style="fill:var(--black)"/><path d="M38 108c4 8 20 8 24 0" fill="none" style="stroke:var(--gold-light)" stroke-width="2"/></svg></div><div class="side lit"><span><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z" style="fill:var(--ink)"/></svg></span><span><svg viewBox="0 0 24 24"><path d="M14 5l7 7-7 7v-4c-5 0-8 1.5-10 5 1-5 4-9 10-10z" style="fill:var(--ink)"/></svg></span></div><div class="minicap glass big4">plus de <b>vues</b></div><i class="fh" id="fh0"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh1"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh2"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh3"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh4"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh5"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><i class="fh" id="fh6"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.4-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.6-8 11-8 11z" style="fill:var(--accent)"/></svg></i><div class="coms"><div class="glass com" id="cm0"><b class="av"></b>Merci pour l&#x27;astuce</div><div class="glass com" id="cm1"><b class="av"></b>Je teste tout de suite</div><div class="glass com" id="cm2"><b class="av"></b>Enfin je comprends</div></div></div></div><div class="glass badge gold" id="badge"><span class="bi"><svg viewBox="0 0 24 24"><path d="M4 17l6-6 4 4 6-7M14 8h6v6" fill="none" style="stroke:var(--accent)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Engagement</div></div><div class="clip part" id="p5" data-start="14.59" data-duration="4.41" data-track-index="1"><div class="phone light short" id="ph5"><div class="screen sr"><div class="searchbar glass" id="sb"><span class="si"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" style="stroke:var(--ink)" stroke-width="2.4"/><path d="M15.5 15.5 21 21" style="stroke:var(--ink)" stroke-width="2.6" stroke-linecap="round"/></svg></span><span id="q"></span><i class="caret" id="caret"></i></div><div class="res" id="r0"><span class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" style="fill:var(--black)"/></svg></span><span class="rl"><b></b><b></b></span></div><div class="res" id="r1"><span class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" style="fill:var(--black)"/></svg></span><span class="rl"><b></b><b></b></span></div><div class="res" id="r2"><span class="th"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z" style="fill:var(--black)"/></svg></span><span class="rl"><b></b><b></b></span></div></div></div><div class="glass note gold cta" id="cta"><span class="ico"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.6L21 11l-6.8 2.4L12 20l-2.2-6.6L3 11l6.8-2.4z" style="fill:var(--accent)"/></svg></span><span class="tx"><span class="t">Teste-les</span><span class="s">tout de suite</span></span></div></div></div>
+      <div class="capwrap clip" id="c0" data-start="0.020" data-duration="0.390" data-track-index="4"><div class="glass cap" id="cb0">Trois <span class='kw'>mots</span></div></div>
+      <div class="capwrap clip" id="c1" data-start="0.410" data-duration="0.550" data-track-index="4"><div class="glass cap" id="cb1">pour <span class='kw'>booster</span></div></div>
+      <div class="capwrap clip" id="c2" data-start="0.960" data-duration="0.520" data-track-index="4"><div class="glass cap" id="cb2">vos <span class='kw'>vues</span></div></div>
+      <div class="capwrap clip" id="c3" data-start="1.480" data-duration="0.760" data-track-index="4"><div class="glass cap" id="cb3">Les <span class='kw'>sous-titres</span></div></div>
+      <div class="capwrap clip" id="c4" data-start="2.240" data-duration="0.540" data-track-index="4"><div class="glass cap" id="cb4">retiennent</div></div>
+      <div class="capwrap clip" id="c5" data-start="2.780" data-duration="0.640" data-track-index="4"><div class="glass cap" id="cb5">l&#x27;attention</div></div>
+      <div class="capwrap clip" id="c6" data-start="3.420" data-duration="0.520" data-track-index="4"><div class="glass cap" id="cb6">et <span class='kw'>boostent</span></div></div>
+      <div class="capwrap clip" id="c7" data-start="3.940" data-duration="0.780" data-track-index="4"><div class="glass cap" id="cb7"><span class='kw'>l&#x27;engagement.</span></div></div>
+      <div class="capwrap clip" id="c8" data-start="4.720" data-duration="0.550" data-track-index="4"><div class="glass cap" id="cb8">Étape</div></div>
+      <div class="capwrap clip" id="c9" data-start="5.270" data-duration="0.790" data-track-index="4"><div class="glass cap" id="cb9">par <span class='kw'>étape</span></div></div>
+      <div class="capwrap clip" id="c10" data-start="6.060" data-duration="0.490" data-track-index="4"><div class="glass cap" id="cb10">Un texte</div></div>
+      <div class="capwrap clip" id="c11" data-start="6.550" data-duration="0.490" data-track-index="4"><div class="glass cap" id="cb11"><span class='kw'>court</span></div></div>
+      <div class="capwrap clip" id="c12" data-start="7.040" data-duration="0.880" data-track-index="4"><div class="glass cap" id="cb12"><span class='kw'>synchronisé</span></div></div>
+      <div class="capwrap clip" id="c13" data-start="7.920" data-duration="0.610" data-track-index="4"><div class="glass cap" id="cb13">des <span class='kw'>overlays</span></div></div>
+      <div class="capwrap clip" id="c14" data-start="8.530" data-duration="0.740" data-track-index="4"><div class="glass cap" id="cb14">qui apparaissent</div></div>
+      <div class="capwrap clip" id="c15" data-start="9.270" data-duration="0.590" data-track-index="4"><div class="glass cap" id="cb15">au bon <span class='kw'>moment</span></div></div>
+      <div class="capwrap clip" id="c16" data-start="9.860" data-duration="1.150" data-track-index="4"><div class="glass cap" id="cb16">Preuve rapide</div></div>
+      <div class="capwrap clip" id="c17" data-start="11.010" data-duration="0.580" data-track-index="4"><div class="glass cap" id="cb17">plus de <span class='kw'>vues</span></div></div>
+      <div class="capwrap clip" id="c18" data-start="11.590" data-duration="0.790" data-track-index="4"><div class="glass cap" id="cb18">et plus de</div></div>
+      <div class="capwrap clip" id="c19" data-start="12.380" data-duration="0.660" data-track-index="4"><div class="glass cap" id="cb19"><span class='kw'>commentaires</span></div></div>
+      <div class="capwrap clip" id="c20" data-start="13.040" data-duration="0.700" data-track-index="4"><div class="glass cap" id="cb20">quand les <span class='kw'>sous-titres</span></div></div>
+      <div class="capwrap clip" id="c21" data-start="13.740" data-duration="0.960" data-track-index="4"><div class="glass cap" id="cb21">accompagnent</div></div>
+      <div class="capwrap clip" id="c22" data-start="14.700" data-duration="0.310" data-track-index="4"><div class="glass cap" id="cb22">Recherchez</div></div>
+      <div class="capwrap clip" id="c23" data-start="15.010" data-duration="0.400" data-track-index="4"><div class="glass cap" id="cb23"><span class='kw'>« Astuces</span></div></div>
+      <div class="capwrap clip" id="c24" data-start="15.410" data-duration="0.670" data-track-index="4"><div class="glass cap" id="cb24"><span class='kw'>visibilité</span></div></div>
+      <div class="capwrap clip" id="c25" data-start="16.080" data-duration="0.150" data-track-index="4"><div class="glass cap" id="cb25"><span class='kw'>TikTok »</span></div></div>
+      <div class="capwrap clip" id="c26" data-start="16.230" data-duration="0.810" data-track-index="4"><div class="glass cap" id="cb26">et <span class='kw'>testez</span></div></div>
+      <div class="capwrap clip" id="c27" data-start="17.040" data-duration="0.630" data-track-index="4"><div class="glass cap" id="cb27">ces astuces</div></div>
+      <div class="capwrap clip" id="c28" data-start="17.670" data-duration="1.290" data-track-index="4"><div class="glass cap" id="cb28">tout de <span class='kw'>suite !</span></div></div>
+      <div class="clip" id="endcard" data-start="19.0" data-duration="2.7" data-track-index="5"><img id="logo" src="assets/brand/logo.png" alt="Specimen Agency"/><div id="tagline">VOTRE IMAGE.<br/>NOTRE EXPERTISE.</div></div>
+    </div>
+    <audio id="voix" class="clip" src="assets/voix.wav" data-start="0" data-duration="18.76" data-volume="1" data-track-index="6"></audio>
+    <audio id="s0" class="clip" src="assets/sfx/ui.wav" data-start="0.200" data-duration="0.49" data-volume="0.22" data-track-index="7"></audio>
+    <audio id="s1" class="clip" src="assets/sfx/ui.wav" data-start="0.600" data-duration="0.49" data-volume="0.22" data-track-index="8"></audio>
+    <audio id="s2" class="clip" src="assets/sfx/ui.wav" data-start="1.100" data-duration="0.49" data-volume="0.22" data-track-index="9"></audio>
+    <audio id="s3" class="clip" src="assets/sfx/chargement-donnees.wav" data-start="2.280" data-duration="1.0" data-volume="0.16" data-track-index="7"></audio>
+    <audio id="s4" class="clip" src="assets/sfx/ui.wav" data-start="6.050" data-duration="0.49" data-volume="0.2" data-track-index="8"></audio>
+    <audio id="s5" class="clip" src="assets/sfx/ui.wav" data-start="7.030" data-duration="0.49" data-volume="0.2" data-track-index="9"></audio>
+    <audio id="s6" class="clip" src="assets/sfx/ui.wav" data-start="8.290" data-duration="0.49" data-volume="0.2" data-track-index="7"></audio>
+    <audio id="s7" class="clip" src="assets/sfx/tic-flutter.wav" data-start="8.730" data-duration="0.5" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="s8" class="clip" src="assets/sfx/tic-flutter.wav" data-start="9.410" data-duration="0.5" data-volume="0.14" data-track-index="9"></audio>
+    <audio id="s9" class="clip" src="assets/sfx/tic-flutter.wav" data-start="9.560" data-duration="0.5" data-volume="0.14" data-track-index="7"></audio>
+    <audio id="s10" class="clip" src="assets/sfx/ui.wav" data-start="11.760" data-duration="0.49" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="s11" class="clip" src="assets/sfx/ui.wav" data-start="12.420" data-duration="0.49" data-volume="0.18" data-track-index="9"></audio>
+    <audio id="s12" class="clip" src="assets/sfx/ui.wav" data-start="13.280" data-duration="0.49" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="s13" class="clip" src="assets/sfx/impact-grave.wav" data-start="13.030" data-duration="1.2" data-volume="0.14" data-track-index="8"></audio>
+    <audio id="s14" class="clip" src="assets/sfx/clavier-apple.wav" data-start="15.000" data-duration="0.53" data-volume="0.22" data-track-index="9"></audio>
+    <audio id="s15" class="clip" src="assets/sfx/clavier-apple.wav" data-start="15.600" data-duration="0.53" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="s16" class="clip" src="assets/sfx/ui.wav" data-start="16.670" data-duration="0.49" data-volume="0.22" data-track-index="8"></audio>
+    <audio id="s17" class="clip" src="assets/sfx/whoosh-court.wav" data-start="1.270" data-duration="0.5" data-volume="0.18" data-track-index="9"></audio>
+    <audio id="s18" class="clip" src="assets/sfx/whoosh-court.wav" data-start="4.510" data-duration="0.5" data-volume="0.18" data-track-index="7"></audio>
+    <audio id="s19" class="clip" src="assets/sfx/whoosh-court.wav" data-start="9.650" data-duration="0.5" data-volume="0.18" data-track-index="8"></audio>
+    <audio id="s20" class="clip" src="assets/sfx/whoosh-court.wav" data-start="14.490" data-duration="0.5" data-volume="0.18" data-track-index="9"></audio>
+    <audio id="s21" class="clip" src="assets/sfx/whoosh-court.wav" data-start="18.750" data-duration="0.5" data-volume="0.14" data-track-index="7"></audio>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+  tl.fromTo(".b1", {x: -60, y: 0}, {...{x: 80, y: 120}, duration: 19.0, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo(".b2", {x: 40, y: 60}, {...{x: -90, y: -80}, duration: 19.0, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo(".b3", {x: 0, y: -40}, {...{x: 60, y: 60}, duration: 19.0, ease: "sine.inOut", immediateRender: true}, 0.000);
+  tl.fromTo("#ph1", {opacity: 0, scale: 0.7, rotateX: 18, y: 120}, {...{opacity: 1, scale: 1, rotateX: 6, y: 0}, duration: 0.7, ease: "power3.out", immediateRender: true}, 0.000);
+  tl.fromTo("#pg1", {scaleX: 0}, {...{scaleX: 1}, duration: 1.77, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#p1 .ken", {scale: 1.0}, {...{scale: 1.12}, duration: 1.77, ease: "none", immediateRender: true}, 0.000);
+  tl.fromTo("#w1", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 40}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.5, ease: "elastic.out(1, 0.62)", immediateRender: true}, 0.200);
+  tl.fromTo("#w2", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 40}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.5, ease: "elastic.out(1, 0.62)", immediateRender: true}, 0.600);
+  tl.fromTo("#w3", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 40}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.5, ease: "elastic.out(1, 0.62)", immediateRender: true}, 1.100);
+  tl.fromTo("#p1", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 1.320);
+  tl.fromTo("#m1", {opacity: 0, scale: 0.6, y: 60}, {...{opacity: 1, scale: 1, y: 0}, duration: 0.5, ease: "back.out(1.7)", immediateRender: true}, 1.470);
+  tl.fromTo("#m2", {opacity: 0, scale: 0.6, y: 60}, {...{opacity: 1, scale: 1, y: 0}, duration: 0.5, ease: "back.out(1.7)", immediateRender: true}, 1.550);
+  tl.fromTo("#m3", {opacity: 0, scale: 0.6, y: 60}, {...{opacity: 1, scale: 1, y: 0}, duration: 0.5, ease: "back.out(1.7)", immediateRender: true}, 1.630);
+  tl.fromTo("#m4", {opacity: 0, scale: 0.6, y: 60}, {...{opacity: 1, scale: 1, y: 0}, duration: 0.5, ease: "back.out(1.7)", immediateRender: true}, 1.710);
+  tl.fromTo("#h2l", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -20}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.5, ease: "elastic.out(1, 0.62)", immediateRender: true}, 1.770);
+  tl.fromTo("#h2r", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -20}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.5, ease: "elastic.out(1, 0.62)", immediateRender: true}, 1.870);
+  tl.fromTo("#bar1", {scaleX: 0}, {...{scaleX: 0.22}, duration: 1.0, ease: "power2.out", immediateRender: true}, 2.280);
+  tl.fromTo("#bar3", {scaleX: 0}, {...{scaleX: 0.28}, duration: 1.0, ease: "power2.out", immediateRender: true}, 2.280);
+  tl.fromTo("#bar2", {scaleX: 0}, {...{scaleX: 0.86}, duration: 1.6, ease: "power2.out", immediateRender: true}, 2.280);
+  tl.fromTo("#bar4", {scaleX: 0}, {...{scaleX: 0.92}, duration: 1.6, ease: "power2.out", immediateRender: true}, 2.280);
+  tl.fromTo("#p2", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 4.560);
+  tl.fromTo("#ph3", {opacity: 0, scale: 0.8, rotateY: -22, x: -80}, {...{opacity: 1, scale: 1, rotateY: -10, x: 0}, duration: 0.6, ease: "power3.out", immediateRender: true}, 4.710);
+  tl.fromTo("#p3 .ken", {scale: 1.0}, {...{scale: 1.1}, duration: 5.14, ease: "none", immediateRender: true}, 4.710);
+  tl.fromTo("#st1", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 6.050);
+  tl.fromTo("#st2", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 7.030);
+  tl.fromTo("#st3", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.55, ease: "elastic.out(1, 0.62)", immediateRender: true}, 8.290);
+  tl.fromTo("#kar", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 20}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.45, ease: "elastic.out(1, 0.62)", immediateRender: true}, 6.050);
+  tl.set("#kw0", {color: "var(--gold-light)"}, 6.100);
+  tl.set("#kw1", {color: "var(--gold-light)"}, 6.420);
+  tl.set("#kw2", {color: "var(--gold-light)"}, 6.590);
+  tl.fromTo("#ov1", {opacity: 0, scale: 0, rotation: -30}, {...{opacity: 1, scale: 1, rotation: 0}, duration: 0.45, ease: "back.out(2.4)", immediateRender: true}, 8.730);
+  tl.fromTo("#ov2", {opacity: 0, scale: 0, rotation: -30}, {...{opacity: 1, scale: 1, rotation: 0}, duration: 0.45, ease: "back.out(2.4)", immediateRender: true}, 9.410);
+  tl.fromTo("#ov3", {opacity: 0, scale: 0, rotation: -30}, {...{opacity: 1, scale: 1, rotation: 0}, duration: 0.45, ease: "back.out(2.4)", immediateRender: true}, 9.560);
+  tl.fromTo("#p3", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 9.700);
+  tl.fromTo("#ph4", {opacity: 0, scale: 0.75, rotateX: 14}, {...{opacity: 1, scale: 1, rotateX: 4}, duration: 0.6, ease: "power3.out", immediateRender: true}, 9.850);
+  tl.fromTo("#p4 .ken", {scale: 1.0}, {...{scale: 1.1}, duration: 4.84, ease: "none", immediateRender: true}, 9.850);
+  tl.fromTo("#fh0", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: -40, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 11.050);
+  tl.fromTo("#fh0", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 11.950);
+  tl.fromTo("#fh1", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: 30, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 11.370);
+  tl.fromTo("#fh1", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 12.270);
+  tl.fromTo("#fh2", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: -10, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 11.690);
+  tl.fromTo("#fh2", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 12.590);
+  tl.fromTo("#fh3", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: 50, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 12.010);
+  tl.fromTo("#fh3", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 12.910);
+  tl.fromTo("#fh4", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: -55, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 12.330);
+  tl.fromTo("#fh4", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 13.230);
+  tl.fromTo("#fh5", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: 15, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 12.650);
+  tl.fromTo("#fh5", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 13.550);
+  tl.fromTo("#fh6", {opacity: 0, y: 0, x: 0, scale: 0.4}, {...{opacity: 1, y: -320, x: 40, scale: 1.1}, duration: 1.2, ease: "power1.out", immediateRender: true}, 12.970);
+  tl.fromTo("#fh6", {opacity: 1}, {...{opacity: 0}, duration: 0.3, ease: "power2.in", immediateRender: false}, 13.870);
+  tl.fromTo("#cm0", {opacity: 0, x: 80, scale: 0.8}, {...{opacity: 1, x: 0, scale: 1}, duration: 0.45, ease: "back.out(1.8)", immediateRender: true}, 11.760);
+  tl.fromTo("#cm1", {opacity: 0, x: 80, scale: 0.8}, {...{opacity: 1, x: 0, scale: 1}, duration: 0.45, ease: "back.out(1.8)", immediateRender: true}, 12.420);
+  tl.fromTo("#cm2", {opacity: 0, x: 80, scale: 0.8}, {...{opacity: 1, x: 0, scale: 1}, duration: 0.45, ease: "back.out(1.8)", immediateRender: true}, 13.280);
+  tl.fromTo("#badge", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 20}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 13.030);
+  tl.fromTo("#p4", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 14.540);
+  tl.fromTo("#ph5", {opacity: 0, scale: 0.8, rotateX: -12, y: 80}, {...{opacity: 1, scale: 1, rotateX: 0, y: 0}, duration: 0.6, ease: "power3.out", immediateRender: true}, 14.690);
+  tl.set("#q", {textContent: "A"}, 15.059);
+  tl.set("#q", {textContent: "As"}, 15.118);
+  tl.set("#q", {textContent: "Ast"}, 15.176);
+  tl.set("#q", {textContent: "Astu"}, 15.235);
+  tl.set("#q", {textContent: "Astuc"}, 15.294);
+  tl.set("#q", {textContent: "Astuce"}, 15.353);
+  tl.set("#q", {textContent: "Astuces"}, 15.412);
+  tl.set("#q", {textContent: "Astuces "}, 15.470);
+  tl.set("#q", {textContent: "Astuces v"}, 15.529);
+  tl.set("#q", {textContent: "Astuces vi"}, 15.588);
+  tl.set("#q", {textContent: "Astuces vis"}, 15.647);
+  tl.set("#q", {textContent: "Astuces visi"}, 15.706);
+  tl.set("#q", {textContent: "Astuces visib"}, 15.764);
+  tl.set("#q", {textContent: "Astuces visibi"}, 15.823);
+  tl.set("#q", {textContent: "Astuces visibil"}, 15.882);
+  tl.set("#q", {textContent: "Astuces visibili"}, 15.941);
+  tl.set("#q", {textContent: "Astuces visibilit"}, 16.000);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9"}, 16.058);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 "}, 16.117);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 T"}, 16.176);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 Ti"}, 16.235);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 Tik"}, 16.294);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 TikT"}, 16.352);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 TikTo"}, 16.411);
+  tl.set("#q", {textContent: "Astuces visibilit\u00e9 TikTok"}, 16.470);
+  tl.set("#q", {textContent: ""}, 14.590);
+  tl.fromTo("#r0", {opacity: 0, y: 40}, {...{opacity: 1, y: 0}, duration: 0.4, ease: "power3.out", immediateRender: true}, 16.570);
+  tl.fromTo("#r1", {opacity: 0, y: 40}, {...{opacity: 1, y: 0}, duration: 0.4, ease: "power3.out", immediateRender: true}, 16.690);
+  tl.fromTo("#r2", {opacity: 0, y: 40}, {...{opacity: 1, y: 0}, duration: 0.4, ease: "power3.out", immediateRender: true}, 16.810);
+  tl.fromTo("#cta", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: 30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 16.670);
+  tl.fromTo("#lbb0", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 0.100);
+  tl.fromTo("#lbb0", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 1.270);
+  tl.fromTo("#lbb1", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 1.520);
+  tl.fromTo("#lbb1", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 4.510);
+  tl.fromTo("#lbb2", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 4.760);
+  tl.fromTo("#lbb2", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 9.650);
+  tl.fromTo("#lbb3", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 9.900);
+  tl.fromTo("#lbb3", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 14.490);
+  tl.fromTo("#lbb4", {opacity: 0, scaleX: 0.5, scaleY: 0.35, y: -30}, {...{opacity: 1, scaleX: 1, scaleY: 1, y: 0}, duration: 0.6, ease: "elastic.out(1, 0.62)", immediateRender: true}, 14.740);
+  tl.fromTo("#lbb4", {opacity: 1}, {...{opacity: 0}, duration: 0.2, ease: "power2.in", immediateRender: false}, 18.800);
+  tl.fromTo("#stage", {filter: "blur(0px)"}, {filter: "blur(10px)", duration: 0.22, ease: "power2.in", immediateRender: false}, 1.230);
+  tl.fromTo("#stage", {filter: "blur(10px)"}, {filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false}, 1.470);
+  tl.fromTo("#stage", {filter: "blur(0px)"}, {filter: "blur(10px)", duration: 0.22, ease: "power2.in", immediateRender: false}, 4.470);
+  tl.fromTo("#stage", {filter: "blur(10px)"}, {filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false}, 4.710);
+  tl.fromTo("#stage", {filter: "blur(0px)"}, {filter: "blur(10px)", duration: 0.22, ease: "power2.in", immediateRender: false}, 9.610);
+  tl.fromTo("#stage", {filter: "blur(10px)"}, {filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false}, 9.850);
+  tl.fromTo("#stage", {filter: "blur(0px)"}, {filter: "blur(10px)", duration: 0.22, ease: "power2.in", immediateRender: false}, 14.450);
+  tl.fromTo("#stage", {filter: "blur(10px)"}, {filter: "blur(0px)", duration: 0.3, ease: "power2.out", immediateRender: false}, 14.690);
+  tl.fromTo("#stage", {scale: 1.000}, {scale: 1.220, duration: 0.620, ease: "power2.inOut", immediateRender: true}, 0.550);
+  tl.fromTo("#stage", {scale: 1.000}, {scale: 1.700, duration: 0.240, ease: "power3.in", immediateRender: false}, 1.230);
+  tl.fromTo("#stage", {scale: 1.275}, {scale: 1.000, duration: 0.420, ease: "power3.out", immediateRender: false}, 1.470);
+  tl.fromTo("#stage", {scale: 1.080}, {scale: 1.000, duration: 0.490, ease: "power3.out", immediateRender: false}, 3.980);
+  tl.fromTo("#stage", {scale: 1.000}, {scale: 1.700, duration: 0.240, ease: "power3.in", immediateRender: false}, 4.470);
+  tl.fromTo("#stage", {scale: 1.275}, {scale: 1.000, duration: 0.420, ease: "power3.out", immediateRender: false}, 4.710);
+  tl.fromTo("#stage", {scale: 1.100}, {scale: 1.000, duration: 0.700, ease: "power3.out", immediateRender: false}, 7.080);
+  tl.fromTo("#stage", {scale: 1.000}, {scale: 1.700, duration: 0.240, ease: "power3.in", immediateRender: false}, 9.610);
+  tl.fromTo("#stage", {scale: 1.275}, {scale: 1.000, duration: 0.420, ease: "power3.out", immediateRender: false}, 9.850);
+  tl.fromTo("#stage", {scale: 1.100}, {scale: 1.000, duration: 0.700, ease: "power3.out", immediateRender: false}, 12.420);
+  tl.fromTo("#stage", {scale: 1.000}, {scale: 1.700, duration: 0.240, ease: "power3.in", immediateRender: false}, 14.450);
+  tl.fromTo("#stage", {scale: 1.275}, {scale: 1.000, duration: 0.420, ease: "power3.out", immediateRender: false}, 14.690);
+  tl.fromTo("#stage", {scale: 1.120}, {scale: 1.000, duration: 0.700, ease: "power3.out", immediateRender: false}, 16.120);
+  tl.fromTo("#stage", {scale: 1.100}, {scale: 1.000, duration: 0.700, ease: "power3.out", immediateRender: false}, 17.710);
+  tl.fromTo("#cb0", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 0.020);
+  tl.fromTo("#cb1", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 0.410);
+  tl.fromTo("#cb2", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 0.960);
+  tl.fromTo("#cb3", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 1.480);
+  tl.fromTo("#cb4", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 2.240);
+  tl.fromTo("#cb5", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 2.780);
+  tl.fromTo("#cb6", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 3.420);
+  tl.fromTo("#cb7", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 3.940);
+  tl.fromTo("#cb8", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 4.720);
+  tl.fromTo("#cb9", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 5.270);
+  tl.fromTo("#cb10", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 6.060);
+  tl.fromTo("#cb11", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 6.550);
+  tl.fromTo("#cb12", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 7.040);
+  tl.fromTo("#cb13", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 7.920);
+  tl.fromTo("#cb14", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 8.530);
+  tl.fromTo("#cb15", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 9.270);
+  tl.fromTo("#cb16", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 9.860);
+  tl.fromTo("#cb17", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 11.010);
+  tl.fromTo("#cb18", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 11.590);
+  tl.fromTo("#cb19", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 12.380);
+  tl.fromTo("#cb20", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 13.040);
+  tl.fromTo("#cb21", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 13.740);
+  tl.fromTo("#cb22", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 14.700);
+  tl.fromTo("#cb23", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 15.010);
+  tl.fromTo("#cb24", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 15.410);
+  tl.fromTo("#cb25", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 16.080);
+  tl.fromTo("#cb26", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 16.230);
+  tl.fromTo("#cb27", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 17.040);
+  tl.fromTo("#cb28", {opacity: 0, scale: 0.86, y: 10}, {opacity: 1, scale: 1, y: 0, duration: 0.22, ease: "back.out(2.2)", immediateRender: true}, 17.670);
+  tl.fromTo("#stage", {opacity: 1}, {opacity: 0, duration: 0.25, immediateRender: false}, 18.750);
+  tl.fromTo("#logo", {opacity: 0, scale: 0.9}, {opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: true}, 19.050);
+  tl.fromTo("#tagline", {opacity: 0, y: 30}, {opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: true}, 19.500);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
