@@ -183,7 +183,7 @@ class Motion:
         self.add(f'<div class="kin" id="{kid}" style="top:{top}px;font-size:{size}px">{rows}{sm}</div>')
         times = stagger if isinstance(stagger, (list, tuple)) else [t + k * stagger for k in range(len(lines))]
         for k in range(len(lines)):
-            self.tw(f"#{kid}l{k}", "{yPercent: 110}", "{yPercent: 0}", times[k], 0.55, "power4.out")
+            self.tw(f"#{kid}l{k}", "{yPercent: 110, opacity: 0}", "{yPercent: 0, opacity: 1}", times[k], 0.55, "power4.out")
         if small:
             self.tw(f"#{kid}s", '{opacity: 0, y: 14, filter: "blur(6px)"}', '{opacity: 1, y: 0, filter: "blur(0px)"}', times[-1] + 0.35, 0.4)
         self.out(f"#{kid}", end - 0.24, 0.2)      # parti juste avant que le balayage ne le couvre
